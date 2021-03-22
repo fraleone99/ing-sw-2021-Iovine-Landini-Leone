@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
 
     private String nickname;
-    private ArrayList<LeaderCard> leaders;
+    private ArrayList<LeaderCard> leaders = new ArrayList<>();
     private PlayerDashboard playerDashboard;
     private int victoryPoints;
     private boolean first;
@@ -13,7 +13,6 @@ public class Player {
 
     public Player(String nickname) {
         this.nickname = nickname;
-        leaders = new ArrayList<LeaderCard>();
     }
 
     public boolean isFirst() {
@@ -52,6 +51,32 @@ public class Player {
         leaders.remove(leader);
 
         //TODO moveForwardFaithPath()
+    }
+
+
+    //move resource from s1 to s2 that is empty
+    public void MoveResourceToEmptyShelf(Shelf s1, Shelf s2) throws ShelfNotEmptyException, NotEnoughSpaceException{
+        if(!s2.isFree()) throw new ShelfNotEmptyException();
+        if(s2.getAvailableSpace() < s1.getAmount()) throw new NotEnoughSpaceException();
+
+        s2.ChangeResourceType(s1.getResourceType());
+        s2.AddResource(s1.getAmount());
+        s1.discardResource(s1.getAmount());
+    }
+
+
+    //move the resource of s1 in s2 and the ones in s2 to s1;
+    public void InvertShelvesContent(Shelf s1, Shelf s2) throws NotEnoughSpaceException{
+        if(s1.getShelfDimension() < s2.getAmount() || s2.getShelfDimension() < s1.getAmount()) throw new NotEnoughSpaceException();
+        Resource TempType = s1.getResourceType();
+        int TempAmount = s1.getAmount();
+
+        s1.ChangeResourceType(s2.getResourceType());
+        s1.AddResource(s2.getAmount());
+
+        s2.ChangeResourceType(TempType);
+        s2.AddResource(TempAmount);
+
     }
 
     public String getNickname() {
