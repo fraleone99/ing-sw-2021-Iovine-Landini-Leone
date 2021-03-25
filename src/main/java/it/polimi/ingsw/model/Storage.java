@@ -6,16 +6,14 @@ import java.util.ArrayList;
 /**
  * Class for the storage of the player dashboard
  * The storage contains 3 shelves with different dimension (1,2,3)
+ * Two shelves cannot contains the same type of resource
+ *
  * @author Francesco Leone
  */
 public class Storage {
-    private ArrayList<Shelf> shelves = new ArrayList<>();
+    private final ArrayList<Shelf> shelves = new ArrayList<>();
 
-    public Storage() {
-        Shelf shelf1 = new Shelf(1,0);
-        Shelf shelf2 = new Shelf(2,0);
-        Shelf shelf3 = new Shelf(3,0);
-
+    public Storage(Shelf shelf1, Shelf shelf2, Shelf shelf3) {
         shelves.add(shelf1);
         shelves.add(shelf2);
         shelves.add(shelf3);
@@ -32,61 +30,59 @@ public class Storage {
 
     public Shelf isThisTypePresent( Resource type){
         for(Shelf s : shelves){
-            if(s.getResourceType().equals(type)){
+            if(s.getResourceType().equals(type) && s.getAmount() > 0){
                 return s;
             }
         }
         return null;
     }
 
-    public void DiscardResources(Resource type, int amount) {
-        for (Shelf s : shelves) {
-            if (s.getResourceType().equals(type)) {
-                s.discardResource(amount);
-                //TODO: others players must go ahead in the faith path MoveForwardOtherPlayersFaith(amount)
-            }
+    public void DiscardResources(int s, int amount) throws NotEnoughResourceException {
+        if(shelves.get(s-1).getAmount() >= amount){
+            shelves.get(s-1).discardResource(amount);
         }
-
-
-    }
-    public void AddResource(Resource type, int amount) throws NotEnoughSpaceException, TooMuchResourceForStorageException {
-
-        //it is impossible to add more than 3 resources of the same type in the Storage
-        if(amount > 3) {
-            throw new TooMuchResourceForStorageException();
-        }
-
-        //Search for a shelf with the same resource type and add the resources if possible
-        for (Shelf s : shelves) {
-            if(s.getResourceType().equals(type)) {
-                    if (s.getAvailableSpace() >= amount) {
-                        s.AddResource(amount);
-                    } else {
-                        throw new NotEnoughSpaceException();
-                    }
-            }
-        }
-
-        //Use a free shelf if present
-        if(isThisTypePresent(type) == null){
-            for (Shelf s : shelves) {
-                if(s.isFree() && amount <= s.getShelfDimension()) {
-                    s.ChangeResourceType(type);
-                    s.AddResource(amount);
-                }
-            }
-        }
-
-
+        else throw new NotEnoughResourceException();
     }
 
-    public int getAmountOfaType(Resource type){
-        for (Shelf s : shelves) {
-            if(s.getResourceType().equals(type)) {
-              return s.getAmount();
-            }
-        }
-        return 0;
+    public void AddResource(int s, Resource type, int amount) throws NotEnoughSpaceException, AnotherShelfHasTheSameTypeException,
+            ShelfHasDifferentTypeException {
+
+
+        if (isThisTypePresent(type) != null && !isThisTypePresent(type).equals(shelves.get(s-1)))  throw new AnotherShelfHasTheSameTypeException();
+
+        if (!shelves.get(s-1).getResourceType().equals(type) && !shelves.get(s-1).isFree()) throw new ShelfHasDifferentTypeException();
+
+        if (shelves.get(s-1).getAvailableSpace() < amount) throw new NotEnoughSpaceException();
+
+        shelves.get(s-1).ChangeResourceType(type);
+        shelves.get(s-1).AddResource(amount);
+    }
+
+    //move resource from s1 to s2 that is empty
+    public void MoveResourceToEmptyShelf(int s1, int s2) throws ShelfNotEmptyException, NotEnoughSpaceException{
+        if(!shelves.get(s2-1).isFree()) throw new ShelfNotEmptyException();
+        if(shelves.get(s2-1).getAvailableSpace() < shelves.get(s1-1).getAmount()) throw new NotEnoughSpaceException();
+
+        shelves.get(s2-1).ChangeResourceType(shelves.get(s1-1).getResourceType());
+        shelves.get(s2-1).AddResource(shelves.get(s1-1).getAmount());
+        shelves.get(s1-1).discardResource(shelves.get(s1-1).getAmount());
+    }
+
+
+    //move the resource of s1 in s2 and the ones in s2 to s1;
+    public void InvertShelvesContent(int s1, int s2) throws NotEnoughSpaceException{
+        if(shelves.get(s1-1).getShelfDimension() < shelves.get(s2-1).getAmount() || shelves.get(s2-1).getShelfDimension() < shelves.get(s2-1).getAmount())
+            throw new NotEnoughSpaceException();
+
+        Resource TempType = shelves.get(s1-1).getResourceType();
+        int TempAmount = shelves.get(s1-1).getAmount();
+
+        shelves.get(s1-1).ChangeResourceType(shelves.get(s2-1).getResourceType());
+        shelves.get(s1-1).AddResource(shelves.get(s2-1).getAmount());
+
+        shelves.get(s2-1).ChangeResourceType(TempType);
+        shelves.get(s2-1).AddResource(TempAmount);
+
     }
 
 }

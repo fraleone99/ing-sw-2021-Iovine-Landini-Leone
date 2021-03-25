@@ -9,13 +9,14 @@ import java.util.ArrayList;
  */
 
 public class Shelf {
-    private int shelfDimension;
+    private final int shelfDimension;
     private Resource resourceType;
     private int resourceAmount;
 
-    public Shelf(int shelfDimension, int resourceAmount) {
+    public Shelf(int shelfDimension, int resourceAmount, Resource resourceType) {
         this.shelfDimension = shelfDimension;
         this.resourceAmount = resourceAmount;
+        this.resourceType = resourceType;
     }
 
     public int getShelfDimension() {
@@ -35,6 +36,7 @@ public class Shelf {
 
     public void ChangeResourceType(Resource newType){
         resourceType = newType;
+        resourceAmount = 0;
     }
 
     public void discardResource(int amount){
