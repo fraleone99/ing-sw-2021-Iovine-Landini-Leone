@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 public enum BallColor {
     BLUE,
-    GREEN,
+    GREY,
     YELLOW,
     PURPLE,
     RED,
