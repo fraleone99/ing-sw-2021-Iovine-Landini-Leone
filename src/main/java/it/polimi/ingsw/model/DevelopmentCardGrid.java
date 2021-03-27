@@ -1,5 +1,15 @@
 package it.polimi.ingsw.model;
+
 import java.util.ArrayList;
+
+/**
+ * In this class we create the instances of the development
+ * cards before inserting them ordered by color and level.
+ *
+ * @author Lorenzo Iovine, Nicola Landini, Francesco Leone.
+ */
+
+
 public class DevelopmentCardGrid {
     private ArrayList<DevelopmentCard> PurpleOne= new ArrayList<>();
     private ArrayList<DevelopmentCard> PurpleTwo= new ArrayList<>();

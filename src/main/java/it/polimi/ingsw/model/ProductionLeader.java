@@ -11,11 +11,13 @@ package it.polimi.ingsw.model;
 
 public class ProductionLeader extends LeaderCard{
     private final Resource inputProduction;
+    private final Resource outputProduction;
     private final Requirements requirements;
 
-    public ProductionLeader(int VictoryPoints, Resource Input, Requirements req) {
+    public ProductionLeader(int VictoryPoints, Resource Input, Resource Output, Requirements req) {
         super(VictoryPoints);
         this.inputProduction = Input;
+        this.outputProduction=Output;
         this.requirements=req;
     }
 
