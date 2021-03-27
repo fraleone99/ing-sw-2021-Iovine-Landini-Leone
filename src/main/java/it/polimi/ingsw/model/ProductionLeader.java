@@ -10,8 +10,8 @@ package it.polimi.ingsw.model;
  */
 
 public class ProductionLeader extends LeaderCard{
-    private Resource inputProduction;
-    private Requirements requirements;
+    private final Resource inputProduction;
+    private final Requirements requirements;
 
     public ProductionLeader(int VictoryPoints, Resource Input, Requirements req) {
         super(VictoryPoints);

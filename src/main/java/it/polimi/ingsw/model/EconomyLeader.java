@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 
 public class EconomyLeader extends LeaderCard{
-    private Resource discountType;
-    private ArrayList<Requirements> requirements = new ArrayList<>();
+    private final Resource discountType;
+    private final ArrayList<Requirements> requirements = new ArrayList<>();
 
     public EconomyLeader(int VictoryPoints, Resource DiscountType, Requirements req1, Requirements req2) {
         super(VictoryPoints);
