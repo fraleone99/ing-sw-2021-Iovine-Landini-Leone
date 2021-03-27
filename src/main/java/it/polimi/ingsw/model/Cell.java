@@ -8,10 +8,17 @@ package it.polimi.ingsw.model;
 
 public class Cell {
 
-    private int position;
-    private boolean isPopespace1;
-    private boolean isPopespace2;
-    private boolean isPopespace3;
+    private final int position;
+    private final boolean isPopespace1;
+    private final boolean isPopespace2;
+    private final boolean isPopespace3;
+
+    public Cell(int position, boolean isPopespace1, boolean isPopespace2, boolean isPopespace3) {
+        this.position = position;
+        this.isPopespace1=isPopespace1;
+        this.isPopespace2=isPopespace2;
+        this.isPopespace3=isPopespace3;
+    }
 
     public int getPosition(){
         return position;

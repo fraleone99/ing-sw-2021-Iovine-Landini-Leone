@@ -8,7 +8,7 @@ package it.polimi.ingsw.model;
 
 public class Ball {
 
-    private BallColor type;
+    private final BallColor type;
 
     public Ball(BallColor type) {
         this.type = type;
@@ -21,5 +21,9 @@ public class Ball {
 
     public boolean moveForwardFaith(){
         return type.equals(BallColor.RED);
+    }
+
+    public BallColor getType() {
+        return type;
     }
 }
