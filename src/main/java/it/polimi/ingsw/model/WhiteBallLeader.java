@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 
 public class WhiteBallLeader extends LeaderCard{
-    private Resource conversionType;
-    private ArrayList<Requirements> requirements = new ArrayList<>();
+    private final Resource conversionType;
+    private final ArrayList<Requirements> requirements = new ArrayList<>();
 
     public WhiteBallLeader(int VictoryPoints, Resource type, Requirements req1, Requirements req2) {
         super(VictoryPoints);

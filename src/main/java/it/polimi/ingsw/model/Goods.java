@@ -8,8 +8,8 @@ package it.polimi.ingsw.model;
  */
 
 public class Goods {
-    private Resource type;
-    private int amount;
+    private final Resource type;
+    private final int amount;
 
     public Goods(Resource Type, int Amount){
         this.type = Type;

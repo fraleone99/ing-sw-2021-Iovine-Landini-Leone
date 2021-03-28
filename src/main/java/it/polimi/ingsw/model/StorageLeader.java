@@ -2,38 +2,38 @@ package it.polimi.ingsw.model;
 
 /**
  * The storage leader is a subclass of Leader Card.
- * This leader offers a storage of 2 spaces
+ * This leader offers a shelf of 2 spaces
  * for one type of resource.
  *
  * @author Lorenzo Iovine.
  */
 public class StorageLeader extends LeaderCard{
-    private Resource activationCost;
-    private Resource storageType;
-    private int resourceAmount;
+    private Shelf LeaderShelf;
+    private Goods activationCost;
 
-    public StorageLeader(int VictoryPoints, Resource cost, Resource type)
+    public StorageLeader(int VictoryPoints, Goods cost, Shelf s)
     {
         super(VictoryPoints);
-        this.activationCost = cost;
-        this.storageType = type;
+        this.activationCost=cost;
+        this.LeaderShelf=s;
     }
 
-    public Resource getActivationCost(){ return activationCost; }
+    public Goods getActivationCost(){ return activationCost; }
 
-    public Resource getStorageType(){
-        return storageType;
+    public void DiscardResources(int amount) throws NotEnoughResourceException {
+        if(LeaderShelf.getAmount() >= amount){
+            LeaderShelf.discardResource(amount);
+        }
+        else throw new NotEnoughResourceException();
     }
 
-    public int getAmount(){
-        return resourceAmount;
+    public void AddResources(Resource type, int amount) throws NotEnoughSpaceException, ShelfHasDifferentTypeException {
+
+        if (!LeaderShelf.getResourceType().equals(type)) throw new ShelfHasDifferentTypeException();
+
+        if (LeaderShelf.getAvailableSpace() < amount) throw new NotEnoughSpaceException();
+
+        LeaderShelf.AddResource(amount);
     }
 
-    public void addResource(int amount){
-        resourceAmount += amount;
-    }
-
-    public void removeResource(int amount){
-        resourceAmount -= amount;
-    }
 }

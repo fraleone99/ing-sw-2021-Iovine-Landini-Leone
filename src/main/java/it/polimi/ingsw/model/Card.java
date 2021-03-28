@@ -8,8 +8,8 @@ package it.polimi.ingsw.model;
  * @author Lorenzo Iovine.
  */
 
-public class Card {
-    private int victoryPoints;
+public abstract class Card {
+    private final int victoryPoints;
 
     public Card(int VictoryPoints) {
         this.victoryPoints = VictoryPoints;

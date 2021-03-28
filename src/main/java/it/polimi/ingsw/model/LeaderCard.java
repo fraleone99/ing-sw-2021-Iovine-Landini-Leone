@@ -9,7 +9,7 @@ package it.polimi.ingsw.model;
  * @author Lorenzo Iovine.
  */
 
-public class LeaderCard extends Card{
+public abstract class LeaderCard extends Card{
     private boolean isDiscarded;
     private boolean isActive;
 

@@ -8,9 +8,9 @@ package it.polimi.ingsw.model;
  */
 
 public class Requirements {
-    private CardColor color;
-    private int level;
-    private int amount;
+    private final CardColor color;
+    private final int level;
+    private final int amount;
 
     public Requirements(CardColor Color, int Level, int Amount){
         this.color=Color;
