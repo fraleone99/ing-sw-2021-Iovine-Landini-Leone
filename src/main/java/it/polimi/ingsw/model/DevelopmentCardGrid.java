@@ -11,21 +11,14 @@ import java.util.ArrayList;
 
 
 public class DevelopmentCardGrid {
-    private ArrayList<DevelopmentCard> PurpleOne= new ArrayList<>();
-    private ArrayList<DevelopmentCard> PurpleTwo= new ArrayList<>();
-    private ArrayList<DevelopmentCard> PurpleThree= new ArrayList<>();
-    private ArrayList<DevelopmentCard> YellowOne= new ArrayList<>();
-    private ArrayList<DevelopmentCard> YellowTwo= new ArrayList<>();
-    private ArrayList<DevelopmentCard> YellowThree= new ArrayList<>();
-    private ArrayList<DevelopmentCard> BlueOne = new ArrayList<>();
-    private ArrayList<DevelopmentCard> BlueTwo = new ArrayList<>();
-    private ArrayList<DevelopmentCard> BlueThree = new ArrayList<>();
-    private final ArrayList<DevelopmentCard> GreenOne=new ArrayList<>();
-    private final ArrayList<DevelopmentCard> GreenTwo=new ArrayList<>();
-    private final ArrayList<DevelopmentCard> GreenThree=new ArrayList<>();
+    private ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
 
 
     public DevelopmentCardGrid() {
+
+        //PURPLE
+        //Level 1
+        DevelopmentCardDeck PurpleOne = new DevelopmentCardDeck();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
         ArrayList<Goods> input=new ArrayList<>();
@@ -66,7 +59,10 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         devCard=new DevelopmentCard(1, CardColor.PURPLE, 1, cost, input, output, 1);
         PurpleOne.add(devCard);
+        devCardsDecks.add(PurpleOne);
 
+        //level 2
+        DevelopmentCardDeck PurpleTwo = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT,4));
         input=new ArrayList<>();
@@ -104,7 +100,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.SHIELD,3));
         devCard=new DevelopmentCard(6, CardColor.PURPLE, 2, cost, input, output, 0);
         PurpleTwo.add(devCard);
+        devCardsDecks.add(PurpleTwo);
 
+        //level3
+        DevelopmentCardDeck PurpleThree = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.SHIELD,4));
         cost.add(new Goods(Resource.SERVANT,4));
@@ -145,7 +144,12 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.COIN,3));
         devCard=new DevelopmentCard(9, CardColor.PURPLE, 3, cost, input, output, 2);
         PurpleThree.add(devCard);
+        devCardsDecks.add(PurpleThree);
 
+
+        //YELLOW
+        //level1
+        DevelopmentCardDeck YellowOne = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.STONE,2));
         input=new ArrayList<>();
@@ -186,7 +190,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.STONE,1));
         devCard=new DevelopmentCard(3, CardColor.YELLOW, 1, cost, input, output, 0);
         YellowOne.add(devCard);
+        devCardsDecks.add(YellowOne);
 
+        //level 2
+        DevelopmentCardDeck YellowTwo = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.STONE,3));
         cost.add(new Goods(Resource.SHIELD,2));
@@ -224,7 +231,11 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         devCard=new DevelopmentCard(5, CardColor.YELLOW, 2, cost, input, output, 2);
         YellowTwo.add(devCard);
+        devCardsDecks.add(YellowOne);
 
+
+        //level 3
+        DevelopmentCardDeck YellowThree = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.STONE,5));
         cost.add(new Goods(Resource.SERVANT,2));
@@ -265,8 +276,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.SERVANT,3));
         devCard=new DevelopmentCard(12, CardColor.YELLOW, 3, cost, input, output, 0);
         YellowThree.add(devCard);
+        devCardsDecks.add(YellowOne);
 
         //level 1 BLUE
+        DevelopmentCardDeck BlueOne = new DevelopmentCardDeck();
         cost = new ArrayList<>();
         cost.add(new Goods(Resource.COIN, 3));
         input= new ArrayList<>();
@@ -305,8 +318,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.STONE, 1));
         devCard=new DevelopmentCard(2, CardColor.BLUE, 1, cost, input, output, 0);
         BlueOne.add(devCard);
+        devCardsDecks.add(BlueOne);
 
         //Level 2 BLUE
+        DevelopmentCardDeck BlueTwo = new DevelopmentCardDeck();
         cost = new ArrayList<>();
         cost.add(new Goods(Resource.COIN, 4));
         input= new ArrayList<>();
@@ -344,8 +359,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.STONE, 2));
         devCard=new DevelopmentCard(8, CardColor.BLUE, 2, cost, input, output, 1);
         BlueTwo.add(devCard);
+        devCardsDecks.add(BlueTwo);
 
         //level 3 BLUE
+        DevelopmentCardDeck BlueThree = new DevelopmentCardDeck();
         cost = new ArrayList<>();
         cost.add(new Goods(Resource.COIN, 6));
         input= new ArrayList<>();
@@ -386,9 +403,11 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.SHIELD, 3));
         devCard=new DevelopmentCard(12, CardColor.BLUE, 3, cost, input, output, 0);
         BlueThree.add(devCard);
+        devCardsDecks.add(BlueThree);
 
         //GREEN
         //level1
+        DevelopmentCardDeck GreenOne = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.SHIELD, 2));
         input=new ArrayList<>();
@@ -429,9 +448,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.STONE, 1));
         devCard=new DevelopmentCard(3, CardColor.GREEN, 1, cost, input, output, 0);
         GreenOne.add(devCard);
-
+        devCardsDecks.add(GreenOne);
 
         //level2
+        DevelopmentCardDeck GreenTwo = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.SHIELD, 4));
         input=new ArrayList<>();
@@ -469,9 +489,10 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.SHIELD, 2));
         devCard=new DevelopmentCard(8, CardColor.GREEN, 2, cost, input, output, 1);
         GreenTwo.add(devCard);
-
+        devCardsDecks.add(GreenTwo);
 
         //level3
+        DevelopmentCardDeck GreenThree = new DevelopmentCardDeck();
         cost=new ArrayList<>();
         cost.add(new Goods(Resource.SHIELD, 6));
         input=new ArrayList<>();
@@ -512,7 +533,12 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.SHIELD, 1));
         devCard=new DevelopmentCard(12, CardColor.GREEN, 3, cost, input, output, 0);
         GreenThree.add(devCard);
-
+        devCardsDecks.add(GreenTwo);
     }
 
+    public void ShufflesAllDecks(){
+        for(DevelopmentCardDeck d: devCardsDecks){
+            d.shuffle();
+        }
+    }
 }

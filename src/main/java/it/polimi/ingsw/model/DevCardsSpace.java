@@ -11,9 +11,9 @@ import java.util.ArrayList;
  */
 
 public class DevCardsSpace {
-    ArrayList<DevelopmentCard> Space1 = new ArrayList<>();
-    ArrayList<DevelopmentCard> Space2 = new ArrayList<>();
-    ArrayList<DevelopmentCard> Space3 = new ArrayList<>();
+    DevelopmentCardDeck Space1;
+    DevelopmentCardDeck Space2;
+    DevelopmentCardDeck Space3;
 
     private final Production basicProduction;
 
@@ -25,6 +25,10 @@ public class DevCardsSpace {
 
         basicProduction.setInputProduction(input);
         basicProduction.setOutputProduction(output);
+
+        Space1 = new DevelopmentCardDeck();
+        Space2 = new DevelopmentCardDeck();
+        Space3 = new DevelopmentCardDeck();
     }
 
     public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardExeption{
@@ -32,7 +36,7 @@ public class DevCardsSpace {
         if(space == 1){
             if(Space1.isEmpty() && Card.getLevel() == 1)
                 Space1.add(Card);
-            else if(Space1.get(Space1.size()-1).getLevel() == Card.getLevel()  - 1 ){
+            else if(Space1.get().getLevel() == Card.getLevel()  - 1 ){
                 Space1.add(Card);
             }
             else
@@ -41,7 +45,7 @@ public class DevCardsSpace {
         else if(space == 2){
             if(Space2.isEmpty() && Card.getLevel() == 1)
                 Space2.add(Card);
-            else if(Space2.get(Space2.size()-1).getLevel() == Card.getLevel()  - 1 ){
+            else if(Space2.get().getLevel() == Card.getLevel()  - 1 ){
                 Space2.add(Card);
             }
             else
@@ -50,7 +54,7 @@ public class DevCardsSpace {
         else if(space == 3){
             if(Space3.isEmpty() && Card.getLevel() == 1)
                 Space3.add(Card);
-            else if(Space3.get(Space3.size()-1).getLevel() == Card.getLevel()  - 1 ){
+            else if(Space3.get().getLevel() == Card.getLevel()  - 1 ){
                 Space3.add(Card);
             }
             else
@@ -79,11 +83,11 @@ public class DevCardsSpace {
 
     public DevelopmentCard getCard(int space) throws InvalidChoiceException{
         if(space == 1 && !Space1.isEmpty())
-            return Space1.get(Space1.size()-1);
+            return Space1.get();
         else if(space == 2 && !Space2.isEmpty())
-            return Space2.get(Space2.size()-1);
+            return Space2.get();
         else if(space == 3 && !Space3.isEmpty())
-            return Space3.get(Space3.size()-1);
+            return Space3.get();
         else
             throw new InvalidChoiceException();
     }

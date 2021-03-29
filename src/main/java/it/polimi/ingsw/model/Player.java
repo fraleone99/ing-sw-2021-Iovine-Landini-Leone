@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
 
     private final String nickname;
-    private ArrayList<LeaderCard> leaders = new ArrayList<>();
+    private LeaderCardDeck leaders;
     private PlayerDashboard playerDashboard;
     private int victoryPoints;
     private boolean first;
@@ -19,15 +19,12 @@ public class Player {
         return first;
     }
 
-    public void discardLeaderFirstRound(LeaderCard leader1, LeaderCard leader2) throws NotYourLeaderException {
-        if (!(leaders.contains(leader1)) || !(leaders.contains(leader2))) {
-            throw new NotYourLeaderException();
-        }
-        leaders.remove(leader1);
-        leaders.remove(leader2);
+    public void discardLeaderFirstRound(int pos1, int pos2) throws InvalidChoiceException {
+        leaders.DrawFromPosition(pos1);
+        leaders.DrawFromPosition(pos2);
     }
 
-    public void buyCard(int row, int col){ //to change return type in devCard
+    public void buyCard(int choice){ //to change return type in devCard
         //TODO
     }
 
@@ -43,14 +40,8 @@ public class Player {
         //TODO
     }
 
-    public void DiscardLeader(LeaderCard leader) throws  NotYourLeaderException{
-        if (!(leaders.contains(leader))) {
-            throw new NotYourLeaderException();
-        }
-
-        leaders.remove(leader);
-
-        //TODO moveForwardFaithPath()
+    public void DiscardLeader(int pos) throws InvalidChoiceException {
+        leaders.DrawFromPosition(pos);
     }
 
 
