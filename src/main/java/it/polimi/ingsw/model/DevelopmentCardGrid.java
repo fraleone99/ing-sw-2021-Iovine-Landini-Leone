@@ -541,4 +541,23 @@ public class DevelopmentCardGrid {
             d.shuffle();
         }
     }
+
+    public DevelopmentCard getAndRemove(CardColor color, int level) throws InvalidChoiceException, InvalidColorException{
+        if (color.equals(CardColor.PURPLE)) {
+            return devCardsDecks.get(level - 1).draw();
+        }
+
+        if (color.equals(CardColor.YELLOW)) {
+            return devCardsDecks.get(level + 2).draw();
+        }
+
+        if (color.equals(CardColor.BLUE)) {
+            return devCardsDecks.get(level + 5).draw();
+        }
+
+        if (color.equals(CardColor.GREEN)) {
+            return devCardsDecks.get(level + 8).draw();
+        }
+        throw new InvalidColorException();
+    }
 }

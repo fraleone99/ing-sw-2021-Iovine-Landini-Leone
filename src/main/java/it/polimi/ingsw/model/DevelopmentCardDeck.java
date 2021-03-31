@@ -23,8 +23,11 @@ public class DevelopmentCardDeck implements Deck {
      * Draw a card from the deck. The Card is removed from the deck
      * @return the last card of the deck.
      */
-    public DevelopmentCard draw(){
-        return deck.isEmpty() ? null : deck.remove(deck.size()-1);
+    public DevelopmentCard draw() throws InvalidChoiceException {
+        if(deck.isEmpty()) {
+            throw new InvalidChoiceException();
+        }
+        return deck.remove(deck.size()-1);
     }
 
     /**
