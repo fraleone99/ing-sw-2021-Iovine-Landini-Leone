@@ -11,55 +11,34 @@ import java.util.ArrayList;
  */
 
 public class DevCardsSpace {
-    DevelopmentCardDeck Space1;
-    DevelopmentCardDeck Space2;
-    DevelopmentCardDeck Space3;
-
+    private ArrayList<DevelopmentCardDeck> Space = new ArrayList<>(3);
     private final Production basicProduction;
 
     public DevCardsSpace() {
-        basicProduction = new Production();
+        Goods Input = new Goods(Resource.UNKNOWN, 2);
+        ArrayList<Goods> basicInput = new ArrayList<>();
+        basicInput.add(Input);
+
+        Goods Output = new Goods(Resource.UNKNOWN, 1);
+        ArrayList<Goods> basicOutput = new ArrayList<>();
+        basicInput.add(Output);
+
+        basicProduction = new Production(basicInput, basicOutput);
 
         Goods input = new Goods(Resource.UNKNOWN, 2);
         Goods output = new Goods(Resource.UNKNOWN, 1);
 
         basicProduction.setInputProduction(input);
         basicProduction.setOutputProduction(output);
-
-        Space1 = new DevelopmentCardDeck();
-        Space2 = new DevelopmentCardDeck();
-        Space3 = new DevelopmentCardDeck();
     }
 
     public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardExeption{
+        if(space < 1 || space > 3) throw new InvalidSpaceCardExeption();
+        if(Space.get(space-1).isEmpty() && Card.getLevel() == 1)
+            Space.get(space-1).add(Card);
 
-        if(space == 1){
-            if(Space1.isEmpty() && Card.getLevel() == 1)
-                Space1.add(Card);
-            else if(Space1.get().getLevel() == Card.getLevel()  - 1 ){
-                Space1.add(Card);
-            }
-            else
-                throw new InvalidSpaceCardExeption();
-        }
-        else if(space == 2){
-            if(Space2.isEmpty() && Card.getLevel() == 1)
-                Space2.add(Card);
-            else if(Space2.get().getLevel() == Card.getLevel()  - 1 ){
-                Space2.add(Card);
-            }
-            else
-                throw new InvalidSpaceCardExeption();
-        }
-        else if(space == 3){
-            if(Space3.isEmpty() && Card.getLevel() == 1)
-                Space3.add(Card);
-            else if(Space3.get().getLevel() == Card.getLevel()  - 1 ){
-                Space3.add(Card);
-            }
-            else
-                throw new InvalidSpaceCardExeption();
-        }
+        else if (!Space.get(space-1).isEmpty() && Space.get(space-1).get().getLevel() == Card.getLevel() - 1)
+            Space.get(space-1).add(Card);
         else
             throw new InvalidSpaceCardExeption();
     }
@@ -82,13 +61,18 @@ public class DevCardsSpace {
     }
 
     public DevelopmentCard getCard(int space) throws InvalidChoiceException{
-        if(space == 1 && !Space1.isEmpty())
-            return Space1.get();
-        else if(space == 2 && !Space2.isEmpty())
-            return Space2.get();
-        else if(space == 3 && !Space3.isEmpty())
-            return Space3.get();
+        if(!Space.get(space - 1).isEmpty())
+            return Space.get(space - 1).get();
         else
             throw new InvalidChoiceException();
+
+    }
+
+    public int checkSpace(CardColor color, int level){
+        int result = 0;
+        for(DevelopmentCardDeck d: Space){
+            result += d.checkDeck(color, level);
+        }
+        return  result;
     }
 }

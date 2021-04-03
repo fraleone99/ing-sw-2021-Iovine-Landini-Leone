@@ -9,7 +9,7 @@ package it.polimi.ingsw.model;
 
 public class Goods {
     private final Resource type;
-    private final int amount;
+    private int amount;
 
     public Goods(Resource Type, int Amount){
         this.type = Type;
@@ -23,4 +23,14 @@ public class Goods {
     public int getAmount(){
         return amount;
     }
+
+    public void setAmount(int amount){
+        this.amount = amount;
+    }
+
+    public Goods(Goods g){
+        this.type = g.getType();
+        this.amount = g.getAmount();
+    }
+
 }

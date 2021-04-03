@@ -10,8 +10,13 @@ import java.util.ArrayList;
  */
 
 public class Production {
-    private ArrayList<Goods> inputProduction = new ArrayList<>();
-    private ArrayList<Goods> outputProduction = new ArrayList<>();
+    private ArrayList<Goods> inputProduction;
+    private ArrayList<Goods> outputProduction;
+
+    public Production(ArrayList<Goods> inputProduction, ArrayList<Goods> outputProduction){
+        this.inputProduction = inputProduction;
+        this.outputProduction = outputProduction;
+    }
 
     public void setInputProduction(Goods input){
         inputProduction.add(input);
@@ -20,6 +25,8 @@ public class Production {
     public void setOutputProduction(Goods output){
         outputProduction.add(output);
     }
+
+
 
     public ArrayList<Goods> getInputProduction() {
         return inputProduction;

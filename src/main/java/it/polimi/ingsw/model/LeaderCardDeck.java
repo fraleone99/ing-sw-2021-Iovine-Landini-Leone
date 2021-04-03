@@ -35,8 +35,15 @@ public class LeaderCardDeck {
         deck.add(card);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public LeaderCard get(){
         return deck.get(deck.size()-1);
+    }
+
+    public LeaderCard get(int pos){
+        return deck.get(pos);
     }
 
     public boolean isEmpty(){
@@ -49,4 +56,5 @@ public class LeaderCardDeck {
         } else
             throw new InvalidChoiceException();
     }
+
 }

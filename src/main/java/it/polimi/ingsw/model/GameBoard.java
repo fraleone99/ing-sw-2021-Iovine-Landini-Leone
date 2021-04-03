@@ -17,4 +17,12 @@ public class GameBoard {
             playersDashboards.add(new PlayerDashboard(players.get(i).getNickname()));
         }
     }
+
+    public DevelopmentCardGrid getDevelopmentCardGrid() {
+        return developmentCardGrid;
+    }
+
+    public Market getMarket() {
+        return market;
+    }
 }

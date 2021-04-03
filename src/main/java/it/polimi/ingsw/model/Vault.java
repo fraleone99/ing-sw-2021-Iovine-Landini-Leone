@@ -39,4 +39,11 @@ public class Vault {
         else if(type.equals(Resource.STONE)) stoneAmount -= amount;
     }
 
+    public int checkInput(Goods needed){
+
+        if(getResource(needed.getType()) == 0) return needed.getAmount();
+        else if(getResource(needed.getType()) > needed.getAmount()) return 0;
+        else return needed.getAmount() - getResource(needed.getType());
+    }
+
 }

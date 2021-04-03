@@ -20,12 +20,25 @@ public class StorageLeader extends LeaderCard{
 
     public Goods getActivationCost(){ return activationCost; }
 
+    /*
     public void DiscardResources(int amount) throws NotEnoughResourceException {
         if(LeaderShelf.getAmount() >= amount){
             LeaderShelf.discardResource(amount);
         }
         else throw new NotEnoughResourceException();
+    }*/
+    public int DiscardResources(int amount) {
+        if(LeaderShelf.getAmount() >= amount){
+            LeaderShelf.discardResource(amount);
+            return 0;
+        }
+        else {
+            int temp = LeaderShelf.getAmount();
+            LeaderShelf.discardResource(temp);
+            return  amount - temp;
+        }
     }
+
 
     public void AddResources(Resource type, int amount) throws NotEnoughSpaceException, ShelfHasDifferentTypeException {
 
@@ -35,5 +48,11 @@ public class StorageLeader extends LeaderCard{
 
         LeaderShelf.AddResource(amount);
     }
+
+    public Resource getType(){
+        return LeaderShelf.getResourceType();
+    }
+
+    public int getAmount(){return LeaderShelf.getAmount();}
 
 }

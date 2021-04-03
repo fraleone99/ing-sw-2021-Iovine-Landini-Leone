@@ -10,7 +10,10 @@ import java.util.Collections;
  */
 
 public class DevelopmentCardDeck implements Deck {
+
+
     private ArrayList<DevelopmentCard> deck = new ArrayList<>();
+
 
     /**
      * {@inheritDoc}
@@ -38,11 +41,29 @@ public class DevelopmentCardDeck implements Deck {
         deck.add(card);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public DevelopmentCard get(){
         return deck.get(deck.size()-1);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isEmpty(){
         return deck.isEmpty();
+    }
+
+    public int checkDeck(CardColor color, int level){
+        int ris = 0;
+        for(DevelopmentCard d: deck){
+            if(level == 0 && d.getColor().equals(color)){
+                ris++;
+            }
+            else if(level != 0 && d.getColor().equals(color) && d.getLevel() == level)
+                ris++;
+        }
+        return ris;
     }
 }

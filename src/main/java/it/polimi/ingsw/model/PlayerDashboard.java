@@ -22,4 +22,20 @@ public class PlayerDashboard {
 
         storage = new Storage(s1,s2,s3);
     }
+
+    public DevCardsSpace getDevCardsSpace() {
+        return devCardsSpace;
+    }
+
+    public FaithPath getFaithPath() {
+        return faithPath;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public Vault getVault() {
+        return vault;
+    }
 }
