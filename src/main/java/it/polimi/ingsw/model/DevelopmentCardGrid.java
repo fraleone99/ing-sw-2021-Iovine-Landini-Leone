@@ -27,7 +27,8 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.SERVANT,1));
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
-        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, input, output, 0);
+        Production production=new Production(input, output);
+        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 0);
         PurpleOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -38,7 +39,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SHIELD,1));
-        devCard=new DevelopmentCard(2, CardColor.PURPLE, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(2, CardColor.PURPLE, 1, cost, production, 0);
         PurpleOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -49,7 +51,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD,1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE,2));
-        devCard=new DevelopmentCard(4, CardColor.PURPLE, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(4, CardColor.PURPLE, 1, cost, production, 1);
         PurpleOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -57,7 +60,8 @@ public class DevelopmentCardGrid {
         input=new ArrayList<>();
         input.add(new Goods(Resource.STONE, 1));
         output=new ArrayList<>();
-        devCard=new DevelopmentCard(1, CardColor.PURPLE, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(1, CardColor.PURPLE, 1, cost, production, 1);
         PurpleOne.add(devCard);
         devCardsDecks.add(PurpleOne);
 
@@ -68,7 +72,8 @@ public class DevelopmentCardGrid {
         input=new ArrayList<>();
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
-        devCard=new DevelopmentCard(5, CardColor.PURPLE, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(5, CardColor.PURPLE, 2, cost, production, 2);
         PurpleTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -77,7 +82,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 2));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,2));
-        devCard=new DevelopmentCard(7, CardColor.PURPLE, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(7, CardColor.PURPLE, 2, cost, production, 2);
         PurpleTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -87,7 +93,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SERVANT,2));
-        devCard=new DevelopmentCard(8, CardColor.PURPLE, 2, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(8, CardColor.PURPLE, 2, cost, production, 1);
         PurpleTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -98,7 +105,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT,1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SHIELD,3));
-        devCard=new DevelopmentCard(6, CardColor.PURPLE, 2, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(6, CardColor.PURPLE, 2, cost, production, 0);
         PurpleTwo.add(devCard);
         devCardsDecks.add(PurpleTwo);
 
@@ -112,7 +120,8 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE,3));
         output.add(new Goods(Resource.SERVANT,1));
-        devCard=new DevelopmentCard(12, CardColor.PURPLE, 3, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(12, CardColor.PURPLE, 3, cost, production, 0);
         PurpleThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -121,7 +130,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE,1));
-        devCard=new DevelopmentCard(11, CardColor.PURPLE, 3, cost, input, output, 3);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(11, CardColor.PURPLE, 3, cost, production, 3);
         PurpleThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -133,7 +143,8 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,2));
         output.add(new Goods(Resource.SERVANT,2));
-        devCard=new DevelopmentCard(10, CardColor.PURPLE, 3, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(10, CardColor.PURPLE, 3, cost, production, 1);
         PurpleThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -142,7 +153,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 2));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,3));
-        devCard=new DevelopmentCard(9, CardColor.PURPLE, 3, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(9, CardColor.PURPLE, 3, cost, production, 2);
         PurpleThree.add(devCard);
         devCardsDecks.add(PurpleThree);
 
@@ -155,7 +167,8 @@ public class DevelopmentCardGrid {
         input=new ArrayList<>();
         input.add(new Goods(Resource.SERVANT, 1));
         output=new ArrayList<>();
-        devCard=new DevelopmentCard(1, CardColor.YELLOW, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(1, CardColor.YELLOW, 1, cost, production, 1);
         YellowOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -166,7 +179,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,1));
-        devCard=new DevelopmentCard(2, CardColor.YELLOW, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(2, CardColor.YELLOW, 1, cost, production, 0);
         YellowOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -177,7 +191,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT,1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SHIELD,2));
-        devCard=new DevelopmentCard(4, CardColor.YELLOW, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(4, CardColor.YELLOW, 1, cost, production, 1);
         YellowOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -188,7 +203,8 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.COIN,1));
         output.add(new Goods(Resource.SERVANT,1));
         output.add(new Goods(Resource.STONE,1));
-        devCard=new DevelopmentCard(3, CardColor.YELLOW, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(3, CardColor.YELLOW, 1, cost, production, 0);
         YellowOne.add(devCard);
         devCardsDecks.add(YellowOne);
 
@@ -202,7 +218,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD,1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,3));
-        devCard=new DevelopmentCard(6, CardColor.YELLOW, 2, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(6, CardColor.YELLOW, 2, cost, production, 0);
         YellowTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -211,7 +228,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD,2));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SERVANT,2));
-        devCard=new DevelopmentCard(7, CardColor.YELLOW, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(7, CardColor.YELLOW, 2, cost, production, 2);
         YellowTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -221,7 +239,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD,1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,2));
-        devCard=new DevelopmentCard(8, CardColor.YELLOW, 2, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(8, CardColor.YELLOW, 2, cost, production, 1);
         YellowTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -229,7 +248,8 @@ public class DevelopmentCardGrid {
         input=new ArrayList<>();
         input.add(new Goods(Resource.SHIELD,1));
         output=new ArrayList<>();
-        devCard=new DevelopmentCard(5, CardColor.YELLOW, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(5, CardColor.YELLOW, 2, cost, production, 2);
         YellowTwo.add(devCard);
         devCardsDecks.add(YellowOne);
 
@@ -245,7 +265,8 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN,2));
         output.add(new Goods(Resource.SHIELD,2));
-        devCard=new DevelopmentCard(10, CardColor.YELLOW, 3, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(10, CardColor.YELLOW, 3, cost, production, 1);
         YellowThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -254,7 +275,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD, 2));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SERVANT,3));
-        devCard=new DevelopmentCard(9, CardColor.YELLOW, 3, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(9, CardColor.YELLOW, 3, cost, production, 2);
         YellowThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -263,7 +285,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SERVANT,1));
-        devCard=new DevelopmentCard(11, CardColor.YELLOW, 3, cost, input, output, 3);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(11, CardColor.YELLOW, 3, cost, production, 3);
         YellowThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -274,7 +297,8 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE,1));
         output.add(new Goods(Resource.SERVANT,3));
-        devCard=new DevelopmentCard(12, CardColor.YELLOW, 3, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(12, CardColor.YELLOW, 3, cost, production, 0);
         YellowThree.add(devCard);
         devCardsDecks.add(YellowOne);
 
@@ -286,7 +310,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 2));
         output= new ArrayList<>();
         output.add(new Goods(Resource.COIN, 1));
-        devCard=new DevelopmentCard(3, CardColor.BLUE, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(3, CardColor.BLUE, 1, cost, production, 0);
         BlueOne.add(devCard);
 
         cost = new ArrayList<>();
@@ -297,7 +322,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SHIELD, 1));
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 2));
-        devCard=new DevelopmentCard(4, CardColor.BLUE, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(4, CardColor.BLUE, 1, cost, production, 1);
         BlueOne.add(devCard);
 
         cost = new ArrayList<>();
@@ -305,7 +331,8 @@ public class DevelopmentCardGrid {
         input= new ArrayList<>();
         input.add(new Goods(Resource.SHIELD, 1));
         output= new ArrayList<>();
-        devCard=new DevelopmentCard(1, CardColor.BLUE, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(1, CardColor.BLUE, 1, cost, production, 1);
         BlueOne.add(devCard);
 
         cost = new ArrayList<>();
@@ -316,7 +343,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 1));
         output= new ArrayList<>();
         output.add(new Goods(Resource.STONE, 1));
-        devCard=new DevelopmentCard(2, CardColor.BLUE, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(2, CardColor.BLUE, 1, cost, production, 0);
         BlueOne.add(devCard);
         devCardsDecks.add(BlueOne);
 
@@ -327,7 +355,8 @@ public class DevelopmentCardGrid {
         input= new ArrayList<>();
         input.add(new Goods(Resource.SERVANT, 1));
         output= new ArrayList<>();
-        devCard=new DevelopmentCard(5, CardColor.BLUE, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(5, CardColor.BLUE, 2, cost, production, 2);
         BlueTwo.add(devCard);
 
         cost = new ArrayList<>();
@@ -338,7 +367,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 1));
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 3));
-        devCard=new DevelopmentCard(6, CardColor.BLUE, 2, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(6, CardColor.BLUE, 2, cost, production, 0);
         BlueTwo.add(devCard);
 
         cost = new ArrayList<>();
@@ -347,7 +377,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 2));
         output= new ArrayList<>();
         output.add(new Goods(Resource.SHIELD, 2));
-        devCard=new DevelopmentCard(7, CardColor.BLUE, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(7, CardColor.BLUE, 2, cost, production, 2);
         BlueTwo.add(devCard);
 
         cost = new ArrayList<>();
@@ -357,7 +388,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 1));
         output= new ArrayList<>();
         output.add(new Goods(Resource.STONE, 2));
-        devCard=new DevelopmentCard(8, CardColor.BLUE, 2, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(8, CardColor.BLUE, 2, cost, production, 1);
         BlueTwo.add(devCard);
         devCardsDecks.add(BlueTwo);
 
@@ -369,7 +401,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 2));
         output= new ArrayList<>();
         output.add(new Goods(Resource.SHIELD, 3));
-        devCard=new DevelopmentCard(9, CardColor.BLUE, 3, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(9, CardColor.BLUE, 3, cost, production, 2);
         BlueThree.add(devCard);
 
         cost = new ArrayList<>();
@@ -381,7 +414,8 @@ public class DevelopmentCardGrid {
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 2));
         output.add(new Goods(Resource.STONE, 2));
-        devCard=new DevelopmentCard(10, CardColor.BLUE, 3, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(10, CardColor.BLUE, 3, cost, production, 1);
         BlueThree.add(devCard);
 
         cost = new ArrayList<>();
@@ -390,7 +424,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 1));
         output= new ArrayList<>();
         output.add(new Goods(Resource.SHIELD, 1));
-        devCard=new DevelopmentCard(11, CardColor.BLUE, 3, cost, input, output, 3);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(11, CardColor.BLUE, 3, cost, production, 3);
         BlueThree.add(devCard);
 
         cost = new ArrayList<>();
@@ -401,7 +436,8 @@ public class DevelopmentCardGrid {
         output= new ArrayList<>();
         output.add(new Goods(Resource.COIN, 1));
         output.add(new Goods(Resource.SHIELD, 3));
-        devCard=new DevelopmentCard(12, CardColor.BLUE, 3, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(12, CardColor.BLUE, 3, cost, production, 0);
         BlueThree.add(devCard);
         devCardsDecks.add(BlueThree);
 
@@ -413,7 +449,8 @@ public class DevelopmentCardGrid {
         input=new ArrayList<>();
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
-        devCard=new DevelopmentCard(1, CardColor.GREEN, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(1, CardColor.GREEN, 1, cost, production, 1);
         GreenOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -424,7 +461,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 2));
-        devCard=new DevelopmentCard(4, CardColor.GREEN, 1, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(4, CardColor.GREEN, 1, cost, production, 1);
         GreenOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -435,7 +473,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.STONE, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 2));
-        devCard=new DevelopmentCard(2, CardColor.GREEN, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(2, CardColor.GREEN, 1, cost, production, 0);
         GreenOne.add(devCard);
 
         cost=new ArrayList<>();
@@ -446,7 +485,8 @@ public class DevelopmentCardGrid {
         output.add(new Goods(Resource.COIN, 1));
         output.add(new Goods(Resource.SHIELD, 1));
         output.add(new Goods(Resource.STONE, 1));
-        devCard=new DevelopmentCard(3, CardColor.GREEN, 1, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(3, CardColor.GREEN, 1, cost, production, 0);
         GreenOne.add(devCard);
         devCardsDecks.add(GreenOne);
 
@@ -457,7 +497,8 @@ public class DevelopmentCardGrid {
         input=new ArrayList<>();
         input.add(new Goods(Resource.STONE, 1));
         output=new ArrayList<>();
-        devCard=new DevelopmentCard(5, CardColor.GREEN, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(5, CardColor.GREEN, 2, cost, production, 2);
         GreenTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -468,7 +509,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE, 3));
-        devCard=new DevelopmentCard(6, CardColor.GREEN, 2, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(6, CardColor.GREEN, 2, cost, production, 0);
         GreenTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -477,7 +519,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.COIN, 2));
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE, 2));
-        devCard=new DevelopmentCard(7, CardColor.GREEN, 2, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(7, CardColor.GREEN, 2, cost, production, 2);
         GreenTwo.add(devCard);
 
         cost=new ArrayList<>();
@@ -487,7 +530,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.SHIELD, 2));
-        devCard=new DevelopmentCard(8, CardColor.GREEN, 2, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(8, CardColor.GREEN, 2, cost, production, 1);
         GreenTwo.add(devCard);
         devCardsDecks.add(GreenTwo);
 
@@ -499,7 +543,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.STONE, 3));
-        devCard=new DevelopmentCard(9, CardColor.GREEN, 3, cost, input, output, 2);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(9, CardColor.GREEN, 3, cost, production, 2);
         GreenThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -511,7 +556,8 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         output.add(new Goods(Resource.SHIELD, 2));
         output.add(new Goods(Resource.STONE, 2));
-        devCard=new DevelopmentCard(10, CardColor.GREEN, 3, cost, input, output, 1);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(10, CardColor.GREEN, 3, cost, production, 1);
         GreenThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -520,7 +566,8 @@ public class DevelopmentCardGrid {
         input.add(new Goods(Resource.SERVANT, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 2));
-        devCard=new DevelopmentCard(11, CardColor.GREEN, 3, cost, input, output, 3);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(11, CardColor.GREEN, 3, cost, production, 3);
         GreenThree.add(devCard);
 
         cost=new ArrayList<>();
@@ -531,7 +578,8 @@ public class DevelopmentCardGrid {
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 3));
         output.add(new Goods(Resource.SHIELD, 1));
-        devCard=new DevelopmentCard(12, CardColor.GREEN, 3, cost, input, output, 0);
+        production=new Production(input, output);
+        devCard=new DevelopmentCard(12, CardColor.GREEN, 3, cost, production, 0);
         GreenThree.add(devCard);
         devCardsDecks.add(GreenTwo);
     }
@@ -542,22 +590,41 @@ public class DevelopmentCardGrid {
         }
     }
 
-    public DevelopmentCard getAndRemove(CardColor color, int level) throws InvalidChoiceException, InvalidColorException{
+    public void removeCard(CardColor color, int level) throws InvalidChoiceException{
         if (color.equals(CardColor.PURPLE)) {
-            return devCardsDecks.get(level - 1).draw();
+            devCardsDecks.get(level - 1).draw();
         }
 
         if (color.equals(CardColor.YELLOW)) {
-            return devCardsDecks.get(level + 2).draw();
+            devCardsDecks.get(level + 2).draw();
         }
 
         if (color.equals(CardColor.BLUE)) {
-            return devCardsDecks.get(level + 5).draw();
+            devCardsDecks.get(level + 5).draw();
         }
 
         if (color.equals(CardColor.GREEN)) {
-            return devCardsDecks.get(level + 8).draw();
+            devCardsDecks.get(level + 8).draw();
         }
-        throw new InvalidColorException();
+        throw new InvalidChoiceException();
+    }
+
+    public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
+        if (color.equals(CardColor.PURPLE)) {
+            return devCardsDecks.get(level - 1).get();
+        }
+
+        if (color.equals(CardColor.YELLOW)) {
+            return devCardsDecks.get(level + 2).get();
+        }
+
+        if (color.equals(CardColor.BLUE)) {
+            return devCardsDecks.get(level + 5).get();
+        }
+
+        if (color.equals(CardColor.GREEN)) {
+            return devCardsDecks.get(level + 8).get();
+        }
+        throw new InvalidChoiceException();
     }
 }
