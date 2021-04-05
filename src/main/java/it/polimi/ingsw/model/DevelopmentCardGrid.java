@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Lorenzo Iovine, Nicola Landini, Francesco Leone.
  */
 
-
+//tested class
 public class DevelopmentCardGrid {
     private ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
 
@@ -581,7 +581,7 @@ public class DevelopmentCardGrid {
         production=new Production(input, output);
         devCard=new DevelopmentCard(12, CardColor.GREEN, 3, cost, production, 0);
         GreenThree.add(devCard);
-        devCardsDecks.add(GreenTwo);
+        devCardsDecks.add(GreenThree);
     }
 
     public void ShufflesAllDecks(){
@@ -594,37 +594,31 @@ public class DevelopmentCardGrid {
         if (color.equals(CardColor.PURPLE)) {
             devCardsDecks.get(level - 1).draw();
         }
-
-        if (color.equals(CardColor.YELLOW)) {
+        else if (color.equals(CardColor.YELLOW)) {
             devCardsDecks.get(level + 2).draw();
         }
-
-        if (color.equals(CardColor.BLUE)) {
+        else if (color.equals(CardColor.BLUE)) {
             devCardsDecks.get(level + 5).draw();
         }
-
-        if (color.equals(CardColor.GREEN)) {
+        else if (color.equals(CardColor.GREEN)) {
             devCardsDecks.get(level + 8).draw();
         }
-        throw new InvalidChoiceException();
+        else throw new InvalidChoiceException();
     }
 
     public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
         if (color.equals(CardColor.PURPLE)) {
             return devCardsDecks.get(level - 1).get();
         }
-
-        if (color.equals(CardColor.YELLOW)) {
+        else if (color.equals(CardColor.YELLOW)) {
             return devCardsDecks.get(level + 2).get();
         }
-
-        if (color.equals(CardColor.BLUE)) {
+        else if (color.equals(CardColor.BLUE)) {
             return devCardsDecks.get(level + 5).get();
         }
-
-        if (color.equals(CardColor.GREEN)) {
+        else if (color.equals(CardColor.GREEN)) {
             return devCardsDecks.get(level + 8).get();
         }
-        throw new InvalidChoiceException();
+        else throw new InvalidChoiceException();
     }
 }

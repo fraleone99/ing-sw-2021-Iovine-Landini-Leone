@@ -46,6 +46,10 @@ public class LeaderCardDeck {
         return deck.get(pos);
     }
 
+    public int size(){
+        return deck.size();
+    }
+
     public boolean isEmpty(){
         return deck.isEmpty();
     }

@@ -9,9 +9,11 @@ import java.util.Arrays;
  * @author Nicola Landini
  */
 
+//Tested Class
+
 public class Market {
 
-    private Ball[][] matrix = new Ball[2][3];
+    private Ball[][] matrix = new Ball[3][4];
     private Ball ramp;
     private ArrayList<Ball>randomBall=new ArrayList<>();
 
@@ -57,17 +59,24 @@ public class Market {
     }
 
 
+    public ArrayList<Ball> getRandomBall() {
+        return randomBall;
+    }
+
+
     public void fillMatrix(ArrayList<Ball>randomBall){
         int cont=13;
 
         for(int i=0; i<3; i++) {
             for(int j=0; j<4; j++) {
                 int num=(int)(Math.random()*cont); //casual number from 1 to cont
-                matrix[i][j]=randomBall.get(num-1);
+                matrix[i][j]=randomBall.get(num);
                 cont--;
-                randomBall.remove(num-1);
+                randomBall.remove(num);
             }
         }
+        ramp=randomBall.get(0);
+        randomBall.clear();
     }
 
 
