@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -82,7 +84,7 @@ public class Market {
 
     //choice indicates which is the player choice: 1-first col...4-last col
     //                                             5-lower row...7-upper row
-    public ArrayList<Ball> getChosenColor(int choice) throws InvalidChoiceException{
+    public ArrayList<Ball> getChosenColor(int choice) throws InvalidChoiceException {
        if(choice<1 || choice>7){
            throw new InvalidChoiceException();
        }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 

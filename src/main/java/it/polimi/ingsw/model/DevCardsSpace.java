@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.exceptions.InvalidSpaceCardExeption;
+
 import java.util.ArrayList;
 
 /**
@@ -15,24 +18,28 @@ public class DevCardsSpace {
     private final Production basicProduction;
 
     public DevCardsSpace() {
-        Goods Input = new Goods(Resource.UNKNOWN, 2);
+        Goods Input1 = new Goods(Resource.UNKNOWN, 1);
+        Goods Input2 = new Goods(Resource.UNKNOWN, 1);
         ArrayList<Goods> basicInput = new ArrayList<>();
-        basicInput.add(Input);
+        basicInput.add(Input1);
+        basicInput.add(Input2);
 
         Goods Output = new Goods(Resource.UNKNOWN, 1);
         ArrayList<Goods> basicOutput = new ArrayList<>();
-        basicInput.add(Output);
+        basicOutput.add(Output);
 
         basicProduction = new Production(basicInput, basicOutput);
 
-        Goods input = new Goods(Resource.UNKNOWN, 2);
-        Goods output = new Goods(Resource.UNKNOWN, 1);
+        DevelopmentCardDeck deck1 = new DevelopmentCardDeck();
+        DevelopmentCardDeck deck2 = new DevelopmentCardDeck();
+        DevelopmentCardDeck deck3 = new DevelopmentCardDeck();
 
-        basicProduction.setInputProduction(input);
-        basicProduction.setOutputProduction(output);
+        Space.add(deck1);
+        Space.add(deck2);
+        Space.add(deck3);
     }
 
-    public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardExeption{
+    public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardExeption {
         if(space < 1 || space > 3) throw new InvalidSpaceCardExeption();
         if(Space.get(space-1).isEmpty() && Card.getLevel() == 1)
             Space.get(space-1).add(Card);
@@ -45,22 +52,22 @@ public class DevCardsSpace {
 
     public void setInputBasicProduction(Resource type1, Resource type2){
         Goods input1 = new Goods(type1, 1);
-        basicProduction.setInputProduction(input1);
+        basicProduction.getInputProduction().set(0, input1);
 
         Goods input2 = new Goods(type2, 1);
-        basicProduction.setInputProduction(input2);
+        basicProduction.getInputProduction().set(1,input2);
     }
 
     public void setOutputBasicProduction(Resource type){
         Goods output = new Goods(type, 1);
-        basicProduction.setOutputProduction(output);
+        basicProduction.getOutputProduction().set(0,output);
     }
 
     public Production getBasicProduction() {
         return basicProduction;
     }
 
-    public DevelopmentCard getCard(int space) throws InvalidChoiceException{
+    public DevelopmentCard getCard(int space) throws InvalidChoiceException {
         if(!Space.get(space - 1).isEmpty())
             return Space.get(space - 1).get();
         else

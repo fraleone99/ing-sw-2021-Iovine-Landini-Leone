@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class ShelfHasDifferentTypeException extends Exception {
     public ShelfHasDifferentTypeException(){

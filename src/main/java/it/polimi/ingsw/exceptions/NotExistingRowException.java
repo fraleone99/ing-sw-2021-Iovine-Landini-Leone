@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class NotExistingRowException extends Exception {
-    NotExistingRowException(){
+    public NotExistingRowException(){
         super("The selected row does not exist!");
     }
 }

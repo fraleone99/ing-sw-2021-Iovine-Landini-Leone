@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class NotExistingPlayerException extends Exception {
-    NotExistingPlayerException(){
+    public NotExistingPlayerException(){
         super("This Player does not exist! Try another nickname");
     }
 }
