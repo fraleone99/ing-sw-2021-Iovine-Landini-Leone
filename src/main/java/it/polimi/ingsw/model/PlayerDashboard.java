@@ -144,4 +144,5 @@ public class PlayerDashboard {
             getVault().AddResource(r, mapElement.getValue());
         }
     }
+
 }

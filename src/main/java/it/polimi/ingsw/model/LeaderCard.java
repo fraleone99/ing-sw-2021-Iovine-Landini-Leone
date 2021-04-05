@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
+
 /**
  * This is a subclass of Card, which describes the Leader Card.
  * The things in common for each leader card are the fact that they can be activated or discarded;
@@ -31,5 +33,17 @@ public abstract class LeaderCard extends Card{
 
     public boolean getIsActive(){
         return isActive;
+    }
+
+    public ArrayList<Requirements> getRequirements() {
+        return getRequirements();
+    }
+
+    public boolean checkRequirements(PlayerDashboard playerDashboard){
+        return checkRequirements(playerDashboard);
+    }
+
+    public boolean checkRequirements(DevCardsSpace space){
+        return checkRequirements(space);
     }
 }

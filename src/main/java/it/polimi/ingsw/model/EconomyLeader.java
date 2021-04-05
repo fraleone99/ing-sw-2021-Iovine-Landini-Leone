@@ -29,4 +29,8 @@ public class EconomyLeader extends LeaderCard{
     public ArrayList<Requirements> getRequirements(){
         return requirements;
     }
+
+    public boolean checkRequirements(DevCardsSpace space) {
+        return space.checkSpace(requirements.get(0).getColor(), requirements.get(0).getLevel()) >= 1 && space.checkSpace(requirements.get(1).getColor(), requirements.get(1).getLevel()) >= 1;
+    }
 }

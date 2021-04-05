@@ -20,77 +20,82 @@ public class Game {
 
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
-        LeaderCard leader=new StorageLeader(3,cost,shelf);
+        Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        LeaderCard leader=new StorageLeader(3,req1,shelf);
         LeaderDeck.add(leader);
 
         shelf=new Shelf(2,0,Resource.STONE);
         cost=new Goods(Resource.COIN,5);
-        leader=new StorageLeader(3,cost,shelf);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,req1,shelf);
         LeaderDeck.add(leader);
 
         shelf=new Shelf(2,0,Resource.SERVANT);
         cost=new Goods(Resource.STONE,5);
-        leader=new StorageLeader(3,cost,shelf);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,req1,shelf);
         LeaderDeck.add(leader);
 
         shelf=new Shelf(2,0,Resource.SHIELD);
         cost=new Goods(Resource.SERVANT,5);
-        leader=new StorageLeader(3,cost,shelf);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,req1,shelf);
         LeaderDeck.add(leader);
 
-        Requirements req1=new Requirements(CardColor.PURPLE,0,2);
-        Requirements req2=new Requirements(CardColor.GREEN,0,1);
+        cost=new Goods(Resource.COIN, 0);
+        req1=new Requirements(CardColor.PURPLE,0,2, cost);
+        Requirements req2=new Requirements(CardColor.GREEN,0,1, cost);
         leader=new WhiteBallLeader(5,Resource.COIN,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.BLUE,0,2);
-        req2=new Requirements(CardColor.YELLOW,0,1);
+        req1=new Requirements(CardColor.BLUE,0,2, cost);
+        req2=new Requirements(CardColor.YELLOW,0,1, cost);
         leader=new WhiteBallLeader(5,Resource.STONE,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.YELLOW,0,2);
-        req2=new Requirements(CardColor.BLUE,0,1);
+        req1=new Requirements(CardColor.YELLOW,0,2, cost);
+        req2=new Requirements(CardColor.BLUE,0,1, cost);
         leader=new WhiteBallLeader(5,Resource.SERVANT,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.GREEN,0,2);
-        req2=new Requirements(CardColor.PURPLE,0,1);
+        req1=new Requirements(CardColor.GREEN,0,2, cost);
+        req2=new Requirements(CardColor.PURPLE,0,1, cost);
         leader=new WhiteBallLeader(5,Resource.SHIELD,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.BLUE,0,1);
-        req2=new Requirements(CardColor.PURPLE,0,1);
+        req1=new Requirements(CardColor.BLUE,0,1, cost);
+        req2=new Requirements(CardColor.PURPLE,0,1, cost);
         leader=new EconomyLeader(2,Resource.SHIELD,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.GREEN,0,1);
-        req2=new Requirements(CardColor.BLUE,0,1);
+        req1=new Requirements(CardColor.GREEN,0,1, cost);
+        req2=new Requirements(CardColor.BLUE,0,1, cost);
         leader=new EconomyLeader(2,Resource.STONE,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.YELLOW,0,1);
-        req2=new Requirements(CardColor.GREEN,0,1);
+        req1=new Requirements(CardColor.YELLOW,0,1, cost);
+        req2=new Requirements(CardColor.GREEN,0,1, cost);
         leader=new EconomyLeader(2,Resource.SERVANT,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.YELLOW,0,1);
-        req2=new Requirements(CardColor.PURPLE,0,1);
+        req1=new Requirements(CardColor.YELLOW,0,1, cost);
+        req2=new Requirements(CardColor.PURPLE,0,1, cost);
         leader=new EconomyLeader(2,Resource.COIN,req1,req2);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.BLUE,2,1);
+        req1=new Requirements(CardColor.BLUE,2,1, cost);
         leader=new ProductionLeader(4,Resource.SERVANT,Resource.UNKNOWN,req1);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.YELLOW,2,1);
+        req1=new Requirements(CardColor.YELLOW,2,1, cost);
         leader=new ProductionLeader(4,Resource.SHIELD,Resource.UNKNOWN,req1);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.GREEN,2,1);
+        req1=new Requirements(CardColor.GREEN,2,1, cost);
         leader=new ProductionLeader(4,Resource.COIN,Resource.UNKNOWN,req1);
         LeaderDeck.add(leader);
 
-        req1=new Requirements(CardColor.PURPLE,2,1);
+        req1=new Requirements(CardColor.PURPLE,2,1, cost);
         leader=new ProductionLeader(4,Resource.STONE,Resource.UNKNOWN,req1);
         LeaderDeck.add(leader);
     }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
+
 /**
  * The storage leader is a subclass of Leader Card.
  * This leader offers a shelf of 2 spaces
@@ -9,16 +11,14 @@ package it.polimi.ingsw.model;
  */
 public class StorageLeader extends LeaderCard{
     private Shelf LeaderShelf;
-    private Goods activationCost;
+    private ArrayList<Requirements> requirements = new ArrayList<>();
 
-    public StorageLeader(int VictoryPoints, Goods cost, Shelf s)
+    public StorageLeader(int VictoryPoints, Requirements req, Shelf s)
     {
         super(VictoryPoints);
-        this.activationCost=cost;
+        requirements.add(req);
         this.LeaderShelf=s;
     }
-
-    public Goods getActivationCost(){ return activationCost; }
 
     /*
     public void DiscardResources(int amount) throws NotEnoughResourceException {
@@ -54,5 +54,13 @@ public class StorageLeader extends LeaderCard{
     }
 
     public int getAmount(){return LeaderShelf.getAmount();}
+
+    public ArrayList<Requirements> getRequirements(){
+        return requirements;
+    }
+
+    public boolean checkRequirements(PlayerDashboard dashboard){
+        return dashboard.CheckResource(requirements.get(0).getCost());
+    }
 
 }

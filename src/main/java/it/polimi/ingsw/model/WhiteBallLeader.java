@@ -25,7 +25,11 @@ public class WhiteBallLeader extends LeaderCard{
         return conversionType;
     }
 
-    public ArrayList<Requirements> getRequirements() {
+    public ArrayList<Requirements> getRequirements(){
         return requirements;
+    }
+
+    public boolean checkRequirements(DevCardsSpace space){
+        return space.checkSpace(requirements.get(0).getColor(), requirements.get(0).getLevel()) >= 2 && space.checkSpace(requirements.get(1).getColor(), requirements.get(1).getLevel()) >= 1;
     }
 }

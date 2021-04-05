@@ -1,9 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.exceptions.InvalidSpaceCardExeption;
-import it.polimi.ingsw.exceptions.NotEnoughResourceException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,11 +53,22 @@ public class Player {
     }
 
     public void ActiveLeader(LeaderCard leader){
-
+        if(leader instanceof StorageLeader){
+            if(leader.checkRequirements(playerDashboard) && !leader.getIsDiscarded()){
+                leader.setIsActive();
+            }
+        }
+        else{
+            if(leader.checkRequirements(playerDashboard.getDevCardsSpace()) && !leader.getIsDiscarded()){
+                leader.setIsActive();
+            }
+        }
     }
 
     public void DiscardLeader(int pos) throws InvalidChoiceException {
         playerDashboard.getLeaders().DrawFromPosition(pos);
+        playerDashboard.getLeaders().get(pos).setIsDiscarded();
+        playerDashboard.getFaithPath().moveForward(1);
     }
 
 
@@ -69,7 +76,7 @@ public class Player {
         return nickname;
     }
 
-    public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
+   /* public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
         if(playerDashboard.getLeaders().get(pos- 1) instanceof ProductionLeader){
             if(playerDashboard.CheckResource(((ProductionLeader) playerDashboard.getLeaders().get(pos- 1)).getInputProduction()))
                 activatedProduction.add(((ProductionLeader) playerDashboard.getLeaders().get(pos-1)).getProduction());
@@ -77,7 +84,7 @@ public class Player {
         }
         else
             throw new InvalidChoiceException();
-    }
+    }*/
 
     public void ActiveProductionBase() throws NotEnoughResourceException {
         if(playerDashboard.CheckResource(playerDashboard.getDevCardsSpace().getBasicProduction().getInputProduction()))
