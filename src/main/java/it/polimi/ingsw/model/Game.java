@@ -124,7 +124,11 @@ public class Game {
     public void choiceDevCard(CardColor color, int level, int space) throws InvalidChoiceException, InvalidSpaceCardExeption, NotEnoughResourceException {
         ArrayList<Goods> cost=new ArrayList<>();
         Shelf shelf;
-        cost=gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost();
+        /*cost=gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost();*/
+
+        for(int i=0; i<gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost().size(); i++) {
+            cost.add(new Goods(gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost().get(i)));
+        }
 
         //check if currentPlayer has an economy leader and set discount
         for(int i=0; i<currentPlayer.getLeaders().size(); i++){

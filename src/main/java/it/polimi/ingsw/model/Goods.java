@@ -7,7 +7,7 @@ package it.polimi.ingsw.model;
  * @author Lorenzo Iovine.
  */
 
-public class Goods {
+public class Goods{
     private final Resource type;
     private int amount;
 
