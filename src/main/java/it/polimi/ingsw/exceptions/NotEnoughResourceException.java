@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class NotEnoughResourceException extends Exception {
     public NotEnoughResourceException(){

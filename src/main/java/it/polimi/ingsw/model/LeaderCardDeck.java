@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -54,7 +56,7 @@ public class LeaderCardDeck {
         return deck.isEmpty();
     }
 
-    public void DrawFromPosition(int position) throws InvalidChoiceException{
+    public void DrawFromPosition(int position) throws InvalidChoiceException {
         if( position <= deck.size()-1 ) {
             deck.remove(position);
         } else

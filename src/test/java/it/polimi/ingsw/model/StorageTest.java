@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.AnotherShelfHasTheSameTypeException;
+import it.polimi.ingsw.exceptions.NotEnoughSpaceException;
+import it.polimi.ingsw.exceptions.ShelfHasDifferentTypeException;
+import it.polimi.ingsw.exceptions.ShelfNotEmptyException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

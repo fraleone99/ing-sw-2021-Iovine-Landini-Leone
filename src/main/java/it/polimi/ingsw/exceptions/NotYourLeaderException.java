@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class NotYourLeaderException extends Exception {
-    NotYourLeaderException(){
+    public NotYourLeaderException(){
         super("The chosen leader is not in your possession!");
     }
 }

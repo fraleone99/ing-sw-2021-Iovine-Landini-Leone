@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NotExistingSpaceException;
+
 import java.util.ArrayList;
 
 /**

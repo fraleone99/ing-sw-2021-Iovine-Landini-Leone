@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class ShelfNotEmptyException extends Exception {
-    ShelfNotEmptyException(){
+    public ShelfNotEmptyException(){
         super("The Shelf is not empty!");
     }
 }

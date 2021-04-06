@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.*;
+
 import java.util.ArrayList;
 
 
@@ -152,6 +154,11 @@ public class Storage {
         if(shelf == null) return needed.getAmount();
         else if(shelf.getAmount() > needed.getAmount()) return 0;
         else return needed.getAmount() - shelf.getAmount();
+    }
+
+    public int getAmountShelf(int s){
+        return shelves.get(s-1).getAmount();
+
     }
 
 }
