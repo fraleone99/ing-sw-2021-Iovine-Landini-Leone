@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class InvalidColorException extends Exception {
-    InvalidColorException(){
+    public InvalidColorException(){
             super("The selected color is invalid!");
         }
 }

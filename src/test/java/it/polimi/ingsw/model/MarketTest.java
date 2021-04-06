@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;

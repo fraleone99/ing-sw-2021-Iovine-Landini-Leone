@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class InvalidChoiceException extends Exception {
-    InvalidChoiceException(){
+    public InvalidChoiceException(){
         super("The selected choice is invalid!");
     }
 }

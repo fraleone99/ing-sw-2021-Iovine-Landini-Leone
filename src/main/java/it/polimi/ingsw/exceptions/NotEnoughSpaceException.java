@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.exceptions;
 
 public class NotEnoughSpaceException extends Exception {
-    NotEnoughSpaceException(){
+    public NotEnoughSpaceException(){
         super("There is not enough space!");
     }
 }

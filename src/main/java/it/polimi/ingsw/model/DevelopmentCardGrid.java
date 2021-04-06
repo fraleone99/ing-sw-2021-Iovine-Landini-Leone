@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+
 import java.util.ArrayList;
 
 /**
@@ -15,7 +17,48 @@ public class DevelopmentCardGrid {
 
 
     public DevelopmentCardGrid() {
+        initializeDevCards();
+    }
 
+    public void ShufflesAllDecks(){
+        for(DevelopmentCardDeck d: devCardsDecks){
+            d.shuffle();
+        }
+    }
+
+    public void removeCard(CardColor color, int level) throws InvalidChoiceException{
+        if (color.equals(CardColor.PURPLE)) {
+            devCardsDecks.get(level - 1).draw();
+        }
+        else if (color.equals(CardColor.YELLOW)) {
+            devCardsDecks.get(level + 2).draw();
+        }
+        else if (color.equals(CardColor.BLUE)) {
+            devCardsDecks.get(level + 5).draw();
+        }
+        else if (color.equals(CardColor.GREEN)) {
+            devCardsDecks.get(level + 8).draw();
+        }
+        else throw new InvalidChoiceException();
+    }
+
+    public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
+        if (color.equals(CardColor.PURPLE)) {
+            return devCardsDecks.get(level - 1).get();
+        }
+        else if (color.equals(CardColor.YELLOW)) {
+            return devCardsDecks.get(level + 2).get();
+        }
+        else if (color.equals(CardColor.BLUE)) {
+            return devCardsDecks.get(level + 5).get();
+        }
+        else if (color.equals(CardColor.GREEN)) {
+            return devCardsDecks.get(level + 8).get();
+        }
+        else throw new InvalidChoiceException();
+    }
+
+    public void initializeDevCards(){
         //PURPLE
         //Level 1
         DevelopmentCardDeck PurpleOne = new DevelopmentCardDeck();
@@ -582,43 +625,5 @@ public class DevelopmentCardGrid {
         devCard=new DevelopmentCard(12, CardColor.GREEN, 3, cost, production, 0);
         GreenThree.add(devCard);
         devCardsDecks.add(GreenThree);
-    }
-
-    public void ShufflesAllDecks(){
-        for(DevelopmentCardDeck d: devCardsDecks){
-            d.shuffle();
-        }
-    }
-
-    public void removeCard(CardColor color, int level) throws InvalidChoiceException{
-        if (color.equals(CardColor.PURPLE)) {
-            devCardsDecks.get(level - 1).draw();
-        }
-        else if (color.equals(CardColor.YELLOW)) {
-            devCardsDecks.get(level + 2).draw();
-        }
-        else if (color.equals(CardColor.BLUE)) {
-            devCardsDecks.get(level + 5).draw();
-        }
-        else if (color.equals(CardColor.GREEN)) {
-            devCardsDecks.get(level + 8).draw();
-        }
-        else throw new InvalidChoiceException();
-    }
-
-    public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
-        if (color.equals(CardColor.PURPLE)) {
-            return devCardsDecks.get(level - 1).get();
-        }
-        else if (color.equals(CardColor.YELLOW)) {
-            return devCardsDecks.get(level + 2).get();
-        }
-        else if (color.equals(CardColor.BLUE)) {
-            return devCardsDecks.get(level + 5).get();
-        }
-        else if (color.equals(CardColor.GREEN)) {
-            return devCardsDecks.get(level + 8).get();
-        }
-        else throw new InvalidChoiceException();
     }
 }
