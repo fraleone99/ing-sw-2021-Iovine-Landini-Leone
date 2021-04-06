@@ -1,5 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.exceptions.InvalidSpaceCardExeption;
+import it.polimi.ingsw.exceptions.NotEnoughResourceException;
+import it.polimi.ingsw.exceptions.NotExistingPlayerException;
+
+import javax.print.attribute.standard.PrinterURI;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +23,31 @@ public class Game {
 
     public Game() {
         players = new ArrayList<> ();
+        initializeLeaderCards();
+    }
 
+    public void createNewPlayer(String nickname){
+        Player NewPlayer = new Player(nickname);
+        players.add(NewPlayer);
+    }
+
+    public Player getPlayer(String nickname) throws NotExistingPlayerException{
+        for (Player p:players) {
+            if(p.getNickname().equals(nickname))
+                return  p;
+        }
+        throw  new NotExistingPlayerException();
+    }
+
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player player){
+        this.currentPlayer = player;
+    }
+
+    public void initializeLeaderCards(){
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
@@ -83,43 +113,52 @@ public class Game {
         leader=new EconomyLeader(2,Resource.COIN,req1,req2);
         LeaderDeck.add(leader);
 
+
+        ArrayList<Goods> input = new ArrayList<>();
+        Goods g1 = new Goods(Resource.SERVANT,1);
+        input.add(g1);
+        ArrayList<Goods> output = new ArrayList<>();
+        Goods g2 = new Goods(Resource.UNKNOWN,1);
+        output.add(g2);
+        Production production = new Production(input,output);
         req1=new Requirements(CardColor.BLUE,2,1, cost);
-        leader=new ProductionLeader(4,Resource.SERVANT,Resource.UNKNOWN,req1);
+        leader=new ProductionLeader(4,production,req1);
         LeaderDeck.add(leader);
 
+        input = new ArrayList<>();
+        g1 = new Goods(Resource.SHIELD,1);
+        input.add(g1);
+        output = new ArrayList<>();
+        g2 = new Goods(Resource.UNKNOWN,1);
+        output.add(g2);
+        production = new Production(input,output);
         req1=new Requirements(CardColor.YELLOW,2,1, cost);
-        leader=new ProductionLeader(4,Resource.SHIELD,Resource.UNKNOWN,req1);
+        leader=new ProductionLeader(4,production,req1);
         LeaderDeck.add(leader);
 
+        input = new ArrayList<>();
+        g1 = new Goods(Resource.COIN,1);
+        input.add(g1);
+        output = new ArrayList<>();
+        g2 = new Goods(Resource.UNKNOWN,1);
+        output.add(g2);
+        production = new Production(input,output);
         req1=new Requirements(CardColor.GREEN,2,1, cost);
-        leader=new ProductionLeader(4,Resource.COIN,Resource.UNKNOWN,req1);
+        leader=new ProductionLeader(4,production,req1);
         LeaderDeck.add(leader);
 
+        input = new ArrayList<>();
+        g1 = new Goods(Resource.STONE,1);
+        input.add(g1);
+        output = new ArrayList<>();
+        g2 = new Goods(Resource.UNKNOWN,1);
+        output.add(g2);
+        production = new Production(input,output);
         req1=new Requirements(CardColor.PURPLE,2,1, cost);
-        leader=new ProductionLeader(4,Resource.STONE,Resource.UNKNOWN,req1);
+        leader=new ProductionLeader(4,production,req1);
         LeaderDeck.add(leader);
     }
 
-    public void createNewPlayer(String nickname){
-        Player NewPlayer = new Player(nickname);
-        players.add(NewPlayer);
-    }
-
-    public Player getPlayer(String nickname) throws NotExistingPlayerException{
-        for (Player p:players) {
-            if(p.getNickname().equals(nickname))
-                return  p;
-        }
-        throw  new NotExistingPlayerException();
-    }
-
-    public Player getCurrentPlayer(){
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(){
-        //TODO
-    }
 
     public void choiceDevCard(CardColor color, int level, int space) throws InvalidChoiceException, InvalidSpaceCardExeption, NotEnoughResourceException {
         ArrayList<Goods> cost=new ArrayList<>();

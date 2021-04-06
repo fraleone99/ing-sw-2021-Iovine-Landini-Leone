@@ -12,24 +12,26 @@ import java.util.ArrayList;
  */
 
 public class ProductionLeader extends LeaderCard{
-    private final Resource inputProduction;
-    private final Resource outputProduction;
+    private Production production;
+
     private final ArrayList<Requirements> requirements = new ArrayList<>();
 
-    public ProductionLeader(int VictoryPoints, Resource Input, Resource Output, Requirements req) {
+
+    public ProductionLeader(int VictoryPoints, Production production, Requirements req) {
         super(VictoryPoints);
-        this.inputProduction = Input;
-        this.outputProduction = Output;
         requirements.add(req);
+        this.production = production;
     }
 
-    public Resource getInputProduction(){
-        return inputProduction;
+    public ArrayList<Goods> getInputProduction(){
+        return production.getInputProduction();
     }
+    public ArrayList<Goods> getOutputProduction(){
+        return production.getOutputProduction();
+    }
+    public Production getProduction(){  return production;}
 
-    public ArrayList<Requirements> getRequirements(){
-        return requirements;
-    }
+    public ArrayList<Requirements> getRequirements(){ return requirements; }
 
     public boolean checkRequirements(PlayerDashboard playerDashboard){
         return playerDashboard.getDevCardsSpace().checkSpace(requirements.get(0).getColor(), requirements.get(0).getLevel()) >= 2;

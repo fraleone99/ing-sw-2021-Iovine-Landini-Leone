@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.exceptions.NotEnoughSpaceException;
+import it.polimi.ingsw.exceptions.ShelfHasDifferentTypeException;
+
 /**
  * The storage leader is a subclass of Leader Card.
  * This leader offers a shelf of 2 spaces
