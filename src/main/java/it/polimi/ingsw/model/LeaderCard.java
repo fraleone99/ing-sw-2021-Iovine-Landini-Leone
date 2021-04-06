@@ -35,15 +35,8 @@ public abstract class LeaderCard extends Card{
         return isActive;
     }
 
-    public ArrayList<Requirements> getRequirements() {
-        return getRequirements();
-    }
+    public abstract ArrayList<Requirements> getRequirements();
 
-    public boolean checkRequirements(PlayerDashboard playerDashboard){
-        return checkRequirements(playerDashboard);
-    }
+    public abstract boolean checkRequirements(PlayerDashboard playerDashboard);
 
-    public boolean checkRequirements(DevCardsSpace space){
-        return checkRequirements(space);
-    }
 }

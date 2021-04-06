@@ -23,7 +23,7 @@ public class Player {
     }
 
     public LeaderCardDeck getLeaders(){
-        return getLeaders();
+        return playerDashboard.getLeaders();
     }
 
     public Player(String nickname) {
@@ -67,7 +67,7 @@ public class Player {
             }
         }
         else{
-            if(leader.checkRequirements(playerDashboard.getDevCardsSpace()) && !leader.getIsDiscarded()){
+            if(leader.checkRequirements(playerDashboard) && !leader.getIsDiscarded()){
                 leader.setIsActive();
             }
         }
