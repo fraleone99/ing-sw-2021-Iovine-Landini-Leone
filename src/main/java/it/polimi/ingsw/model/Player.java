@@ -63,17 +63,20 @@ public class Player {
 
     }
 
-    public void ActiveLeader(LeaderCard leader){
-        if(leader instanceof StorageLeader){
-            if(leader.checkRequirements(playerDashboard) && !leader.getIsDiscarded()){
-                leader.setIsActive();
+    public void ActiveLeader(int pos) throws InvalidChoiceException{
+        if(playerDashboard.getLeaders().size()>=pos && !playerDashboard.getLeaders().get(pos).getIsDiscarded()) {
+            if (playerDashboard.getLeaders().get(pos) instanceof StorageLeader) {
+                if (playerDashboard.getLeaders().get(pos).checkRequirements(playerDashboard)) {
+                    playerDashboard.getLeaders().get(pos).setIsActive();
+                    playerDashboard.RemoveResource(playerDashboard.getLeaders().get(pos).getRequirements().get(0).getCost());
+                }
+            } else {
+                if (playerDashboard.getLeaders().get(pos).checkRequirements(playerDashboard)) {
+                    playerDashboard.getLeaders().get(pos).setIsActive();
+                }
             }
         }
-        else{
-            if(leader.checkRequirements(playerDashboard) && !leader.getIsDiscarded()){
-                leader.setIsActive();
-            }
-        }
+        else throw new InvalidChoiceException();
     }
 
     public void DiscardLeader(int pos) throws InvalidChoiceException {
@@ -87,7 +90,7 @@ public class Player {
         return nickname;
     }
 
-   public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
+   /*public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
         if(playerDashboard.getLeaders().get(pos- 1) instanceof ProductionLeader){
             if(playerDashboard.CheckResource(((ProductionLeader) playerDashboard.getLeaders().get(pos- 1)).getInputProduction()))
                 activatedProduction.add(((ProductionLeader) playerDashboard.getLeaders().get(pos-1)).getProduction());
@@ -95,7 +98,7 @@ public class Player {
         }
         else
             throw new InvalidChoiceException();
-    }
+    }*/
 
     public void ActiveProductionBase() throws NotEnoughResourceException {
         if(playerDashboard.CheckResource(playerDashboard.getDevCardsSpace().getBasicProduction().getInputProduction()))

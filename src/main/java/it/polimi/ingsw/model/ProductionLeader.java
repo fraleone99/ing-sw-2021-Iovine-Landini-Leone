@@ -34,6 +34,6 @@ public class ProductionLeader extends LeaderCard{
     public ArrayList<Requirements> getRequirements(){ return requirements; }
 
     public boolean checkRequirements(PlayerDashboard playerDashboard){
-        return playerDashboard.getDevCardsSpace().checkSpace(requirements.get(0).getColor(), requirements.get(0).getLevel()) >= 2;
+        return playerDashboard.getDevCardsSpace().checkSpace(requirements.get(0).getColor(), requirements.get(0).getLevel()) >= 1;
     }
 }

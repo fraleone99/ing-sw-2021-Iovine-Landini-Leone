@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NotEnoughSpaceException;
+import it.polimi.ingsw.exceptions.ShelfHasDifferentTypeException;
+
 import java.util.ArrayList;
 
 import it.polimi.ingsw.exceptions.NotEnoughSpaceException;
@@ -23,13 +26,6 @@ public class StorageLeader extends LeaderCard{
         this.LeaderShelf=s;
     }
 
-    /*
-    public void DiscardResources(int amount) throws NotEnoughResourceException {
-        if(LeaderShelf.getAmount() >= amount){
-            LeaderShelf.discardResource(amount);
-        }
-        else throw new NotEnoughResourceException();
-    }*/
     public int DiscardResources(int amount) {
         if(LeaderShelf.getAmount() >= amount){
             LeaderShelf.discardResource(amount);
@@ -41,7 +37,6 @@ public class StorageLeader extends LeaderCard{
             return  amount - temp;
         }
     }
-
 
     public void AddResources(Resource type, int amount) throws NotEnoughSpaceException, ShelfHasDifferentTypeException {
 

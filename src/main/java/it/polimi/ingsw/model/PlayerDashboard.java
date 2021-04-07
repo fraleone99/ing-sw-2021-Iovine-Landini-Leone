@@ -63,7 +63,7 @@ public class PlayerDashboard {
         }
 
         //StorageLeader check
-        for(int i = 0; i <= 1; i++) {
+        for(int i = 0; i < leaders.size(); i++) {
             if (leaders.get(i) instanceof StorageLeader && leaders.get(i).getIsActive()) {
                 for (Goods g1 : neededClone) {
                     if (g1.getType().equals(((StorageLeader) leaders.get(i)).getType())) {
@@ -112,7 +112,7 @@ public class PlayerDashboard {
         }
 
         //StorageLeader remove
-        for(int i = 0; i <= 1; i++) {
+        for(int i = 0; i < leaders.size(); i++) {
             if (leaders.get(i) instanceof StorageLeader && leaders.get(i).getIsActive()) {
                 Resource type = ((StorageLeader) leaders.get(i)).getType();
                 int remaining = ((StorageLeader) leaders.get(i)).DiscardResources(ResToRemove.get(type));
