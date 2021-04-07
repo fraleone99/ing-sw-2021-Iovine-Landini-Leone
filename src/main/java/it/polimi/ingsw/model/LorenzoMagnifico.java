@@ -30,16 +30,17 @@ public class LorenzoMagnifico{
         tokens.add(temp);
     }
 
-
-    public void shuffle() {
+    public void shuffle(){
         Collections.shuffle(tokens);
     }
 
     //this method allow the player to draw a token and put it in the last position of the ArrayList
     public ActionToken draw() {
-        ActionToken temp;
-        temp=tokens.get(0);
-        tokens.add(tokens.get(0));
-        return temp;
+        ActionToken element;
+        // remove last element, add it to front of the ArrayList
+        element = tokens.remove(0);
+        tokens.add(tokens.size()-1, element);
+
+        return element;
     }
 }

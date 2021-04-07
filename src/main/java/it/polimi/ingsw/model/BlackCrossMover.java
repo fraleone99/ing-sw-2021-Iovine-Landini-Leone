@@ -18,4 +18,7 @@ public class BlackCrossMover extends ActionToken {
         return shuffle;
     }
 
+    public void moveForwardLorenzo(int move){
+
+    }
 }

@@ -13,9 +13,7 @@ import java.util.Collections;
 
 public class DevelopmentCardDeck implements Deck {
 
-
     private ArrayList<DevelopmentCard> deck = new ArrayList<>();
-
 
     /**
      * {@inheritDoc}

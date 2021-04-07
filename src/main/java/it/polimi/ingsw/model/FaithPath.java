@@ -12,13 +12,18 @@ import java.util.ArrayList;
 
 public class FaithPath {
     private ArrayList<Cell> Space;
-    private int positionFaithPath;
+    private int positionFaithPath=0;
+    private int positionLorenzo=0;
     private boolean papalPawn1;
     private boolean papalPawn2;
     private boolean papalPawn3;
 
     public void moveForward(int move){
         positionFaithPath = positionFaithPath+move;
+    }
+
+    public void moveForwardBCM(int move){
+        positionLorenzo = positionLorenzo+move;
     }
 
     //spaceIndicator indicates which papal space

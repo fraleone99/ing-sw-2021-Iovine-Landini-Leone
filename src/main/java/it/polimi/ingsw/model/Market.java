@@ -14,7 +14,6 @@ import java.util.Arrays;
 //Tested Class
 
 public class Market {
-
     private Ball[][] matrix = new Ball[3][4];
     private Ball ramp;
     private ArrayList<Ball>randomBall=new ArrayList<>();
@@ -65,6 +64,13 @@ public class Market {
         return randomBall;
     }
 
+    public Ball[][] getMatrix() {
+        return matrix;
+    }
+
+    public Ball getRamp() {
+        return ramp;
+    }
 
     public void fillMatrix(ArrayList<Ball>randomBall){
         int cont=13;
@@ -72,12 +78,12 @@ public class Market {
         for(int i=0; i<3; i++) {
             for(int j=0; j<4; j++) {
                 int num=(int)(Math.random()*cont); //casual number from 1 to cont
-                matrix[i][j]=randomBall.get(num);
+                matrix[i][j]=new Ball(randomBall.get(num));
                 cont--;
                 randomBall.remove(num);
             }
         }
-        ramp=randomBall.get(0);
+        ramp=new Ball(randomBall.get(0));
         randomBall.clear();
     }
 

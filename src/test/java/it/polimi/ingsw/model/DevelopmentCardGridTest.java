@@ -13,6 +13,11 @@ public class DevelopmentCardGridTest extends TestCase {
 
     public void testRemoveCard() throws InvalidChoiceException {
         devCardGrid.removeCard(CardColor.GREEN, 3);
+        devCardGrid.removeCard(CardColor.GREEN, 3);
+        devCardGrid.removeCard(CardColor.GREEN, 3);
+        devCardGrid.removeCard(CardColor.GREEN, 3);
+
+        assert(devCardGrid.getDevCardsDecks().get(11).isEmpty());
     }
 
     public void testGetCard() throws InvalidChoiceException {

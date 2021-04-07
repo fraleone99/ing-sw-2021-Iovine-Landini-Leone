@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 
+import javax.swing.text.DefaultEditorKit;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +16,9 @@ import java.util.ArrayList;
 public class DevelopmentCardGrid {
     private ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
 
+    public ArrayList<DevelopmentCardDeck> getDevCardsDecks() {
+        return devCardsDecks;
+    }
 
     public DevelopmentCardGrid() {
         initializeDevCards();
@@ -26,36 +30,38 @@ public class DevelopmentCardGrid {
         }
     }
 
+    public DevelopmentCardDeck getDeck(CardColor color, int level) throws InvalidChoiceException {
+        switch (color){
+            case PURPLE: switch (level){
+                case 1: return devCardsDecks.get(0);
+                case 2: return devCardsDecks.get(1);
+                case 3: return devCardsDecks.get(2);
+            }
+            case YELLOW: switch (level){
+                case 1: return devCardsDecks.get(3);
+                case 2: return devCardsDecks.get(4);
+                case 3: return devCardsDecks.get(5);
+            }
+            case BLUE: switch (level){
+                case 1: return devCardsDecks.get(6);
+                case 2: return devCardsDecks.get(7);
+                case 3: return devCardsDecks.get(8);
+            }
+            case GREEN: switch (level){
+                case 1: return devCardsDecks.get(9);
+                case 2: return devCardsDecks.get(10);
+                case 3: return devCardsDecks.get(11);
+            }
+            default: throw new InvalidChoiceException();
+        }
+    }
+
     public void removeCard(CardColor color, int level) throws InvalidChoiceException{
-        if (color.equals(CardColor.PURPLE)) {
-            devCardsDecks.get(level - 1).draw();
-        }
-        else if (color.equals(CardColor.YELLOW)) {
-            devCardsDecks.get(level + 2).draw();
-        }
-        else if (color.equals(CardColor.BLUE)) {
-            devCardsDecks.get(level + 5).draw();
-        }
-        else if (color.equals(CardColor.GREEN)) {
-            devCardsDecks.get(level + 8).draw();
-        }
-        else throw new InvalidChoiceException();
+        getDeck(color, level).draw();
     }
 
     public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
-        if (color.equals(CardColor.PURPLE)) {
-            return devCardsDecks.get(level - 1).get();
-        }
-        else if (color.equals(CardColor.YELLOW)) {
-            return devCardsDecks.get(level + 2).get();
-        }
-        else if (color.equals(CardColor.BLUE)) {
-            return devCardsDecks.get(level + 5).get();
-        }
-        else if (color.equals(CardColor.GREEN)) {
-            return devCardsDecks.get(level + 8).get();
-        }
-        else throw new InvalidChoiceException();
+        return getDeck(color, level).get();
     }
 
     public void initializeDevCards(){

@@ -14,6 +14,10 @@ public class Ball {
         this.type = type;
     }
 
+    public Ball(Ball ball){
+        this.type=ball.getType();
+    }
+
 
     public boolean increaseResources(){
         return !type.equals(BallColor.WHITE);

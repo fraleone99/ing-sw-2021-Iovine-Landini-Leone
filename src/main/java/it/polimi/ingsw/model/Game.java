@@ -5,7 +5,6 @@ import it.polimi.ingsw.exceptions.InvalidSpaceCardExeption;
 import it.polimi.ingsw.exceptions.NotEnoughResourceException;
 import it.polimi.ingsw.exceptions.NotExistingPlayerException;
 
-import javax.print.attribute.standard.PrinterURI;
 import java.util.ArrayList;
 
 /**
