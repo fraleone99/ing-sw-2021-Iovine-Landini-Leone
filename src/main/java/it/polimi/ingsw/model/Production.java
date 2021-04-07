@@ -23,7 +23,7 @@ public class Production {
     }
 
     public void setOutputProduction(Goods output){
-        outputProduction.add(output);
+        outputProduction.set(0, output);
     }
 
 

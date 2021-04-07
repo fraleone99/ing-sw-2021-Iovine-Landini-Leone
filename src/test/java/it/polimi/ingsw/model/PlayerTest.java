@@ -16,7 +16,36 @@ public class PlayerTest {
     }
 
     @Test
-    public void ProductionLeader() {
+    public void ProductionLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+        player.getPlayerDashboard().getStorage().AddResource(1,Resource.STONE,1);
+        player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,1);
+        player.getPlayerDashboard().getVault().AddResource(Resource.STONE,1);
+        player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,1);
+        player.getPlayerDashboard().getVault().AddResource(Resource.COIN,2);
+
+        Goods cost = new Goods(Resource.SERVANT, 0);
+        ArrayList<Goods> input = new ArrayList<>();
+        Goods g1 = new Goods(Resource.STONE,1);
+        input.add(g1);
+        ArrayList<Goods> output = new ArrayList<>();
+        Goods g2 = new Goods(Resource.UNKNOWN,1);
+        output.add(g2);
+        Production production = new Production(input,output);
+        Requirements req1=new Requirements(CardColor.PURPLE,2,1, cost);
+        LeaderCard leader=new ProductionLeader(4,production,req1);
+
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        if(player.getPlayerDashboard().getLeaders().get(0) instanceof ProductionLeader)
+            ((ProductionLeader) player.getPlayerDashboard().getLeaders().get(0)).setOutputProduction(Resource.COIN);
+        else
+            fail();
+
+        player.ActiveProductionLeader(1);
+        player.doProduction();
+
+        assertEquals(player.getPlayerDashboard().getStorage().getAmountShelf(1),0);
+        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.COIN), 3);
 
     }
 
@@ -41,7 +70,9 @@ public class PlayerTest {
     }
 
     @Test
-    public void testActiveLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, InvalidSpaceCardExeption, InvalidChoiceException {
+    public void testActiveLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException,
+            NotEnoughSpaceException, InvalidSpaceCardExeption, InvalidChoiceException {
+
         player.getPlayerDashboard().getStorage().AddResource(3,Resource.SHIELD,3);
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,4);
         player.getPlayerDashboard().getVault().AddResource(Resource.COIN,1);

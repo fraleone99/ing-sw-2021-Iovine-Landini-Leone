@@ -7,12 +7,11 @@ import java.util.Map;
 
 public class PlayerDashboard {
 
-    private String playerName;
-    private FaithPath faithPath;
-    private Storage storage;
-    private Vault vault;
-    private DevCardsSpace devCardsSpace;
-    private LeaderCardDeck leaders;
+    private final FaithPath faithPath;
+    private final Storage storage;
+    private final Vault vault;
+    private final DevCardsSpace devCardsSpace;
+    private final LeaderCardDeck leaders;
 
     public DevCardsSpace getDevCardsSpace() {
         return devCardsSpace;
@@ -27,7 +26,7 @@ public class PlayerDashboard {
     }
 
     public PlayerDashboard(String playerName) {
-        this.playerName = playerName;
+
         faithPath = new FaithPath();
         vault = new Vault();
         devCardsSpace = new DevCardsSpace();

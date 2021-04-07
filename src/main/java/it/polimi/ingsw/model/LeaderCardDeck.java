@@ -57,7 +57,7 @@ public class LeaderCardDeck {
     }
 
     public void DrawFromPosition(int position) throws InvalidChoiceException {
-        if( position <= deck.size()-1 ) {
+        if(position < deck.size()) {
             deck.remove(position);
         } else
             throw new InvalidChoiceException();
