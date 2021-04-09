@@ -1,0 +1,98 @@
+[
+  {
+    "VictoryPoints": 2,
+    "discountType": "SHIELD",
+    "requirements": [
+      {
+        "color": "BLUE",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      },
+      {
+        "color": "PURPLE",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 2,
+    "discountType": "STONE",
+    "requirements": [
+      {
+        "color": "GREEN",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      },
+      {
+        "color": "BLUE",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 2,
+    "discountType": "SERVANT",
+    "requirements": [
+      {
+        "color": "YELLOW",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      },
+      {
+        "color": "GREEN",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 2,
+    "discountType": "COIN",
+    "requirements": [
+      {
+        "color": "YELLOW",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      },
+      {
+        "color": "PURPLE",
+        "level": 0,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  }
+]

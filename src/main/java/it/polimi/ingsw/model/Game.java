@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.exceptions.InvalidSpaceCardExeption;
+import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
 import it.polimi.ingsw.exceptions.NotEnoughResourceException;
 import it.polimi.ingsw.exceptions.NotExistingPlayerException;
+import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
+import it.polimi.ingsw.model.enumeration.CardColor;
+import it.polimi.ingsw.model.gameboard.GameBoard;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
 
 import java.util.ArrayList;
 
@@ -21,6 +25,10 @@ public class Game {
 
     public Game() {
         players = new ArrayList<> ();
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public void createNewPlayer(String nickname){
@@ -44,7 +52,7 @@ public class Game {
         this.currentPlayer = player;
     }
 
-    public void choiceDevCard(CardColor color, int level, int space) throws InvalidChoiceException, InvalidSpaceCardExeption, NotEnoughResourceException {
+    public void choiceDevCard(CardColor color, int level, int space) throws InvalidChoiceException, InvalidSpaceCardException, NotEnoughResourceException {
         ArrayList<Goods> cost=new ArrayList<>();
         Shelf shelf;
         /*cost=gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost();*/
