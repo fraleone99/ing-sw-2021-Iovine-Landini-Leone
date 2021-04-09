@@ -1,6 +1,12 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.card.leadercard.*;
+import it.polimi.ingsw.model.enumeration.CardColor;
+import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +19,66 @@ public class PlayerTest {
 
     @Before public void initialize(){
         player = new Player("TestPlayer");
+    }
+
+    @Test
+    public void buyCard() throws InvalidSpaceCardException, InvalidChoiceException {
+        ArrayList<Goods> input=new ArrayList<>();
+        ArrayList<Goods> cost=new ArrayList<>();
+        cost.add(new Goods(Resource.SERVANT, 3));
+        input.add(new Goods(Resource.COIN, 2));
+        ArrayList<Goods> output=new ArrayList<>();
+        output.add(new Goods(Resource.SERVANT,1));
+        output.add(new Goods(Resource.SHIELD,1));
+        output.add(new Goods(Resource.STONE,1));
+        Production production=new Production(input, output);
+        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 3);
+
+        player.buyCard(devCard,2);
+
+        assertEquals(player.getPlayerDashboard().getDevCardsSpace().getCard(2).getLevel(),1);
+        assertEquals(player.getPlayerDashboard().getDevCardsSpace().getCard(2).getFaithSteps(),3);
+    }
+
+    @Test(expected = InvalidSpaceCardException.class)
+    public void buyCard_InvalidSpace() throws InvalidSpaceCardException{
+        ArrayList<Goods> input=new ArrayList<>();
+        ArrayList<Goods> cost=new ArrayList<>();
+        cost.add(new Goods(Resource.SERVANT, 3));
+        input.add(new Goods(Resource.COIN, 2));
+        ArrayList<Goods> output=new ArrayList<>();
+        output.add(new Goods(Resource.SERVANT,1));
+        output.add(new Goods(Resource.SHIELD,1));
+        output.add(new Goods(Resource.STONE,1));
+        Production production=new Production(input, output);
+        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 3);
+
+        player.buyCard(devCard,5);
+    }
+
+    @Test(expected=NotEnoughResourceException.class)
+    public void ProductionLeader_NotEnoughResource() throws NotEnoughResourceException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, InvalidChoiceException {
+        player.getPlayerDashboard().getStorage().AddResource(1,Resource.SHIELD,1);
+        player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,1);
+        player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,1);
+        player.getPlayerDashboard().getVault().AddResource(Resource.COIN,2);
+
+        Goods cost = new Goods(Resource.SERVANT, 0);
+        ArrayList<Goods> input = new ArrayList<>();
+        Goods g1 = new Goods(Resource.STONE,1);
+        input.add(g1);
+        ArrayList<Goods> output = new ArrayList<>();
+        Goods g2 = new Goods(Resource.UNKNOWN,1);
+        output.add(g2);
+        Production production = new Production(input,output);
+        Requirements req1=new Requirements(CardColor.PURPLE,2,1, cost);
+        LeaderCard leader=new ProductionLeader(4,production,req1);
+
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        ((ProductionLeader) player.getPlayerDashboard().getLeaders().get(0)).setOutputProduction(Resource.COIN);
+
+        player.ActiveProductionLeader(1);
     }
 
     @Test
@@ -69,9 +135,20 @@ public class PlayerTest {
         assert(player.getPlayerDashboard().getLeaders().get(1).getIsDiscarded());
     }
 
+    @Test(expected = InvalidChoiceException.class)
+    public void testDiscardLeader_InvalidChoice() throws InvalidChoiceException {
+        Shelf shelf=new Shelf(2,0,Resource.COIN);
+        Goods cost=new Goods(Resource.SHIELD,5);
+        Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        LeaderCard leader=new StorageLeader(3,req1,shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        player.DiscardLeader(2);
+    }
+
     @Test
     public void testActiveLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException,
-            NotEnoughSpaceException, InvalidSpaceCardExeption, InvalidChoiceException {
+            NotEnoughSpaceException, InvalidSpaceCardException, InvalidChoiceException {
 
         player.getPlayerDashboard().getStorage().AddResource(3,Resource.SHIELD,3);
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,4);
@@ -189,7 +266,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void ProductionDevCard() throws InvalidSpaceCardExeption, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+    public void ProductionDevCard() throws InvalidSpaceCardException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));

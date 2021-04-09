@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.Resource;
+
 /**
  * This class is used to describe the cost, input
  * and output of development cards.

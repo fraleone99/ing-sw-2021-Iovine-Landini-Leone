@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.model.enumeration.CardColor;
+import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
+import it.polimi.ingsw.model.singleplayer.DeleteCard;
 import junit.framework.TestCase;
 
 public class DeleteCardTest extends TestCase {

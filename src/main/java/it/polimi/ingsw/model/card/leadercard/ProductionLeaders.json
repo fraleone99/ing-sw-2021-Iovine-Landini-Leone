@@ -1,0 +1,114 @@
+[
+  {
+    "VictoryPoints": 4,
+    "production": {
+        "inputProduction": [
+          {
+            "type": "SERVANT",
+            "amount": 1
+          }
+        ],
+        "outputProduction": [
+          {
+            "type": "UNKNOWN",
+            "amount": 1
+          }
+        ]
+    },
+    "requirements": [
+      {
+        "color": "BLUE",
+        "level": 2,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 4,
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "UNKNOWN",
+          "amount": 1
+        }
+      ]
+    },
+    "requirements": [
+      {
+        "color": "YELLOW",
+        "level": 2,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 4,
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "UNKNOWN",
+          "amount": 1
+        }
+      ]
+    },
+    "requirements": [
+      {
+        "color": "GREEN",
+        "level": 2,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 4,
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "UNKNOWN",
+          "amount": 1
+        }
+      ]
+    },
+    "requirements": [
+      {
+        "color": "PURPLE",
+        "level": 2,
+        "amount": 1,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 0
+        }
+      }
+    ]
+  }
+]

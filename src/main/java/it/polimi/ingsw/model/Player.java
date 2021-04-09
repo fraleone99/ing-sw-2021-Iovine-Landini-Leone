@@ -1,8 +1,16 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.exceptions.InvalidSpaceCardExeption;
+import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
 import it.polimi.ingsw.exceptions.NotEnoughResourceException;
+import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
+import it.polimi.ingsw.model.card.leadercard.StorageLeader;
+import it.polimi.ingsw.model.enumeration.BallColor;
+import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
+import it.polimi.ingsw.model.gameboard.playerdashboard.PlayerDashboard;
 
 import java.util.ArrayList;
 
@@ -43,7 +51,7 @@ public class Player {
         playerDashboard.getLeaders().DrawFromPosition(pos2);
     }
 
-    public void buyCard(DevelopmentCard Card, int space) throws InvalidSpaceCardExeption {
+    public void buyCard(DevelopmentCard Card, int space) throws InvalidSpaceCardException {
         playerDashboard.getDevCardsSpace().AddCard(Card, space);
     }
 
@@ -64,7 +72,7 @@ public class Player {
     }
 
     public void ActiveLeader(int pos) throws InvalidChoiceException{
-        if(playerDashboard.getLeaders().size()>=pos && !playerDashboard.getLeaders().get(pos).getIsDiscarded()) {
+        if(playerDashboard.getLeaders().size()>=pos && pos>=0 && !playerDashboard.getLeaders().get(pos).getIsDiscarded()) {
             if (playerDashboard.getLeaders().get(pos) instanceof StorageLeader) {
                 if (playerDashboard.getLeaders().get(pos).checkRequirements(playerDashboard)) {
                     playerDashboard.getLeaders().get(pos).setIsActive();
@@ -80,9 +88,11 @@ public class Player {
     }
 
     public void DiscardLeader(int pos) throws InvalidChoiceException {
-        playerDashboard.getLeaders().DrawFromPosition(pos);
-        playerDashboard.getLeaders().get(pos).setIsDiscarded();
-        playerDashboard.getFaithPath().moveForward(1);
+        //playerDashboard.getLeaders().DrawFromPosition(pos);
+        if(playerDashboard.getLeaders().size()>=pos && pos>=0 && !playerDashboard.getLeaders().get(pos).getIsActive()) {
+            playerDashboard.getLeaders().get(pos).setIsDiscarded();
+            playerDashboard.getFaithPath().moveForward(1);
+        } else throw new InvalidChoiceException();
     }
 
 

@@ -1,0 +1,86 @@
+[
+  {
+    "VictoryPoints": 3,
+    "LeaderShelf": [
+      {
+        "shelfDimension": 2,
+        "resourceType": "COIN",
+        "resourceAmount": 0
+      }
+    ],
+    "requirements": [
+      {
+        "color": "PURPLE",
+        "level": 0,
+        "amount": 0,
+        "activationCost": {
+          "type": "SHIELD",
+          "amount": 5
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 3,
+    "LeaderShelf": [
+      {
+        "shelfDimension": 2,
+        "resourceType": "STONE",
+        "resourceAmount": 0
+      }
+    ],
+    "requirements": [
+      {
+        "color": "PURPLE",
+        "level": 0,
+        "amount": 0,
+        "activationCost": {
+          "type": "COIN",
+          "amount": 5
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 3,
+    "LeaderShelf": [
+      {
+        "shelfDimension": 2,
+        "resourceType": "SERVANT",
+        "resourceAmount": 0
+      }
+    ],
+    "requirements": [
+      {
+        "color": "PURPLE",
+        "level": 0,
+        "amount": 0,
+        "activationCost": {
+          "type": "STONE",
+          "amount": 5
+        }
+      }
+    ]
+  },
+  {
+    "VictoryPoints": 3,
+    "LeaderShelf": [
+      {
+        "shelfDimension": 2,
+        "resourceType": "SHIELD",
+        "resourceAmount": 0
+      }
+    ],
+    "requirements": [
+      {
+        "color": "PURPLE",
+        "level": 0,
+        "amount": 0,
+        "activationCost": {
+          "type": "SERVANT",
+          "amount": 5
+        }
+      }
+    ]
+  }
+]
