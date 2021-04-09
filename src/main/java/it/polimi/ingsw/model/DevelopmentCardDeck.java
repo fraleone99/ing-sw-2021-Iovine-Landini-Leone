@@ -66,4 +66,6 @@ public class DevelopmentCardDeck implements Deck {
         }
         return ris;
     }
+
+    public int size(){ return deck.size(); }
 }

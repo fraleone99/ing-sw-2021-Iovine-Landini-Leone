@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class LorenzoMagnifico{
 
-    private ArrayList<ActionToken> tokens;
+    private ArrayList<ActionToken> tokens=new ArrayList<>();
 
     public LorenzoMagnifico(){
         ActionToken temp=new BlackCrossMover(2, false);
@@ -30,6 +30,10 @@ public class LorenzoMagnifico{
         tokens.add(temp);
     }
 
+    public ArrayList<ActionToken> getTokens(){
+        return tokens;
+    }
+
     public void shuffle(){
         Collections.shuffle(tokens);
     }
@@ -39,7 +43,7 @@ public class LorenzoMagnifico{
         ActionToken element;
         // remove last element, add it to front of the ArrayList
         element = tokens.remove(0);
-        tokens.add(tokens.size()-1, element);
+        tokens.add(element);
 
         return element;
     }

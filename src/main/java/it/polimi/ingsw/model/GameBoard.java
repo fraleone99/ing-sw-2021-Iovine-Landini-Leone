@@ -17,6 +17,7 @@ public class GameBoard {
         this.playersNumber = playersNumber;
         market = new Market();
         developmentCardGrid = new DevelopmentCardGrid();
+        lorenzoMagnifico=new LorenzoMagnifico();
 
         for(int i = 0; i<playersNumber; i++){
             playersDashboards.add(new PlayerDashboard(players.get(i).getNickname()));
