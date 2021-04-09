@@ -61,4 +61,16 @@ public class DevelopmentCard extends Card{
     public Production getProduction() {
         return production;
     }
+
+    @Override
+    public String toString() {
+        return "DevelopmentCard{" +
+                "color=" + color +
+                ", level=" + level +
+                ", cost=" + cost.toString() +
+                ", production=(" + "input->" + production.getInputProduction().toString() +
+                                    "output->" + production.getOutputProduction().toString() + ")"+
+                ", faithSteps=" + faithSteps +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,7 +14,7 @@ public class GameBoard {
     private LeaderCardDeck LeaderDeck=new LeaderCardDeck();
     private LorenzoMagnifico lorenzoMagnifico;
 
-    public GameBoard(int playersNumber, ArrayList<Player> players) {
+    public GameBoard(int playersNumber, ArrayList<Player> players) throws FileNotFoundException {
         this.playersNumber = playersNumber;
         market = new Market();
         developmentCardGrid = new DevelopmentCardGrid();

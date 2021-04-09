@@ -33,4 +33,11 @@ public class Goods{
         this.amount = g.getAmount();
     }
 
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "type=" + type +
+                ", amount=" + amount +
+                '}';
+    }
 }

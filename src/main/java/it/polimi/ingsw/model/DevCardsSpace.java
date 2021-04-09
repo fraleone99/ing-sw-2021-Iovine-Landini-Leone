@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class DevCardsSpace {
-    private ArrayList<DevelopmentCardDeck> Space = new ArrayList<>(3);
+    private final ArrayList<DevelopmentCardDeck> Space = new ArrayList<>(3);
     private final Production basicProduction;
 
     public DevCardsSpace() {

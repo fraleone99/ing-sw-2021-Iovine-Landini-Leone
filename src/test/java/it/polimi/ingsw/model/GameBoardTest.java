@@ -3,11 +3,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import junit.framework.TestCase;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GameBoardTest extends TestCase {
 
-    public void testDrawActionToken() throws InvalidChoiceException {
+    public void testDrawActionToken() throws InvalidChoiceException, FileNotFoundException {
         ArrayList<Player> players = new ArrayList<>();
         Player player1=new Player("player1");
         players.add(player1);

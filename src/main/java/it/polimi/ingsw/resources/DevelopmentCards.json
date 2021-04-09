@@ -1,0 +1,1431 @@
+[
+  {
+    "color":"PURPLE",
+    "level":1,
+    "victoryPoints": 2,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 3
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount":2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount":1
+        },
+        {
+          "type": "SHIELD",
+          "amount":1
+        },
+        {
+          "type": "STONE",
+          "amount":1
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":1,
+    "victoryPoints": 2,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 1
+      },
+      {
+        "type": "SHIELD",
+        "amount": 1
+      },
+      {
+        "type": "SERVANT",
+        "amount": 1
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ]
+    }
+  },
+  {
+    "color": "PURPLE",
+    "level": 1,
+    "victoryPoints": 4,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 2
+      },
+      {
+        "type": "SERVANT",
+        "amount": 2
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":1,
+    "victoryPoints": 1,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 2
+      }
+    ],
+  "production": {
+    "inputProduction": [
+      {
+        "type": "STONE",
+        "amount": 1
+      }
+    ],
+    "outputProduction": []
+    }
+  },
+
+  {
+    "color":"PURPLE",
+    "level":2,
+    "victoryPoints": 5,
+    "faithSteps":2,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 4
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":2,
+    "victoryPoints": 7,
+    "faithSteps":2,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 5
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":2,
+    "victoryPoints": 8,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 3
+      },
+      {
+        "type": "SERVANT",
+        "amount": 3
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":2,
+    "victoryPoints": 6,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 2
+      },
+      {
+        "type": "SERVANT",
+        "amount": 3
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 3
+        }
+      ]
+    }
+  },
+
+  {
+    "color":"PURPLE",
+    "level":3,
+    "victoryPoints": 12,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 4
+      },
+      {
+        "type": "SERVANT",
+        "amount": 4
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 3
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":3,
+    "victoryPoints": 11,
+    "faithSteps":3,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 7
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":3,
+    "victoryPoints": 10,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 5
+      },
+      {
+        "type": "COIN",
+        "amount": 2
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        },
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"PURPLE",
+    "level":3,
+    "victoryPoints": 9,
+    "faithSteps":2,
+    "cost": [
+      {
+        "type": "SERVANT",
+        "amount": 6
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 3
+        }
+      ]
+    }
+  },
+
+
+  {
+    "color":"YELLOW",
+    "level":1,
+    "victoryPoints": 1,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 2
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":1,
+    "victoryPoints": 2,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 1
+      },
+      {
+        "type": "SHIELD",
+        "amount": 1
+      },
+      {
+        "type": "STONE",
+        "amount": 1
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":1,
+    "victoryPoints": 4,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 2
+      },
+      {
+        "type": "SHIELD",
+        "amount": 2
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":1,
+    "victoryPoints": 3,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 3
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        },
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ]
+    }
+  },
+
+  {
+    "color":"YELLOW",
+    "level":2,
+    "victoryPoints": 6,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 3
+      },
+      {
+        "type": "SHIELD",
+        "amount": 2
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+          ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 3
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":2,
+    "victoryPoints": 7,
+    "faithSteps":2,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 5
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":2,
+    "victoryPoints": 8,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 3
+      },
+      {
+        "type": "SERVANT",
+        "amount": 3
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":2,
+    "victoryPoints": 5,
+    "faithSteps":2,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 4
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+
+  {
+    "color":"YELLOW",
+    "level":3,
+    "victoryPoints": 10,
+    "faithSteps":1,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 5
+      },
+      {
+        "type": "SERVANT",
+        "amount": 2
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        },
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":3,
+    "victoryPoints": 9,
+    "faithSteps":2,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 6
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 3
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":3,
+    "victoryPoints": 11,
+    "faithSteps":3,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 7
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ]
+    }
+  },
+  {
+    "color":"YELLOW",
+    "level":3,
+    "victoryPoints": 12,
+    "faithSteps":0,
+    "cost": [
+      {
+        "type": "STONE",
+        "amount": 4
+      },
+      {
+        "type": "SERVANT",
+        "amount": 4
+      }
+    ],
+    "production": {
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 3
+        }
+      ]
+    }
+  },
+
+
+  {
+    "color":"BLUE",
+    "level": 1,
+    "victoryPoints": 3,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 3
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 1,
+    "victoryPoints": 4,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 2
+      },
+      {
+        "type": "SERVANT",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 1,
+    "victoryPoints": 1,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 1,
+    "victoryPoints": 2,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 1
+      },
+      {
+        "type": "STONE",
+        "amount": 1
+      },
+      {
+        "type": "SERVANT",
+        "amount": 1
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ]
+    }
+  },
+
+  {
+    "color":"BLUE",
+    "level": 2,
+    "victoryPoints": 5,
+    "faithSteps": 2,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 4
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 2,
+    "victoryPoints": 6,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 3
+      },
+      {
+        "type": "STONE",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 3
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 2,
+    "victoryPoints": 7,
+    "faithSteps": 2,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 5
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 2,
+    "victoryPoints": 8,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 3
+      },
+      {
+        "type": "STONE",
+        "amount": 3
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ]
+    }
+  },
+
+  {
+    "color":"BLUE",
+    "level": 3,
+    "victoryPoints": 9,
+    "faithSteps": 2,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 6
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 3
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 3,
+    "victoryPoints": 10,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 5
+      },
+      {
+        "type": "STONE",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        },
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 3,
+    "victoryPoints": 11,
+    "faithSteps": 3,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 7
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ]
+    }
+  },
+  {
+    "color":"BLUE",
+    "level": 3,
+    "victoryPoints": 12,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "COIN",
+        "amount": 4
+      },
+      {
+        "type": "STONE",
+        "amount": 4
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 3
+        }
+      ]
+    }
+  },
+
+
+  {
+    "color":"GREEN",
+    "level": 1,
+    "victoryPoints": 1,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 1,
+    "victoryPoints": 4,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 2
+      },
+      {
+        "type": "COIN",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 1,
+    "victoryPoints": 2,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 1
+      },
+      {
+        "type": "SERVANT",
+        "amount": 1
+      },
+      {
+        "type": "STONE",
+        "amount": 1
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 1,
+    "victoryPoints": 3,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 3
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        },
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ]
+    }
+  },
+
+  {
+    "color":"GREEN",
+    "level": 2,
+    "victoryPoints": 5,
+    "faithSteps": 2,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 4
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": []
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 2,
+    "victoryPoints": 6,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 3
+      },
+      {
+        "type": "SERVANT",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 3
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 2,
+    "victoryPoints": 7,
+    "faithSteps": 2,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 5
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 2,
+    "victoryPoints": 8,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 3
+      },
+      {
+        "type": "COIN",
+        "amount": 3
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        }
+      ]
+    }
+  },
+
+  {
+    "color":"GREEN",
+    "level": 3,
+    "victoryPoints": 9,
+    "faithSteps": 2,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 6
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "STONE",
+          "amount": 3
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 3,
+    "victoryPoints": 10,
+    "faithSteps": 1,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 5
+      },
+      {
+        "type": "SERVANT",
+        "amount": 2
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "SHIELD",
+          "amount": 2
+        },
+        {
+          "type": "STONE",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 3,
+    "victoryPoints": 11,
+    "faithSteps": 3,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 7
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "SERVANT",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 2
+        }
+      ]
+    }
+  },
+  {
+    "color":"GREEN",
+    "level": 3,
+    "victoryPoints": 12,
+    "faithSteps": 0,
+    "cost": [
+      {
+        "type": "SHIELD",
+        "amount": 4
+      },
+      {
+        "type": "COIN",
+        "amount": 4
+      }
+    ],
+    "production":{
+      "inputProduction": [
+        {
+          "type": "STONE",
+          "amount": 1
+        }
+      ],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 3
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
+        }
+      ]
+    }
+  }
+]

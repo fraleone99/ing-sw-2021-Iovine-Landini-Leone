@@ -3,9 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import junit.framework.TestCase;
 
+import java.io.FileNotFoundException;
+
 public class DeleteCardTest extends TestCase {
 
-    public void testDraw() throws InvalidChoiceException {
+    public void testDraw() throws InvalidChoiceException, FileNotFoundException {
         DevelopmentCardGrid developmentCardGrid=new DevelopmentCardGrid();
         DeleteCard deleteCard=new DeleteCard(CardColor.GREEN);
 

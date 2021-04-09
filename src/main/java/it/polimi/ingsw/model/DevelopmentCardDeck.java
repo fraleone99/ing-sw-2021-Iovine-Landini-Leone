@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.InvalidChoiceException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Class for decks of Development Cards
@@ -13,7 +14,7 @@ import java.util.Collections;
 
 public class DevelopmentCardDeck implements Deck {
 
-    private ArrayList<DevelopmentCard> deck = new ArrayList<>();
+    private List<DevelopmentCard> deck = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -68,4 +69,8 @@ public class DevelopmentCardDeck implements Deck {
     }
 
     public int size(){ return deck.size(); }
+
+    public void setDeck(List<DevelopmentCard> deck){
+        this.deck = deck;
+    }
 }
