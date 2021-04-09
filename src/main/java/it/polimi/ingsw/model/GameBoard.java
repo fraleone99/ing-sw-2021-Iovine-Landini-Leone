@@ -10,7 +10,7 @@ public class GameBoard {
     private Market market;
     private ArrayList<PlayerDashboard> playersDashboards = new ArrayList<>();
     private DevelopmentCardGrid developmentCardGrid;
-    private LeaderCardDeck LeaderDeck;
+    private LeaderCardDeck LeaderDeck=new LeaderCardDeck();
     private LorenzoMagnifico lorenzoMagnifico;
 
     public GameBoard(int playersNumber, ArrayList<Player> players) {
@@ -25,7 +25,9 @@ public class GameBoard {
         initializeLeaderCards();
     }
 
-    public void drawActionToken() throws InvalidChoiceException {
+    public LorenzoMagnifico getLorenzoMagnifico(){ return lorenzoMagnifico; }
+
+    public ActionToken drawActionToken() throws InvalidChoiceException {
         ActionToken element=lorenzoMagnifico.draw();
 
         if(element instanceof BlackCrossMover){
@@ -38,6 +40,8 @@ public class GameBoard {
             ((DeleteCard) element).draw(((DeleteCard) element).getColorType(), developmentCardGrid);
             ((DeleteCard) element).draw(((DeleteCard) element).getColorType(), developmentCardGrid);
         }
+
+        return element;
     }
 
     public DevelopmentCardGrid getDevelopmentCardGrid() {
