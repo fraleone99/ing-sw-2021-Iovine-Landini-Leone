@@ -26,6 +26,10 @@ public class FaithPath {
         positionLorenzo = positionLorenzo+move;
     }
 
+    public int getPositionFaithPath() {
+        return positionFaithPath;
+    }
+
     public void setPositionFaithPath(int positionFaithPath) {
         this.positionFaithPath = positionFaithPath;
     }
