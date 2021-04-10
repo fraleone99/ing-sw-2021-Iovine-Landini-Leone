@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.gameboard.playerdashboard;
 
 import it.polimi.ingsw.model.enumeration.BallColor;
+import it.polimi.ingsw.model.enumeration.Resource;
 
 /**
  * Ball Class manages every ball of the market
@@ -31,5 +32,23 @@ public class Ball {
 
     public BallColor getType() {
         return type;
+    }
+
+    public Resource getCorrespondingResource(){
+        switch (this.type){
+            case RED:
+                return null;
+            case BLUE:
+                return Resource.SHIELD;
+            case GREY:
+                return Resource.STONE;
+            case WHITE:
+                return Resource.UNKNOWN;
+            case PURPLE:
+                return Resource.SERVANT;
+            case YELLOW:
+                return Resource.COIN;
+        }
+        return  null;
     }
 }

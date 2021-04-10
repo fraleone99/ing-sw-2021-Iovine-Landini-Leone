@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.model.gameboard.GameBoard;
+import it.polimi.ingsw.model.singleplayer.ActionToken;
+import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import junit.framework.TestCase;
 
 import java.io.FileNotFoundException;
