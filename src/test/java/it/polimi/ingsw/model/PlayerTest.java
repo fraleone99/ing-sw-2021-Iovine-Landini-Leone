@@ -300,4 +300,43 @@ public class PlayerTest {
         assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.SERVANT),1);
     }
 
+    @Test
+    public void testCalculateVictoryPoints() throws InvalidSpaceCardException {
+        ArrayList<Goods> input=new ArrayList<>();
+        ArrayList<Goods> output=new ArrayList<>();
+        Production production=new Production(input, output);
+
+        ArrayList<Goods> cost=new ArrayList<>();
+
+        DevelopmentCard card = new DevelopmentCard(4, CardColor.GREEN, 1, cost, production, 2);
+        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
+
+        card = new DevelopmentCard(8, CardColor.BLUE, 2, cost, production, 5);
+        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
+
+        card = new DevelopmentCard(12, CardColor.GREEN, 3, cost, production, 9);
+        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
+
+        card = new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 2);
+        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 2);
+
+        card = new DevelopmentCard(6, CardColor.YELLOW, 2, cost, production, 2);
+        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 2);
+
+
+        Goods good=new Goods(Resource.COIN, 3);
+        Requirements requirements = new Requirements(CardColor.GREEN, 2, 3, good);
+
+        LeaderCard leader=new ProductionLeader(4, production, requirements);
+        leader.setIsDiscarded();
+        player.getLeaders().add(leader);
+
+        leader=new ProductionLeader(10, production, requirements);
+        leader.setIsActive();
+        player.getLeaders().add(leader);
+
+        assertEquals(player.calculateVictoryPoints(), 43);
+
+    }
+
 }

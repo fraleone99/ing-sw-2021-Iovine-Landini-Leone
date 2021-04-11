@@ -4,12 +4,15 @@ import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 
-public class DeleteCardTest extends TestCase {
+public class DeleteCardTest{
 
+    @Test
     public void testDraw() throws InvalidChoiceException, FileNotFoundException {
         DevelopmentCardGrid developmentCardGrid=new DevelopmentCardGrid();
         DeleteCard deleteCard=new DeleteCard(CardColor.GREEN);

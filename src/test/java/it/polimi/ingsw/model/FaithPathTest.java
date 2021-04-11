@@ -5,20 +5,31 @@ import it.polimi.ingsw.exceptions.NotExistingSpaceException;
 import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class FaithPathTest {
     private FaithPath faithPath;
 
     @Test
-    public void testIsPopeRegion() throws NotExistingSpaceException {
+    public void testActivatePapalPawn() throws NotExistingSpaceException {
         faithPath=new FaithPath();
         faithPath.setPositionFaithPath(12);
-        assert(faithPath.isPopeRegion(2));
+        faithPath.activatePapalPawn(2);
+        assert(faithPath.isPapalPawn2());
     }
 
     @Test(expected = NotExistingSpaceException.class)
-    public void testIsPopeRegion_NotExistingSpace() throws NotExistingSpaceException {
+    public void testActivatePapalPawn_NotExistingSpace() throws NotExistingSpaceException {
         faithPath=new FaithPath();
         faithPath.setPositionFaithPath(12);
-        faithPath.isPopeRegion(5);
+        faithPath.activatePapalPawn(5);
+    }
+
+    @Test
+    public void testGetTotalPoint() throws NotExistingSpaceException {
+        faithPath=new FaithPath();
+        faithPath.setPositionFaithPath(19);
+        faithPath.activatePapalPawn(3);
+        assertEquals(faithPath.getTotalPoint(), 15);
     }
 }

@@ -3,13 +3,13 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
-public class MarketTest extends TestCase {
+public class MarketTest {
     Market market = new Market();
 
     @Before public void testFillMatrix() {

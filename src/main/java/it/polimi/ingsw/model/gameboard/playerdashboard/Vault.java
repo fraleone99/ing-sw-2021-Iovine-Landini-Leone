@@ -49,4 +49,7 @@ public class Vault {
         else return needed.getAmount() - getResource(needed.getType());
     }
 
+    public int getTotalResources(){
+        return coinsAmount+servantsAmount+stoneAmount+shieldsAmount;
+    }
 }

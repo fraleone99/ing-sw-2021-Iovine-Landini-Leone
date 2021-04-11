@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.card.deck;
 
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Collections;
  * @author Francesco Leone
  */
 public class LeaderCardDeck {
+
     private ArrayList<LeaderCard> deck = new ArrayList<>();
 
     /**
@@ -62,6 +64,21 @@ public class LeaderCardDeck {
             deck.remove(position);
         } else
             throw new InvalidChoiceException();
+    }
+
+    public int victoryPointsAmount(){
+        int amount=0;
+        for(LeaderCard d: deck){
+            if(d.getIsActive()){
+                amount=amount+d.getVictoryPoints();
+            }
+        }
+
+        return amount;
+    }
+
+    public ArrayList<LeaderCard> getDeck() {
+        return deck;
     }
 
 }
