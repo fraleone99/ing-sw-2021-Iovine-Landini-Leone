@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.card.deck;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
 
@@ -75,6 +76,17 @@ public class LeaderCardDeck {
             deck.remove(position);
         } else
             throw new InvalidChoiceException();
+    }
+
+    public int victoryPointsAmount(){
+        int amount=0;
+        for(LeaderCard d: deck){
+            if(d.getIsActive()){
+                amount=amount+d.getVictoryPoints();
+            }
+        }
+
+        return amount;
     }
 
 }

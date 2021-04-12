@@ -4,13 +4,16 @@ import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-/*
-public class GameBoardTest extends TestCase {
 
+import static org.junit.Assert.assertEquals;
+
+public class GameBoardTest{
+
+    @Test
     public void testDrawActionToken() throws InvalidChoiceException, FileNotFoundException {
         ArrayList<Player> players = new ArrayList<>();
         Player player1=new Player("player1");
@@ -34,4 +37,4 @@ public class GameBoardTest extends TestCase {
             assertEquals(gameBoard.getLorenzoMagnifico().getTokens().get(6), element);
         }
     }
-}*/
+}

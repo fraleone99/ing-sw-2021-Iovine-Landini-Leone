@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
 import it.polimi.ingsw.exceptions.NotEnoughResourceException;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
@@ -35,6 +36,18 @@ public class Player {
 
     public LeaderCardDeck getLeaders(){
         return playerDashboard.getLeaders();
+    }
+
+    public int calculateVictoryPoints() {
+        //total points from cards in devCardsSpace
+        for(DevelopmentCardDeck deck: getPlayerDashboard().getDevCardsSpace().getSpace()){
+            victoryPoints += deck.victoryPointsAmount();
+        }
+
+        //total points from player's leader cards
+        victoryPoints += getLeaders().victoryPointsAmount();
+
+        return victoryPoints;
     }
 
     public Player(String nickname) {

@@ -45,6 +45,10 @@ public class DevCardsSpace {
         Space.add(deck3);
     }
 
+    public ArrayList<DevelopmentCardDeck> getSpace() {
+        return Space;
+    }
+
     public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardException {
         if(space < 1 || space > 3) throw new InvalidSpaceCardException();
         if(Space.get(space-1).isEmpty() && Card.getLevel() == 1)

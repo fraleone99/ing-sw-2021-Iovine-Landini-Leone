@@ -75,4 +75,13 @@ public class DevelopmentCardDeck implements Deck {
     public void setDeck(List<DevelopmentCard> deck){
         this.deck = deck;
     }
+
+    public int victoryPointsAmount(){
+        int amount=0;
+        for(DevelopmentCard d: deck){
+            amount=amount+d.getVictoryPoints();
+        }
+
+        return amount;
+    }
 }

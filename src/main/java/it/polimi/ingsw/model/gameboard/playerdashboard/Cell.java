@@ -8,31 +8,29 @@ package it.polimi.ingsw.model.gameboard.playerdashboard;
 
 public class Cell {
 
-    private final int position;
-    private final boolean isPopespace1;
-    private final boolean isPopespace2;
-    private final boolean isPopespace3;
+    private final boolean isPopeSpace1;
+    private final boolean isPopeSpace2;
+    private final boolean isPopeSpace3;
+    private final int points;
 
-    public Cell(int position, boolean isPopespace1, boolean isPopespace2, boolean isPopespace3) {
-        this.position = position;
-        this.isPopespace1=isPopespace1;
-        this.isPopespace2=isPopespace2;
-        this.isPopespace3=isPopespace3;
+    public Cell(boolean isPopeSpace1, boolean isPopeSpace2, boolean isPopeSpace3, int points) {
+        this.isPopeSpace1=isPopeSpace1;
+        this.isPopeSpace2=isPopeSpace2;
+        this.isPopeSpace3=isPopeSpace3;
+        this.points=points;
     }
 
-    public int getPosition(){
-        return position;
-    }
+    public int getPoints() { return points; }
 
     public boolean isPopeSpace1(){
-        return isPopespace1;
+        return isPopeSpace1;
     }
 
     public boolean isPopeSpace2(){
-        return isPopespace2;
+        return isPopeSpace2;
     }
 
     public boolean isPopeSpace3(){
-        return isPopespace3;
+        return isPopeSpace3;
     }
 }
