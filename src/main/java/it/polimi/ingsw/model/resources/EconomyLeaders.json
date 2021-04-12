@@ -7,19 +7,25 @@
         "color": "BLUE",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost":
+          [
+            {
+              "type": "COIN",
+              "amount": 0
+            }
+          ]
+
       },
       {
         "color": "PURPLE",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   },
@@ -31,19 +37,24 @@
         "color": "GREEN",
         "level": 0,
         "amount": 1,
-        "activationCost": {
+        "activationCost": [
+        {
           "type": "COIN",
           "amount": 0
         }
+      ]
+
       },
       {
         "color": "BLUE",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   },
@@ -55,19 +66,23 @@
         "color": "YELLOW",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       },
       {
         "color": "GREEN",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   },
@@ -79,19 +94,23 @@
         "color": "YELLOW",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       },
       {
         "color": "PURPLE",
         "level": 0,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   }

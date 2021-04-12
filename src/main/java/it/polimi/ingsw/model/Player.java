@@ -39,7 +39,7 @@ public class Player {
 
     public Player(String nickname) {
         this.nickname = nickname;
-        this.playerDashboard = new PlayerDashboard(nickname);
+        this.playerDashboard = new PlayerDashboard();
     }
 
     public boolean isFirst() {

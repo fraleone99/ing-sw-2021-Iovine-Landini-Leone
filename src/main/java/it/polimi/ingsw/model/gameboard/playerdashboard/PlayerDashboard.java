@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.gameboard.playerdashboard;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
 import it.polimi.ingsw.model.enumeration.Resource;
 
@@ -30,7 +31,7 @@ public class PlayerDashboard {
         return vault;
     }
 
-    public PlayerDashboard(String playerName) {
+    public PlayerDashboard() {
 
         faithPath = new FaithPath();
         vault = new Vault();

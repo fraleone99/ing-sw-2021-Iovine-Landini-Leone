@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
+/*
 public class GameBoardTest extends TestCase {
 
     public void testDrawActionToken() throws InvalidChoiceException, FileNotFoundException {
@@ -34,4 +34,4 @@ public class GameBoardTest extends TestCase {
             assertEquals(gameBoard.getLorenzoMagnifico().getTokens().get(6), element);
         }
     }
-}
+}*/

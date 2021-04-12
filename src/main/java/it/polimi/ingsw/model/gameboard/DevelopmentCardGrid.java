@@ -78,7 +78,7 @@ public class DevelopmentCardGrid {
 
     public void initializeDevCards() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/resources/DevelopmentCards.json"));
+        JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/DevelopmentCards.json"));
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
 
         DevelopmentCardDeck PurpleOne = new DevelopmentCardDeck();

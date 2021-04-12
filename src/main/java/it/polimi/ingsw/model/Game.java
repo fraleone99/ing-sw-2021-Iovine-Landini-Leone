@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
+import it.polimi.ingsw.model.singleplayer.ActionToken;
+import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
+import it.polimi.ingsw.model.singleplayer.DeleteCard;
 
 import java.util.ArrayList;
 
@@ -82,6 +85,23 @@ public class Game {
 
         currentPlayer.getPlayerDashboard().RemoveResource(cost);
 
+    }
+
+    public ActionToken drawActionToken() throws InvalidChoiceException {
+        ActionToken element = gameBoard.getLorenzoMagnifico().draw();
+
+        if(element instanceof BlackCrossMover){
+            players.get(0).getPlayerDashboard().getFaithPath().moveForwardBCM(((BlackCrossMover) element).getSteps());
+            if(((BlackCrossMover) element).haveToBeShuffled()){
+                gameBoard.getLorenzoMagnifico().shuffle();
+            }
+        }
+        else{
+            ((DeleteCard) element).draw(((DeleteCard) element).getColorType(), gameBoard.getDevelopmentCardGrid());
+            ((DeleteCard) element).draw(((DeleteCard) element).getColorType(), gameBoard.getDevelopmentCardGrid());
+        }
+
+        return element;
     }
 
 }

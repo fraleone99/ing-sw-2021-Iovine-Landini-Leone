@@ -20,10 +20,12 @@
         "color": "BLUE",
         "level": 2,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   },
@@ -48,10 +50,12 @@
         "color": "YELLOW",
         "level": 2,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   },
@@ -76,10 +80,12 @@
         "color": "GREEN",
         "level": 2,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   },
@@ -104,10 +110,12 @@
         "color": "PURPLE",
         "level": 2,
         "amount": 1,
-        "activationCost": {
-          "type": "COIN",
-          "amount": 0
-        }
+        "activationCost": [
+          {
+            "type": "COIN",
+            "amount": 0
+          }
+        ]
       }
     ]
   }

@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.card.deck;
 
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
+import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +15,18 @@ import java.util.Collections;
  * @author Francesco Leone
  */
 public class LeaderCardDeck {
-    private ArrayList<LeaderCard> deck = new ArrayList<>();
+
+
+    private ArrayList<LeaderCard> deck;
+
+    public LeaderCardDeck() {
+        deck = new ArrayList<>();
+    }
+
+
+    public ArrayList<LeaderCard> getDeck() {
+        return deck;
+    }
 
     /**
      * {@inheritDoc}
