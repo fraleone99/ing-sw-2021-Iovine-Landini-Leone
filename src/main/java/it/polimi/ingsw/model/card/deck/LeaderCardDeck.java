@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model.card.deck;
 
 
+import com.sun.source.tree.WhileLoopTree;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
+import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,6 +89,14 @@ public class LeaderCardDeck {
         }
 
         return amount;
+    }
+
+    public WhiteBallLeader isWhitePresent(){
+        for(LeaderCard c: deck) {
+            if (c instanceof WhiteBallLeader)
+                return (WhiteBallLeader) c;
+        }
+        return null;
     }
 
 }

@@ -91,18 +91,31 @@ public class TurnController {
     public void market(int marketChoice) throws InvalidChoiceException {
         ArrayList<Ball> balls = gameBoard.getMarket().getChosenColor(marketChoice);
 
-        /*Maybe this for can be surrounded by a while(balls.isEmpty())*/
-        for(Ball b : balls){
-            if(b.getType().equals(BallColor.RED)){
-                player.getPlayerDashboard().getFaithPath().moveForward(1);
-                balls.remove(b);
-            }
-            else{
-                /*The player needs to choose where to put this resource something must happen to update the shelfToAdd variable */
-                try {
-                    player.getPlayerDashboard().getStorage().AddResource(shelfToAdd, b.getCorrespondingResource(),1);
-                } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
-                    //TODO: if the resource can't be added where the player wants he must discard something or reorganize the shelves
+        while(!balls.isEmpty()) {
+            for (Ball b : balls) {
+                if (b.getType().equals(BallColor.RED)) {
+                    player.getPlayerDashboard().getFaithPath().moveForward(1);
+                    balls.remove(b);
+                } else if (b.getType().equals(BallColor.WHITE)) {
+                    if (player.getPlayerDashboard().bothWhiteLeader()) {
+                        //TODO: User needs to chose which of the white Leader he wants to activate
+                    } else if (player.getLeaders().isWhitePresent() != null) {
+                        /*The player needs to choose where to put this resource something must happen to update the shelfToAdd variable */
+                        try {
+                            player.getPlayerDashboard().getStorage().AddResource(shelfToAdd, player.getLeaders().isWhitePresent().getConversionType(), 1);
+                            balls.remove(b);
+                        } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
+                            //TODO: if the resource can't be added where the player wants he must discard something or reorganize the shelves
+                        }
+                    }
+                } else {
+                    /*The player needs to choose where to put this resource something must happen to update the shelfToAdd variable */
+                    try {
+                        player.getPlayerDashboard().getStorage().AddResource(shelfToAdd, b.getCorrespondingResource(), 1);
+                        balls.remove(b);
+                    } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
+                        //TODO: if the resource can't be added where the player wants he must discard something or reorganize the shelves
+                    }
                 }
             }
         }

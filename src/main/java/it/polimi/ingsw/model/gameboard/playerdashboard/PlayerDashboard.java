@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
+import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
 import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.util.ArrayList;
@@ -147,6 +148,15 @@ public class PlayerDashboard {
             Resource r = mapElement.getKey();
             getVault().AddResource(r, mapElement.getValue());
         }
+    }
+
+    public Boolean bothWhiteLeader(){
+        int white = 0;
+        for(LeaderCard c : leaders.getDeck()){
+            if(c instanceof WhiteBallLeader && c.getIsActive())
+                white++;
+        }
+        return white > 1;
     }
 
 }
