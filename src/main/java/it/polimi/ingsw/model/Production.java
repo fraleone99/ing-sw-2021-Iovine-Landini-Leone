@@ -12,10 +12,12 @@ import java.util.ArrayList;
 public class Production {
     private ArrayList<Goods> inputProduction;
     private ArrayList<Goods> outputProduction;
+    private final int faithSteps;
 
-    public Production(ArrayList<Goods> inputProduction, ArrayList<Goods> outputProduction){
+    public Production(ArrayList<Goods> inputProduction, ArrayList<Goods> outputProduction, int faithSteps){
         this.inputProduction = inputProduction;
         this.outputProduction = outputProduction;
+        this.faithSteps = faithSteps;
     }
 
     public void setInputProduction(Goods input){
@@ -26,8 +28,6 @@ public class Production {
         outputProduction.set(0, output);
     }
 
-
-
     public ArrayList<Goods> getInputProduction() {
         return inputProduction;
     }
@@ -35,4 +35,9 @@ public class Production {
     public ArrayList<Goods> getOutputProduction() {
         return outputProduction;
     }
+
+    public int getFaithSteps() {
+        return faithSteps;
+    }
+
 }

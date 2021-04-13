@@ -20,17 +20,14 @@ public class DevelopmentCard extends Card {
     private final int level;
     private final ArrayList<Goods> cost = new ArrayList<>();
     private final Production production;
-    private final int faithSteps;
 
 
-
-    public DevelopmentCard(int VictoryPoints, CardColor Color, int Level, ArrayList<Goods> Cost, Production production, int FaithSteps) {
+    public DevelopmentCard(int VictoryPoints, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
         super(VictoryPoints);
         this.color=Color;
         this.level=Level;
         this.cost.addAll(Cost);
         this.production = production;
-        this.faithSteps=FaithSteps;
     }
 
     public CardColor getColor() {
@@ -53,7 +50,7 @@ public class DevelopmentCard extends Card {
     }*/
 
     public int getFaithSteps() {
-        return faithSteps;
+        return production.getFaithSteps();
     }
 
     public ArrayList<Goods> getInputProduction(){
@@ -75,7 +72,7 @@ public class DevelopmentCard extends Card {
                 ", cost=" + cost.toString() +
                 ", production=(" + "input->" + production.getInputProduction().toString() +
                                     "output->" + production.getOutputProduction().toString() + ")"+
-                ", faithSteps=" + faithSteps +
+                ", faithSteps=" + production.getFaithSteps() +
                 '}';
     }
 }

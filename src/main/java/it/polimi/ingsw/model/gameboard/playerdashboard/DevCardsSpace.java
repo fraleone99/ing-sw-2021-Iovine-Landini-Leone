@@ -34,7 +34,7 @@ public class DevCardsSpace {
         ArrayList<Goods> basicOutput = new ArrayList<>();
         basicOutput.add(Output);
 
-        basicProduction = new Production(basicInput, basicOutput);
+        basicProduction = new Production(basicInput, basicOutput,0);
 
         DevelopmentCardDeck deck1 = new DevelopmentCardDeck();
         DevelopmentCardDeck deck2 = new DevelopmentCardDeck();

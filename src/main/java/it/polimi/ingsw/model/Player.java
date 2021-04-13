@@ -139,10 +139,12 @@ public class Player {
     public void doProduction() throws NotEnoughResourceException {
         ArrayList<Goods> TotInput = new ArrayList<>();
         ArrayList<Goods> TotOutput = new ArrayList<>();
+        int TotFaithSteps = 0;
 
         for(Production p: activatedProduction){
             TotInput.addAll(p.getInputProduction());
             TotOutput.addAll(p.getOutputProduction());
+            TotFaithSteps += p.getFaithSteps();
         }
 
         if(!playerDashboard.CheckResource(TotInput)) throw new NotEnoughResourceException();
@@ -151,6 +153,7 @@ public class Player {
         }
 
         playerDashboard.AddResources(TotOutput);
+        playerDashboard.getFaithPath().moveForward(TotFaithSteps);
 
 
 

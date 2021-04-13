@@ -23,13 +23,15 @@ public class GameBoardTest{
         Player player3=new Player("player3");
         players.add(player3);
 
-        GameBoard gameBoard=new GameBoard(3, players);
+        GameBoard gameBoard=new GameBoard(3);
+        Game game = new Game();
+        game.setGameBoard(gameBoard);
 
-        gameBoard.drawActionToken();
-        gameBoard.drawActionToken();
-        gameBoard.drawActionToken();
-        gameBoard.drawActionToken();
-        ActionToken element=gameBoard.drawActionToken();
+        game.drawActionToken();
+        game.drawActionToken();
+        game.drawActionToken();
+        game.drawActionToken();
+        ActionToken element=game.drawActionToken();
 
         if(element instanceof BlackCrossMover && ((BlackCrossMover) element).haveToBeShuffled()){
             assertEquals(gameBoard.getLorenzoMagnifico().getTokens().size(), 7);

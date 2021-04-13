@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class PlayerTest {
+/*public class PlayerTest {
     private Player player;
 
     @Before public void initialize(){
@@ -339,4 +339,4 @@ public class PlayerTest {
 
     }
 
-}
+}*/
