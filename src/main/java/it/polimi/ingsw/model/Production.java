@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 
 public class Production {
-    private ArrayList<Goods> inputProduction;
-    private ArrayList<Goods> outputProduction;
+    private final ArrayList<Goods> inputProduction;
+    private final ArrayList<Goods> outputProduction;
     private final int faithSteps;
 
     public Production(ArrayList<Goods> inputProduction, ArrayList<Goods> outputProduction, int faithSteps){

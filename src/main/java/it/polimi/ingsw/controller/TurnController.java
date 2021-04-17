@@ -78,8 +78,10 @@ public class TurnController {
         }
 
         for(int i = 0; i < player.getPlayerDashboard().getLeaders().size() ; i++){
-            if(ProductionLeader[i])
+            if(ProductionLeader[i]) {
+                //TODO: Ask the player the unknown resource
                 player.ActiveProductionLeader(i); //same problem of the previous for
+                }
         }
 
         player.doProduction();
