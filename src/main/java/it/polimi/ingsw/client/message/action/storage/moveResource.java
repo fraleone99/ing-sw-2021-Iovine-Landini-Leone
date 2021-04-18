@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client.message.action.storage;
 
-import it.polimi.ingsw.client.message.action.UserAction;
+import it.polimi.ingsw.client.message.Message;
 
-public class moveResource implements UserAction {
+
+public class moveResource implements Message {
     private final int source;
     private final int destination;
 

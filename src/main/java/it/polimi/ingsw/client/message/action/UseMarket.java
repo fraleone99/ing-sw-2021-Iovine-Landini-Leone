@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.message.action;
 
-public class UseMarket implements UserAction{
+import it.polimi.ingsw.client.message.Message;
+
+
+public class UseMarket implements Message {
     private final int choice;
 
     public UseMarket(int choice) {

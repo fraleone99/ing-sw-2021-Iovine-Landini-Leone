@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.message.action.production;
 
-import it.polimi.ingsw.client.message.action.UserAction;
+import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.model.enumeration.Resource;
 
-public class ActiveProductionLeader implements UserAction {
+public class ActiveProductionLeader implements Message {
     private final int position;
     private final Resource output;
 

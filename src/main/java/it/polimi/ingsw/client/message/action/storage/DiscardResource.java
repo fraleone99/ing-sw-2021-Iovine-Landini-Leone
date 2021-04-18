@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client.message.action.storage;
 
-import it.polimi.ingsw.client.message.action.UserAction;
+import it.polimi.ingsw.client.message.Message;
 
-public class DiscardResource implements UserAction {
+
+public class DiscardResource implements Message {
     private final int shelf;
     private final int amount;
 

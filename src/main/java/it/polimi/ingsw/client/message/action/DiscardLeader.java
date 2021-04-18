@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.message.action;
 
-public class DiscardLeader implements UserAction{
+import it.polimi.ingsw.client.message.Message;
+
+
+public class DiscardLeader implements Message {
     private final int position;
 
     public DiscardLeader(int position) {

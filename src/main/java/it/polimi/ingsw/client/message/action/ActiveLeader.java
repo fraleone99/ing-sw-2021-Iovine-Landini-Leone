@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.message.action;
 
-public class ActiveLeader implements UserAction{
+import it.polimi.ingsw.client.message.Message;
+
+
+public class ActiveLeader implements Message {
     private final int position;
 
     public ActiveLeader(int position) {

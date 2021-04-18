@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client.message.action.production;
 
-import it.polimi.ingsw.client.message.action.UserAction;
+import it.polimi.ingsw.client.message.Message;
 
-public class ActiveDevelopmentCard implements UserAction {
+
+public class ActiveDevelopmentCard implements Message {
     private final int position;
 
     public ActiveDevelopmentCard(int position) {

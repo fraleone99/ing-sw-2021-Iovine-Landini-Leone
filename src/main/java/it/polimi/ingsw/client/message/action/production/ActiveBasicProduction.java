@@ -1,9 +1,10 @@
 package it.polimi.ingsw.client.message.action.production;
 
-import it.polimi.ingsw.client.message.action.UserAction;
+import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.model.enumeration.Resource;
 
-public class ActiveBasicProduction implements UserAction {
+
+public class ActiveBasicProduction implements Message {
     private final Resource input1;
     private final Resource input2;
     private final Resource output;

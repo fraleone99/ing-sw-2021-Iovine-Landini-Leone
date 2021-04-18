@@ -1,8 +1,9 @@
 package it.polimi.ingsw.client.message.action.storage;
 
-import it.polimi.ingsw.client.message.action.UserAction;
+import it.polimi.ingsw.client.message.Message;
 
-public class InvertShelves implements UserAction {
+
+public class InvertShelves implements Message {
     private final int s1;
     private final int s2;
 
