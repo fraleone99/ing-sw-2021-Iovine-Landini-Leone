@@ -45,8 +45,12 @@ public class DevCardsSpace {
         Space.add(deck3);
     }
 
-    public ArrayList<DevelopmentCardDeck> getSpace() {
-        return Space;
+    public int getAmountCards() {
+        int sum=0;
+        for(DevelopmentCardDeck d : Space){
+            sum+=d.size();
+        }
+        return sum;
     }
 
     public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardException {
@@ -91,5 +95,9 @@ public class DevCardsSpace {
             result += d.checkDeck(color, level);
         }
         return  result;
+    }
+
+    public ArrayList<DevelopmentCardDeck> getSpace() {
+        return Space;
     }
 }
