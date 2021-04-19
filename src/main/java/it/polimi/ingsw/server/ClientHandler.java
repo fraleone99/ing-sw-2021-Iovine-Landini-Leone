@@ -52,7 +52,7 @@ public class ClientHandler implements Runnable{
         }
     }
 
-    public void processClientMessage(Message message){
+    public synchronized void processClientMessage(Message message){
         if(message instanceof ClientConnection){
             System.out.println(((ClientConnection) message).getMessage());
             handshake = true;

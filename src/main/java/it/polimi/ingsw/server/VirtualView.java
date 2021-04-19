@@ -17,8 +17,8 @@ public class VirtualView {
 
     public String requestNickname(ClientHandler client) throws IOException, InterruptedException {
         client.send(new RequestNickname("Please insert your nickname:"));
-        synchronized (lock) {
-            while(!client.isReady())lock.wait();
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
             nickname = client.getNickname();
         }
         return nickname;
