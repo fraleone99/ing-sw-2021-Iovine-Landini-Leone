@@ -35,12 +35,12 @@ public class ClientHandler implements Runnable{
 
     }
 
-    public void send(Object message) throws IOException, InterruptedException {
+    public void send(Object message) throws IOException{
             output.writeObject(message);
             //handleClientConnection();
     }
 
-    public void handleClientConnection() throws IOException, InterruptedException {
+    public void handleClientConnection() throws IOException {
         try{
             while(true){
                 Object next = input.readObject();
@@ -65,6 +65,8 @@ public class ClientHandler implements Runnable{
         }
         else if(message instanceof NumberOfPlayers){
             playersNumber=((NumberOfPlayers) message).getNumber();
+            isReady = true;
+            notifyAll();
         }
     }
 
@@ -90,7 +92,7 @@ public class ClientHandler implements Runnable{
         try {
             //virtualView.askHandShake(this);
             handleClientConnection();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             System.out.println("client " + socketClient.getInetAddress() + " connection dropped");
         }
 

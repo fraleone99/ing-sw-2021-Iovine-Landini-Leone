@@ -19,7 +19,15 @@ public class Lobby {
         clientNames.put(s,firstClient);
 
          String str=(String) clientNames.keySet().toArray()[0];
-         System.out.println(str);
+         System.out.println(str + " has joined the server.");
+
+          playersNumber = view.requestPlayersNumber(firstClient);
+        System.out.println("This lobby will contain " + playersNumber + " players");
+    }
+
+    public void add(ClientHandler clientHandler) throws IOException, InterruptedException {
+        String s = view.requestNickname(clientHandler);
+        clientNames.put(s,clientHandler);
     }
 
 }

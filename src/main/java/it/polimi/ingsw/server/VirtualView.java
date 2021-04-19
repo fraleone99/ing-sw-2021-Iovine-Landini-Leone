@@ -7,12 +7,18 @@ import it.polimi.ingsw.server.answer.RequestNickname;
 import java.io.IOException;
 
 public class VirtualView {
-    private Object lock = new Object();
     private String nickname;
+    private int playersNumber;
 
-    public synchronized void requestPlayersNumber(ClientHandler client) throws IOException, InterruptedException {
+    public int requestPlayersNumber(ClientHandler client) throws IOException, InterruptedException {
         client.send(new PlayersNumber("Please insert the number of players:"));
+        synchronized (client) {
+            while (!client.isReady()) client.wait();
+            playersNumber = client.getPlayersNumber();
+        }
+        return playersNumber;
     }
+
 
 
     public String requestNickname(ClientHandler client) throws IOException, InterruptedException {
@@ -21,6 +27,7 @@ public class VirtualView {
             while(!client.isReady()) client.wait();
             nickname = client.getNickname();
         }
+        client.setReady(false);
         return nickname;
     }
 
@@ -28,7 +35,4 @@ public class VirtualView {
         client.send(new Connection("Welcome to this fantastic server!", true));
     }
 
-    public Object getLock() {
-        return lock;
-    }
 }
