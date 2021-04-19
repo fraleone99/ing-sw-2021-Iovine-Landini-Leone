@@ -15,14 +15,11 @@ public class Lobby {
     private Map<String, ClientHandler> clientNames = new HashMap<>();
 
     public void newLobby(ClientHandler firstClient) throws IOException, InterruptedException {
-            clientNames.put(view.requestNickname(firstClient),firstClient);
+        String s = view.requestNickname(firstClient);
+        clientNames.put(s,firstClient);
 
-            //view.requestPlayersNumber(firstClient);
-
-            //playersNumber = firstClient.getPlayersNumber();
-
-            String s=(String) clientNames.keySet().toArray()[0];
-            System.out.println(s);
+         String str=(String) clientNames.keySet().toArray()[0];
+         System.out.println(str);
     }
 
 }

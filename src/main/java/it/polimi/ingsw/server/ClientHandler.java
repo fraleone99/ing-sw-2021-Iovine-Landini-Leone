@@ -20,26 +20,27 @@ public class ClientHandler implements Runnable{
     private String nickname;
     private int playersNumber;
     private boolean isReady;
+    private boolean handshake;
+    VirtualView virtualView;
 
 
-    public ClientHandler(Socket socketClient) {
+    public ClientHandler(Socket socketClient) throws IOException {
         this.socketClient = socketClient;
         isReady=false;
+        handshake = false;
+        virtualView = new VirtualView();
+
+        output=new ObjectOutputStream(socketClient.getOutputStream());
+        input=new ObjectInputStream(socketClient.getInputStream());
+
     }
 
-    public void send(Object message) throws IOException {
-        if (message instanceof RequestNickname) {
-            Object msg = new RequestNickname(((RequestNickname) message).getMessage());
-            output.writeObject(msg);
-            handleClientConnection();
-        } else if (message instanceof PlayersNumber) {
-            Object msg = new PlayersNumber(((PlayersNumber) message).getMessage());
-            output.writeObject(msg);
-            handleClientConnection();
-        }
+    public void send(Object message) throws IOException, InterruptedException {
+            output.writeObject(message);
+            //handleClientConnection();
     }
 
-    public void handleClientConnection() throws IOException{
+    public void handleClientConnection() throws IOException, InterruptedException {
         try{
             while(true){
                 Object next = input.readObject();
@@ -54,6 +55,8 @@ public class ClientHandler implements Runnable{
     public void processClientMessage(Message message){
         if(message instanceof ClientConnection){
             System.out.println(((ClientConnection) message).getMessage());
+            handshake = true;
+            notifyAll();
         }
         if(message instanceof SendNickname){
                 nickname = ((SendNickname) message).getNickname();
@@ -83,19 +86,11 @@ public class ClientHandler implements Runnable{
 
     @Override
     public void run() {
-        try{
-            output=new ObjectOutputStream(socketClient.getOutputStream());
-            input=new ObjectInputStream(socketClient.getInputStream());
-        } catch (IOException e) {
-            System.out.println("Not open connection to "+socketClient.getInetAddress());
-            return;
-        }
-
         System.out.println("Connected to "+socketClient.getInetAddress());
-
         try {
+            //virtualView.askHandShake(this);
             handleClientConnection();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("client " + socketClient.getInetAddress() + " connection dropped");
         }
 

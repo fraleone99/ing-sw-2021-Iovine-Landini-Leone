@@ -44,15 +44,18 @@ public class Server {
                 ClientHandler clientHandler = new ClientHandler(newSocket);
                 Thread t = new Thread(clientHandler, "Server_" + newSocket.getInetAddress());
                 t.start();
-                synchronized (clients) {
-                    clients.add(clientHandler);
-                }
+
+                clients.add(clientHandler);
                 if (clients.size() == 1) {
                     synchronized (clients) {
-                        lobby.newLobby(clients.get(0));
+                        try {
+                            lobby.newLobby(clients.get(0));
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 System.out.println("Connection dropped");
             }
         }
