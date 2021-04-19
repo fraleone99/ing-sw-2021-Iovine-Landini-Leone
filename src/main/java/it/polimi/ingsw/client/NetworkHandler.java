@@ -1,12 +1,12 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.message.Message;
+import it.polimi.ingsw.client.message.ClientConnection;
 import it.polimi.ingsw.client.message.NumberOfPlayers;
-import it.polimi.ingsw.client.message.SetupConnection;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.client.message.SendNickname;
 import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.Connection;
 import it.polimi.ingsw.server.answer.PlayersNumber;
+import it.polimi.ingsw.server.answer.RequestNickname;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -60,16 +60,19 @@ public class NetworkHandler implements Runnable {
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnection()){
                 System.out.println("You are now connected to the server!");
-                String nickname;
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Insert nickname:");
-                nickname = scanner.nextLine();
-                Object msg = new SetupConnection(nickname);
-                output.writeObject(msg);
+                output.writeObject(new ClientConnection("Client connected!"));
             }
         }
+        else if(inputObj instanceof RequestNickname){
+            String nickname;
+            Scanner scanner = new Scanner(System.in);
+            System.out.println(((RequestNickname) inputObj).getMessage());
+            nickname = scanner.nextLine();
+            Object msg = new SendNickname(nickname);
+            output.writeObject(msg);
+        }
         else if(inputObj instanceof PlayersNumber){
-            System.out.println("Insert the number of players:");
+            System.out.println(((PlayersNumber) inputObj).getMessage());
             Scanner scanner = new Scanner(System.in);
             int number = scanner.nextInt();
             output.writeObject(new NumberOfPlayers(number));

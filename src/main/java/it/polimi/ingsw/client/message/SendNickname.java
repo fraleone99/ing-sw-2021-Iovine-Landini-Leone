@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.message;
 
-public class SetupConnection implements Message {
+public class SendNickname implements Message {
     private final String nickname;
 
-    public SetupConnection(String nickname) {
+    public SendNickname(String nickname) {
         this.nickname = nickname;
     }
 

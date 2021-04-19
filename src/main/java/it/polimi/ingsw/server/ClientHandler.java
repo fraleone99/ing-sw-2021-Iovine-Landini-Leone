@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.message.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
-import it.polimi.ingsw.client.message.SetupConnection;
-import it.polimi.ingsw.server.answer.Connection;
-import it.polimi.ingsw.server.answer.turnanswer.EndTurn;
-import it.polimi.ingsw.server.answer.turnanswer.StartTurn;
+import it.polimi.ingsw.client.message.NumberOfPlayers;
+import it.polimi.ingsw.client.message.SendNickname;
+import it.polimi.ingsw.server.answer.PlayersNumber;
+import it.polimi.ingsw.server.answer.RequestNickname;
+
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,33 +17,31 @@ public class ClientHandler implements Runnable{
     private Socket socketClient;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private static StartTurn start;
-    private static EndTurn end;
-    private static boolean myTurn;
-    private boolean isFirst=true;
+    private String nickname;
+    private int playersNumber;
+    private boolean isReady;
+
 
     public ClientHandler(Socket socketClient) {
         this.socketClient = socketClient;
+        isReady=false;
     }
 
-    /*public static void send(Object message){
-        try{
-            if(message.equals(start.getMessage())){
-                myTurn=true;
-            }
-            else if(message.equals(end.getMessage())){
-                myTurn=false;
-            }
+    public void send(Object message) throws IOException {
+        if (message instanceof RequestNickname) {
+            Object msg = new RequestNickname(((RequestNickname) message).getMessage());
+            output.writeObject(msg);
+            handleClientConnection();
+        } else if (message instanceof PlayersNumber) {
+            Object msg = new PlayersNumber(((PlayersNumber) message).getMessage());
+            output.writeObject(msg);
+            handleClientConnection();
         }
-    }*/
+    }
 
     public void handleClientConnection() throws IOException{
         try{
             while(true){
-                if(isFirst){
-                    output.writeObject(new Connection("Welcome!",true));
-                    isFirst=false;
-                }
                 Object next = input.readObject();
                 Message message=(Message)next;
                 processClientMessage(message);
@@ -52,9 +52,33 @@ public class ClientHandler implements Runnable{
     }
 
     public void processClientMessage(Message message){
-        if(message instanceof SetupConnection){
-            System.out.println(((SetupConnection) message).getNickname());
+        if(message instanceof ClientConnection){
+            System.out.println(((ClientConnection) message).getMessage());
         }
+        if(message instanceof SendNickname){
+                nickname = ((SendNickname) message).getNickname();
+                isReady = true;
+                notifyAll();
+        }
+        else if(message instanceof NumberOfPlayers){
+            playersNumber=((NumberOfPlayers) message).getNumber();
+        }
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public void setReady(boolean ready) {
+        isReady = ready;
+    }
+
+    public int getPlayersNumber() {
+        return playersNumber;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     @Override
