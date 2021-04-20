@@ -72,9 +72,15 @@ public class NetworkHandler implements Runnable {
             output.writeObject(msg);
         }
         else if(inputObj instanceof PlayersNumber){
+            String number;
             System.out.println(((PlayersNumber) inputObj).getMessage());
-            Scanner scanner = new Scanner(System.in);
-            String number = scanner.nextLine();
+            do {
+                Scanner scanner = new Scanner(System.in);
+                number = scanner.nextLine();
+                if(Integer.parseInt(number)<1 || Integer.parseInt(number)>4){
+                    System.out.println("Incorrect number, please try again:");
+                }
+            } while (Integer.parseInt(number)<1 || Integer.parseInt(number)>4);
             output.writeObject(new NumberOfPlayers(number));
         }
     }

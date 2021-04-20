@@ -12,7 +12,9 @@ import java.util.Scanner;
 public class Server {
     private ServerSocket Socket;
     private ArrayList<ClientHandler> clients = new ArrayList<>();
-    private Lobby lobby = new Lobby();
+    private ArrayList<Lobby> lobbies = new ArrayList<>();
+    private int numberOfLobbies=0;
+    private int playerRegistered=0;
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -21,7 +23,6 @@ public class Server {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        boolean isFirst = true;
 
         int PORT_NUMBER;
 
@@ -40,24 +41,39 @@ public class Server {
             try {
                 System.out.println("Waiting for connection...");
                 Socket newSocket = Socket.accept();
-                //System.out.println("Client connected");
                 ClientHandler clientHandler = new ClientHandler(newSocket);
                 Thread t = new Thread(clientHandler, "Server_" + newSocket.getInetAddress());
                 t.start();
 
                 clients.add(clientHandler);
-                if (clients.size() == 1) {
-                    synchronized (clients) {
-                        try {
-                            lobby.newLobby(clients.get(0));
-                        } catch (IOException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+
+                if (clients.size() == 1 + playerRegistered) {
+                    try {
+                        Lobby lobby = new Lobby();
+                        lobby.newLobby(clients.get(clients.size()-1));
+                        lobbies.add(lobby);
+                        playerRegistered+=lobbies.get(numberOfLobbies).getPlayersNumber();
+                        numberOfLobbies++;
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
                     }
-                }
-            } catch (IOException e) {
+                } else {
+                    lobbies.get(numberOfLobbies-1).add(clientHandler);
+                } /*else if(clients.size() == 1+lobbies.get(numberOfLobbies-1).getPlayersNumber()){
+                    Lobby lobby=new Lobby();
+                    lobby.newLobby(clients.get(lobbies.get(numberOfLobbies-1).getPlayersNumber()));
+                    lobbies.add(lobby);
+                    numberOfLobbies++;
+                } else if(clients.size()<= 1+lobbies.get(numberOfLobbies-1).getPlayersNumber()){
+                    lobbies.get(numberOfLobbies-1).add(clientHandler);
+                }*/
+            } catch (IOException | InterruptedException e) {
                 System.out.println("Connection dropped");
             }
         }
+    }
+
+    public int getNumberOfLobbies() {
+        return numberOfLobbies;
     }
 }
