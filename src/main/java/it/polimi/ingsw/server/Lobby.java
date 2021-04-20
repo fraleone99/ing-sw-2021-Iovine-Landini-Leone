@@ -15,14 +15,19 @@ public class Lobby {
     private Map<String, ClientHandler> clientNames = new HashMap<>();
 
     public void newLobby(ClientHandler firstClient) throws IOException, InterruptedException {
-        String s = view.requestNickname(firstClient);
+        String s=view.askHandShake(firstClient);
+        System.out.println(s);
+
+        s = view.requestNickname(firstClient);
         clientNames.put(s,firstClient);
 
-         String str=(String) clientNames.keySet().toArray()[0];
-         System.out.println(str + " has joined the server.");
+        String str=(String) clientNames.keySet().toArray()[0];
+        System.out.println(str + " has joined the server.");
 
-          playersNumber = view.requestPlayersNumber(firstClient);
+        playersNumber= Integer.parseInt( view.requestPlayersNumber(firstClient) );
         System.out.println("This lobby will contain " + playersNumber + " players");
+
+
     }
 
     public void add(ClientHandler clientHandler) throws IOException, InterruptedException {

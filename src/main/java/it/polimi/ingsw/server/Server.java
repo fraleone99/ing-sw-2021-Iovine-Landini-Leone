@@ -40,7 +40,7 @@ public class Server {
             try {
                 System.out.println("Waiting for connection...");
                 Socket newSocket = Socket.accept();
-                System.out.println("Client connected");
+                //System.out.println("Client connected");
                 ClientHandler clientHandler = new ClientHandler(newSocket);
                 Thread t = new Thread(clientHandler, "Server_" + newSocket.getInetAddress());
                 t.start();

@@ -4,8 +4,6 @@ import it.polimi.ingsw.client.message.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.message.NumberOfPlayers;
 import it.polimi.ingsw.client.message.SendNickname;
-import it.polimi.ingsw.server.answer.PlayersNumber;
-import it.polimi.ingsw.server.answer.RequestNickname;
 
 
 import java.io.IOException;
@@ -17,17 +15,14 @@ public class ClientHandler implements Runnable{
     private Socket socketClient;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private String nickname;
-    private int playersNumber;
     private boolean isReady;
-    private boolean handshake;
     VirtualView virtualView;
+    private String answer;
 
 
     public ClientHandler(Socket socketClient) throws IOException {
         this.socketClient = socketClient;
         isReady=false;
-        handshake = false;
         virtualView = new VirtualView();
 
         output=new ObjectOutputStream(socketClient.getOutputStream());
@@ -37,7 +32,6 @@ public class ClientHandler implements Runnable{
 
     public void send(Object message) throws IOException{
             output.writeObject(message);
-            //handleClientConnection();
     }
 
     public void handleClientConnection() throws IOException {
@@ -54,17 +48,17 @@ public class ClientHandler implements Runnable{
 
     public synchronized void processClientMessage(Message message){
         if(message instanceof ClientConnection){
-            System.out.println(((ClientConnection) message).getMessage());
-            handshake = true;
+            answer = ((ClientConnection) message).getMessage();
+            isReady = true;
             notifyAll();
         }
-        if(message instanceof SendNickname){
-                nickname = ((SendNickname) message).getNickname();
-                isReady = true;
-                notifyAll();
+        else if(message instanceof SendNickname){
+            answer = ((SendNickname) message).getNickname();
+            isReady = true;
+            notifyAll();
         }
         else if(message instanceof NumberOfPlayers){
-            playersNumber=((NumberOfPlayers) message).getNumber();
+            answer=((NumberOfPlayers) message).getNumber();
             isReady = true;
             notifyAll();
         }
@@ -78,17 +72,14 @@ public class ClientHandler implements Runnable{
         isReady = ready;
     }
 
-    public int getPlayersNumber() {
-        return playersNumber;
+    public String getAnswer() {
+        return answer;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
 
     @Override
     public void run() {
-        System.out.println("Connected to "+socketClient.getInetAddress());
+        //System.out.println("Connected to "+socketClient.getInetAddress());
         try {
             //virtualView.askHandShake(this);
             handleClientConnection();

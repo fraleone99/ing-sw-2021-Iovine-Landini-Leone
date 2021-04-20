@@ -1,13 +1,13 @@
 package it.polimi.ingsw.client.message;
 
 public class NumberOfPlayers implements Message {
-    private final int number;
+    private final String number;
 
-    public NumberOfPlayers(int number) {
+    public NumberOfPlayers(String number) {
         this.number = number;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 }

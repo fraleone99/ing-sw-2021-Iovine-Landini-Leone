@@ -59,7 +59,7 @@ public class NetworkHandler implements Runnable {
     public void processServerAnswer(Object inputObj) throws IOException {
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnection()){
-                System.out.println("You are now connected to the server!");
+                System.out.println(((Connection) inputObj).getMessage());
                 output.writeObject(new ClientConnection("Client connected!"));
             }
         }
@@ -74,7 +74,7 @@ public class NetworkHandler implements Runnable {
         else if(inputObj instanceof PlayersNumber){
             System.out.println(((PlayersNumber) inputObj).getMessage());
             Scanner scanner = new Scanner(System.in);
-            int number = scanner.nextInt();
+            String number = scanner.nextLine();
             output.writeObject(new NumberOfPlayers(number));
         }
     }
