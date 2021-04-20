@@ -3,6 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.message.ClientConnection;
 import it.polimi.ingsw.client.message.NumberOfPlayers;
 import it.polimi.ingsw.client.message.SendNickname;
+import it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.Connection;
 import it.polimi.ingsw.server.answer.PlayersNumber;
@@ -19,10 +21,12 @@ public class NetworkHandler implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Client owner;
+    private View view;
 
     public NetworkHandler(Socket server, Client owner) {
         this.server = server;
         this.owner = owner;
+        view = new CLI();
     }
 
     @Override
@@ -56,31 +60,23 @@ public class NetworkHandler implements Runnable {
         }
     }
 
+    public void send(Object message) throws IOException{
+        output.writeObject(message);
+    }
+
     public void processServerAnswer(Object inputObj) throws IOException {
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnection()){
-                System.out.println(((Connection) inputObj).getMessage());
-                output.writeObject(new ClientConnection("Client connected!"));
+                view.handShake(((Connection) inputObj).getMessage());
+                send(new ClientConnection("Client connected!"));
             }
         }
         else if(inputObj instanceof RequestNickname){
-            String nickname;
-            Scanner scanner = new Scanner(System.in);
-            System.out.println(((RequestNickname) inputObj).getMessage());
-            nickname = scanner.nextLine();
-            Object msg = new SendNickname(nickname);
-            output.writeObject(msg);
+            String nickname = view.askNickname(((RequestNickname) inputObj).getMessage());
+            send(new SendNickname(nickname));
         }
         else if(inputObj instanceof PlayersNumber){
-            String number;
-            System.out.println(((PlayersNumber) inputObj).getMessage());
-            do {
-                Scanner scanner = new Scanner(System.in);
-                number = scanner.nextLine();
-                if(Integer.parseInt(number)<1 || Integer.parseInt(number)>4){
-                    System.out.println("Incorrect number, please try again:");
-                }
-            } while (Integer.parseInt(number)<1 || Integer.parseInt(number)>4);
+            String number = view.askPlayerNumber(((PlayersNumber) inputObj).getMessage());
             output.writeObject(new NumberOfPlayers(number));
         }
     }

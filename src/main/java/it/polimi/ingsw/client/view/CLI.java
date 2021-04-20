@@ -1,11 +1,15 @@
 package it.polimi.ingsw.client.view;
 
+import it.polimi.ingsw.client.NetworkHandler;
+import it.polimi.ingsw.server.answer.PlayersNumber;
+import it.polimi.ingsw.server.answer.RequestNickname;
+
 import java.util.Scanner;
 
-public class CLI {
+public class CLI implements View{
     private final Scanner in;
 
-    public CLI(Scanner in) {
+    public CLI() {
         this.in = new Scanner(System.in);
     }
 
@@ -31,5 +35,31 @@ public class CLI {
                 "                                                                                                            ");
         }
 
-        
+
+    @Override
+    public void handShake(String welcome) {
+        System.out.println(welcome);
+    }
+
+    @Override
+    public String askPlayerNumber(String message) {
+        String number;
+        System.out.println(message);
+        do {
+            Scanner scanner = new Scanner(System.in);
+            number = scanner.nextLine();
+            if(Integer.parseInt(number)<1 || Integer.parseInt(number)>4){
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while (Integer.parseInt(number)<1 || Integer.parseInt(number)>4);
+        return number;
+    }
+
+    @Override
+    public String askNickname(String message) {
+        String nickname;
+        System.out.println(message);
+        nickname = in.nextLine();
+        return  nickname;
+    }
 }
