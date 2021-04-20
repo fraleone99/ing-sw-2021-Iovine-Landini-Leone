@@ -13,7 +13,7 @@ public class Server {
     private ServerSocket Socket;
     private ArrayList<ClientHandler> clients = new ArrayList<>();
     private ArrayList<Lobby> lobbies = new ArrayList<>();
-    private int numberOfLobbies=0;
+    private int numberOfLobbies;
     private int playerRegistered=0;
 
     public static void main(String[] args) {
@@ -53,7 +53,7 @@ public class Server {
                         lobby.newLobby(clients.get(clients.size()-1));
                         lobbies.add(lobby);
                         playerRegistered+=lobbies.get(numberOfLobbies).getPlayersNumber();
-                        numberOfLobbies++;
+                        setNumberOfLobbies();
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -71,6 +71,10 @@ public class Server {
                 System.out.println("Connection dropped");
             }
         }
+    }
+
+    public void setNumberOfLobbies(){
+        numberOfLobbies++;
     }
 
     public int getNumberOfLobbies() {
