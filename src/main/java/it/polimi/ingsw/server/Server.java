@@ -11,10 +11,11 @@ import java.util.Scanner;
 
 public class Server {
     private ServerSocket Socket;
-    private ArrayList<ClientHandler> clients = new ArrayList<>();
-    private ArrayList<Lobby> lobbies = new ArrayList<>();
+    private final ArrayList<ClientHandler> clients = new ArrayList<>();
+    private final ArrayList<Lobby> lobbies = new ArrayList<>();
     private int numberOfLobbies;
-    private int playerRegistered=0;
+    private int playersInLastLobby;
+    private boolean lobbyFull;
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -47,37 +48,29 @@ public class Server {
 
                 clients.add(clientHandler);
 
-                if (clients.size() == 1 + playerRegistered) {
+                //if there is no lobby or the existing lobbies are full we need to create a new lobby
+                if (clients.size() == 1 || lobbyFull) {
                     try {
-                        Lobby lobby = new Lobby();
-                        lobby.newLobby(clients.get(clients.size()-1));
+                        Lobby lobby = new Lobby(numberOfLobbies);
+                        lobby.newLobby(clientHandler);
                         lobbies.add(lobby);
-                        playerRegistered+=lobbies.get(numberOfLobbies).getPlayersNumber();
-                        setNumberOfLobbies();
+                        playersInLastLobby++;
+                        numberOfLobbies++;
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else {
                     lobbies.get(numberOfLobbies-1).add(clientHandler);
-                } /*else if(clients.size() == 1+lobbies.get(numberOfLobbies-1).getPlayersNumber()){
-                    Lobby lobby=new Lobby();
-                    lobby.newLobby(clients.get(lobbies.get(numberOfLobbies-1).getPlayersNumber()));
-                    lobbies.add(lobby);
-                    numberOfLobbies++;
-                } else if(clients.size()<= 1+lobbies.get(numberOfLobbies-1).getPlayersNumber()){
-                    lobbies.get(numberOfLobbies-1).add(clientHandler);
-                }*/
+                    playersInLastLobby++;
+                    if(playersInLastLobby == lobbies.get(numberOfLobbies-1).getPlayersNumber()) {
+                        lobbyFull = true;
+                        System.out.println("This lobby is now full. Next player will create a new lobby.");
+                    }
+                }
             } catch (IOException | InterruptedException e) {
                 System.out.println("Connection dropped");
             }
         }
     }
 
-    public void setNumberOfLobbies(){
-        numberOfLobbies++;
-    }
-
-    public int getNumberOfLobbies() {
-        return numberOfLobbies;
-    }
 }
