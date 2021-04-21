@@ -21,8 +21,8 @@ import java.util.ArrayList;
  */
 
 public class Game {
-
     private final ArrayList<Player> players;
+    private ArrayList<String> nicknames;
     private Player currentPlayer;
     private GameBoard gameBoard;
 
@@ -34,9 +34,13 @@ public class Game {
         return players;
     }
 
-    public void createNewPlayer(String nickname){
-        Player NewPlayer = new Player(nickname);
-        players.add(NewPlayer);
+    public void createPlayers(ArrayList<String> nickname){
+        nicknames.addAll(nickname);
+        for(int i=0; i<nicknames.size();i++){
+            Player p = new Player(nicknames.get(0));
+            players.add(p);
+        }
+        players.get(0).setFirst(true);
     }
 
     public Player getPlayer(String nickname) throws NotExistingPlayerException{

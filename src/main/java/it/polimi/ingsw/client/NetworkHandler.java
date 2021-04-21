@@ -5,10 +5,7 @@ import it.polimi.ingsw.client.message.NumberOfPlayers;
 import it.polimi.ingsw.client.message.SendNickname;
 import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.server.answer.Answer;
-import it.polimi.ingsw.server.answer.Connection;
-import it.polimi.ingsw.server.answer.PlayersNumber;
-import it.polimi.ingsw.server.answer.RequestNickname;
+import it.polimi.ingsw.server.answer.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -78,6 +75,10 @@ public class NetworkHandler implements Runnable {
         else if(inputObj instanceof PlayersNumber){
             String number = view.askPlayerNumber(((PlayersNumber) inputObj).getMessage());
             output.writeObject(new NumberOfPlayers(number));
+        }
+        else if(inputObj instanceof InvalidNickname){
+            String nickname = view.askNickname(((InvalidNickname)inputObj).getMessage());
+            output.writeObject(new SendNickname(nickname));
         }
     }
 

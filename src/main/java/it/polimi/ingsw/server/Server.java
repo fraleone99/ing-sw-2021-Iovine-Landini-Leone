@@ -51,11 +51,20 @@ public class Server {
                 //if there is no lobby or the existing lobbies are full we need to create a new lobby
                 if (clients.size() == 1 || lobbyFull) {
                     try {
+                        numberOfLobbies++;
                         Lobby lobby = new Lobby(numberOfLobbies);
                         lobby.newLobby(clientHandler);
                         lobbies.add(lobby);
                         playersInLastLobby++;
-                        numberOfLobbies++;
+                        if(lobbyFull){
+                            lobbyFull=false;
+                        }
+                        if(playersInLastLobby == lobbies.get(numberOfLobbies-1).getPlayersNumber()) {
+                            lobbyFull = true;
+                            System.out.println("This lobby is now full. Next player will create a new lobby.");
+                            lobbies.get(numberOfLobbies-1).prepareTheGame();
+                            playersInLastLobby=0;
+                        }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -65,6 +74,8 @@ public class Server {
                     if(playersInLastLobby == lobbies.get(numberOfLobbies-1).getPlayersNumber()) {
                         lobbyFull = true;
                         System.out.println("This lobby is now full. Next player will create a new lobby.");
+                        lobbies.get(numberOfLobbies-1).prepareTheGame();
+                        playersInLastLobby=0;
                     }
                 }
             } catch (IOException | InterruptedException e) {

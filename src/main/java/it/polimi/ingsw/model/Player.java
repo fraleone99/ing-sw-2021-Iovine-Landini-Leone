@@ -22,11 +22,10 @@ import java.util.ArrayList;
  */
 
 public class Player {
-
     private final String nickname;
     private final PlayerDashboard playerDashboard;
     private int victoryPoints;
-    private boolean first;
+    private boolean first=false;
     private final ArrayList <Production> activatedProduction = new ArrayList<>();
 
 
@@ -36,6 +35,10 @@ public class Player {
 
     public LeaderCardDeck getLeaders(){
         return playerDashboard.getLeaders();
+    }
+
+    public void setFirst(boolean first) {
+        this.first = first;
     }
 
     public int calculateVictoryPoints() {
