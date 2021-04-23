@@ -22,9 +22,10 @@ public class GameBoardTest{
         players.add(player2);
         Player player3=new Player("player3");
         players.add(player3);
+        ArrayList<String> nickname=new ArrayList<>();
 
         GameBoard gameBoard=new GameBoard(3);
-        Game game = new Game();
+        Game game = new Game(3,nickname);
         game.setGameBoard(gameBoard);
 
         game.drawActionToken();

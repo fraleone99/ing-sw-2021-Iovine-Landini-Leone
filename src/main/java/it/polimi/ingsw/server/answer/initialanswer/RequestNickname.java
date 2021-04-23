@@ -1,6 +1,8 @@
-package it.polimi.ingsw.server.answer;
+package it.polimi.ingsw.server.answer.initialanswer;
 
-public class RequestNickname implements Answer{
+import it.polimi.ingsw.server.answer.Answer;
+
+public class RequestNickname implements Answer {
     private final String message;
 
     public RequestNickname(String message) {

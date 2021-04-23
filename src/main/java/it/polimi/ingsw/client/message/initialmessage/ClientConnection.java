@@ -1,6 +1,8 @@
-package it.polimi.ingsw.client.message;
+package it.polimi.ingsw.client.message.initialmessage;
 
-public class ClientConnection implements Message{
+import it.polimi.ingsw.client.message.Message;
+
+public class ClientConnection implements Message {
     private String message;
 
     public ClientConnection(String message) {

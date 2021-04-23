@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -22,25 +23,32 @@ import java.util.ArrayList;
 
 public class Game {
     private final ArrayList<Player> players;
-    private ArrayList<String> nicknames;
+    private ArrayList<String> nicknames=new ArrayList<>();
     private Player currentPlayer;
     private GameBoard gameBoard;
 
-    public Game() {
+    public Game(int playersNumber, ArrayList<String> nickname) {
         players = new ArrayList<> ();
+        nicknames.addAll(nickname);
+
+        try {
+            gameBoard=new GameBoard(playersNumber);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public void createPlayers(ArrayList<String> nickname){
-        nicknames.addAll(nickname);
-        for(int i=0; i<nicknames.size();i++){
-            Player p = new Player(nicknames.get(0));
-            players.add(p);
+    public void createPlayer(String nickname){
+        Player p = new Player(nickname);
+        players.add(p);
+
+        if(players.size()==1){
+            players.get(0).setFirst(true);
         }
-        players.get(0).setFirst(true);
     }
 
     public Player getPlayer(String nickname) throws NotExistingPlayerException{

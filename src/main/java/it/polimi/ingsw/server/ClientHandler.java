@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.message.ClientConnection;
+import it.polimi.ingsw.client.message.action.ChosenResource;
+import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
-import it.polimi.ingsw.client.message.NumberOfPlayers;
-import it.polimi.ingsw.client.message.SendNickname;
+import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
+import it.polimi.ingsw.client.message.initialmessage.SendNickname;
+import it.polimi.ingsw.server.answer.ChooseResource;
 
 
 import java.io.IOException;
@@ -16,14 +18,12 @@ public class ClientHandler implements Runnable{
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private boolean isReady;
-    VirtualView virtualView;
     private String answer;
 
 
     public ClientHandler(Socket socketClient) throws IOException {
         this.socketClient = socketClient;
         isReady=false;
-        virtualView = new VirtualView();
 
         output=new ObjectOutputStream(socketClient.getOutputStream());
         input=new ObjectInputStream(socketClient.getInputStream());
@@ -62,6 +62,11 @@ public class ClientHandler implements Runnable{
             isReady = true;
             notifyAll();
         }
+        else if(message instanceof ChosenResource){
+            answer=String.valueOf(((ChosenResource) message).getResource());
+            isReady=true;
+            notifyAll();
+        }
     }
 
     public boolean isReady() {
@@ -89,6 +94,8 @@ public class ClientHandler implements Runnable{
 
         try{
             socketClient.close();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

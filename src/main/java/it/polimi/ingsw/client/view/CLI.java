@@ -1,9 +1,5 @@
 package it.polimi.ingsw.client.view;
 
-import it.polimi.ingsw.client.NetworkHandler;
-import it.polimi.ingsw.server.answer.PlayersNumber;
-import it.polimi.ingsw.server.answer.RequestNickname;
-
 import java.util.Scanner;
 
 public class CLI implements View{
@@ -38,6 +34,7 @@ public class CLI implements View{
 
     @Override
     public void handShake(String welcome) {
+        startGame();
         System.out.println(welcome);
     }
 
@@ -45,13 +42,14 @@ public class CLI implements View{
     public String askPlayerNumber(String message) {
         String number;
         System.out.println(message);
+
         do {
-            Scanner scanner = new Scanner(System.in);
-            number = scanner.nextLine();
-            if(Integer.parseInt(number)<1 || Integer.parseInt(number)>4){
+            number = in.nextLine();
+            if(Integer.parseInt(number)<2 || Integer.parseInt(number)>4){
                 System.out.println("Incorrect number, please try again:");
             }
-        } while (Integer.parseInt(number)<1 || Integer.parseInt(number)>4);
+        } while (Integer.parseInt(number)<2 || Integer.parseInt(number)>4);
+
         return number;
     }
 
@@ -61,5 +59,25 @@ public class CLI implements View{
         System.out.println(message);
         nickname = in.nextLine();
         return  nickname;
+    }
+
+    public int askResource(String message) {
+        int resource;
+
+        System.out.println(message);
+        System.out.println("Press the corresponding number:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
+
+        do {
+            resource=Integer.parseInt(in.nextLine());
+            if(resource<1 || resource >4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(resource<1 || resource>4);
+
+        return resource;
+    }
+
+    public void readMessage(String message) {
+        System.out.println(message);
     }
 }

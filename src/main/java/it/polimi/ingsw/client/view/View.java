@@ -11,5 +11,7 @@ public interface View {
 
     String askNickname(String message);
 
+    void readMessage(String message);
 
+    int askResource(String message);
 }

@@ -1,4 +1,6 @@
-package it.polimi.ingsw.client.message;
+package it.polimi.ingsw.client.message.initialmessage;
+
+import it.polimi.ingsw.client.message.Message;
 
 public class SendNickname implements Message {
     private final String nickname;

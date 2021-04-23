@@ -1,12 +1,13 @@
 package it.polimi.ingsw.server.answer;
 
-public class InvalidNickname implements Answer{
+public class FirstPlayer implements Answer{
     private final String message;
 
-    public InvalidNickname(String message) {
+    public FirstPlayer(String message) {
         this.message = message;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

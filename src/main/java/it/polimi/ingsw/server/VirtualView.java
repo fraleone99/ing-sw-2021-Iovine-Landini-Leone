@@ -1,18 +1,17 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.server.answer.Connection;
-import it.polimi.ingsw.server.answer.InvalidNickname;
-import it.polimi.ingsw.server.answer.PlayersNumber;
-import it.polimi.ingsw.server.answer.RequestNickname;
+import it.polimi.ingsw.server.answer.ChooseResource;
+import it.polimi.ingsw.server.answer.FirstPlayer;
+import it.polimi.ingsw.server.answer.initialanswer.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VirtualView {
     private String answer;
+    private Map<String, ClientHandler> namesToClient = new HashMap<>();
+
 
     public String requestPlayersNumber(ClientHandler client) throws IOException, InterruptedException {
         client.send(new PlayersNumber("Please insert the number of players:"));
@@ -22,6 +21,40 @@ public class VirtualView {
         }
         client.setReady(false);
         return answer;
+        //notify everyone the players number
+    }
+
+    public void firstPlayer(String nickname) throws IOException {
+        namesToClient.get(nickname).send(new FirstPlayer("You are the first player."));
+    }
+
+    public int chooseResource(String nickname, String player, int amount) throws IOException, InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        if(player.equals("fourth") && amount==2){
+            client.send(new ChooseResource("Please choose another resource."));
+        } else {
+            client.send(new ChooseResource("You are the " + player + " player. Please choose a resource."));
+        }
+
+        synchronized (client){
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+
+    public void waitingRoom(ClientHandler client) throws IOException {
+        client.send(new WaitingRoom("You are now in the waiting room. The game will start soon!"));
+    }
+
+    public void prepareTheLobby(ClientHandler client) throws IOException {
+        client.send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
+        //notify everyone
     }
 
     public String requestNickname(ClientHandler client) throws IOException, InterruptedException {
@@ -32,6 +65,7 @@ public class VirtualView {
         }
         client.setReady(false);
         return answer;
+        //notify everyone who joined the lobby
     }
 
     public String InvalidNickname(ClientHandler client) throws InterruptedException, IOException {
@@ -55,4 +89,7 @@ public class VirtualView {
         return answer;
     }
 
+    public void setNamesToClient(String nickname, ClientHandler client) {
+        namesToClient.put(nickname,client);
+    }
 }

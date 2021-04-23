@@ -1,17 +1,18 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.message.ClientConnection;
-import it.polimi.ingsw.client.message.NumberOfPlayers;
-import it.polimi.ingsw.client.message.SendNickname;
+import it.polimi.ingsw.client.message.action.ChosenResource;
+import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
+import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
+import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.*;
+import it.polimi.ingsw.server.answer.initialanswer.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class NetworkHandler implements Runnable {
     private Socket server;
@@ -79,6 +80,19 @@ public class NetworkHandler implements Runnable {
         else if(inputObj instanceof InvalidNickname){
             String nickname = view.askNickname(((InvalidNickname)inputObj).getMessage());
             output.writeObject(new SendNickname(nickname));
+        }
+        else if(inputObj instanceof WaitingRoom){
+            view.readMessage(((WaitingRoom) inputObj).getMessage());
+        }
+        else if(inputObj instanceof PrepareTheLobby){
+            view.readMessage(((PrepareTheLobby) inputObj).getMessage());
+        }
+        else if(inputObj instanceof FirstPlayer){
+            view.readMessage(((FirstPlayer) inputObj).getMessage());
+        }
+        else if(inputObj instanceof ChooseResource){
+            int resource=view.askResource(((ChooseResource) inputObj).getMessage());
+            output.writeObject(new ChosenResource(resource));
         }
     }
 

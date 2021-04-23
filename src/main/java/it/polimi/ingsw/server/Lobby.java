@@ -13,7 +13,8 @@ public class Lobby {
     private int playersNumber;
     private final int lobbyID;
     private VirtualView view=new VirtualView();
-    private Map<ClientHandler, String> clientNames = new HashMap<>();
+    private Map<ClientHandler, String> clientToNames = new HashMap<>();
+    private Map<String, ClientHandler> namesToClient = new HashMap<>();
     private ArrayList<String> nicknames = new ArrayList<>();
 
     public Lobby(int lobbyID) {
@@ -21,19 +22,22 @@ public class Lobby {
     }
 
     public void newLobby(ClientHandler firstClient) throws IOException, InterruptedException {
-
         String s=view.askHandShake(firstClient);
         System.out.println(s);
 
         s = view.requestNickname(firstClient);
-        clientNames.put(firstClient, s);
+        clientToNames.put(firstClient, s);
+        namesToClient.put(s, firstClient);
         nicknames.add(s);
+        view.setNamesToClient(s,firstClient);
 
-        String str=  clientNames.get(firstClient);
+        String str = clientToNames.get(firstClient);
         System.out.println(str + " has joined the lobby number " + lobbyID);
 
         playersNumber= Integer.parseInt( view.requestPlayersNumber(firstClient) );
         System.out.println("The lobby number "+ lobbyID +" will contain " + playersNumber + " players");
+
+        view.waitingRoom(firstClient);
     }
 
     public void add(ClientHandler clientHandler) throws IOException, InterruptedException {
@@ -46,10 +50,19 @@ public class Lobby {
             s=view.InvalidNickname(clientHandler);
         }
 
-        clientNames.put(clientHandler,s);
+        clientToNames.put(clientHandler,s);
+        namesToClient.put(s, clientHandler);
         nicknames.add(s);
+        view.setNamesToClient(s,clientHandler);
 
-        String str= clientNames.get(clientHandler);
+        if(nicknames.size()<playersNumber){
+            view.waitingRoom(clientHandler);
+        } else {
+            view.waitingRoom(clientHandler);
+            view.prepareTheLobby(clientHandler);
+        }
+
+        String str= clientToNames.get(clientHandler);
         System.out.println(str + " has joined the lobby number " + lobbyID);
     }
 
@@ -57,12 +70,16 @@ public class Lobby {
         return playersNumber;
     }
 
+    public Map<String, ClientHandler> getNamesToClient() {
+        return namesToClient;
+    }
+
     public void prepareTheGame(){
         Thread t=new Thread( () -> {
             System.out.println("Prepare game of the lobby number " + lobbyID);
             Collections.shuffle(nicknames);
 
-            Controller controller=new Controller(nicknames);
+            Controller controller = new Controller(nicknames, view);
 
             controller.play();
         }

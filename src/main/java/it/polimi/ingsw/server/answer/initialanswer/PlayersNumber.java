@@ -1,6 +1,8 @@
-package it.polimi.ingsw.server.answer;
+package it.polimi.ingsw.server.answer.initialanswer;
 
-public class PlayersNumber implements Answer{
+import it.polimi.ingsw.server.answer.Answer;
+
+public class PlayersNumber implements Answer {
     private final String message;
 
     public PlayersNumber(String message) {

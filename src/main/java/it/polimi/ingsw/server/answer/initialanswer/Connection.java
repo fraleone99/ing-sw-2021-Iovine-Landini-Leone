@@ -1,6 +1,8 @@
-package it.polimi.ingsw.server.answer;
+package it.polimi.ingsw.server.answer.initialanswer;
 
-public class Connection implements Answer{
+import it.polimi.ingsw.server.answer.Answer;
+
+public class Connection implements Answer {
     private final String message;
     private final boolean connection; //true connection confirmation, false connection termination.
 

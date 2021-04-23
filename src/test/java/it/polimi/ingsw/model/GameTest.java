@@ -14,7 +14,8 @@ public class GameTest {
 
     @Test
     public void getPlayer() throws NotExistingPlayerException {
-        game=new Game();
+        ArrayList<String> nickname=new ArrayList<>();
+        game=new Game(1, nickname);
         Player player=new Player("TestPlayer");
         game.getPlayers().add(player);
         assertEquals(game.getPlayer("TestPlayer").getNickname(),"TestPlayer");
@@ -22,7 +23,8 @@ public class GameTest {
 
     @Test(expected = NotExistingPlayerException.class)
     public void getPlayer_NotExistingPlayer() throws NotExistingPlayerException {
-        game=new Game();
+        ArrayList<String> nickname=new ArrayList<>();
+        game=new Game(1, nickname);
         Player player=new Player("TestPlayer");
         game.getPlayers().add(player);
         assertEquals(game.getPlayer("Nicola").getNickname(),"TestPlayer");
