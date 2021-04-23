@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view;
-
+package it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.client.view.View;
 import java.util.Scanner;
 
-public class CLI implements View{
+public class CLI implements View {
     private final Scanner in;
 
     public CLI() {
@@ -48,8 +48,10 @@ public class CLI implements View{
             if(Integer.parseInt(number)<2 || Integer.parseInt(number)>4){
                 System.out.println("Incorrect number, please try again:");
             }
+            else if(Integer.parseInt(number) == 1){
+                System.out.println("Sorry, single player is still under development. Try again: ");
+            }
         } while (Integer.parseInt(number)<2 || Integer.parseInt(number)>4);
-
         return number;
     }
 

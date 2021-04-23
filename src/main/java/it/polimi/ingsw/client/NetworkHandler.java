@@ -1,10 +1,10 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.view.CLI.CLI;
 import it.polimi.ingsw.client.message.action.ChosenResource;
 import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
 import it.polimi.ingsw.client.message.initialmessage.SendNickname;
-import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
@@ -13,11 +13,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class NetworkHandler implements Runnable {
     private Socket server;
     private ObjectOutputStream output;
     private ObjectInputStream input;
+    private Heartbeat heartbeat;
     private Client owner;
     private View view;
 
@@ -29,6 +31,11 @@ public class NetworkHandler implements Runnable {
 
     @Override
     public void run() {
+
+        heartbeat = new Heartbeat(this);
+        Thread heartbeatThread = new Thread(heartbeat);
+        heartbeatThread.start();
+
 
         try {
             input = new ObjectInputStream(server.getInputStream());
@@ -43,23 +50,33 @@ public class NetworkHandler implements Runnable {
             e.printStackTrace();
         }
 
+
+
     }
 
     private void handleClientConnection() throws IOException{
         while (true) {
             try {
+                server.setSoTimeout(4000);
                 Object next = input.readObject();
                 Answer answer = (Answer) next;
-                processServerAnswer(answer);
+                if(!(answer instanceof Pong))
+                    processServerAnswer(answer);
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+
+            }
+            catch (SocketTimeoutException e){
+                System.out.println("Server unreachable!");
             }
         }
     }
 
     public void send(Object message) throws IOException{
+        output.reset();
         output.writeObject(message);
+        output.flush();
     }
 
     public void processServerAnswer(Object inputObj) throws IOException {

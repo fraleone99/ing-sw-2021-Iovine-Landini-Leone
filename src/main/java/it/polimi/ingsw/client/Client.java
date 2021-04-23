@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Client implements Runnable {
     NetworkHandler networkHandler;
+    Heartbeat heartbeat;
 
     public static void main(String[] args) {
         Client client = new Client();

@@ -54,7 +54,7 @@ public class Server {
                         lobbies.add(lobby);
                         playersInLastLobby++;
                         if(lobbyFull){
-                            lobbyFull=false;
+                            lobbyFull = false;
                         }
                         if(playersInLastLobby == lobbies.get(numberOfLobbies-1).getPlayersNumber()) {
                             lobbyFull = true;
@@ -72,7 +72,7 @@ public class Server {
                         lobbyFull = true;
                         System.out.println("This lobby is now full. Next player will create a new lobby.");
                         lobbies.get(numberOfLobbies-1).prepareTheGame();
-                        playersInLastLobby=0;
+                        playersInLastLobby = 0;
                     }
                 }
             } catch (IOException | InterruptedException e) {

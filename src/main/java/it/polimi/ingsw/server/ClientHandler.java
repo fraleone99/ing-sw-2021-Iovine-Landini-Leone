@@ -6,12 +6,15 @@ import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
 import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.server.answer.ChooseResource;
+import it.polimi.ingsw.client.message.*;
 
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ClientHandler implements Runnable{
     private Socket socketClient;
@@ -19,6 +22,7 @@ public class ClientHandler implements Runnable{
     private ObjectInputStream input;
     private boolean isReady;
     private String answer;
+    private Heartbeat heartbeat;
 
 
     public ClientHandler(Socket socketClient) throws IOException {
@@ -31,18 +35,28 @@ public class ClientHandler implements Runnable{
     }
 
     public void send(Object message) throws IOException{
-            output.writeObject(message);
+        output.reset();
+        output.writeObject(message);
+        output.flush();
     }
 
     public void handleClientConnection() throws IOException {
         try{
             while(true){
+                socketClient.setSoTimeout(4000);
                 Object next = input.readObject();
                 Message message=(Message)next;
-                processClientMessage(message);
+                if(!(message instanceof Ping))
+                    processClientMessage(message);
+
+
+
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+        catch (SocketTimeoutException e){
+            System.out.println("Client unreachable!");
         }
     }
 
@@ -67,6 +81,9 @@ public class ClientHandler implements Runnable{
             isReady=true;
             notifyAll();
         }
+        else if(message instanceof Ping){
+            System.out.println("ping received!");
+        }
     }
 
     public boolean isReady() {
@@ -85,6 +102,11 @@ public class ClientHandler implements Runnable{
     @Override
     public void run() {
         //System.out.println("Connected to "+socketClient.getInetAddress());
+
+        heartbeat = new Heartbeat(this);
+        Thread heartbeatThread = new Thread(heartbeat);
+        heartbeatThread.start();
+
         try {
             //virtualView.askHandShake(this);
             handleClientConnection();
@@ -94,6 +116,7 @@ public class ClientHandler implements Runnable{
 
         try{
             socketClient.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
