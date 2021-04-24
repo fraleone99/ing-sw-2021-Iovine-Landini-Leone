@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.card.leadercard.StorageLeader;
 import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
 import it.polimi.ingsw.model.enumeration.Resource;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,6 @@ public class PlayerDashboard {
     }
 
     public PlayerDashboard() {
-
         faithPath = new FaithPath();
         vault = new Vault();
         devCardsSpace = new DevCardsSpace();

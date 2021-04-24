@@ -70,6 +70,7 @@ public class DevelopmentCard extends Card {
                 "color=" + color +
                 ", level=" + level +
                 ", cost=" + cost.toString() +
+                ", victoryPoints=" + getVictoryPoints() +
                 ", production=(" + "input->" + production.getInputProduction().toString() +
                                     "output->" + production.getOutputProduction().toString() + ")"+
                 ", faithSteps=" + production.getFaithSteps() +

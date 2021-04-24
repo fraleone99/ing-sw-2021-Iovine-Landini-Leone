@@ -1,7 +1,13 @@
 package it.polimi.ingsw.model.gameboard.playerdashboard;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.exceptions.NotExistingSpaceException;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 /**
@@ -20,107 +26,22 @@ public class FaithPath {
     private boolean papalPawn3=false;
 
     public FaithPath() {
-        //0
-        Cell cell=new Cell(false, false, false, 0);
-        space.add(cell);
-
-        //1
-        cell=new Cell(false, false, false, 0);
-        space.add(cell);
-
-        //2
-        cell=new Cell(false, false, false, 0);
-        space.add(cell);
-
-        //3
-        cell=new Cell(false, false, false, 1);
-        space.add(cell);
-
-        //4
-        cell=new Cell(false, false, false, 1);
-        space.add(cell);
-
-        //5
-        cell=new Cell(false, false, false, 1);
-        space.add(cell);
-
-        //6
-        cell=new Cell(false, false, false, 2);
-        space.add(cell);
-
-        //7
-        cell=new Cell(false, false, false, 2);
-        space.add(cell);
-
-        //8
-        cell=new Cell(true, false, false, 2);
-        space.add(cell);
-
-        //9
-        cell=new Cell(false, false, false, 4);
-        space.add(cell);
-
-        //10
-        cell=new Cell(false, false, false, 4);
-        space.add(cell);
-
-        //11
-        cell=new Cell(false, false, false, 4);
-        space.add(cell);
-
-        //12
-        cell=new Cell(false, false, false, 6);
-        space.add(cell);
-
-        //13
-        cell=new Cell(false, false, false, 6);
-        space.add(cell);
-
-        //14
-        cell=new Cell(false, false, false, 6);
-        space.add(cell);
-
-        //15
-        cell=new Cell(false, false, false, 9);
-        space.add(cell);
-
-        //16
-        cell=new Cell(false, true, false, 9);
-        space.add(cell);
-
-        //17
-        cell=new Cell(false, false, false, 9);
-        space.add(cell);
-
-        //18
-        cell=new Cell(false, false, false, 12);
-        space.add(cell);
-
-        //19
-        cell=new Cell(false, false, false, 12);
-        space.add(cell);
-
-        //20
-        cell=new Cell(false, false, false, 12);
-        space.add(cell);
-
-        //21
-        cell=new Cell(false, false, false, 16);
-        space.add(cell);
-
-        //22
-        cell=new Cell(false, false, false, 16);
-        space.add(cell);
-
-        //23
-        cell=new Cell(false, false, false, 16);
-        space.add(cell);
-
-        //24
-        cell=new Cell(false, false, true, 16);
-        space.add(cell);
+        initializeCells();
     }
 
+    public void initializeCells(){
+        try{
+            Gson gson = new Gson();
+            JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/Cells.json"));
+            ArrayList<Cell> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<Cell>>(){}.getType());
+
+            for(Cell cell: data){
+                space.add(cell);
+            }
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public boolean isPapalPawn1() {
         return papalPawn1;
@@ -160,14 +81,17 @@ public class FaithPath {
                 papalPawn1=true;
                 papalPoints=papalPoints+1;
             }
+            break;
             case 2: if(positionFaithPath>11){
                 papalPawn2=true;
                 papalPoints=papalPoints+2;
             }
+            break;
             case 3: if(positionFaithPath>18){
                 papalPawn3=true;
                 papalPoints=papalPoints+3;
             }
+            break;
         }
     }
 
