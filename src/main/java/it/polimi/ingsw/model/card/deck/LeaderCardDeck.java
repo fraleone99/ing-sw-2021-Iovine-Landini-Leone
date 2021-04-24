@@ -20,7 +20,7 @@ import java.util.Collections;
 public class LeaderCardDeck {
 
 
-    private ArrayList<LeaderCard> deck;
+    private final ArrayList<LeaderCard> deck;
 
     public LeaderCardDeck() {
         deck = new ArrayList<>();
@@ -98,5 +98,6 @@ public class LeaderCardDeck {
         }
         return null;
     }
+
 
 }

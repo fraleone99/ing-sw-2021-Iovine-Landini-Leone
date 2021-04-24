@@ -1,34 +1,44 @@
 package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.model.Goods;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.enumeration.CardColor;
+import it.polimi.ingsw.model.enumeration.Resource;
+
+import java.sql.Struct;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CLI implements View {
     private final Scanner in;
+    private final HashMap<CardColor, String> CardColorToString = new HashMap<>();
+    private final HashMap<Resource, String> ResourceToString = new HashMap<>();
 
     public CLI() {
         this.in = new Scanner(System.in);
+        initializeCardColorToString();
+        initializeResourceToString();
     }
 
-    private static void startGame() {
-        System.out.println("\n Welcome to" +
-                "_________   _______  _______  _______  _______ _________ _______ _________   ______   _______  _            \n" +
-                "\\__   __/  (       )(  ___  )(  ____ \\(  ____ \\\\__   __/(  ____ )\\__   __/  (  __  \\ (  ____ \\( \\           \n" +
-                "   ) (     | () () || (   ) || (    \\/| (    \\/   ) (   | (    )|   ) (     | (  \\  )| (    \\/| (           \n" +
-                "   | |     | || || || (___) || (__    | (_____    | |   | (____)|   | |     | |   ) || (__    | |           \n" +
-                "   | |     | |(_)| ||  ___  ||  __)   (_____  )   | |   |     __)   | |     | |   | ||  __)   | |           \n" +
-                "   | |     | |   | || (   ) || (            ) |   | |   | (\\ (      | |     | |   ) || (      | |           \n" +
-                "___) (___  | )   ( || )   ( || (____/\\/\\____) |   | |   | ) \\ \\_____) (___  | (__/  )| (____/\\| (____/\\     \n" +
-                "\\_______/  |/     \\||/     \\|(_______/\\_______)   )_(   |/   \\__/\\_______/  (______/ (_______/(_______/     \n" +
-                "                                                                                                            \n" +
-                " _______ _________ _        _______  _______  _______ _________ _______  _______  _       _________ _______ \n" +
-                "(  ____ )\\__   __/( (    /|(  ___  )(  ____ \\(  ____ \\\\__   __/(       )(  ____ \\( (    /|\\__   __/(  ___  )\n" +
-                "| (    )|   ) (   |  \\  ( || (   ) || (    \\/| (    \\/   ) (   | () () || (    \\/|  \\  ( |   ) (   | (   ) |\n" +
-                "| (____)|   | |   |   \\ | || (___) || (_____ | |         | |   | || || || (__    |   \\ | |   | |   | |   | |\n" +
-                "|     __)   | |   | (\\ \\) ||  ___  |(_____  )| |         | |   | |(_)| ||  __)   | (\\ \\) |   | |   | |   | |\n" +
-                "| (\\ (      | |   | | \\   || (   ) |      ) || |         | |   | |   | || (      | | \\   |   | |   | |   | |\n" +
-                "| ) \\ \\_____) (___| )  \\  || )   ( |/\\____) || (____/\\___) (___| )   ( || (____/\\| )  \\  |   | |   | (___) |\n" +
-                "|/   \\__/\\_______/|/    )_)|/     \\|\\_______)(_______/\\_______/|/     \\|(_______/|/    )_)   )_(   (_______)\n" +
-                "                                                                                                            ");
+    private void initializeResourceToString() {
+       ResourceToString.put(Resource.COIN, Constants.COIN);
+       ResourceToString.put(Resource.STONE, Constants.STONE);
+       ResourceToString.put(Resource.SHIELD, Constants.SHIELD);
+       ResourceToString.put(Resource.SERVANT, Constants.SERVANT);
+       ResourceToString.put(Resource.UNKNOWN, Constants.UNKNOWN);
+    }
+
+    private void initializeCardColorToString() {
+        CardColorToString.put(CardColor.BLUE, Constants.ANSI_BLUE);
+        CardColorToString.put(CardColor.GREEN, Constants.ANSI_GREEN);
+        CardColorToString.put(CardColor.PURPLE, Constants.ANSI_PURPLE);
+        CardColorToString.put(CardColor.YELLOW, Constants.ANSI_YELLOW);
+
+    }
+
+    public void startGame() {
+        System.out.println("\n Welcome to" + Constants.MAESTRI_RINASCIMENTO + Constants.AUTHORS);
         }
 
 
@@ -81,5 +91,99 @@ public class CLI implements View {
 
     public void readMessage(String message) {
         System.out.println(message);
+    }
+
+    public String printGood(Goods goods , String color){
+        //good
+        StringBuilder goodBuilder = new StringBuilder();
+        goodBuilder.append(color + "+" + Constants.ANSI_RESET);
+        for(int i = 0; i < goods.getAmount(); i++){
+            goodBuilder.append(ResourceToString.get((goods.getType())));
+        }
+        if(goods.getAmount()<0) {
+            for (int i = 0; i < 12 - goods.getAmount(); i++) {
+                goodBuilder.append(" ");
+            }
+        }
+        if(goods.getAmount()<=2){
+            goodBuilder.append(" ");
+        }
+        goodBuilder.append(color + "+\n" + Constants.ANSI_RESET);
+
+        return goodBuilder.toString();
+    }
+
+    public String printDevelopmentCard(DevelopmentCard developmentCard){
+
+        String Color = CardColorToString.get(developmentCard.getColor());
+        String fourteenSpace = "              ";
+        int MAX_LENGTH = 14;
+        int nres = 0;
+
+
+
+        //cost
+        StringBuilder costBuilder = new StringBuilder();
+        costBuilder.append("Cost:");
+        costBuilder.append("         "+ Color + "+\n" + Constants.ANSI_RESET);
+        for(Goods g: developmentCard.getCost()){
+            costBuilder.append(printGood(g,Color));
+        }
+        String cost = costBuilder.toString();
+
+        //level
+        StringBuilder levelBuilder = new StringBuilder();
+        levelBuilder.append("  Level: ");
+        levelBuilder.append(developmentCard.getLevel());
+        for(int i = levelBuilder.length(); i< MAX_LENGTH; i++){
+            levelBuilder.append(" ");
+        }
+        String level = levelBuilder.toString();
+
+        //victoryPoints
+        StringBuilder pointsBuilder = new StringBuilder();
+        pointsBuilder.append(" Points: ");
+        pointsBuilder.append(developmentCard.getLevel());
+        for(int i = pointsBuilder.length(); i< MAX_LENGTH; i++){
+            pointsBuilder.append(" ");
+        }
+        String points = pointsBuilder.toString();
+
+
+        //production
+        StringBuilder productionBuilder = new StringBuilder();
+        productionBuilder.append("Production:");
+        productionBuilder.append("   "+ Color + "+\n" + Constants.ANSI_RESET);
+        for(Goods g : developmentCard.getInputProduction()){
+            productionBuilder.append(printGood(g, Color));
+        }
+        productionBuilder.append(Color + "+" + Constants.ANSI_RESET);
+        productionBuilder.append("----->");
+        productionBuilder.append("        "+ Color + "+\n" + Constants.ANSI_RESET);
+        for(Goods g : developmentCard.getOutputProduction()){
+            productionBuilder.append(printGood(g, Color));
+        }
+        if(developmentCard.getFaithSteps() > 0) {
+            productionBuilder.append(Color + "+" + Constants.ANSI_RESET);
+            int k;
+            for (k = 0; k < developmentCard.getFaithSteps(); k++){
+                productionBuilder.append(Constants.FAITH);
+            }
+            for(; k<MAX_LENGTH; k++){
+                pointsBuilder.append(" ");
+            }
+            productionBuilder.append(Color + "+\n" + Constants.ANSI_RESET);
+        }
+        String production = productionBuilder.toString();
+
+
+        String DEV_CARD_EDGE = Color + "++++++++++++++++\n" + Constants.ANSI_RESET;
+        String BODY =
+                Color + "+" + Constants.ANSI_RESET + level  +  Color + "+\n" + Constants.ANSI_RESET +
+                Color + "+" + Constants.ANSI_RESET + points +  Color + "+\n" + Constants.ANSI_RESET +
+                Color + "+" + Constants.ANSI_RESET + fourteenSpace +   Color + "+\n" + Constants.ANSI_RESET +
+                Color + "+" + Constants.ANSI_RESET + cost +   Color  + Constants.ANSI_RESET +
+                Color + "+" + Constants.ANSI_RESET + production +   Color  + Constants.ANSI_RESET;
+        return DEV_CARD_EDGE + BODY + DEV_CARD_EDGE;
     }
 }

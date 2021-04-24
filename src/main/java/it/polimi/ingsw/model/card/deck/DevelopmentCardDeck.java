@@ -84,4 +84,8 @@ public class DevelopmentCardDeck implements Deck {
 
         return amount;
     }
+
+    public List<DevelopmentCard> getDeck() {
+        return deck;
+    }
 }
