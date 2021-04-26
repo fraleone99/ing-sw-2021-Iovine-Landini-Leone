@@ -15,17 +15,19 @@ public class GameBoardTest{
 
     @Test
     public void testDrawActionToken() throws InvalidChoiceException, FileNotFoundException {
-        ArrayList<Player> players = new ArrayList<>();
-        Player player1=new Player("player1");
-        players.add(player1);
-        Player player2=new Player("player2");
-        players.add(player2);
-        Player player3=new Player("player3");
-        players.add(player3);
         ArrayList<String> nickname=new ArrayList<>();
+        String player1="player1";
+        nickname.add(player1);
+        String player2="player2";
+        nickname.add(player2);
+        String player3="player3";
+        nickname.add(player3);
 
         GameBoard gameBoard=new GameBoard(3);
         Game game = new Game(3,nickname);
+        for(String nick: nickname){
+            game.createPlayer(nick);
+        }
         game.setGameBoard(gameBoard);
 
         game.drawActionToken();

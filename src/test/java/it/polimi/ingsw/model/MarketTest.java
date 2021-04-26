@@ -12,10 +12,6 @@ import java.util.ArrayList;
 public class MarketTest {
     Market market = new Market();
 
-    @Before public void testFillMatrix() {
-       market.fillMatrix(market.getRandomBall());
-    }
-
     @Test
     public void testGetChosenColor() throws InvalidChoiceException {
         market.fillMatrix(market.getRandomBall());

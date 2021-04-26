@@ -73,7 +73,7 @@ public class DevelopmentCardDeck implements Deck {
     public int size(){ return deck.size(); }
 
     public void setDeck(List<DevelopmentCard> deck){
-        this.deck = deck;
+        this.deck.addAll(deck);
     }
 
     public int victoryPointsAmount(){
