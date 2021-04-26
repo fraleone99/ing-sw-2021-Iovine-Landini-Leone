@@ -21,19 +21,25 @@ public class Constants {
     public final static String STONE        = "\u23E2";
     public final static String SHIELD       = ANSI_BLUE + "\uD83D\uDEE1" + ANSI_RESET;
     public final static String UNKNOWN      = "\u2753";
-    public final static String DOWNARROW    = "\uD83E\uDC17";
 
     public final static String FAITH    = "\u271F";
+    public final static String CIRCLE = "\uD83D\uDF89";
+    public final static String RECTTANGLE = "\u25AD";
 
     public final static String AUTHORS = "Authors: " + ANSI_BLUE + "Francesco Leone " + ANSI_RED + "Nicola Landini " +
                                             ANSI_GREEN + "Lorenzo Iovine " +ANSI_RESET;
+
+    public final static String LEADER_CARD_TOP_EDGE = "++++++++++++++++\n";
+    public final static String LEADER_CARD_LEFT_EDGE = "+";
+    public final static String LEADER_CARD_RIGHT_EDGE = "+\n";
+    public final static String FIVE_WITHE_SPACE = "     ";
 
     //DEVELOPMENT CARD
     public final static String DEV_CARD_TOP = "+++++++++++++";
 
     public final static String MAESTRI_RINASCIMENTO = "\"_________   _______  _______  _______  _______ _________ _______ _________   ______   _______  _            \\n\" +\n" +
             "                \"\\\\__   __/  (       )(  ___  )(  ____ \\\\(  ____ \\\\\\\\__   __/(  ____ )\\\\__   __/  (  __  \\\\ (  ____ \\\\( \\\\           \\n\" +\n" +
-            "                \"   ) (     | () () || (   ) || (    \\\\/| (    \\\\/   ) (   | (    )|   ) (     | (  \\\\  )| (    \\\\/| (           \\n\" +\n" +
+            "                \"   ) (     | () () || (   ) || (    \\\\/| (    \\\\/   ) (   | (    )|   ) (     | (  \\\\  )| (    \\\\/| (           \\\" +\n" +
             "                \"   | |     | || || || (___) || (__    | (_____    | |   | (____)|   | |     | |   ) || (__    | |           \\n\" +\n" +
             "                \"   | |     | |(_)| ||  ___  ||  __)   (_____  )   | |   |     __)   | |     | |   | ||  __)   | |           \\n\" +\n" +
             "                \"   | |     | |   | || (   ) || (            ) |   | |   | (\\\\ (      | |     | |   ) || (      | |           \\n\" +\n" +

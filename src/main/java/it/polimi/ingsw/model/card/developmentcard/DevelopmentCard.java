@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.Production;
 import it.polimi.ingsw.model.card.Card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**

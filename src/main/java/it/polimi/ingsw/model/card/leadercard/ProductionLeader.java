@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 
 public class ProductionLeader extends LeaderCard {
-    private Production production;
+    private final Production production;
 
     private final ArrayList<Requirements> requirements = new ArrayList<>();
 
@@ -44,5 +44,9 @@ public class ProductionLeader extends LeaderCard {
     public void setOutputProduction(Resource resource){
         Goods good = new Goods(resource, 1);
         production.setOutputProduction(good);
+    }
+
+    public int getFaithSteps() {
+        return production.getFaithSteps();
     }
 }

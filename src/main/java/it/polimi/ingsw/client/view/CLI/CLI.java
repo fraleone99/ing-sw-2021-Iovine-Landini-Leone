@@ -1,11 +1,14 @@
 package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.Goods;
+import it.polimi.ingsw.model.Production;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.card.leadercard.*;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.sql.Struct;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -186,4 +189,131 @@ public class CLI implements View {
                 Color + "+" + Constants.ANSI_RESET + production +   Color  + Constants.ANSI_RESET;
         return DEV_CARD_EDGE + BODY + DEV_CARD_EDGE;
     }
+
+
+    public String printLeaderCard(LeaderCard leaderCard){
+        StringBuilder leaderCardBuilder = new StringBuilder();
+        String LEADER_CARD_TOP_EDGE = "++++++++++++++++\n";
+        String LEADER_CARD_LEFT_EDGE = "+";
+        String LEADER_CARD_RIGHT_EDGE = "+\n";
+        String FIVE_WITHE_SPACE = "     ";
+
+        //TOP
+        leaderCardBuilder.append(LEADER_CARD_TOP_EDGE);
+
+        //victory points
+        String victoryPoints = LEADER_CARD_LEFT_EDGE+ "Points: " + leaderCard.getVictoryPoints() +
+                FIVE_WITHE_SPACE + LEADER_CARD_RIGHT_EDGE;
+        leaderCardBuilder.append(victoryPoints);
+
+        //requirements
+        leaderCardBuilder.append(requirementsToString(leaderCard.getRequirements()));
+
+        //power
+        if (leaderCard instanceof WhiteBallLeader){
+            leaderCardBuilder.append(printWhiteBallLeader((WhiteBallLeader) leaderCard));
+        }
+        else if (leaderCard instanceof ProductionLeader){
+            leaderCardBuilder.append(printProductionLeader((ProductionLeader) leaderCard));
+        }
+        else if (leaderCard instanceof StorageLeader){
+            leaderCardBuilder.append(printStorageLeader((StorageLeader) leaderCard));
+        }
+        else if(leaderCard instanceof  EconomyLeader){
+            leaderCardBuilder.append(printEconomyLeader((EconomyLeader) leaderCard));
+        }
+
+        leaderCardBuilder.append(LEADER_CARD_TOP_EDGE);
+
+        return leaderCardBuilder.toString();
+    }
+
+    public String printWhiteBallLeader(WhiteBallLeader leaderCard){
+        StringBuilder whiteBuilder = new StringBuilder();
+        whiteBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
+        whiteBuilder.append("+Conversion : +\n");
+        whiteBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
+        whiteBuilder.append(ResourceToString.get(leaderCard.getConversionType()));
+
+        whiteBuilder.append(Constants.LEADER_CARD_RIGHT_EDGE);
+
+        return whiteBuilder.toString();
+    }
+
+    public String printProductionLeader(ProductionLeader leaderCard){
+
+        //production
+        StringBuilder productionBuilder = new StringBuilder();
+        productionBuilder.append("Production:");
+        productionBuilder.append("   " + "+\n" + Constants.ANSI_RESET);
+        for(Goods g : leaderCard.getInputProduction()){
+            productionBuilder.append(printGood(g, Constants.ANSI_RESET));
+        }
+        productionBuilder.append("+" + Constants.ANSI_RESET);
+        productionBuilder.append("----->");
+        productionBuilder.append("        " + "+\n" + Constants.ANSI_RESET);
+        for(Goods g : leaderCard.getOutputProduction()){
+            productionBuilder.append(printGood(g, Constants.ANSI_RESET));
+        }
+        if(leaderCard.getFaithSteps() > 0) {
+            productionBuilder.append( "+" + Constants.ANSI_RESET);
+            int k;
+            for (k = 0; k < leaderCard.getFaithSteps(); k++){
+                productionBuilder.append(Constants.FAITH);
+            }
+            productionBuilder.append("+\n" + Constants.ANSI_RESET);
+        }
+        return productionBuilder.toString();
+    }
+
+    public String printStorageLeader(StorageLeader leaderCard){
+        StringBuilder storageLeader = new StringBuilder();
+
+        storageLeader.append(Constants.LEADER_CARD_LEFT_EDGE);
+        storageLeader.append("Shelf: ");
+        storageLeader.append(ResourceToString.get(leaderCard.getType()));
+        storageLeader.append(Constants.LEADER_CARD_RIGHT_EDGE);
+
+        return storageLeader.toString();
+
+    }
+
+    public String printEconomyLeader(EconomyLeader leaderCard){
+        StringBuilder economyBuilder = new StringBuilder();
+        economyBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
+        economyBuilder.append("Discount: ");
+        economyBuilder.append("-1").append(ResourceToString.get(leaderCard.getDiscountType()));
+        economyBuilder.append(Constants.LEADER_CARD_RIGHT_EDGE);
+
+
+        return economyBuilder.toString();
+    }
+
+    public String requirementsToString(ArrayList<Requirements> requirements){
+        StringBuilder requirementsBuilder = new StringBuilder();
+        requirementsBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
+        requirementsBuilder.append("Requirements: +\n");
+        requirementsBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
+        if(requirements.get(0).getAmount() > 0){
+            for(Requirements requirements1: requirements) {
+                String color = CardColorToString.get(requirements1.getColor());
+                if(requirements1.getLevel()!= 0) requirementsBuilder.append("Level:").append(requirements1.getLevel()).append(" ");
+                requirementsBuilder.append(color);
+                requirementsBuilder.append(Constants.CIRCLE);
+
+                requirementsBuilder.append(Constants.ANSI_RESET);
+            }
+        }
+        else{
+            for(Goods g: requirements.get(0).getCost()){
+               requirementsBuilder.append(printGood(g,Constants.ANSI_RESET));
+            }
+        }
+        requirementsBuilder.append(Constants.LEADER_CARD_RIGHT_EDGE);
+
+        return  requirementsBuilder.toString();
+    }
+
+
+
 }

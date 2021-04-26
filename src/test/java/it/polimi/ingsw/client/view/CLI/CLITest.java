@@ -3,10 +3,14 @@ package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.DevelopmentCardGridTest;
+import it.polimi.ingsw.model.GameBoardTest;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
+import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
+import it.polimi.ingsw.model.gameboard.GameBoard;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -30,6 +34,18 @@ public class CLITest {
                 System.out.println(cli.printDevelopmentCard(c) + c.toString());
 
             }
+        }
+    }
+
+    @Test
+    public void printLeaderCard() throws FileNotFoundException {
+        GameBoard gameBoard = new GameBoard(2);
+        CLI cli = new CLI();
+
+        LeaderCardDeck deck = gameBoard.getLeaderDeck();
+
+        for(LeaderCard d: deck.getDeck()){
+            System.out.println(cli.printLeaderCard(d));
         }
     }
 }
