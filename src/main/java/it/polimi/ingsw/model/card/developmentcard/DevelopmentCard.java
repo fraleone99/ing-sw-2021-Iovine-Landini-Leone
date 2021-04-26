@@ -23,8 +23,8 @@ public class DevelopmentCard extends Card {
     private final Production production;
 
 
-    public DevelopmentCard(int VictoryPoints, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
-        super(VictoryPoints);
+    public DevelopmentCard(int VictoryPoints, int CardID, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
+        super(VictoryPoints, CardID);
         this.color=Color;
         this.level=Level;
         this.cost.addAll(Cost);

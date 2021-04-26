@@ -1,6 +1,7 @@
 [
   {
-    "VictoryPoints": 5,
+    "victoryPoints": 5,
+    "cardID": 13,
     "conversionType": "COIN",
     "requirements": [
       {
@@ -28,7 +29,8 @@
     ]
   },
   {
-    "VictoryPoints": 5,
+    "victoryPoints": 5,
+    "cardID": 14,
     "conversionType": "STONE",
     "requirements": [
       {
@@ -56,7 +58,8 @@
     ]
   },
   {
-    "VictoryPoints": 5,
+    "victoryPoints": 5,
+    "cardID": 15,
     "conversionType": "SERVANT",
     "requirements": [
       {
@@ -84,7 +87,8 @@
     ]
   },
   {
-    "VictoryPoints": 5,
+    "victoryPoints": 5,
+    "cardID": 16,
     "conversionType": "SHIELD",
     "requirements": [
       {

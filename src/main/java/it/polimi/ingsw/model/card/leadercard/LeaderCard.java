@@ -18,8 +18,8 @@ public abstract class LeaderCard extends Card {
     private boolean isDiscarded;
     private boolean isActive;
 
-    public LeaderCard(int VictoryPoints) {
-        super(VictoryPoints);
+    public LeaderCard(int VictoryPoints, int CardID) {
+        super(VictoryPoints, CardID);
     }
 
     public void setIsDiscarded(){

@@ -1,6 +1,7 @@
 [
   {
-    "VictoryPoints": 3,
+    "victoryPoints": 3,
+    "cardID": 9,
     "LeaderShelf":
       {
         "shelfDimension": 2,
@@ -23,7 +24,8 @@
     ]
   },
   {
-    "VictoryPoints": 3,
+    "victoryPoints": 3,
+    "cardID": 10,
     "LeaderShelf":
       {
         "shelfDimension": 2,
@@ -46,7 +48,8 @@
     ]
   },
   {
-    "VictoryPoints": 3,
+    "victoryPoints": 3,
+    "cardID": 11,
     "LeaderShelf":
       {
         "shelfDimension": 2,
@@ -69,7 +72,8 @@
     ]
   },
   {
-    "VictoryPoints": 3,
+    "victoryPoints": 3,
+    "cardID": 12,
     "LeaderShelf":
       {
         "shelfDimension": 2,

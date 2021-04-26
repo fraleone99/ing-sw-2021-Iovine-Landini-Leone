@@ -20,9 +20,9 @@ public class StorageLeader extends LeaderCard {
     private Shelf LeaderShelf;
     private ArrayList<Requirements> requirements = new ArrayList<>();
 
-    public StorageLeader(int VictoryPoints, Requirements req, Shelf s)
+    public StorageLeader(int VictoryPoints, int CardID, Requirements req, Shelf s)
     {
-        super(VictoryPoints);
+        super(VictoryPoints, CardID);
         requirements.add(req);
         this.LeaderShelf=s;
     }

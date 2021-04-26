@@ -10,9 +10,11 @@ package it.polimi.ingsw.model.card;
 
 public abstract class Card {
     private final int victoryPoints;
+    private final int cardID;
 
-    public Card(int VictoryPoints) {
+    public Card(int VictoryPoints, int CardID) {
         this.victoryPoints = VictoryPoints;
+        this.cardID = CardID;
     }
 
     public int getVictoryPoints(){

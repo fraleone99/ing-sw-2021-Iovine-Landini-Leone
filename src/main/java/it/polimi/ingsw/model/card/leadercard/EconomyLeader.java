@@ -17,8 +17,8 @@ public class EconomyLeader extends LeaderCard {
     private final Resource discountType;
     private final ArrayList<Requirements> requirements = new ArrayList<>();
 
-    public EconomyLeader(int VictoryPoints, Resource DiscountType, Requirements req1, Requirements req2) {
-        super(VictoryPoints);
+    public EconomyLeader(int VictoryPoints, int CardID, Resource DiscountType, Requirements req1, Requirements req2) {
+        super(VictoryPoints, CardID);
         this.discountType = DiscountType;
         requirements.add(req1);
         requirements.add(req2);

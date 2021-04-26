@@ -1,6 +1,7 @@
 [
   {
     "color":"PURPLE",
+    "cardID": 17,
     "level":1,
     "victoryPoints": 2,
     "cost": [
@@ -35,6 +36,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 18,
     "level":1,
     "victoryPoints": 2,
     "cost": [
@@ -69,6 +71,7 @@
   },
   {
     "color": "PURPLE",
+    "cardID": 19,
     "level": 1,
     "victoryPoints": 4,
     "cost": [
@@ -103,6 +106,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 20,
     "level":1,
     "victoryPoints": 1,
     "cost": [
@@ -125,6 +129,7 @@
 
   {
     "color":"PURPLE",
+    "cardID": 21,
     "level":2,
     "victoryPoints": 5,
     "cost": [
@@ -146,6 +151,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 22,
     "level":2,
     "victoryPoints": 7,
     "cost": [
@@ -172,6 +178,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 23,
     "level":2,
     "victoryPoints": 8,
     "cost": [
@@ -202,6 +209,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 24,
     "level":2,
     "victoryPoints": 6,
     "cost": [
@@ -237,6 +245,7 @@
 
   {
     "color":"PURPLE",
+    "cardID": 25,
     "level":3,
     "victoryPoints": 12,
     "cost": [
@@ -271,6 +280,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 26,
     "level":3,
     "victoryPoints": 11,
     "cost": [
@@ -297,6 +307,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 27,
     "level":3,
     "victoryPoints": 10,
     "cost": [
@@ -335,6 +346,7 @@
   },
   {
     "color":"PURPLE",
+    "cardID": 28,
     "level":3,
     "victoryPoints": 9,
     "cost": [
@@ -363,6 +375,7 @@
 
   {
     "color":"YELLOW",
+    "cardID": 29,
     "level":1,
     "victoryPoints": 1,
     "cost": [
@@ -384,6 +397,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 30,
     "level":1,
     "victoryPoints": 2,
     "cost": [
@@ -413,6 +427,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 31,
     "level":1,
     "victoryPoints": 4,
     "cost": [
@@ -443,6 +458,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 32,
     "level":1,
     "victoryPoints": 3,
     "cost": [
@@ -478,6 +494,7 @@
 
   {
     "color":"YELLOW",
+    "cardID": 33,
     "level":2,
     "victoryPoints": 6,
     "cost": [
@@ -512,6 +529,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 34,
     "level":2,
     "victoryPoints": 7,
     "cost": [
@@ -538,6 +556,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 35,
     "level":2,
     "victoryPoints": 8,
     "cost": [
@@ -568,6 +587,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 36,
     "level":2,
     "victoryPoints": 5,
     "cost": [
@@ -590,6 +610,7 @@
 
   {
     "color":"YELLOW",
+    "cardID": 37,
     "level":3,
     "victoryPoints": 10,
     "cost": [
@@ -628,6 +649,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 38,
     "level":3,
     "victoryPoints": 9,
     "cost": [
@@ -654,6 +676,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 39,
     "level":3,
     "victoryPoints": 11,
     "cost": [
@@ -680,6 +703,7 @@
   },
   {
     "color":"YELLOW",
+    "cardID": 40,
     "level":3,
     "victoryPoints": 12,
     "cost": [
@@ -716,6 +740,7 @@
 
   {
     "color":"BLUE",
+    "cardID": 41,
     "level": 1,
     "victoryPoints": 3,
     "cost": [
@@ -742,6 +767,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 42,
     "level": 1,
     "victoryPoints": 4,
     "cost": [
@@ -776,6 +802,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 43,
     "level": 1,
     "victoryPoints": 1,
     "cost": [
@@ -797,6 +824,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 44,
     "level": 1,
     "victoryPoints": 2,
     "cost": [
@@ -832,6 +860,7 @@
 
   {
     "color":"BLUE",
+    "cardID": 45,
     "level": 2,
     "victoryPoints": 5,
     "cost": [
@@ -853,6 +882,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 46,
     "level": 2,
     "victoryPoints": 6,
     "cost": [
@@ -887,6 +917,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 47,
     "level": 2,
     "victoryPoints": 7,
     "cost": [
@@ -913,6 +944,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 48,
     "level": 2,
     "victoryPoints": 8,
     "cost": [
@@ -944,6 +976,7 @@
 
   {
     "color":"BLUE",
+    "cardID": 49,
     "level": 3,
     "victoryPoints": 9,
     "cost": [
@@ -970,6 +1003,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 50,
     "level": 3,
     "victoryPoints": 10,
     "cost": [
@@ -1008,6 +1042,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 51,
     "level": 3,
     "victoryPoints": 11,
     "cost": [
@@ -1034,6 +1069,7 @@
   },
   {
     "color":"BLUE",
+    "cardID": 52,
     "level": 3,
     "victoryPoints": 12,
     "cost": [
@@ -1070,6 +1106,7 @@
 
   {
     "color":"GREEN",
+    "cardID": 53,
     "level": 1,
     "victoryPoints": 1,
     "cost": [
@@ -1091,6 +1128,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 54,
     "level": 1,
     "victoryPoints": 4,
     "cost": [
@@ -1125,6 +1163,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 55,
     "level": 1,
     "victoryPoints": 2,
     "cost": [
@@ -1159,6 +1198,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 56,
     "level": 1,
     "victoryPoints": 3,
     "cost": [
@@ -1194,6 +1234,7 @@
 
   {
     "color":"GREEN",
+    "cardID": 57,
     "level": 2,
     "victoryPoints": 5,
     "cost": [
@@ -1215,6 +1256,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 58,
     "level": 2,
     "victoryPoints": 6,
     "cost": [
@@ -1249,6 +1291,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 59,
     "level": 2,
     "victoryPoints": 7,
     "cost": [
@@ -1275,6 +1318,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 60,
     "level": 2,
     "victoryPoints": 8,
     "cost": [
@@ -1306,6 +1350,7 @@
 
   {
     "color":"GREEN",
+    "cardID": 61,
     "level": 3,
     "victoryPoints": 9,
     "cost": [
@@ -1332,6 +1377,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 62,
     "level": 3,
     "victoryPoints": 10,
     "cost": [
@@ -1370,6 +1416,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 63,
     "level": 3,
     "victoryPoints": 11,
     "cost": [
@@ -1396,6 +1443,7 @@
   },
   {
     "color":"GREEN",
+    "cardID": 64,
     "level": 3,
     "victoryPoints": 12,
     "cost": [

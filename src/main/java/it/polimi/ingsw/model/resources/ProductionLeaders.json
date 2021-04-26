@@ -1,6 +1,7 @@
 [
   {
-    "VictoryPoints": 4,
+    "victoryPoints": 4,
+    "cardID": 5,
     "production": {
         "inputProduction": [
           {
@@ -30,7 +31,8 @@
     ]
   },
   {
-    "VictoryPoints": 4,
+    "victoryPoints": 4,
+    "cardID": 6,
     "production": {
       "inputProduction": [
         {
@@ -60,7 +62,8 @@
     ]
   },
   {
-    "VictoryPoints": 4,
+    "victoryPoints": 4,
+    "cardID": 7,
     "production": {
       "inputProduction": [
         {
@@ -90,7 +93,8 @@
     ]
   },
   {
-    "VictoryPoints": 4,
+    "victoryPoints": 4,
+    "cardID": 8,
     "production": {
       "inputProduction": [
         {

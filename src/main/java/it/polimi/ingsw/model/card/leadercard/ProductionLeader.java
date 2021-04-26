@@ -21,8 +21,8 @@ public class ProductionLeader extends LeaderCard {
     private final ArrayList<Requirements> requirements = new ArrayList<>();
 
 
-    public ProductionLeader(int VictoryPoints, Production production, Requirements req) {
-        super(VictoryPoints);
+    public ProductionLeader(int VictoryPoints, int CardID, Production production, Requirements req) {
+        super(VictoryPoints, CardID);
         requirements.add(req);
         this.production = production;
     }

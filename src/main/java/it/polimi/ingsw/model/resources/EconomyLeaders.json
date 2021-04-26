@@ -1,6 +1,7 @@
 [
   {
-    "VictoryPoints": 2,
+    "victoryPoints": 2,
+    "cardID": 1,
     "discountType": "SHIELD",
     "requirements": [
       {
@@ -30,7 +31,8 @@
     ]
   },
   {
-    "VictoryPoints": 2,
+    "victoryPoints": 2,
+    "cardID": 2,
     "discountType": "STONE",
     "requirements": [
       {
@@ -59,7 +61,8 @@
     ]
   },
   {
-    "VictoryPoints": 2,
+    "victoryPoints": 2,
+    "cardID": 3,
     "discountType": "SERVANT",
     "requirements": [
       {
@@ -87,7 +90,8 @@
     ]
   },
   {
-    "VictoryPoints": 2,
+    "victoryPoints": 2,
+    "cardID": 4,
     "discountType": "COIN",
     "requirements": [
       {

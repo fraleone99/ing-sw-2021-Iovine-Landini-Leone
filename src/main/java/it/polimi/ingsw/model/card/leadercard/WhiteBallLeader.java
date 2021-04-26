@@ -17,8 +17,8 @@ public class WhiteBallLeader extends LeaderCard {
     private final Resource conversionType;
     private final ArrayList<Requirements> requirements = new ArrayList<>();
 
-    public WhiteBallLeader(int VictoryPoints, Resource type, Requirements req1, Requirements req2) {
-        super(VictoryPoints);
+    public WhiteBallLeader(int VictoryPoints, int CardID, Resource type, Requirements req1, Requirements req2) {
+        super(VictoryPoints, CardID);
         this.conversionType = type;
         requirements.add(req1);
         requirements.add(req2);
