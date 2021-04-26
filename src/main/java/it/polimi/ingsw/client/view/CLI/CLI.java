@@ -244,7 +244,7 @@ public class CLI implements View {
 
         //production
         StringBuilder productionBuilder = new StringBuilder();
-        productionBuilder.append("Production:");
+        productionBuilder.append("+Production:");
         productionBuilder.append("   " + "+\n" + Constants.ANSI_RESET);
         for(Goods g : leaderCard.getInputProduction()){
             productionBuilder.append(printGood(g, Constants.ANSI_RESET));
