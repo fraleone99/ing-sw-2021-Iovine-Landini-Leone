@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.observer.VirtualViewObservable;
 import it.polimi.ingsw.server.answer.ChooseResource;
 import it.polimi.ingsw.server.answer.FirstPlayer;
 import it.polimi.ingsw.server.answer.StartGame;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VirtualView {
+public class VirtualView extends VirtualViewObservable {
     private String answer;
     private Map<String, ClientHandler> namesToClient = new HashMap<>();
 
@@ -32,7 +33,6 @@ public class VirtualView {
         }
         client.setReady(false);
         return answer;
-        //notify everyone who joined the lobby
     }
 
 
@@ -59,7 +59,13 @@ public class VirtualView {
     }
 
     public void prepareTheLobby(ClientHandler client) throws IOException {
-        client.send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
+        //client.send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
+
+
+
+
+
+        notifyPreparationOfLobby();
         //notify everyone
     }
 
@@ -123,5 +129,9 @@ public class VirtualView {
 
     public void setNamesToClient(String nickname, ClientHandler client) {
         namesToClient.put(nickname,client);
+    }
+
+    public void removeNamesToClient(String nickname, ClientHandler client){
+        namesToClient.remove(nickname, client);
     }
 }

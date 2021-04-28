@@ -6,6 +6,8 @@ import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
 import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
 import it.polimi.ingsw.client.message.initialmessage.SendNickname;
+import it.polimi.ingsw.observer.ConnectionObservable;
+import it.polimi.ingsw.observer.VirtualViewObserver;
 import it.polimi.ingsw.server.answer.ChooseResource;
 import it.polimi.ingsw.client.message.*;
 
@@ -17,7 +19,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler extends ConnectionObservable implements Runnable {
     private Socket socketClient;
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -41,7 +43,7 @@ public class ClientHandler implements Runnable{
         output.flush();
     }
 
-    public void handleClientConnection() throws IOException {
+    public void handleClientConnection() throws IOException{
         try{
             while(true){
                 socketClient.setSoTimeout(4000);
@@ -55,6 +57,13 @@ public class ClientHandler implements Runnable{
         }
         catch (SocketTimeoutException e){
             System.out.println("Client unreachable!");
+
+
+            try {
+                notifyDisconnection(this);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
         }
     }
 
@@ -99,6 +108,11 @@ public class ClientHandler implements Runnable{
 
     public String getAnswer() {
         return answer;
+    }
+
+    public void closeConnection() throws IOException {
+        socketClient.close();
+        System.out.println("Client disconnected");
     }
 
 

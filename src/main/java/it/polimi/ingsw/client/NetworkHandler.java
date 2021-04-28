@@ -122,6 +122,9 @@ public class NetworkHandler implements Runnable {
         else if(inputObj instanceof StartGame) {
             view.readMessage(((StartGame) inputObj).getMessage());
         }
+        else if(inputObj instanceof JoiningPlayer){
+            view.readMessage(((JoiningPlayer) inputObj).getMessage());
+        }
     }
 
 }

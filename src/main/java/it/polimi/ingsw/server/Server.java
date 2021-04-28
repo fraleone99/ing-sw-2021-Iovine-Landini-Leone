@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.observer.LobbyObserver;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,6 +15,7 @@ public class Server {
     private int numberOfLobbies;
     private int playersInLastLobby;
     private boolean lobbyFull;
+
 
     public static void main(String[] args) {
         Server server = new Server();
