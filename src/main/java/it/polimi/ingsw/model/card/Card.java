@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.card;
 
+
 /**
  * General class used for organized the game's cards.
  * The only thing in common for all the cards are the Victory Points,
@@ -8,7 +9,7 @@ package it.polimi.ingsw.model.card;
  * @author Lorenzo Iovine.
  */
 
-public abstract class Card {
+public abstract class Card{
     private final int victoryPoints;
     private final int cardID;
 
@@ -19,5 +20,9 @@ public abstract class Card {
 
     public int getVictoryPoints(){
         return victoryPoints;
+    }
+
+    public int getCardID() {
+        return cardID;
     }
 }

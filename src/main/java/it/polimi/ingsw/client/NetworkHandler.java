@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
 import it.polimi.ingsw.client.view.CLI.CLI;
 import it.polimi.ingsw.client.message.action.ChosenResource;
 import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
@@ -110,6 +111,16 @@ public class NetworkHandler implements Runnable {
         else if(inputObj instanceof ChooseResource){
             int resource=view.askResource(((ChooseResource) inputObj).getMessage());
             output.writeObject(new ChosenResource(resource));
+        }
+        else if(inputObj instanceof DiscardFirstLeaders){
+            view.readMessage(((DiscardFirstLeaders) inputObj).getMessage());
+        }
+        else if(inputObj instanceof PassLeaderCard) {
+            int card=view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());
+            output.writeObject(new FirstChosenLeaders(card));
+        }
+        else if(inputObj instanceof StartGame) {
+            view.readMessage(((StartGame) inputObj).getMessage());
         }
     }
 

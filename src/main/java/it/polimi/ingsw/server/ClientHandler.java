@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.client.message.action.ChosenResource;
 import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
+import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
 import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
 import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.server.answer.ChooseResource;
@@ -48,9 +49,6 @@ public class ClientHandler implements Runnable{
                 Message message=(Message)next;
                 if(!(message instanceof Ping))
                     processClientMessage(message);
-
-
-
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -83,6 +81,11 @@ public class ClientHandler implements Runnable{
         }
         else if(message instanceof Ping){
             System.out.println("ping received!");
+        }
+        else if(message instanceof FirstChosenLeaders){
+            answer=String.valueOf(((FirstChosenLeaders) message).getLeader());
+            isReady=true;
+            notifyAll();
         }
     }
 

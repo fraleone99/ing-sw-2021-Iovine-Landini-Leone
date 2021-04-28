@@ -28,7 +28,7 @@ public class GameBoardTest{
         for(String nick: nickname){
             game.createPlayer(nick);
         }
-        game.setGameBoard(gameBoard);
+        //game.setGameBoard(gameBoard);
 
         game.drawActionToken();
         game.drawActionToken();

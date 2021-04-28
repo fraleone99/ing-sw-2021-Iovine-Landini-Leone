@@ -6,10 +6,9 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.server.VirtualView;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Controller {
     private final Game gameModel;
@@ -17,9 +16,7 @@ public class Controller {
     private final EndGameController endgame;
     private final ArrayList<String> players=new ArrayList<>();
     private boolean isOver;
-    private VirtualView view;
-    private int resource1;
-    private int resource2;
+    private final VirtualView view;
 
     public Controller(ArrayList<String> players, VirtualView view) {
         this.players.addAll(players);
@@ -36,38 +33,47 @@ public class Controller {
             }
             for (int i = 0; i < players.size(); i++) {
                 setInitialBenefits(i);
+                setInitialLeaderCards(i);
+                discardFirstLeaders(i);
+            }
+            for(int i=0; i<players.size(); i++){
+                startGame(i);
             }
         } catch (NotExistingPlayerException | IOException | InterruptedException e){
             e.printStackTrace();
         }
     }
 
+
     public void setPlayers(int player){
         gameModel.createPlayer(players.get(player));
     }
+
 
     public void setInitialBenefits(int i) throws NotExistingPlayerException, IOException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
                     break;
-            case 1: resource1=view.chooseResource(players.get(i), "second",1);
+            case 1:
+                int resource1 = view.chooseResource(players.get(i), "second", 1);
                     addInitialResource(i, resource1,1);
                     break;
-            case 2: resource1=view.chooseResource(players.get(i), "third",1);
-                    addInitialResource(i,resource1,1);
+            case 2: resource1 =view.chooseResource(players.get(i), "third",1);
+                    addInitialResource(i, resource1,1);
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
                     break;
-            case 3: resource1=view.chooseResource(players.get(i), "fourth",1);
-                    addInitialResource(i,resource1,2);
-                    resource2=view.chooseResource(players.get(i), "fourth",2);
-                    if(resource1==resource2) {
+            case 3: resource1 =view.chooseResource(players.get(i), "fourth",1);
+                    addInitialResource(i, resource1,2);
+                int resource2 = view.chooseResource(players.get(i), "fourth", 2);
+                    if(resource1 == resource2) {
                         addInitialResource(i, resource2, 2);
                     } else {
-                        addInitialResource(i,resource2,1);
+                        addInitialResource(i, resource2,1);
                     }
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
         }
     }
+
 
     public void addInitialResource(int player, int resource, int shelf) throws NotExistingPlayerException{
         try {
@@ -85,6 +91,28 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+
+    public void setInitialLeaderCards(int player) throws NotExistingPlayerException {
+        for(int i=0; i<4; i++){
+            gameModel.getGameBoard().getLeaderDeck().shuffle();
+            gameModel.getPlayer(players.get(player)).getLeaders().add(gameModel.getGameBoard().getLeaderDeck().drawFromTail());
+        }
+    }
+
+
+    public void discardFirstLeaders(int player) throws IOException, InterruptedException, NotExistingPlayerException {
+        int card;
+        card=view.discardFirstLeaders(players.get(player), 1, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+        gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
+        card=view.discardFirstLeaders(players.get(player), 2, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+        gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
+    }
+
+    public void startGame(int player) throws IOException {
+        view.startGame(players.get(player));
+    }
+
 
     public EndGameController getEndgame() {
         return endgame;

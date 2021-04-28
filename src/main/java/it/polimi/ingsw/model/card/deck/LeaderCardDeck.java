@@ -38,6 +38,8 @@ public class LeaderCardDeck {
         Collections.shuffle(deck);
     }
 
+    public void remove(int pos) {deck.remove(pos);}
+
     /**
      * Draw a card from the deck. The Card is removed from the deck
      * @return the last card of the deck.
@@ -59,6 +61,22 @@ public class LeaderCardDeck {
      */
     public LeaderCard get(){
         return deck.get(deck.size()-1);
+    }
+
+    public ArrayList<Integer> IdDeck(){
+        ArrayList<Integer> IdDeck=new ArrayList<>();
+        for (LeaderCard leaderCard : deck) {
+            IdDeck.add(leaderCard.getCardID());
+        }
+        return IdDeck;
+    }
+
+    public LeaderCard getFromID(int ID){
+        for(LeaderCard card:deck){
+            if(card.getCardID()==ID)
+                return card;
+        }
+        return deck.get(0);
     }
 
     public LeaderCard get(int pos){

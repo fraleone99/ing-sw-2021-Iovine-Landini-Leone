@@ -116,7 +116,7 @@ public class Game {
         return element;
     }
 
-    public void setGameBoard(GameBoard gameBoard) {
-        this.gameBoard = gameBoard;
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }

@@ -24,7 +24,7 @@ public class Heartbeat implements Runnable {
 
             try {
                 networkHandler.send(new Ping());
-                System.out.println("Sending ping...");
+                //System.out.println("Sending ping...");
             } catch (IOException e) {
                 e.printStackTrace();
             }

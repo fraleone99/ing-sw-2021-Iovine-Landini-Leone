@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.view;
 
-import it.polimi.ingsw.client.NetworkHandler;
+import java.util.ArrayList;
 
 public interface View {
 
@@ -14,4 +14,6 @@ public interface View {
     void readMessage(String message);
 
     int askResource(String message);
+
+    int askLeaderToDiscard(ArrayList<Integer> IdLeaders);
 }

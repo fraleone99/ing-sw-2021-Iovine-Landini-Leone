@@ -22,7 +22,7 @@ public class Heartbeat implements Runnable{
 
             try {
                 clientHandler.send(new Pong());
-                System.out.println("Sending pong...");
+                //System.out.println("Sending pong...");
             } catch (IOException e) {
                 e.printStackTrace();
             }

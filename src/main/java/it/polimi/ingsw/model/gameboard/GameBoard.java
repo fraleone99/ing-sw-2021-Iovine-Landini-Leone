@@ -3,25 +3,14 @@ package it.polimi.ingsw.model.gameboard;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
-import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.*;
-import it.polimi.ingsw.model.enumeration.CardColor;
-import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
-import it.polimi.ingsw.model.gameboard.playerdashboard.PlayerDashboard;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
-import it.polimi.ingsw.model.singleplayer.ActionToken;
-import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
-import it.polimi.ingsw.model.singleplayer.DeleteCard;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class GameBoard {
     private int playersNumber;

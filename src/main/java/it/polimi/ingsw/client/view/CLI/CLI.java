@@ -140,7 +140,7 @@ public class CLI implements View {
     }
 
     public void startGame() {
-        System.out.println("\n Welcome to" + Constants.MAESTRI_RINASCIMENTO + Constants.AUTHORS);
+        System.out.println(Constants.MAESTRI_RINASCIMENTO + Constants.AUTHORS);
         }
 
 
@@ -193,6 +193,26 @@ public class CLI implements View {
 
     public void readMessage(String message) {
         System.out.println(message);
+    }
+
+    public int askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
+        int card;
+
+        System.out.println("Entering the corresponding number");
+
+        for(int i=0;i<IdLeaders.size();i++){
+            System.out.println(i+1+")");
+            System.out.println(printLeaderCard(LeaderDeck.getFromID(IdLeaders.get(i))));
+        }
+
+        do {
+            card=Integer.parseInt(in.nextLine());
+            if(card<1 || card>IdLeaders.size()) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(card<1 || card>IdLeaders.size());
+
+        return card;
     }
 
     public String printGood(Goods goods , String color){
