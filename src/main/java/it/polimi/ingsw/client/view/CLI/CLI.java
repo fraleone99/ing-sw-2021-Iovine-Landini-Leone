@@ -270,7 +270,7 @@ public class CLI implements View {
         //victoryPoints
         StringBuilder pointsBuilder = new StringBuilder();
         pointsBuilder.append(" Points: ");
-        pointsBuilder.append(developmentCard.getLevel());
+        pointsBuilder.append(developmentCard.getVictoryPoints());
         for(int i = pointsBuilder.length(); i< MAX_LENGTH; i++){
             pointsBuilder.append(" ");
         }
@@ -439,7 +439,6 @@ public class CLI implements View {
     }
 
 
-
     public String printMarket(Market market){
         StringBuilder marketBuilder = new StringBuilder();
 
@@ -480,4 +479,22 @@ public class CLI implements View {
         BallToString.put(BallColor.GREY, Constants.GreyBALL);
         BallToString.put(BallColor.RED, Constants.RedBALL);
     }
+
+
+    public String printDevelopmentCardGrid(ArrayList<Integer> cardsID){
+        StringBuilder gridByLevelBuilder = new StringBuilder();
+
+        for(DevelopmentCardDeck decks: devCardsDecks){
+            for(DevelopmentCard card: decks.getDeck()){
+                for(Integer i: cardsID){
+                    if(i==card.getCardID()){
+                        gridByLevelBuilder.append(printDevelopmentCard(card));
+                    }
+                }
+            }
+        }
+
+        return gridByLevelBuilder.toString();
+    }
+
 }

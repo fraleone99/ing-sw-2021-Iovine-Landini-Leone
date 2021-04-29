@@ -57,4 +57,24 @@ public class CLITest {
 
         System.out.println(cli.printMarket(market));
     }
+
+    @Test
+    public void printDevelopmentCardGrid(){
+        CLI cli = new CLI();
+        ArrayList<Integer> cards = new ArrayList<>();
+
+        Integer code = 18;
+        cards.add(code);
+
+        code = 22;
+        cards.add(code);
+
+        code = 45;
+        cards.add(code);
+
+        code = 54;
+        cards.add(code);
+
+        System.out.println(cli.printDevelopmentCardGrid(cards));
+    }
 }
