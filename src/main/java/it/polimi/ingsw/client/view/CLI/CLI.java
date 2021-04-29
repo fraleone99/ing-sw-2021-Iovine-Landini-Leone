@@ -497,4 +497,48 @@ public class CLI implements View {
         return gridByLevelBuilder.toString();
     }
 
+
+    public String printFaithPath(int position, boolean papalPawn1, boolean papalPawn2, boolean papalPawn3){
+        StringBuilder faithPathBuilder = new StringBuilder();
+
+        faithPathBuilder.append(Constants.FAITH_LEGEND);
+
+        faithPathBuilder.append(Constants.FAITH_TOP_EDGE);
+        for(int i=0; i<13; i++){
+            faithPathBuilder.append(printFaithPathSupport(i, position));
+        }
+        faithPathBuilder.append("\n"+Constants.FAITH_MIDDLE_EDGE+"\n");
+        for(int j=24; j>12; j--){
+            faithPathBuilder.append(printFaithPathSupport(j, position));
+        }
+        faithPathBuilder.append("\n"+Constants.FAITH_BOTTOM_EDGE);
+
+        if(papalPawn1 || papalPawn2 || papalPawn3){
+            faithPathBuilder.append("\n       --> Active papal pawn: ");
+            if(papalPawn1) faithPathBuilder.append(Constants.PapalPOINT1 + " ");
+            if(papalPawn2) faithPathBuilder.append(Constants.PapalPOINT2 + " ");
+            if(papalPawn3) faithPathBuilder.append(Constants.PapalPOINT3 + " ");
+        }
+
+        return faithPathBuilder.toString();
+    }
+
+    public String printFaithPathSupport(int num, int position){
+        StringBuilder faithPathSupport = new StringBuilder();
+
+        if(num==position){
+            faithPathSupport.append("   "+"+ "+Constants.ColorFAITH+" +");
+        } else if (num==8 || num==16 || num==24){
+            faithPathSupport.append("   "+"+ "+Constants.PapalCELL+" +");
+        } else {
+            if((num>=5 && num<=7) || (num>=12 && num<=15) || (num>=19 && num<=23)){
+                faithPathSupport.append("   "+"+ "+Constants.ANSI_RED+num+Constants.ANSI_RESET+" +");
+            } else {
+                faithPathSupport.append("   "+"+ "+Constants.ANSI_CYAN+num+Constants.ANSI_RESET+" +");
+            }
+        }
+
+        return faithPathSupport.toString();
+    }
+
 }

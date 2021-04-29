@@ -39,16 +39,36 @@ public class Constants {
     public final static String DEV_CARD_TOP = "+++++++++++++";
 
     //BALL
-    public final static String WhiteBALL = ANSI_WHITE + CIRCLE + ANSI_RESET;
-    public final static String PurpleBALL = ANSI_PURPLE + CIRCLE + ANSI_RESET;
-    public final static String BlueBALL = ANSI_BLUE + CIRCLE + ANSI_RESET;
-    public final static String YellowBALL = ANSI_YELLOW + CIRCLE + ANSI_RESET;
-    public final static String GreyBALL = ANSI_GREY + CIRCLE + ANSI_RESET;
-    public final static String RedBALL = ANSI_RED + CIRCLE + ANSI_RESET;
+    public final static String WhiteBALL    = ANSI_WHITE + CIRCLE + ANSI_RESET;
+    public final static String PurpleBALL   = ANSI_PURPLE + CIRCLE + ANSI_RESET;
+    public final static String BlueBALL     = ANSI_BLUE + CIRCLE + ANSI_RESET;
+    public final static String YellowBALL   = ANSI_YELLOW + CIRCLE + ANSI_RESET;
+    public final static String GreyBALL     = ANSI_GREY + CIRCLE + ANSI_RESET;
+    public final static String RedBALL      = ANSI_RED + CIRCLE + ANSI_RESET;
     public final static String BALL_TOP_BOTTOM_EDGE = "+++++++++++++";
 
     public final static String LEFT_ARROW = "🠔";
     public final static String UPPER_ARROW = "\uD83E\uDC15";
+
+    //FAITH PATH
+    public final static String OnePOINT     = ANSI_YELLOW + "❶" + ANSI_RESET;
+    public final static String TwoPOINTS    = ANSI_YELLOW + "❷" + ANSI_RESET;
+    public final static String FourPOINTS   = ANSI_YELLOW + "❹" + ANSI_RESET;
+    public final static String SixPOINTS    = ANSI_YELLOW + "❻" + ANSI_RESET;
+    public final static String NinePOINTS   = ANSI_YELLOW + "❾" + ANSI_RESET;
+    public final static String TwelvePOINTS = ANSI_YELLOW + "⓬" + ANSI_RESET;
+    public final static String SixteenPOINTS= ANSI_YELLOW + "⓰" + ANSI_RESET;
+    public final static String TwentyPOINTS = ANSI_YELLOW + "⓴" + ANSI_RESET;
+    public final static String PapalPOINT1  = ANSI_GREEN + "➊" + ANSI_RESET;
+    public final static String PapalPOINT2  = ANSI_GREEN + "➋" + ANSI_RESET;
+    public final static String PapalPOINT3  = ANSI_GREEN + "➌" + ANSI_RESET;
+    public final static String PapalCELL    = ANSI_RED + "⳩" + ANSI_RESET;
+    public final static String ColorFAITH   = ANSI_PURPLE + FAITH + ANSI_RESET;
+    public final static String FAITH_LEGEND = ANSI_WHITE +"   FAITH PATH:\n"+ ANSI_RESET +"      ->"+ ANSI_CYAN +" Cyan "+ ANSI_RESET +"numbers represent the position of the FaithPath\n"+"      ->"+ ANSI_RED +" Red "+ ANSI_RESET+"numbers represent the position of papal regions\n"+"      -> "+ PapalCELL +" represents papal spaces\n\n";
+    public final static String FAITH_MIDDLE_EDGE = "   + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +";
+    public final static String FAITH_TOP_EDGE    = "   + + + + + + + + + + + + + " + OnePOINT +" + + + + + + + + + + + "+ TwoPOINTS +" + + + + + + + + + + + "+ FourPOINTS +" + + + + + + + + + + + + "+ SixPOINTS +" +\n";
+    public final static String FAITH_BOTTOM_EDGE = "   + "+ TwentyPOINTS +" + + + + + + + + + + + + "+ SixteenPOINTS +" + + + + + + + + + + + + "+ TwelvePOINTS +" + + + + + + + + + + + + "+ NinePOINTS +" + + + + + + + + + + +\n";
+
 
     public final static String MAESTRI_RINASCIMENTO = "\"_________   _______  _______  _______  _______ _________ _______ _________   ______   _______  _            \\n\" +\n" +
             "                \"\\\\__   __/  (       )(  ___  )(  ____ \\\\(  ____ \\\\\\\\__   __/(  ____ )\\\\__   __/  (  __  \\\\ (  ____ \\\\( \\\\           \\n\" +\n" +

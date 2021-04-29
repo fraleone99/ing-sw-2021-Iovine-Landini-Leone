@@ -77,4 +77,11 @@ public class CLITest {
 
         System.out.println(cli.printDevelopmentCardGrid(cards));
     }
+
+    @Test
+    public void printFaithPath(){
+        CLI cli = new CLI();
+
+        System.out.println(cli.printFaithPath(8, false, true, true));
+    }
 }
