@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.gameboard.GameBoard;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -23,7 +24,7 @@ public class CLITest {
 
 
     @Test
-    public void printDevelopmentCard() throws FileNotFoundException, InvalidChoiceException {
+    public void printDevelopmentCard() throws FileNotFoundException {
         DevelopmentCardGrid d = new DevelopmentCardGrid();
         CLI cli = new CLI();
 
@@ -47,5 +48,13 @@ public class CLITest {
         for(LeaderCard d: deck.getDeck()){
             System.out.println(cli.printLeaderCard(d));
         }
+    }
+
+    @Test
+    public void printMarket(){
+        CLI cli = new CLI();
+        Market market=new Market();
+
+        System.out.println(cli.printMarket(market));
     }
 }

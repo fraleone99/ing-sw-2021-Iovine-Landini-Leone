@@ -4,14 +4,15 @@ public class Constants {
 
 
     //ANSI COLOR
-    public static final String	ANSI_BLACK				= "\u001B[30m";
-    public static final String	ANSI_RED				= "\u001B[31m";
-    public static final String	ANSI_GREEN				= "\u001B[32m";
-    public static final String	ANSI_YELLOW				= "\u001B[33m";
-    public static final String	ANSI_BLUE				= "\u001B[34m";
-    public static final String	ANSI_PURPLE   			= "\u001B[35m";
-    public static final String	ANSI_CYAN				= "\u001B[36m";
-    public static final String	ANSI_WHITE				= "\u001B[37m";
+    public static final String	ANSI_BLACK				= "\u001B[0;30m";
+    public static final String	ANSI_RED				= "\u001B[0;31m";
+    public static final String	ANSI_GREEN				= "\u001B[0;32m";
+    public static final String	ANSI_YELLOW				= "\u001B[0;33m";
+    public static final String	ANSI_BLUE				= "\u001B[0;34m";
+    public static final String	ANSI_PURPLE   			= "\u001B[0;35m";
+    public static final String	ANSI_CYAN				= "\u001B[0;36m";
+    public static final String	ANSI_GREY				= "\u001B[0;37m";
+    public static final String  ANSI_WHITE              = "\u001B[1;30m";
     public static final String  ANSI_RESET              = "\u001B[0m";
 
 
@@ -24,7 +25,7 @@ public class Constants {
 
     public final static String FAITH    = "\u271F";
     public final static String CIRCLE = "\uD83D\uDF89";
-    public final static String RECTTANGLE = "\u25AD";
+    public final static String RECTANGLE = "\u25AD";
 
     public final static String AUTHORS = "Authors: " + ANSI_BLUE + "Francesco Leone " + ANSI_RED + "Nicola Landini " +
                                             ANSI_GREEN + "Lorenzo Iovine " +ANSI_RESET;
@@ -36,6 +37,18 @@ public class Constants {
 
     //DEVELOPMENT CARD
     public final static String DEV_CARD_TOP = "+++++++++++++";
+
+    //BALL
+    public final static String WhiteBALL = ANSI_WHITE + CIRCLE + ANSI_RESET;
+    public final static String PurpleBALL = ANSI_PURPLE + CIRCLE + ANSI_RESET;
+    public final static String BlueBALL = ANSI_BLUE + CIRCLE + ANSI_RESET;
+    public final static String YellowBALL = ANSI_YELLOW + CIRCLE + ANSI_RESET;
+    public final static String GreyBALL = ANSI_GREY + CIRCLE + ANSI_RESET;
+    public final static String RedBALL = ANSI_RED + CIRCLE + ANSI_RESET;
+    public final static String BALL_TOP_BOTTOM_EDGE = "+++++++++++++";
+
+    public final static String LEFT_ARROW = "🠔";
+    public final static String UPPER_ARROW = "\uD83E\uDC15";
 
     public final static String MAESTRI_RINASCIMENTO = "\"_________   _______  _______  _______  _______ _________ _______ _________   ______   _______  _            \\n\" +\n" +
             "                \"\\\\__   __/  (       )(  ___  )(  ____ \\\\(  ____ \\\\\\\\__   __/(  ____ )\\\\__   __/  (  __  \\\\ (  ____ \\\\( \\\\           \\n\" +\n" +

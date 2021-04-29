@@ -58,6 +58,8 @@ public class Market {
 
         ball=new Ball(BallColor.RED);
         randomBall.add(ball);
+
+        fillMatrix();
     }
 
 
@@ -73,7 +75,7 @@ public class Market {
         return ramp;
     }
 
-    public void fillMatrix(ArrayList<Ball>randomBall){
+    public void fillMatrix(){
         int cont=13;
 
         for(int i=0; i<3; i++) {

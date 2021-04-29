@@ -8,8 +8,11 @@ import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.*;
+import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,6 +24,7 @@ public class CLI implements View {
     private final Scanner in;
     private final HashMap<CardColor, String> CardColorToString = new HashMap<>();
     private final HashMap<Resource, String> ResourceToString = new HashMap<>();
+    private final HashMap<BallColor, String> BallToString = new HashMap<>();
 
     private LeaderCardDeck LeaderDeck;
     private final ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
@@ -30,6 +34,7 @@ public class CLI implements View {
         this.in = new Scanner(System.in);
         initializeCardColorToString();
         initializeResourceToString();
+        initializeBallToString();
 
 
         LeaderDeck = new LeaderCardDeck();
@@ -435,4 +440,44 @@ public class CLI implements View {
 
 
 
+    public String printMarket(Market market){
+        StringBuilder marketBuilder = new StringBuilder();
+
+        marketBuilder.append("Ramp: "+BallToString.get(market.getRamp().getType())+"\n");
+
+        marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE+"\n");
+
+        int i = 7;
+        for(Ball[] a: market.getMatrix()){
+            marketBuilder.append("+");
+            for(Ball b: a){
+                marketBuilder.append(" "+BallToString.get(b.getType()));
+            }
+            marketBuilder.append(" +  "+Constants.LEFT_ARROW+" "+i+"\n");
+            i--;
+        }
+
+        marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE+"\n");
+
+        marketBuilder.append("  ");
+        for(i=1; i<=4; i++){
+            marketBuilder.append(Constants.UPPER_ARROW+"  ");
+        }
+        marketBuilder.append("\n"+"  ");
+
+        for(i=1; i<=4; i++){
+            marketBuilder.append(i+"  ");
+        }
+
+        return marketBuilder.toString();
+    }
+
+    public void initializeBallToString(){
+        BallToString.put(BallColor.WHITE, Constants.WhiteBALL);
+        BallToString.put(BallColor.PURPLE, Constants.PurpleBALL);
+        BallToString.put(BallColor.BLUE, Constants.BlueBALL);
+        BallToString.put(BallColor.YELLOW, Constants.YellowBALL);
+        BallToString.put(BallColor.GREY, Constants.GreyBALL);
+        BallToString.put(BallColor.RED, Constants.RedBALL);
+    }
 }

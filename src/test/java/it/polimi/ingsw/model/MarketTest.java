@@ -14,7 +14,6 @@ public class MarketTest {
 
     @Test
     public void testGetChosenColor() throws InvalidChoiceException {
-        market.fillMatrix(market.getRandomBall());
         ArrayList<Ball> testChosenBalls=market.getChosenColor(3);
 
         assertEquals(testChosenBalls.get(0).getType(), market.getRamp().getType());
