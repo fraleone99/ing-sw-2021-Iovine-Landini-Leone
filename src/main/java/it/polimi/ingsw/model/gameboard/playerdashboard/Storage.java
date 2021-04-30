@@ -163,4 +163,8 @@ public class Storage {
 
     }
 
+    public Resource getTypeShelf(int s){
+        return shelves.get(s-1).getResourceType();
+    }
+
 }

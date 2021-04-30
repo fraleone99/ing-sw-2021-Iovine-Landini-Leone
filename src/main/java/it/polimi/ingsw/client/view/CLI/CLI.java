@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.CLI;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
@@ -13,6 +14,9 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.server.answer.Answer;
+import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
@@ -22,6 +26,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 public class CLI implements View {
     private final Scanner in;
@@ -30,8 +35,8 @@ public class CLI implements View {
     private final HashMap<BallColor, String> BallToString = new HashMap<>();
     private final HashMap<CardColor, String> TokenToString = new HashMap<>();
 
-    private LeaderCardDeck LeaderDeck;
-    private final ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
+    private final LeaderCardDeck LeaderDeck = new LeaderCardDeck();
+    private final DevelopmentCardDeck developmentCardDeck = new DevelopmentCardDeck();
 
 
     public CLI() {
@@ -41,8 +46,6 @@ public class CLI implements View {
         initializeBallToString();
         initializeTokenToString();
 
-
-        LeaderDeck = new LeaderCardDeck();
         try {
             initializeDevelopmentCard();
             initializeLeaderCard();
@@ -56,53 +59,7 @@ public class CLI implements View {
         JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/DevelopmentCards.json"));
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
 
-        DevelopmentCardDeck PurpleOne = new DevelopmentCardDeck();
-        DevelopmentCardDeck PurpleTwo = new DevelopmentCardDeck();
-        DevelopmentCardDeck PurpleThree = new DevelopmentCardDeck();
-
-        DevelopmentCardDeck YellowOne = new DevelopmentCardDeck();
-        DevelopmentCardDeck YellowTwo = new DevelopmentCardDeck();
-        DevelopmentCardDeck YellowThree = new DevelopmentCardDeck();
-
-        DevelopmentCardDeck BlueOne = new DevelopmentCardDeck();
-        DevelopmentCardDeck BlueTwo = new DevelopmentCardDeck();
-        DevelopmentCardDeck BlueThree = new DevelopmentCardDeck();
-
-        DevelopmentCardDeck GreenOne = new DevelopmentCardDeck();
-        DevelopmentCardDeck GreenTwo = new DevelopmentCardDeck();
-        DevelopmentCardDeck GreenThree = new DevelopmentCardDeck();
-
-        PurpleOne.setDeck(data.subList(0,4));
-        PurpleTwo.setDeck(data.subList(4,8));
-        PurpleThree.setDeck(data.subList(8,12));
-
-        YellowOne.setDeck(data.subList(12,16));
-        YellowTwo.setDeck(data.subList(16,20));
-        YellowThree.setDeck(data.subList(20,24));
-
-        BlueOne.setDeck(data.subList(24,28));
-        BlueTwo.setDeck(data.subList(28,32));
-        BlueThree.setDeck(data.subList(32,36));
-
-        GreenOne.setDeck(data.subList(36,40));
-        GreenTwo.setDeck(data.subList(40,44));
-        GreenThree.setDeck(data.subList(44,48));
-
-        devCardsDecks.add(PurpleOne);
-        devCardsDecks.add(PurpleTwo);
-        devCardsDecks.add(PurpleThree);
-
-        devCardsDecks.add(YellowOne);
-        devCardsDecks.add(YellowTwo);
-        devCardsDecks.add(YellowThree);
-
-        devCardsDecks.add(BlueOne);
-        devCardsDecks.add(BlueTwo);
-        devCardsDecks.add(BlueThree);
-
-        devCardsDecks.add(GreenOne);
-        devCardsDecks.add(GreenTwo);
-        devCardsDecks.add(GreenThree);
+        developmentCardDeck.setDeck(data);
     }
 
     private void initializeLeaderCard() throws FileNotFoundException {
@@ -147,6 +104,15 @@ public class CLI implements View {
         CardColorToString.put(CardColor.PURPLE, Constants.ANSI_PURPLE);
         CardColorToString.put(CardColor.YELLOW, Constants.ANSI_YELLOW);
 
+    }
+
+    public void initializeBallToString(){
+        BallToString.put(BallColor.WHITE, Constants.WhiteBALL);
+        BallToString.put(BallColor.PURPLE, Constants.PurpleBALL);
+        BallToString.put(BallColor.BLUE, Constants.BlueBALL);
+        BallToString.put(BallColor.YELLOW, Constants.YellowBALL);
+        BallToString.put(BallColor.GREY, Constants.GreyBALL);
+        BallToString.put(BallColor.RED, Constants.RedBALL);
     }
 
     public void startGame() {
@@ -485,6 +451,10 @@ public class CLI implements View {
         storageLeader.append(ResourceToString.get(leaderCard.getType()));
         storageLeader.append(Constants.LEADER_CARD_RIGHT_EDGE);
 
+        storageLeader.append(Constants.LEADER_CARD_LEFT_EDGE);
+        storageLeader.append("Free space: " + (2 - leaderCard.getAmount()) + " ");
+        storageLeader.append(Constants.LEADER_CARD_RIGHT_EDGE);
+
         return storageLeader.toString();
 
     }
@@ -525,6 +495,80 @@ public class CLI implements View {
         return  requirementsBuilder.toString();
     }
 
+    public String shelfToString(int capacity, Resource type, int amount) {
+        StringBuilder shelfBuilder = new StringBuilder();
+
+        if (amount == 0) {
+            for (int i = 0; i < capacity; i++) {
+                shelfBuilder.append(Constants.EMPTY_SPACE);
+            }
+        } else {
+            for (int i = 0; i < amount; i++) {
+                shelfBuilder.append(ResourceToString.get(type));
+            }
+            for (int i = 0; i < capacity - amount; i++) {
+                shelfBuilder.append(Constants.EMPTY_SPACE);
+            }
+        }
+
+        return shelfBuilder.toString();
+    }
+
+    public void printStorage(StorageInfo storageInfo){
+        StringBuilder storageBuilder = new StringBuilder();
+
+        storageBuilder.append(Constants.STORAGE_TOP_BOTTOM_EDGE);
+
+        //FIRST SHELF
+        storageBuilder.append(Constants.EDGE).append(Constants.FOUR_EMPTY_SPACE);
+        storageBuilder.append(shelfToString(1,storageInfo.getShelf1Type(), storageInfo.getShelf1Amount()));
+        storageBuilder.append(Constants.FIVE_EMPTY_SPACE).append(Constants.RIGHT_EDGE);
+
+        //SECOND SHELF
+        storageBuilder.append(Constants.EDGE).append(Constants.THREE_EMPTY_SPACE);
+        storageBuilder.append(shelfToString(2,storageInfo.getShelf2Type(), storageInfo.getShelf2Amount()));
+        storageBuilder.append(Constants.FIVE_EMPTY_SPACE).append(Constants.RIGHT_EDGE);
+
+        //THIRD SHELF
+        storageBuilder.append(Constants.EDGE).append(Constants.TWO_EMPTY_SPACE);
+        storageBuilder.append(shelfToString(3,storageInfo.getShelf3Type(), storageInfo.getShelf3Amount()));
+        storageBuilder.append(Constants.FOUR_EMPTY_SPACE).append(Constants.RIGHT_EDGE);
+
+        storageBuilder.append(Constants.STORAGE_TOP_BOTTOM_EDGE);
+
+        //VAULT
+        storageBuilder.append("\n").append(Constants.VAULT).append("\n");
+        storageBuilder.append(Constants.COIN).append(":").append(storageInfo.getCoinsAmount()).append("\n");
+        storageBuilder.append(Constants.STONE).append(":").append(storageInfo.getStoneAmount()).append("\n");
+        storageBuilder.append(Constants.SERVANT).append(":").append(storageInfo.getServantsAmount()).append("\n");
+        storageBuilder.append(Constants.SHIELD).append(":").append(storageInfo.getShieldsAmount()).append("\n");
+
+
+
+        System.out.println(storageBuilder.toString());
+
+    }
+
+
+    public void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo){
+        StringBuilder devCardsSpaceBuilder = new StringBuilder();
+
+        HashMap<String, Integer> cards = devCardsSpaceInfo.getNumberOfCardByColor();
+
+        devCardsSpaceBuilder.append("Victory points by dev Cards: ").append(devCardsSpaceInfo.getVictoryPoints()).append("\n");
+        devCardsSpaceBuilder.append("Development Cards of the player: \n");
+
+
+        cards.forEach((k,v)-> {
+            if(v>0){
+                devCardsSpaceBuilder.append(k).append(":").append(v).append("\n");
+            }
+        });
+
+        System.out.println(devCardsSpaceBuilder.toString());
+
+    }
+
 
     public String printMarket(Market market){
         StringBuilder marketBuilder = new StringBuilder();
@@ -558,28 +602,20 @@ public class CLI implements View {
         return marketBuilder.toString();
     }
 
-    public void initializeBallToString(){
-        BallToString.put(BallColor.WHITE, Constants.WhiteBALL);
-        BallToString.put(BallColor.PURPLE, Constants.PurpleBALL);
-        BallToString.put(BallColor.BLUE, Constants.BlueBALL);
-        BallToString.put(BallColor.YELLOW, Constants.YellowBALL);
-        BallToString.put(BallColor.GREY, Constants.GreyBALL);
-        BallToString.put(BallColor.RED, Constants.RedBALL);
-    }
+
 
 
     public String printDevelopmentCardGrid(ArrayList<Integer> cardsID){
         StringBuilder gridByLevelBuilder = new StringBuilder();
 
-        for(DevelopmentCardDeck decks: devCardsDecks){
-            for(DevelopmentCard card: decks.getDeck()){
+            for(DevelopmentCard card: developmentCardDeck.getDeck()){
                 for(Integer i: cardsID){
                     if(i==card.getCardID()){
                         gridByLevelBuilder.append(printDevelopmentCard(card));
                     }
                 }
             }
-        }
+
 
         return gridByLevelBuilder.toString();
     }
@@ -659,4 +695,7 @@ public class CLI implements View {
         TokenToString.put(CardColor.YELLOW, Constants.YellowCARD);
     }
 
+    public DevelopmentCardDeck getDevelopmentCardDeck() {
+        return developmentCardDeck;
+    }
 }

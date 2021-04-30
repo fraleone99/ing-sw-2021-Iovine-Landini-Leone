@@ -1,11 +1,22 @@
 package it.polimi.ingsw.client.view.CLI;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
+import it.polimi.ingsw.model.DevelopmentCardGridTest;
+import it.polimi.ingsw.model.GameBoardTest;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
+import it.polimi.ingsw.model.enumeration.CardColor;
+import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.gameboard.GameBoard;
+import it.polimi.ingsw.model.gameboard.playerdashboard.*;
+import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.StorageInfo;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 import org.junit.Test;
@@ -58,7 +69,7 @@ public class CLITest {
         CLI cli = new CLI();
         ArrayList<Integer> cards = new ArrayList<>();
 
-        Integer code = 18;
+        int code = 18;
         cards.add(code);
 
         code = 22;
@@ -76,8 +87,43 @@ public class CLITest {
     @Test
     public void printFaithPath(){
         CLI cli = new CLI();
-
         System.out.println(cli.printFaithPath(8, false, true, true));
+    }
+
+    @Test
+    public void printStorage(){
+        CLI cli = new CLI();
+
+        Shelf shelf1 = new Shelf(1, 1, Resource.STONE);
+        Shelf shelf2 = new Shelf(2, 1, Resource.COIN);
+        Shelf shelf3 = new Shelf(3, 2, Resource.SERVANT);
+        Storage storage = new Storage(shelf1,shelf2,shelf3);
+
+        Vault vault = new Vault();
+        vault.AddResource(Resource.COIN, 5);
+        vault.AddResource(Resource.SHIELD, 3);
+
+        StorageInfo  s = new StorageInfo(storage, vault);
+
+        cli.printStorage(s);
+
+    }
+
+
+    @Test
+    public void printDevelopmentCardSpace() throws InvalidSpaceCardException {
+        CLI cli = new CLI();
+
+
+        DevCardsSpace devCardsSpace = new DevCardsSpace();
+        devCardsSpace.AddCard(cli.getDevelopmentCardDeck().getCardByID(17), 1);
+        devCardsSpace.AddCard(cli.getDevelopmentCardDeck().getCardByID(18), 2);
+        devCardsSpace.AddCard(cli.getDevelopmentCardDeck().getCardByID(29), 3);
+
+        DevCardsSpaceInfo devCardsSpaceInfo = new DevCardsSpaceInfo(devCardsSpace);
+
+        cli.printDevelopmentCardsSpace(devCardsSpaceInfo);
+
     }
 
     @Test

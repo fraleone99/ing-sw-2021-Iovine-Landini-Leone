@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.card.deck;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 
@@ -87,5 +88,15 @@ public class DevelopmentCardDeck implements Deck {
 
     public List<DevelopmentCard> getDeck() {
         return deck;
+    }
+
+    public  DevelopmentCard getCardByID(int ID){
+        for(DevelopmentCard c: deck){
+            if (c.getCardID() == ID){
+                return c;
+            }
+        }
+
+        return null;
     }
 }

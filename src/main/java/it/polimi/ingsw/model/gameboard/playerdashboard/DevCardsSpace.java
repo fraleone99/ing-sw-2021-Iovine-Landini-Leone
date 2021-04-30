@@ -100,4 +100,28 @@ public class DevCardsSpace {
     public ArrayList<DevelopmentCardDeck> getSpace() {
         return Space;
     }
+
+    public int getNumberOfColor(CardColor color, int level){
+        int result = 0;
+
+        for(DevelopmentCardDeck deck : Space){
+            for(DevelopmentCard card : deck.getDeck()){
+                if (card.getLevel() == level && card.getColor().equals(color))
+                    result++;
+            }
+        }
+
+        return  result;
+    }
+
+    public int pointsByDevCards(){
+        int points = 0;
+        for(DevelopmentCardDeck deck : Space) {
+            for (DevelopmentCard card : deck.getDeck()) {
+                points += card.getVictoryPoints();
+            }
+        }
+        return points;
+
+    }
 }
