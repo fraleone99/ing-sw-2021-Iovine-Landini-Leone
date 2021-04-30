@@ -2,8 +2,6 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.observer.ConnectionObserver;
-import it.polimi.ingsw.observer.LobbyObservable;
-import it.polimi.ingsw.observer.LobbyObserver;
 import it.polimi.ingsw.observer.VirtualViewObserver;
 import it.polimi.ingsw.server.answer.initialanswer.JoiningPlayer;
 import it.polimi.ingsw.server.answer.initialanswer.PrepareTheLobby;

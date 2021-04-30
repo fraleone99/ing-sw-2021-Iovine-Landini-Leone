@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.message.action.ChoiceGameBoard;
+import it.polimi.ingsw.client.message.action.ChosenLeaderCard;
+import it.polimi.ingsw.client.message.action.TurnType;
 import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
 import it.polimi.ingsw.client.view.CLI.CLI;
 import it.polimi.ingsw.client.message.action.ChosenResource;
@@ -9,6 +12,10 @@ import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
+import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
+import it.polimi.ingsw.server.answer.turnanswer.ChooseTurn;
+import it.polimi.ingsw.server.answer.turnanswer.SeeLeaderCards;
+import it.polimi.ingsw.server.answer.turnanswer.SeeMarket;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -32,12 +39,6 @@ public class NetworkHandler implements Runnable {
 
     @Override
     public void run() {
-
-        heartbeat = new Heartbeat(this);
-        Thread heartbeatThread = new Thread(heartbeat);
-        heartbeatThread.start();
-
-
         try {
             input = new ObjectInputStream(server.getInputStream());
             output = new ObjectOutputStream(server.getOutputStream());
@@ -50,12 +51,12 @@ public class NetworkHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     private void handleClientConnection() throws IOException{
+        heartbeat = new Heartbeat(this);
+        Thread heartbeatThread = new Thread(heartbeat);
+        heartbeatThread.start();
         while (true) {
             try {
                 server.setSoTimeout(4000);
@@ -63,7 +64,6 @@ public class NetworkHandler implements Runnable {
                 Answer answer = (Answer) next;
                 if(!(answer instanceof Pong))
                     processServerAnswer(answer);
-
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
 
@@ -124,6 +124,29 @@ public class NetworkHandler implements Runnable {
         }
         else if(inputObj instanceof JoiningPlayer){
             view.readMessage(((JoiningPlayer) inputObj).getMessage());
+        }
+        else if(inputObj instanceof ChooseTurn) {
+            int turn=view.askTurnType(((ChooseTurn) inputObj).getMessage());
+            output.writeObject(new TurnType(turn));
+        }
+        else if(inputObj instanceof ActiveLeader) {
+            int leaderCard=view.activeLeader(((ActiveLeader) inputObj).getMessage());
+            output.writeObject(new ChosenLeaderCard(leaderCard));
+        }
+        else if(inputObj instanceof GameError) {
+            view.readMessage(((GameError) inputObj).getMessage());
+        }
+        else if(inputObj instanceof SeeGameBoard) {
+            int choice=view.seeGameBoard(((SeeGameBoard) inputObj).getMessage());
+            output.writeObject(new ChoiceGameBoard(choice));
+        }
+        else if(inputObj instanceof SeeLeaderCards) {
+            int choice=view.seeLeaderCards(((SeeLeaderCards) inputObj).getMessage());
+            output.writeObject(new ChoiceGameBoard(choice));
+        }
+        else if(inputObj instanceof SeeMarket) {
+            int choice=view.seeMarket(((SeeMarket) inputObj).getMessage());
+            output.writeObject(new ChoiceGameBoard(choice));
         }
     }
 

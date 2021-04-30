@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.view;
 
+import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+
 import java.util.ArrayList;
 
 public interface View {
@@ -16,4 +18,14 @@ public interface View {
     int askResource(String message);
 
     int askLeaderToDiscard(ArrayList<Integer> IdLeaders);
+
+    int askTurnType(String message);
+
+    int activeLeader(String message);
+
+    int seeGameBoard(String message);
+
+    int seeLeaderCards(ArrayList<Integer> leaderCards);
+
+    int seeMarket(Market market);
 }

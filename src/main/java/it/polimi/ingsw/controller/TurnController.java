@@ -35,7 +35,9 @@ public class TurnController {
     int level;
     int space;
 
-
+    public TurnController(Game game) {
+        this.game = game;
+    }
 
     /*At this moment i use a string for what the player wants to do. And i assume that somewhere the variable of this class
     * are properly set*/

@@ -6,5 +6,6 @@ public enum Errors {
     IndexOutOfBounds,
     NotEnoughResources,
     InvalidInput,
-    ImpossibleRequest
+    ImpossibleRequest,
+    InvalidChoice
 }

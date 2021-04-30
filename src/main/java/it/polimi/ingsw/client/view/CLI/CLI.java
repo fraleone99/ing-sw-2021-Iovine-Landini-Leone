@@ -225,6 +225,88 @@ public class CLI implements View {
         return card;
     }
 
+    public int seeGameBoard(String message) {
+        int choice;
+        System.out.println(message);
+        System.out.println("1) Leader Cards.\n2) Market.\n3) Development cards grid.\n4) Cards for production");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice<1 || choice>4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice<1 || choice>4);
+
+        return choice;
+    }
+
+    public int seeLeaderCards(ArrayList<Integer> leaderCards) {
+        int choice;
+
+        for(int i=0; i<leaderCards.size(); i++) {
+            System.out.println(printLeaderCard(LeaderDeck.getFromID(leaderCards.get(i))));
+        }
+
+        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice!=1 && choice!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice!=1 && choice!=2);
+
+        return choice;
+    }
+
+    public int seeMarket(Market market) {
+        int choice;
+
+        System.out.println(printMarket(market));
+
+        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice!=1 && choice!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice!=1 && choice!=2);
+
+        return choice;
+    }
+
+    public int askTurnType(String message) {
+        int choose;
+
+        System.out.println(message);
+        System.out.println("1) Active Leader Card.\n2) Discard Leader Card.\n3) Use Market.\n4) Buy Development Card.\n5) Active Productions");
+
+        do {
+            choose=Integer.parseInt(in.nextLine());
+            if(choose<1 || choose>5) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choose<1 || choose>5);
+
+        return choose;
+    }
+
+    public int activeLeader(String message){
+        int leaderCard;
+
+        System.out.println(message);
+
+        do {
+            leaderCard=Integer.parseInt(in.nextLine());
+            if(leaderCard!=1 && leaderCard!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(leaderCard!=1 && leaderCard!=2);
+
+        return leaderCard;
+    }
+
     public String printGood(Goods goods , String color){
         //good
         StringBuilder goodBuilder = new StringBuilder();

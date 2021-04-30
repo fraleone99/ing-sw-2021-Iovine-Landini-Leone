@@ -1,10 +1,14 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import it.polimi.ingsw.observer.VirtualViewObservable;
-import it.polimi.ingsw.server.answer.ChooseResource;
-import it.polimi.ingsw.server.answer.FirstPlayer;
-import it.polimi.ingsw.server.answer.StartGame;
+import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
+import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
+import it.polimi.ingsw.server.answer.turnanswer.ChooseTurn;
+import it.polimi.ingsw.server.answer.turnanswer.SeeLeaderCards;
+import it.polimi.ingsw.server.answer.turnanswer.SeeMarket;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ public class VirtualView extends VirtualViewObservable {
         }
         client.setReady(false);
         return answer;
+        //notify everyone who joined the lobby
     }
 
 
@@ -124,6 +129,85 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new StartGame("The game start!"));
+    }
+
+
+    public int seeGameBoard(String nickname) throws IOException, InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new SeeGameBoard("What do you want to see about the Game Board?"));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+
+    public int seeLeaderCards(String nickname, ArrayList<Integer> leaderCards) throws IOException, InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new SeeLeaderCards(leaderCards));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int seeMarket(String nickname, Market market) throws InterruptedException, IOException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new SeeMarket(market));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+
+    public int chooseTurn(String nickname) throws IOException, InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new ChooseTurn("Choose what you want to do in this turn:"));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int activeLeader(String nickname) throws IOException, InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new ActiveLeader("Which leader do you want to activate?"));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public void sendErrorMessage(String nickname) throws IOException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new GameError("Invalid choice."));
     }
 
 

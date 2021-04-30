@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.gameboard.playerdashboard;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.enumeration.BallColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,7 +15,7 @@ import java.util.Arrays;
 
 //Tested Class
 
-public class Market {
+public class Market implements Serializable {
     private Ball[][] matrix = new Ball[3][4];
     private Ball ramp;
     private ArrayList<Ball>randomBall=new ArrayList<>();

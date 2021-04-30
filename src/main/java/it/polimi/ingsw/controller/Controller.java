@@ -17,11 +17,12 @@ public class Controller {
     private final ArrayList<String> players=new ArrayList<>();
     private boolean isOver;
     private final VirtualView view;
+    private boolean isEnd=false;
 
     public Controller(ArrayList<String> players, VirtualView view) {
         this.players.addAll(players);
         gameModel=new Game(players.size(), players);
-        turncontroller=new TurnController();
+        turncontroller=new TurnController(gameModel);
         endgame=new EndGameController();
         this.view=view;
     }
@@ -38,6 +39,12 @@ public class Controller {
             }
             for(int i=0; i<players.size(); i++){
                 startGame(i);
+            }
+            while(!isEnd){
+                for(int i=0; i<players.size();i++){
+                    seeGameBoard(i);
+                    chooseTurn(i);
+                }
             }
         } catch (NotExistingPlayerException | IOException | InterruptedException e){
             e.printStackTrace();
@@ -113,18 +120,46 @@ public class Controller {
         view.startGame(players.get(player));
     }
 
+    public void seeGameBoard(int player) throws IOException, NotExistingPlayerException, InterruptedException {
+        int answer=view.seeGameBoard(players.get(player));
+        //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production
+        int finish;
+
+        switch(answer){
+            case 1 : finish=view.seeLeaderCards(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                     if(finish==1) seeGameBoard(player);
+                     break;
+            case 2 : finish=view.seeMarket(players.get(player), gameModel.getGameBoard().getMarket());
+                     if(finish==1) seeGameBoard(player);
+                     break;
+            case 3 :
+            case 4 :
+        }
+    }
+
+    public void chooseTurn(int player) throws IOException, InterruptedException, NotExistingPlayerException {
+        int answer=view.chooseTurn(players.get(player));
+
+        switch(answer){
+            case 1 : try {
+                int pos = view.activeLeader(players.get(player));
+                activeLeader(player, pos);
+            } catch (InvalidChoiceException e) {
+                view.sendErrorMessage(players.get(player));
+                chooseTurn(player);
+            }
+            case 2 :
+        }
+    }
+
 
     public EndGameController getEndgame() {
         return endgame;
     }
 
 
-    public void activeLeader(int pos) throws InvalidChoiceException {
-        try {
-            gameModel.getCurrentPlayer().ActiveLeader(pos);
-        } catch (InvalidChoiceException e) {
-            //TODO
-        }
+    public void activeLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
+        gameModel.getPlayer(players.get(player)).ActiveLeader(pos);
     }
 
     public void discardLeader(int pos) throws InvalidChoiceException {

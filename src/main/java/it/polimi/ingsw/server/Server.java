@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.observer.LobbyObserver;
+//import it.polimi.ingsw.observer.LobbyObserver;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.message.action.ChoiceGameBoard;
+import it.polimi.ingsw.client.message.action.ChosenLeaderCard;
 import it.polimi.ingsw.client.message.action.ChosenResource;
+import it.polimi.ingsw.client.message.action.TurnType;
 import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
@@ -44,6 +47,9 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     }
 
     public void handleClientConnection() throws IOException{
+        heartbeat = new Heartbeat(this);
+        Thread heartbeatThread = new Thread(heartbeat);
+        heartbeatThread.start();
         try{
             while(true){
                 socketClient.setSoTimeout(4000);
@@ -96,6 +102,21 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
             isReady=true;
             notifyAll();
         }
+        else if(message instanceof ChoiceGameBoard) {
+            answer=String.valueOf(((ChoiceGameBoard) message).getChoice());
+            isReady=true;
+            notifyAll();
+        }
+        else if(message instanceof TurnType) {
+            answer=String.valueOf(((TurnType) message).getTurn());
+            isReady=true;
+            notifyAll();
+        }
+        else if(message instanceof ChosenLeaderCard) {
+            answer=String.valueOf(((ChosenLeaderCard) message).getPosition());
+            isReady=true;
+            notifyAll();
+        }
     }
 
     public boolean isReady() {
@@ -118,14 +139,7 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     @Override
     public void run() {
-        //System.out.println("Connected to "+socketClient.getInetAddress());
-
-        heartbeat = new Heartbeat(this);
-        Thread heartbeatThread = new Thread(heartbeat);
-        heartbeatThread.start();
-
         try {
-            //virtualView.askHandShake(this);
             handleClientConnection();
         } catch (IOException e) {
             System.out.println("client " + socketClient.getInetAddress() + " connection dropped");

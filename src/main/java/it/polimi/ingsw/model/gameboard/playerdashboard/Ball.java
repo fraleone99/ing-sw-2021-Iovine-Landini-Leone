@@ -3,13 +3,15 @@ package it.polimi.ingsw.model.gameboard.playerdashboard;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 
+import java.io.Serializable;
+
 /**
  * Ball Class manages every ball of the market
  *
  * @author Nicola Landini
  */
 
-public class Ball {
+public class Ball implements Serializable {
 
     private final BallColor type;
 

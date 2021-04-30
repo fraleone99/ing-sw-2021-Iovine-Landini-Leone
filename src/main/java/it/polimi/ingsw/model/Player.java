@@ -88,16 +88,18 @@ public class Player {
     }
 
     public void ActiveLeader(int pos) throws InvalidChoiceException{
-        if(playerDashboard.getLeaders().size()>=pos && pos>=0 && !playerDashboard.getLeaders().get(pos).getIsDiscarded()) {
-            if (playerDashboard.getLeaders().get(pos) instanceof StorageLeader) {
-                if (playerDashboard.getLeaders().get(pos).checkRequirements(playerDashboard)) {
-                    playerDashboard.getLeaders().get(pos).setIsActive();
-                    playerDashboard.RemoveResource(playerDashboard.getLeaders().get(pos).getRequirements().get(0).getCost());
+        if(playerDashboard.getLeaders().size()>=pos && pos>=0 && !playerDashboard.getLeaders().get(pos-1).getIsDiscarded()) {
+            if (playerDashboard.getLeaders().get(pos-1) instanceof StorageLeader) {
+                if (playerDashboard.getLeaders().get(pos-1).checkRequirements(playerDashboard)) {
+                    playerDashboard.getLeaders().get(pos-1).setIsActive();
+                    playerDashboard.RemoveResource(playerDashboard.getLeaders().get(pos-1).getRequirements().get(0).getCost());
                 }
+                else throw new InvalidChoiceException();
             } else {
-                if (playerDashboard.getLeaders().get(pos).checkRequirements(playerDashboard)) {
-                    playerDashboard.getLeaders().get(pos).setIsActive();
+                if (playerDashboard.getLeaders().get(pos-1).checkRequirements(playerDashboard)) {
+                    playerDashboard.getLeaders().get(pos-1).setIsActive();
                 }
+                else throw new InvalidChoiceException();
             }
         }
         else throw new InvalidChoiceException();
