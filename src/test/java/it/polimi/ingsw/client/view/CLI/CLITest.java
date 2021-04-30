@@ -1,24 +1,19 @@
 package it.polimi.ingsw.client.view.CLI;
 
-import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.model.DevelopmentCardGridTest;
-import it.polimi.ingsw.model.GameBoardTest;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
-import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+
 
 public class CLITest {
 
@@ -83,5 +78,19 @@ public class CLITest {
         CLI cli = new CLI();
 
         System.out.println(cli.printFaithPath(8, false, true, true));
+    }
+
+    @Test
+    public void printActionToken(){
+        LorenzoMagnifico lorenzoMagnifico = new LorenzoMagnifico();
+        CLI cli = new CLI();
+
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(0)));
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(1)));
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(2)));
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(3)));
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(4)));
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(5)));
+        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(6)));
     }
 }

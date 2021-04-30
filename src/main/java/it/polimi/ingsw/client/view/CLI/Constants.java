@@ -69,6 +69,18 @@ public class Constants {
     public final static String FAITH_TOP_EDGE    = "   + + + + + + + + + + + + + " + OnePOINT +" + + + + + + + + + + + "+ TwoPOINTS +" + + + + + + + + + + + "+ FourPOINTS +" + + + + + + + + + + + + "+ SixPOINTS +" +\n";
     public final static String FAITH_BOTTOM_EDGE = "   + "+ TwentyPOINTS +" + + + + + + + + + + + + "+ SixteenPOINTS +" + + + + + + + + + + + + "+ TwelvePOINTS +" + + + + + + + + + + + + "+ NinePOINTS +" + + + + + + + + + + +\n";
 
+    //SINGLE PLAYER
+    public final static String BCM = ANSI_BLACK + FAITH + ANSI_RESET;
+    public final static String CARD         = "▇";
+    public final static String YellowCARD   = ANSI_YELLOW + CARD + ANSI_RESET;
+    public final static String BlueCARD     = ANSI_BLUE + CARD + ANSI_RESET;
+    public final static String GreenCARD    = ANSI_GREEN + CARD + ANSI_RESET;
+    public final static String PurpleCARD   = ANSI_PURPLE + CARD + ANSI_RESET;
+    public final static String SHUFFLE      = ANSI_WHITE + "\uD83D\uDD00" + ANSI_RESET;
+    public final static String AT_TOP_BOTTOM_EDGE = ANSI_WHITE + " ******" + ANSI_RESET;
+    public final static String TOP_CARD = ANSI_WHITE +"***\n * "+ ANSI_RESET;
+    public final static String BOTTOM_CARD = ANSI_WHITE +" *\n"+ ANSI_RESET;
+
 
     public final static String MAESTRI_RINASCIMENTO = "\"_________   _______  _______  _______  _______ _________ _______ _________   ______   _______  _            \\n\" +\n" +
             "                \"\\\\__   __/  (       )(  ___  )(  ____ \\\\(  ____ \\\\\\\\__   __/(  ____ )\\\\__   __/  (  __  \\\\ (  ____ \\\\( \\\\           \\n\" +\n" +

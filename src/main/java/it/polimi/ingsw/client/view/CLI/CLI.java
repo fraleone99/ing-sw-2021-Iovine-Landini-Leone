@@ -13,6 +13,9 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.singleplayer.ActionToken;
+import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
+import it.polimi.ingsw.model.singleplayer.DeleteCard;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,6 +28,7 @@ public class CLI implements View {
     private final HashMap<CardColor, String> CardColorToString = new HashMap<>();
     private final HashMap<Resource, String> ResourceToString = new HashMap<>();
     private final HashMap<BallColor, String> BallToString = new HashMap<>();
+    private final HashMap<CardColor, String> TokenToString = new HashMap<>();
 
     private LeaderCardDeck LeaderDeck;
     private final ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
@@ -35,6 +39,7 @@ public class CLI implements View {
         initializeCardColorToString();
         initializeResourceToString();
         initializeBallToString();
+        initializeTokenToString();
 
 
         LeaderDeck = new LeaderCardDeck();
@@ -539,6 +544,37 @@ public class CLI implements View {
         }
 
         return faithPathSupport.toString();
+    }
+
+
+    public String printActionToken(ActionToken actionToken){
+        StringBuilder actionTokenBuilder = new StringBuilder();
+
+        actionTokenBuilder.append("\n"+Constants.AT_TOP_BOTTOM_EDGE);
+        if(actionToken instanceof BlackCrossMover){
+            if(((BlackCrossMover) actionToken).haveToBeShuffled()){
+                actionTokenBuilder.append(Constants.ANSI_WHITE+"**"+Constants.ANSI_RESET+Constants.TOP_CARD);
+                actionTokenBuilder.append("+1 "+Constants.BCM+" "+Constants.SHUFFLE+Constants.BOTTOM_CARD);
+                actionTokenBuilder.append(Constants.AT_TOP_BOTTOM_EDGE+Constants.ANSI_WHITE+"*****\n"+Constants.ANSI_RESET);
+            } else {
+                actionTokenBuilder.append(Constants.TOP_CARD+"+2 "+Constants.BCM+Constants.BOTTOM_CARD);
+                actionTokenBuilder.append(Constants.AT_TOP_BOTTOM_EDGE+Constants.ANSI_WHITE+"***\n"+Constants.ANSI_RESET);
+            }
+        } else {
+            actionTokenBuilder.append(Constants.TOP_CARD);
+            actionTokenBuilder.append("-2  "+TokenToString.get(((DeleteCard)actionToken).getColorType()));
+            actionTokenBuilder.append(Constants.BOTTOM_CARD);
+            actionTokenBuilder.append(Constants.AT_TOP_BOTTOM_EDGE+Constants.ANSI_WHITE+"***\n"+Constants.ANSI_RESET);
+        }
+
+        return actionTokenBuilder.toString();
+    }
+
+    public void initializeTokenToString(){
+        TokenToString.put(CardColor.PURPLE, Constants.PurpleCARD);
+        TokenToString.put(CardColor.BLUE, Constants.BlueCARD);
+        TokenToString.put(CardColor.GREEN, Constants.GreenCARD);
+        TokenToString.put(CardColor.YELLOW, Constants.YellowCARD);
     }
 
 }
