@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.card.deck;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.card.Card;
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class DevelopmentCardDeck implements Deck {
 
-    private List<DevelopmentCard> deck = new ArrayList<>();
+    private ArrayList<DevelopmentCard> deck = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -44,6 +45,9 @@ public class DevelopmentCardDeck implements Deck {
     public void add(DevelopmentCard card){
         deck.add(card);
     }
+
+    public void addAll(DevelopmentCardDeck devCards) {deck.addAll(devCards.getDeck());}
+
 
     /**
      * {@inheritDoc}
@@ -98,5 +102,13 @@ public class DevelopmentCardDeck implements Deck {
         }
 
         return null;
+    }
+
+    public ArrayList<Integer> IdDeck(){
+        ArrayList<Integer> IdDeck=new ArrayList<>();
+        for (DevelopmentCard dev : deck) {
+            IdDeck.add(dev.getCardID());
+        }
+        return IdDeck;
     }
 }

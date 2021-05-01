@@ -117,7 +117,7 @@ public class LeaderCardDeck {
         return null;
     }
 
-    public  LeaderCard getCardByID(int ID){
+    public LeaderCard getCardByID(int ID){
         for(LeaderCard c: deck){
             if (c.getCardID() == ID){
                 return c;

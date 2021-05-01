@@ -23,9 +23,17 @@ public interface View {
 
     int activeLeader(String message);
 
+    int discardLeader(String message);
+
     int seeGameBoard(String message);
 
     int seeLeaderCards(ArrayList<Integer> leaderCards);
 
     int seeMarket(Market market);
+
+    int chooseLine(String message);
+
+    int seeGrid(ArrayList<Integer> devCards);
+
+    int seeProductions(ArrayList<Integer> productions);
 }

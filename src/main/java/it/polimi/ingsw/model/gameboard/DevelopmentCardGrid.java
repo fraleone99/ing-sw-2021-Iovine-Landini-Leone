@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 
 import javax.swing.text.DefaultEditorKit;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -40,6 +41,61 @@ public class DevelopmentCardGrid {
         for(DevelopmentCardDeck d: devCardsDecks){
             d.shuffle();
         }
+    }
+
+    public DevelopmentCardDeck getLine(int choice) {
+        // 1-3 level, 4-7 color
+        DevelopmentCardDeck deck = new DevelopmentCardDeck();
+        try {
+            switch (choice) {
+                case 1:
+                    deck.addAll(addFromLevel(1));
+                    break;
+                case 2:
+                    deck.addAll(addFromLevel(2));
+                    break;
+                case 3:
+                    deck.addAll(addFromLevel(3));
+                    break;
+                case 4:
+                    deck.addAll(addFromColor(CardColor.PURPLE));
+                    break;
+                case 5:
+                    deck.addAll(addFromColor(CardColor.YELLOW));
+                    break;
+                case 6:
+                    deck.addAll(addFromColor(CardColor.BLUE));
+                    break;
+                case 7:
+                    deck.addAll(addFromColor(CardColor.GREEN));
+                    break;
+            }
+        }catch(InvalidChoiceException e) {
+            e.printStackTrace();
+        }
+
+        return deck;
+    }
+
+    public DevelopmentCardDeck addFromLevel(int level) throws InvalidChoiceException {
+        DevelopmentCardDeck devCards = new DevelopmentCardDeck();
+
+        devCards.add(getCard(CardColor.PURPLE,level));
+        devCards.add(getCard(CardColor.YELLOW,level));
+        devCards.add(getCard(CardColor.BLUE,level));
+        devCards.add(getCard(CardColor.GREEN,level));
+
+        return devCards;
+    }
+
+    public DevelopmentCardDeck addFromColor(CardColor color) throws InvalidChoiceException {
+        DevelopmentCardDeck devCards = new DevelopmentCardDeck();
+
+        devCards.add(getCard(color,1));
+        devCards.add(getCard(color,2));
+        devCards.add(getCard(color,3));
+
+        return devCards;
     }
 
     public DevelopmentCardDeck getDeck(CardColor color, int level) throws InvalidChoiceException {

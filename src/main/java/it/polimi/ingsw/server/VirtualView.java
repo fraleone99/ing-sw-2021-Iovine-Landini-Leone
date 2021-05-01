@@ -5,12 +5,10 @@ import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import it.polimi.ingsw.observer.VirtualViewObservable;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
-import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
-import it.polimi.ingsw.server.answer.turnanswer.ChooseTurn;
-import it.polimi.ingsw.server.answer.turnanswer.SeeLeaderCards;
-import it.polimi.ingsw.server.answer.turnanswer.SeeMarket;
+import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +35,6 @@ public class VirtualView extends VirtualViewObservable {
         }
         client.setReady(false);
         return answer;
-        //notify everyone who joined the lobby
     }
 
 
@@ -63,15 +60,8 @@ public class VirtualView extends VirtualViewObservable {
         //notify everyone the players number
     }
 
-    public void prepareTheLobby(ClientHandler client) throws IOException {
-        //client.send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
-
-
-
-
-
+    public void prepareTheLobby() throws IOException {
         notifyPreparationOfLobby();
-        //notify everyone
     }
 
 
@@ -175,6 +165,50 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
+    public int chooseLine(String nickname) throws InterruptedException, IOException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new ChooseLine("Please choose what you want to see from the Development Cards Grid"));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int seeGrid(String nickname, ArrayList<Integer> id) throws InterruptedException, IOException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new SeeGrid(id));
+
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int seeProduction(String nickname, ArrayList<Integer> productions) throws InterruptedException, IOException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new SeeProductions(productions));
+
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
 
     public int chooseTurn(String nickname) throws IOException, InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -194,6 +228,20 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ActiveLeader("Which leader do you want to activate?"));
+        synchronized (client) {
+            while(!client.isReady()) client.wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int discardLeader(String nickname) throws InterruptedException, IOException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new DiscardLeader("Which leader do you want to discard?"));
         synchronized (client) {
             while(!client.isReady()) client.wait();
             answer=client.getAnswer();

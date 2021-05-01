@@ -132,10 +132,16 @@ public class Controller {
             case 2 : finish=view.seeMarket(players.get(player), gameModel.getGameBoard().getMarket());
                      if(finish==1) seeGameBoard(player);
                      break;
-            case 3 :
-            case 4 :
+            case 3 : int choice=view.chooseLine(players.get(player));
+                     finish=view.seeGrid(players.get(player), gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                     if(finish==1) seeGameBoard(player);
+                     break;
+            case 4 : finish=view.seeProduction(players.get(player), gameModel.getPlayer(players.get(player)).getProductions());
+                     if(finish==1) seeGameBoard(player);
+                     break;
         }
     }
+
 
     public void chooseTurn(int player) throws IOException, InterruptedException, NotExistingPlayerException {
         int answer=view.chooseTurn(players.get(player));
@@ -148,7 +154,13 @@ public class Controller {
                 view.sendErrorMessage(players.get(player));
                 chooseTurn(player);
             }
-            case 2 :
+            case 2 : try {
+                int pos = view.discardLeader(players.get(player));
+                discardLeader(player, pos);
+            } catch (InvalidChoiceException e) {
+                view.sendErrorMessage(players.get(player));
+                chooseTurn(player);
+            }
         }
     }
 
@@ -162,12 +174,8 @@ public class Controller {
         gameModel.getPlayer(players.get(player)).ActiveLeader(pos);
     }
 
-    public void discardLeader(int pos) throws InvalidChoiceException {
-        try {
-            gameModel.getCurrentPlayer().DiscardLeader(pos);
-        } catch (InvalidChoiceException e) {
-            //TODO
-        }
+    public void discardLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
+        gameModel.getPlayer(players.get(player)).DiscardLeader(pos);
     }
 
     public void endGame(){

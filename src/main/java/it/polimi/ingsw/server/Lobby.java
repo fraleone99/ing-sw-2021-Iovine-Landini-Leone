@@ -79,7 +79,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
             view.waitingRoom(clientHandler);
         } else {
             view.waitingRoom(clientHandler);
-            view.prepareTheLobby(clientHandler);
+            view.prepareTheLobby();
         }
 
         String str= clientToNames.get(clientHandler);

@@ -6,6 +6,7 @@ import it.polimi.ingsw.exceptions.NotEnoughResourceException;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
 import it.polimi.ingsw.model.enumeration.BallColor;
@@ -107,12 +108,30 @@ public class Player {
 
     public void DiscardLeader(int pos) throws InvalidChoiceException {
         //playerDashboard.getLeaders().DrawFromPosition(pos);
-        if(playerDashboard.getLeaders().size()>=pos && pos>=0 && !playerDashboard.getLeaders().get(pos).getIsActive()) {
-            playerDashboard.getLeaders().get(pos).setIsDiscarded();
+        if(playerDashboard.getLeaders().size()>=pos-1 && pos-1>=0 && !playerDashboard.getLeaders().get(pos-1).getIsActive()) {
+            playerDashboard.getLeaders().get(pos-1).setIsDiscarded();
             playerDashboard.getFaithPath().moveForward(1);
         } else throw new InvalidChoiceException();
     }
 
+    public ArrayList<Integer> getProductions() {
+        ArrayList<Integer> Id=new ArrayList<>();
+
+        for(LeaderCard card : playerDashboard.getLeaders().getDeck()){
+            if(card instanceof ProductionLeader && card.getIsActive())
+            {
+                Id.add(card.getCardID());
+            }
+        }
+
+        for(int i=0; i<3; i++) {
+            if(!playerDashboard.getDevCardsSpace().getSpace().get(i).isEmpty()) {
+                Id.add(playerDashboard.getDevCardsSpace().getSpace().get(i).get().getCardID());
+            }
+        }
+
+        return Id;
+    }
 
     public String getNickname() {
         return nickname;

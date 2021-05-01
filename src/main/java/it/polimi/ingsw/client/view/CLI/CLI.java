@@ -209,8 +209,8 @@ public class CLI implements View {
     public int seeLeaderCards(ArrayList<Integer> leaderCards) {
         int choice;
 
-        for(int i=0; i<leaderCards.size(); i++) {
-            System.out.println(printLeaderCard(LeaderDeck.getFromID(leaderCards.get(i))));
+        for (Integer leaderCard : leaderCards) {
+            System.out.println(printLeaderCard(LeaderDeck.getFromID(leaderCard)));
         }
 
         System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
@@ -242,6 +242,67 @@ public class CLI implements View {
         return choice;
     }
 
+    public int chooseLine(String message) {
+        int choice;
+
+        System.out.println(message);
+        System.out.println("1) Level one cards\n2) Level two cards\n3) Level three cards\n4) Purple cards\n5) Yellow Cards\n6) Blue Cards\n7) Green Cards");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice<1 || choice>7) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice<1 || choice>7);
+
+        return choice;
+    }
+
+    public int seeGrid(ArrayList<Integer> devCards) {
+        int choice;
+
+        for (Integer devCard : devCards) {
+            System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(devCard)));
+        }
+
+        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice!=1 && choice!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice!=1 && choice!=2);
+
+        return choice;
+    }
+
+    public int seeProductions(ArrayList<Integer> productions) {
+        int choice;
+
+        if(productions.size()==0) {
+            System.out.println("You haven't cards to make productions.");
+        } else {
+            for (Integer production : productions) {
+                if (production < 17)
+                    System.out.println(printLeaderCard(LeaderDeck.getFromID(production)));
+                else
+                    System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(production)));
+            }
+        }
+
+        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice!=1 && choice!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice!=1 && choice!=2);
+
+        return choice;
+    }
+
     public int askTurnType(String message) {
         int choose;
 
@@ -259,6 +320,21 @@ public class CLI implements View {
     }
 
     public int activeLeader(String message){
+        int leaderCard;
+
+        System.out.println(message);
+
+        do {
+            leaderCard=Integer.parseInt(in.nextLine());
+            if(leaderCard!=1 && leaderCard!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(leaderCard!=1 && leaderCard!=2);
+
+        return leaderCard;
+    }
+
+    public int discardLeader(String message) {
         int leaderCard;
 
         System.out.println(message);
