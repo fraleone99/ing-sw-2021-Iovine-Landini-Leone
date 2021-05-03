@@ -73,7 +73,7 @@ public class Server {
                             lobbies.get(numberOfLobbies-1).prepareTheGame();
                             playersInLastLobby=0;
                         }
-                    } catch (IOException | InterruptedException e) {
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else {

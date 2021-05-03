@@ -66,13 +66,7 @@ public class VirtualView extends VirtualViewObservable {
         //notify everyone the players number
     }
 
-    public void prepareTheLobby(ClientHandler client) throws IOException {
-        //client.send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
-
-
-
-
-
+    public void prepareTheLobby() throws IOException {
         notifyPreparationOfLobby();
     }
 

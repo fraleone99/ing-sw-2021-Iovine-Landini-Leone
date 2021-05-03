@@ -199,7 +199,7 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     public void closeConnection(){
         System.out.println(Constants.ANSI_RED +  "[SERVER] client disconnected." + Constants.ANSI_RESET);
-        connectionObservable.notifyDisconnection(this);
+        notifyDisconnection(this);
         active.set(false);
         isConnected = false;
 

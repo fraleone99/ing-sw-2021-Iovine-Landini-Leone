@@ -137,7 +137,7 @@ public class Player {
         return nickname;
     }
 
-   public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
+    public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
         if(playerDashboard.getLeaders().get(pos- 1) instanceof ProductionLeader){
             if(playerDashboard.CheckResource(((ProductionLeader) playerDashboard.getLeaders().get(pos- 1)).getInputProduction()))
                 activatedProduction.add(((ProductionLeader) playerDashboard.getLeaders().get(pos-1)).getProduction());

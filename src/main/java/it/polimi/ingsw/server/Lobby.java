@@ -64,7 +64,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
 
 
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new JoiningPlayer(Constants.ANSI_BLUE +  s + " joins the game. "+(nicknames.size()+1)+" players have already joined this Lobby."));
+            namesToClient.get(nick).send(new JoiningPlayer(Constants.ANSI_BLUE +  s + " joins the game. "+(nicknames.size()+1)+" players have already joined this Lobby."+Constants.ANSI_RESET));
         }
 
 
@@ -99,10 +99,12 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
 
     @Override
     public void updateDisconnection(ClientHandler clientHandler) {
-        removeConnection(clientHandler);
+        //removeConnection(clientHandler);
+        clientHandler.unregisterObserver(this);
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new Disconnection("Player "+view.requestNickname(clientHandler)+" left the game. Now there are "+nicknames.size()+" players in this Lobby."));
+            namesToClient.get(nick).send(new Disconnection("Player "+clientToNames.get(clientHandler)+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."));
         }
+        removeConnection(clientHandler);
     }
 
     @Override

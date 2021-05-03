@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
-import it.polimi.ingsw.exceptions.NotEnoughResourceException;
-import it.polimi.ingsw.exceptions.NotExistingPlayerException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.GameBoard;
@@ -99,7 +96,7 @@ public class Game {
 
     }
 
-    public ActionToken drawActionToken() throws InvalidChoiceException {
+    public ActionToken drawActionToken() throws InvalidChoiceException, EmptyDecksException {
         ActionToken element = gameBoard.getLorenzoMagnifico().draw();
 
         if(element instanceof BlackCrossMover){

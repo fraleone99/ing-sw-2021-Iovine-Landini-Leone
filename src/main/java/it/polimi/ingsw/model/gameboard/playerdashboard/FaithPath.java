@@ -63,6 +63,8 @@ public class FaithPath {
 
     public int getPositionFaithPath() { return positionFaithPath; }
 
+    public int getPositionLorenzo() { return positionLorenzo; }
+
     public void moveForward(int move){
         positionFaithPath = positionFaithPath+move;
     }
