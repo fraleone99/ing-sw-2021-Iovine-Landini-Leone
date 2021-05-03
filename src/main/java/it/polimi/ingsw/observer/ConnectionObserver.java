@@ -8,6 +8,6 @@ import java.io.IOException;
 
 public interface ConnectionObserver {
 
-    void updateDisconnection(ClientHandler clientHandler) throws IOException, InterruptedException;
+    void updateDisconnection(ClientHandler clientHandler);
 
 }

@@ -37,7 +37,7 @@ public class ConnectionObservable {
      * @param clientHandler
      */
     //Every object in observersList is an instance of a class that implements ConnectionObserver interface
-    public void notifyDisconnection(ClientHandler clientHandler) throws IOException, InterruptedException {
+    public void notifyDisconnection(ClientHandler clientHandler){
         synchronized (observersList){
             for(ConnectionObserver obs: observersList){
                 obs.updateDisconnection(clientHandler);

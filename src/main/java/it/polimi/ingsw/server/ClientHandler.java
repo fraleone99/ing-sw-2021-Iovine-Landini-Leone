@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.message.action.ChoiceGameBoard;
 import it.polimi.ingsw.client.message.action.ChosenLeaderCard;
 import it.polimi.ingsw.client.message.action.ChosenResource;
@@ -13,6 +14,7 @@ import it.polimi.ingsw.observer.ConnectionObservable;
 import it.polimi.ingsw.observer.VirtualViewObserver;
 import it.polimi.ingsw.server.answer.ChooseResource;
 import it.polimi.ingsw.client.message.*;
+import it.polimi.ingsw.server.answer.Pong;
 
 
 import java.io.IOException;
@@ -21,57 +23,105 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientHandler extends ConnectionObservable implements Runnable {
-    private Socket socketClient;
-    private ObjectOutputStream output;
-    private ObjectInputStream input;
+    private final Socket socketClient;
+
+    private  ObjectOutputStream output;
+    private  ObjectInputStream input;
+
     private boolean isReady;
     private String answer;
-    private Heartbeat heartbeat;
+
+    private boolean isConnected;
 
 
-    public ClientHandler(Socket socketClient) throws IOException {
+    private static final int CONNECTION_TIMEOUT = 4000;
+
+    private AtomicBoolean active = new AtomicBoolean(false);
+
+    private Thread heartbeat;
+
+    ConnectionObservable connectionObservable = new ConnectionObservable();
+
+    private final Object lock = new Object();
+
+
+    public ClientHandler(Socket socketClient) {
         this.socketClient = socketClient;
-        isReady=false;
+        this.isReady=false;
 
-        output=new ObjectOutputStream(socketClient.getOutputStream());
-        input=new ObjectInputStream(socketClient.getInputStream());
-
+        heartbeat = new Thread(()->{
+            while(active.get()){
+                try {
+                    Thread.sleep(CONNECTION_TIMEOUT/2);
+                    send(new Pong());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    public void send(Object message) throws IOException{
-        output.reset();
-        output.writeObject(message);
-        output.flush();
+    public void send(Object message) {
+        synchronized (lock) {
+            while (!active.get()) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                output.reset();
+                output.writeObject(message);
+                output.flush();
+            } catch (IOException e) {
+                closeConnection();
+            }
+
+        }
     }
 
-    public void handleClientConnection() throws IOException{
-        heartbeat = new Heartbeat(this);
-        Thread heartbeatThread = new Thread(heartbeat);
-        heartbeatThread.start();
-        try{
-            while(true){
-                socketClient.setSoTimeout(4000);
-                Object next = input.readObject();
-                Message message=(Message)next;
+    public void handleClientConnection(){
+        try {
+            this.socketClient.setSoTimeout(CONNECTION_TIMEOUT);
+
+            output = new ObjectOutputStream(socketClient.getOutputStream());
+            input  = new ObjectInputStream(socketClient.getInputStream());
+
+            synchronized (lock) {
+                active.set(true);
+                lock.notifyAll();
+            }
+
+            heartbeat.start();
+
+            while(active.get()) {
+                Message message = readFromClient();
                 if(!(message instanceof Ping))
                     processClientMessage(message);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+
+        } catch (IOException e) {
+            closeConnection();
         }
-        catch (SocketTimeoutException e){
-            System.out.println("Client unreachable!");
 
 
-            try {
-                notifyDisconnection(this);
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
-        }
     }
+
+    public Message readFromClient(){
+        Object next = null;
+        try {
+            next = input.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+          closeConnection();
+        }
+        return (Message) next;
+    }
+
 
     public synchronized void processClientMessage(Message message){
         if(message instanceof ClientConnection){
@@ -131,25 +181,34 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return answer;
     }
 
-    public void closeConnection() throws IOException {
-        socketClient.close();
-        System.out.println("Client disconnected");
+
+    public boolean isConnected() {
+        return isConnected;
     }
 
+    public boolean isActive() {
+        return active.get();
+    }
+
+    public void closeConnection(){
+        System.out.println(Constants.ANSI_RED +  "[SERVER] client disconnected." + Constants.ANSI_RESET);
+        connectionObservable.notifyDisconnection(this);
+        active.set(false);
+        isConnected = false;
+
+        try {
+
+            input.close();
+            output.close();
+            socketClient.close();
+
+
+        } catch (IOException ignored) {
+        }
+    }
 
     @Override
     public void run() {
-        try {
-            handleClientConnection();
-        } catch (IOException e) {
-            System.out.println("client " + socketClient.getInetAddress() + " connection dropped");
-        }
-
-        try{
-            socketClient.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        handleClientConnection();
     }
 }

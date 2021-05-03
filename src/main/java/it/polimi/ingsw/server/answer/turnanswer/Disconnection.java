@@ -10,7 +10,7 @@ public class Disconnection implements Answer {
     }
 
     @Override
-    public Object getMessage(){
+    public String getMessage(){
         return message;
     }
 

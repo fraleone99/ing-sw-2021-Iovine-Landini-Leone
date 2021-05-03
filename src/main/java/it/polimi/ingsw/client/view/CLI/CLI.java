@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.view.CLI;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.client.message.Message;
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
@@ -14,7 +14,6 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
-import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
@@ -26,7 +25,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentNavigableMap;
 
 public class CLI implements View {
     private final Scanner in;

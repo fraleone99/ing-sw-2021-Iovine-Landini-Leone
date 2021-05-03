@@ -14,7 +14,7 @@ public class Heartbeat implements Runnable {
 
     @Override
     public void run() {
-        while(true) {
+        while(networkHandler.isConnected()) {
             try {
                 Thread.sleep(2000);
 
@@ -24,9 +24,8 @@ public class Heartbeat implements Runnable {
 
             try {
                 networkHandler.send(new Ping());
-                //System.out.println("Sending ping...");
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Server unreachable");
             }
         }
     }

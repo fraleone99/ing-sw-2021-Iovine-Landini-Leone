@@ -12,29 +12,31 @@ import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
-import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
-import it.polimi.ingsw.server.answer.turnanswer.ChooseTurn;
-import it.polimi.ingsw.server.answer.turnanswer.SeeLeaderCards;
-import it.polimi.ingsw.server.answer.turnanswer.SeeMarket;
+import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NetworkHandler implements Runnable {
-    private Socket server;
+    private final Socket server;
+
     private ObjectOutputStream output;
     private ObjectInputStream input;
+
     private Heartbeat heartbeat;
     private Client owner;
-    private View view;
+    private final View view;
 
+    private boolean isConnected;
     public NetworkHandler(Socket server, Client owner) {
         this.server = server;
         this.owner = owner;
         view = new CLI();
+        isConnected = true;
     }
 
     @Override
@@ -42,8 +44,9 @@ public class NetworkHandler implements Runnable {
         try {
             input = new ObjectInputStream(server.getInputStream());
             output = new ObjectOutputStream(server.getOutputStream());
+
         } catch (IOException e) {
-            System.out.println("Could not open connection to");
+            System.out.println("Could not open connection to the server");
         }
 
         try {
@@ -57,7 +60,8 @@ public class NetworkHandler implements Runnable {
         heartbeat = new Heartbeat(this);
         Thread heartbeatThread = new Thread(heartbeat);
         heartbeatThread.start();
-        while (true) {
+
+        while (isConnected) {
             try {
                 server.setSoTimeout(4000);
                 Object next = input.readObject();
@@ -70,6 +74,7 @@ public class NetworkHandler implements Runnable {
             }
             catch (SocketTimeoutException e){
                 System.out.println("Server unreachable!");
+                isConnected = false;
             }
         }
     }
@@ -148,6 +153,12 @@ public class NetworkHandler implements Runnable {
             int choice=view.seeMarket(((SeeMarket) inputObj).getMessage());
             output.writeObject(new ChoiceGameBoard(choice));
         }
+        else if(inputObj instanceof Disconnection){
+            view.readMessage(((Disconnection) inputObj).getMessage());
+        }
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
 }

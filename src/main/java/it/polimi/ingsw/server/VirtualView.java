@@ -17,9 +17,9 @@ import java.util.Map;
 
 public class VirtualView extends VirtualViewObservable {
     private String answer;
-    private Map<String, ClientHandler> namesToClient = new HashMap<>();
+    private final Map<String, ClientHandler> namesToClient = new HashMap<>();
 
-    public String askHandShake(ClientHandler client) throws IOException, InterruptedException {
+    public String askHandShake(ClientHandler client) throws InterruptedException {
         client.send(new Connection("Welcome to this fantastic server!", true));
         synchronized (client) {
             while (!client.isReady()) client.wait();
@@ -29,10 +29,16 @@ public class VirtualView extends VirtualViewObservable {
         return answer;
     }
 
-    public String requestNickname(ClientHandler client) throws IOException, InterruptedException {
+    public String requestNickname(ClientHandler client){
         client.send(new RequestNickname("Please insert your nickname:"));
         synchronized (client) {
-            while(!client.isReady()) client.wait();
+            while(!client.isReady()) {
+                try {
+                    client.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             answer = client.getAnswer();
         }
         client.setReady(false);
@@ -41,7 +47,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public String InvalidNickname(ClientHandler client) throws InterruptedException, IOException {
+    public String InvalidNickname(ClientHandler client) throws InterruptedException{
         client.send(new InvalidNickname("The chosen nickname is not valid. Try again:"));
         synchronized (client) {
             while(!client.isReady()) client.wait();
@@ -52,7 +58,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public String requestPlayersNumber(ClientHandler client) throws IOException, InterruptedException {
+    public String requestPlayersNumber(ClientHandler client) throws InterruptedException {
         client.send(new PlayersNumber("Please insert the number of players:"));
         synchronized (client) {
             while (!client.isReady()) client.wait();
@@ -75,12 +81,12 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void firstPlayer(String nickname) throws IOException {
+    public void firstPlayer(String nickname) {
         namesToClient.get(nickname).send(new FirstPlayer("You are the first player."));
     }
 
 
-    public int chooseResource(String nickname, String player, int amount) throws IOException, InterruptedException {
+    public int chooseResource(String nickname, String player, int amount) throws  InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         if(player.equals("fourth") && amount==2){
@@ -100,12 +106,12 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void waitingRoom(ClientHandler client) throws IOException {
+    public void waitingRoom(ClientHandler client){
         client.send(new WaitingRoom("You are now in the waiting room. The game will start soon!"));
     }
 
 
-    public int discardFirstLeaders(String nickname, int number, ArrayList<Integer> IdLeader) throws IOException, InterruptedException {
+    public int discardFirstLeaders(String nickname, int number, ArrayList<Integer> IdLeader) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         if(number==1) {
@@ -125,14 +131,14 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void startGame(String nickname) throws IOException {
+    public void startGame(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new StartGame("The game start!"));
     }
 
 
-    public int seeGameBoard(String nickname) throws IOException, InterruptedException {
+    public int seeGameBoard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeGameBoard("What do you want to see about the Game Board?"));
@@ -147,7 +153,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int seeLeaderCards(String nickname, ArrayList<Integer> leaderCards) throws IOException, InterruptedException {
+    public int seeLeaderCards(String nickname, ArrayList<Integer> leaderCards) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeLeaderCards(leaderCards));
@@ -161,7 +167,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int seeMarket(String nickname, Market market) throws InterruptedException, IOException {
+    public int seeMarket(String nickname, Market market) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeMarket(market));
@@ -176,7 +182,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int chooseTurn(String nickname) throws IOException, InterruptedException {
+    public int chooseTurn(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ChooseTurn("Choose what you want to do in this turn:"));
@@ -190,7 +196,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int activeLeader(String nickname) throws IOException, InterruptedException {
+    public int activeLeader(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ActiveLeader("Which leader do you want to activate?"));
@@ -204,7 +210,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public void sendErrorMessage(String nickname) throws IOException {
+    public void sendErrorMessage(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new GameError("Invalid choice."));

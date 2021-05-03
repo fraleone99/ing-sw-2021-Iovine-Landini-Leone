@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.CLI;
+package it.polimi.ingsw;
 
 public class Constants {
 

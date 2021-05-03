@@ -16,6 +16,8 @@ public class Server {
     private int playersInLastLobby;
     private boolean lobbyFull;
 
+    private int DEFAULT_PORT = 3456;
+
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -27,11 +29,17 @@ public class Server {
 
         int PORT_NUMBER;
 
-        do {
-            System.out.println("Insert port number:");
-            PORT_NUMBER = scanner.nextInt();
-        } while (PORT_NUMBER < 1024);
-
+        System.out.println("Default configuration?[y/n]");
+        String config = scanner.nextLine();
+        if(config.equalsIgnoreCase("y")){
+            PORT_NUMBER = DEFAULT_PORT;
+        }
+        else {
+            do {
+                System.out.println("Insert port number:");
+                PORT_NUMBER = scanner.nextInt();
+            } while (PORT_NUMBER < 1024);
+        }
         try {
             Socket = new ServerSocket(PORT_NUMBER);
         } catch (IOException e) {
@@ -78,8 +86,11 @@ public class Server {
                         playersInLastLobby = 0;
                     }
                 }
-            } catch (IOException | InterruptedException e) {
-                System.out.println("Connection dropped");
+            } catch (IOException  e) {
+                System.out.println("Connection dropped1");
+            }
+            catch (InterruptedException e){
+                System.out.println("Connection dropped2");
             }
         }
     }

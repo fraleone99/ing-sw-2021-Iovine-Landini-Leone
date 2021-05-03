@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.observer.ConnectionObserver;
 import it.polimi.ingsw.observer.VirtualViewObserver;
@@ -12,22 +13,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 
 public class Lobby implements ConnectionObserver, VirtualViewObserver {
     private int playersNumber;
     private final int lobbyID;
-    private VirtualView view=new VirtualView();
-    private Map<ClientHandler, String> clientToNames = new HashMap<>();
-    private Map<String, ClientHandler> namesToClient = new HashMap<>();
-    private ArrayList<String> nicknames = new ArrayList<>();
+    private final VirtualView view=new VirtualView();
+    private final Map<ClientHandler, String> clientToNames = new HashMap<>();
+    private final Map<String, ClientHandler> namesToClient = new HashMap<>();
+    private final ArrayList<String> nicknames = new ArrayList<>();
 
     public Lobby(int lobbyID) {
         this.lobbyID = lobbyID;
     }
 
-    public void newLobby(ClientHandler firstClient) throws IOException, InterruptedException {
-        String s=view.askHandShake(firstClient);
+    public void newLobby(ClientHandler firstClient) throws InterruptedException {
+        String s = view.askHandShake(firstClient);
         System.out.println(s);
 
         s = view.requestNickname(firstClient);
@@ -44,7 +46,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         String str = clientToNames.get(firstClient);
         System.out.println(str + " has joined the lobby number " + lobbyID);
 
-        playersNumber= Integer.parseInt( view.requestPlayersNumber(firstClient) );
+        playersNumber = Integer.parseInt(view.requestPlayersNumber(firstClient) );
         System.out.println("The lobby number "+ lobbyID +" will contain " + playersNumber + " players");
 
         view.waitingRoom(firstClient);
@@ -62,7 +64,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
 
 
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new JoiningPlayer(s+" joins the game. "+(nicknames.size()+1)+" players have already joined this Lobby."));
+            namesToClient.get(nick).send(new JoiningPlayer(Constants.ANSI_BLUE +  s + " joins the game. "+(nicknames.size()+1)+" players have already joined this Lobby."));
         }
 
 
@@ -96,12 +98,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     }
 
     @Override
-    public void updateDisconnection(ClientHandler clientHandler) throws IOException, InterruptedException {
-        try {
-            clientHandler.closeConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void updateDisconnection(ClientHandler clientHandler) {
         removeConnection(clientHandler);
         for(String nick: nicknames){
             namesToClient.get(nick).send(new Disconnection("Player "+view.requestNickname(clientHandler)+" left the game. Now there are "+nicknames.size()+" players in this Lobby."));
@@ -109,7 +106,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     }
 
     @Override
-    public void updatePreparationOfLobby() throws IOException {
+    public void updatePreparationOfLobby(){
         for(String nick: nicknames){
             namesToClient.get(nick).send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
         }
