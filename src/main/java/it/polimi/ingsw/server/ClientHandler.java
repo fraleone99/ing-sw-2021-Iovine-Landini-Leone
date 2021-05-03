@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.message.action.ChoiceGameBoard;
 import it.polimi.ingsw.client.message.action.ChosenLeaderCard;
 import it.polimi.ingsw.client.message.action.ChosenResource;
 import it.polimi.ingsw.client.message.action.TurnType;
+import it.polimi.ingsw.client.message.action.*;
 import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
@@ -15,6 +16,7 @@ import it.polimi.ingsw.observer.VirtualViewObserver;
 import it.polimi.ingsw.server.answer.ChooseResource;
 import it.polimi.ingsw.client.message.*;
 import it.polimi.ingsw.server.answer.Pong;
+import it.polimi.ingsw.server.answer.turnanswer.ChooseLine;
 
 
 import java.io.IOException;
@@ -164,6 +166,11 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         }
         else if(message instanceof ChosenLeaderCard) {
             answer=String.valueOf(((ChosenLeaderCard) message).getPosition());
+            isReady=true;
+            notifyAll();
+        }
+        else if(message instanceof ChosenLine) {
+            answer=String.valueOf(((ChosenLine) message).getChoice());
             isReady=true;
             notifyAll();
         }

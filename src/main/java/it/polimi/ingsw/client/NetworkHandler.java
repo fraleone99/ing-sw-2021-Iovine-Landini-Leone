@@ -1,11 +1,8 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.message.action.ChoiceGameBoard;
-import it.polimi.ingsw.client.message.action.ChosenLeaderCard;
-import it.polimi.ingsw.client.message.action.TurnType;
+import it.polimi.ingsw.client.message.action.*;
 import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
 import it.polimi.ingsw.client.view.CLI.CLI;
-import it.polimi.ingsw.client.message.action.ChosenResource;
 import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
 import it.polimi.ingsw.client.message.initialmessage.SendNickname;
@@ -134,10 +131,6 @@ public class NetworkHandler implements Runnable {
             int turn=view.askTurnType(((ChooseTurn) inputObj).getMessage());
             output.writeObject(new TurnType(turn));
         }
-        else if(inputObj instanceof ActiveLeader) {
-            int leaderCard=view.activeLeader(((ActiveLeader) inputObj).getMessage());
-            output.writeObject(new ChosenLeaderCard(leaderCard));
-        }
         else if(inputObj instanceof GameError) {
             view.readMessage(((GameError) inputObj).getMessage());
         }
@@ -151,6 +144,26 @@ public class NetworkHandler implements Runnable {
         }
         else if(inputObj instanceof SeeMarket) {
             int choice=view.seeMarket(((SeeMarket) inputObj).getMessage());
+            output.writeObject(new ChoiceGameBoard(choice));
+        }
+        else if(inputObj instanceof ActiveLeader) {
+            int leaderCard=view.activeLeader(((ActiveLeader) inputObj).getMessage());
+            output.writeObject(new ChosenLeaderCard(leaderCard));
+        }
+        else if(inputObj instanceof DiscardLeader) {
+            int leaderCard=view.discardLeader(((DiscardLeader) inputObj).getMessage());
+            output.writeObject(new ChosenLeaderCard(leaderCard));
+        }
+        else if(inputObj instanceof ChooseLine) {
+            int choice=view.chooseLine(((ChooseLine) inputObj).getMessage());
+            output.writeObject(new ChosenLine(choice));
+        }
+        else if(inputObj instanceof SeeGrid) {
+            int choice=view.seeGrid(((SeeGrid) inputObj).getMessage());
+            output.writeObject(new ChoiceGameBoard(choice));
+        }
+        else if(inputObj instanceof SeeProductions) {
+            int choice=view.seeProductions(((SeeProductions) inputObj).getMessage());
             output.writeObject(new ChoiceGameBoard(choice));
         }
         else if(inputObj instanceof Disconnection){

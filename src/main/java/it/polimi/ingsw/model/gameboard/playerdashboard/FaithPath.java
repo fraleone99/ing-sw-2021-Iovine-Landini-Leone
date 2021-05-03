@@ -18,14 +18,20 @@ import java.util.ArrayList;
 
 public class FaithPath {
     private ArrayList<Cell> space=new ArrayList<>();
-    private int positionFaithPath=0;
-    private int positionLorenzo=0;
-    private int papalPoints=0;
-    private boolean papalPawn1=false;
-    private boolean papalPawn2=false;
-    private boolean papalPawn3=false;
+    private int positionFaithPath;
+    private int positionLorenzo;
+    private int papalPoints;
+    private boolean papalPawn1;
+    private boolean papalPawn2;
+    private boolean papalPawn3;
 
     public FaithPath() {
+        positionFaithPath=0;
+        positionLorenzo=0;
+        papalPoints=0;
+        papalPawn1=false;
+        papalPawn2=false;
+        papalPawn3=false;
         initializeCells();
     }
 
