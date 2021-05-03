@@ -169,6 +169,15 @@ public class NetworkHandler implements Runnable {
         else if(inputObj instanceof Disconnection){
             view.readMessage(((Disconnection) inputObj).getMessage());
         }
+        else if(inputObj instanceof FaithPathInfo){
+            view.printFaithPath((FaithPathInfo) inputObj);
+        }
+        else if(inputObj instanceof StorageInfo){
+            view.printStorage((StorageInfo) inputObj);
+        }
+        else if(inputObj instanceof DevCardsSpaceInfo){
+            view.printDevelopmentCardsSpace((DevCardsSpaceInfo) inputObj);
+        }
     }
 
     public boolean isConnected() {

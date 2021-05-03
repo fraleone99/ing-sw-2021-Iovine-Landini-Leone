@@ -13,8 +13,10 @@ import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
+import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
@@ -134,13 +136,13 @@ public class CLI implements View {
 
         do {
             number = in.nextLine();
-            if(Integer.parseInt(number)<2 || Integer.parseInt(number)>4){
+            if(Integer.parseInt(number)<1 || Integer.parseInt(number)>4){
                 System.out.println("Incorrect number, please try again:");
             }
-            else if(Integer.parseInt(number) == 1){
+            /*else if(Integer.parseInt(number) == 1){
                 System.out.println("Sorry, single player is still under development. Try again: ");
-            }
-        } while (Integer.parseInt(number)<2 || Integer.parseInt(number)>4);
+            }*/
+        } while (Integer.parseInt(number)<1 || Integer.parseInt(number)>4);
         return number;
     }
 
@@ -191,6 +193,7 @@ public class CLI implements View {
 
         return card;
     }
+
 
     public int seeGameBoard(String message) {
         int choice;
@@ -684,29 +687,31 @@ public class CLI implements View {
     }
 
 
-    public String printFaithPath(int position, boolean papalPawn1, boolean papalPawn2, boolean papalPawn3){
+    public void printFaithPath(FaithPathInfo path){
+        System.out.println(path.getMessage());
+
         StringBuilder faithPathBuilder = new StringBuilder();
 
         faithPathBuilder.append(Constants.FAITH_LEGEND);
 
         faithPathBuilder.append(Constants.FAITH_TOP_EDGE);
         for(int i=0; i<13; i++){
-            faithPathBuilder.append(printFaithPathSupport(i, position));
+            faithPathBuilder.append(printFaithPathSupport(i, path.getPosition()));
         }
         faithPathBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE).append("\n");
         for(int j=24; j>12; j--){
-            faithPathBuilder.append(printFaithPathSupport(j, position));
+            faithPathBuilder.append(printFaithPathSupport(j, path.getPosition()));
         }
         faithPathBuilder.append("\n").append(Constants.FAITH_BOTTOM_EDGE);
 
-        if(papalPawn1 || papalPawn2 || papalPawn3){
+        if(path.isPapal1() || path.isPapal2() || path.isPapal3()){
             faithPathBuilder.append("\n       --> Active papal pawn: ");
-            if(papalPawn1) faithPathBuilder.append(Constants.PapalPOINT1).append(" ");
-            if(papalPawn2) faithPathBuilder.append(Constants.PapalPOINT2).append(" ");
-            if(papalPawn3) faithPathBuilder.append(Constants.PapalPOINT3).append(" ");
+            if(path.isPapal1()) faithPathBuilder.append(Constants.PapalPOINT1).append(" ");
+            if(path.isPapal2()) faithPathBuilder.append(Constants.PapalPOINT2).append(" ");
+            if(path.isPapal3()) faithPathBuilder.append(Constants.PapalPOINT3).append(" ");
         }
 
-        return faithPathBuilder.toString();
+        System.out.println(faithPathBuilder.toString());
     }
 
     public String printFaithPathSupport(int num, int position){

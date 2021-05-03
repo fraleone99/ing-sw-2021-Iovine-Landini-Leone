@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.gameboard.playerdashboard.*;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
@@ -87,7 +88,9 @@ public class CLITest {
     @Test
     public void printFaithPath(){
         CLI cli = new CLI();
-        System.out.println(cli.printFaithPath(8, false, true, true));
+        FaithPath path=new FaithPath();
+        FaithPathInfo msg=new FaithPathInfo("ciao",path);
+        cli.printFaithPath( msg);
     }
 
     @Test

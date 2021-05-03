@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.EmptyDecksException;
+
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class GameBoardTest{
 
     @Test
-    public void testDrawActionToken() throws InvalidChoiceException, EmptyDecksException {
+    public void testDrawActionToken() throws InvalidChoiceException {
         ArrayList<String> nickname=new ArrayList<>();
         String player1="player1";
         nickname.add(player1);

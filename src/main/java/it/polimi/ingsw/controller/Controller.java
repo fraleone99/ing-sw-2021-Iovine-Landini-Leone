@@ -42,6 +42,7 @@ public class Controller {
             }
             while(!isEnd){
                 for(int i=0; i<players.size();i++){
+                    seePlayerDashboards(i);
                     seeGameBoard(i);
                     chooseTurn(i);
                 }
@@ -57,7 +58,7 @@ public class Controller {
     }
 
 
-    public void setInitialBenefits(int i) throws NotExistingPlayerException, IOException, InterruptedException {
+    public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
                     break;
@@ -108,7 +109,7 @@ public class Controller {
     }
 
 
-    public void discardFirstLeaders(int player) throws IOException, InterruptedException, NotExistingPlayerException {
+    public void discardFirstLeaders(int player) throws  InterruptedException, NotExistingPlayerException {
         int card;
         card=view.discardFirstLeaders(players.get(player), 1, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
@@ -116,8 +117,17 @@ public class Controller {
         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
     }
 
-    public void startGame(int player) throws IOException {
+    public void startGame(int player) {
         view.startGame(players.get(player));
+    }
+
+    public void seePlayerDashboards(int player) throws NotExistingPlayerException {
+        for (String s : players) {
+            view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath());
+            view.seeStorage(players.get(player), gameModel.getPlayer(s).getPlayerDashboard().getStorage(),
+                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getVault());
+            view.seeDevCardsSpace(players.get(player), gameModel.getPlayer(s).getPlayerDashboard().getDevCardsSpace());
+        }
     }
 
     public void seeGameBoard(int player) throws IOException, NotExistingPlayerException, InterruptedException {
@@ -154,6 +164,7 @@ public class Controller {
                 view.sendErrorMessage(players.get(player));
                 chooseTurn(player);
             }
+                    break;
             case 2 : try {
                 int pos = view.discardLeader(players.get(player));
                 discardLeader(player, pos);
@@ -161,6 +172,7 @@ public class Controller {
                 view.sendErrorMessage(players.get(player));
                 chooseTurn(player);
             }
+                    break;
         }
     }
 

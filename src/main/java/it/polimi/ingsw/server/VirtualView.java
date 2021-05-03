@@ -1,7 +1,8 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.*;
 import it.polimi.ingsw.observer.VirtualViewObservable;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
@@ -128,6 +129,27 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    public void seeFaithPath(String nickname, String player, FaithPath path) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new FaithPathInfo(("This is the Dashboard of "+player+" :"), path));
+    }
+
+
+    public void seeStorage(String nickname, Storage storage, Vault vault) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new StorageInfo(storage, vault));
+    }
+
+
+    public void seeDevCardsSpace(String nickname, DevCardsSpace space) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new DevCardsSpaceInfo(space));
+    }
+
+
     public int seeGameBoard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -171,7 +193,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int chooseLine(String nickname) throws InterruptedException, IOException {
+    public int chooseLine(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ChooseLine("Please choose what you want to see from the Development Cards Grid"));
@@ -185,7 +207,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int seeGrid(String nickname, ArrayList<Integer> id) throws InterruptedException, IOException {
+    public int seeGrid(String nickname, ArrayList<Integer> id) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeGrid(id));
@@ -200,7 +222,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int seeProduction(String nickname, ArrayList<Integer> productions) throws InterruptedException, IOException {
+    public int seeProduction(String nickname, ArrayList<Integer> productions) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeProductions(productions));
@@ -244,7 +266,7 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int discardLeader(String nickname) throws InterruptedException, IOException {
+    public int discardLeader(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new DiscardLeader("Which leader do you want to discard?"));

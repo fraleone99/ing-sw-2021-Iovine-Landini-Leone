@@ -96,7 +96,7 @@ public class Game {
 
     }
 
-    public ActionToken drawActionToken() throws InvalidChoiceException, EmptyDecksException {
+    public ActionToken drawActionToken() throws InvalidChoiceException{
         ActionToken element = gameBoard.getLorenzoMagnifico().draw();
 
         if(element instanceof BlackCrossMover){

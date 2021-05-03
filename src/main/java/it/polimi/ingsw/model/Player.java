@@ -108,7 +108,7 @@ public class Player {
 
     public void DiscardLeader(int pos) throws InvalidChoiceException {
         //playerDashboard.getLeaders().DrawFromPosition(pos);
-        if(playerDashboard.getLeaders().size()>=pos-1 && pos-1>=0 && !playerDashboard.getLeaders().get(pos-1).getIsActive()) {
+        if(playerDashboard.getLeaders().size()>=pos-1 && pos-1>=0 && !playerDashboard.getLeaders().get(pos-1).getIsActive() && !playerDashboard.getLeaders().get(pos-1).getIsDiscarded()) {
             playerDashboard.getLeaders().get(pos-1).setIsDiscarded();
             playerDashboard.getFaithPath().moveForward(1);
         } else throw new InvalidChoiceException();

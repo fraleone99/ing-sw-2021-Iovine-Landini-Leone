@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.StorageInfo;
 
 import java.util.ArrayList;
 
@@ -36,4 +39,10 @@ public interface View {
     int seeGrid(ArrayList<Integer> devCards);
 
     int seeProductions(ArrayList<Integer> productions);
+
+    void printFaithPath(FaithPathInfo path);
+
+    void printStorage(StorageInfo storageInfo);
+
+    void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo);
 }
