@@ -139,4 +139,11 @@ public class CLITest {
         System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(5)));
         System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(6)));
     }
+
+    @Test
+    public void setBackgroundColor(){
+        CLI cli = new CLI();
+
+        cli.setBackgroundColor();
+    }
 }

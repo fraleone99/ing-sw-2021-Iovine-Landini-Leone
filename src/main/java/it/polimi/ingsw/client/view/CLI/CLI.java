@@ -36,7 +36,6 @@ public class CLI implements View {
     private final LeaderCardDeck LeaderDeck = new LeaderCardDeck();
     private final DevelopmentCardDeck developmentCardDeck = new DevelopmentCardDeck();
 
-
     public CLI() {
         this.in = new Scanner(System.in);
         initializeCardColorToString();
@@ -50,6 +49,10 @@ public class CLI implements View {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public Scanner getScanner() {
+        return in;
     }
 
     private void initializeDevelopmentCard() throws FileNotFoundException {
@@ -350,7 +353,7 @@ public class CLI implements View {
     public String printGood(Goods goods , String color){
         //good
         StringBuilder goodBuilder = new StringBuilder();
-        goodBuilder.append(color + "+" + Constants.ANSI_RESET);
+        goodBuilder.append(color).append("+").append(Constants.ANSI_RESET);
         for(int i = 0; i < goods.getAmount(); i++){
             goodBuilder.append(ResourceToString.get((goods.getType())));
         }
@@ -362,7 +365,7 @@ public class CLI implements View {
         if(goods.getAmount()<=2){
             goodBuilder.append(" ");
         }
-        goodBuilder.append(color + "+\n" + Constants.ANSI_RESET);
+        goodBuilder.append(color).append("+\n").append(Constants.ANSI_RESET);
 
         return goodBuilder.toString();
     }
@@ -372,14 +375,13 @@ public class CLI implements View {
         String Color = CardColorToString.get(developmentCard.getColor());
         String fourteenSpace = "              ";
         int MAX_LENGTH = 14;
-        int nres = 0;
 
 
 
         //cost
         StringBuilder costBuilder = new StringBuilder();
         costBuilder.append("Cost:");
-        costBuilder.append("         "+ Color + "+\n" + Constants.ANSI_RESET);
+        costBuilder.append("         ").append(Color).append("+\n").append(Constants.ANSI_RESET);
         for(Goods g: developmentCard.getCost()){
             costBuilder.append(printGood(g,Color));
         }
@@ -407,18 +409,18 @@ public class CLI implements View {
         //production
         StringBuilder productionBuilder = new StringBuilder();
         productionBuilder.append("Production:");
-        productionBuilder.append("   "+ Color + "+\n" + Constants.ANSI_RESET);
+        productionBuilder.append("   ").append(Color).append("+\n").append(Constants.ANSI_RESET);
         for(Goods g : developmentCard.getInputProduction()){
             productionBuilder.append(printGood(g, Color));
         }
-        productionBuilder.append(Color + "+" + Constants.ANSI_RESET);
+        productionBuilder.append(Color).append("+").append(Constants.ANSI_RESET);
         productionBuilder.append("----->");
-        productionBuilder.append("        "+ Color + "+\n" + Constants.ANSI_RESET);
+        productionBuilder.append("        ").append(Color).append("+\n").append(Constants.ANSI_RESET);
         for(Goods g : developmentCard.getOutputProduction()){
             productionBuilder.append(printGood(g, Color));
         }
         if(developmentCard.getFaithSteps() > 0) {
-            productionBuilder.append(Color + "+" + Constants.ANSI_RESET);
+            productionBuilder.append(Color).append("+").append(Constants.ANSI_RESET);
             int k;
             for (k = 0; k < developmentCard.getFaithSteps(); k++){
                 productionBuilder.append(Constants.FAITH);
@@ -426,7 +428,7 @@ public class CLI implements View {
             for(; k<MAX_LENGTH; k++){
                 pointsBuilder.append(" ");
             }
-            productionBuilder.append(Color + "+\n" + Constants.ANSI_RESET);
+            productionBuilder.append(Color).append("+\n").append(Constants.ANSI_RESET);
         }
         String production = productionBuilder.toString();
 
@@ -480,15 +482,12 @@ public class CLI implements View {
     }
 
     public String printWhiteBallLeader(WhiteBallLeader leaderCard){
-        StringBuilder whiteBuilder = new StringBuilder();
-        whiteBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
-        whiteBuilder.append("+Conversion : +\n");
-        whiteBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
-        whiteBuilder.append(ResourceToString.get(leaderCard.getConversionType()));
 
-        whiteBuilder.append(Constants.LEADER_CARD_RIGHT_EDGE);
-
-        return whiteBuilder.toString();
+        return Constants.LEADER_CARD_LEFT_EDGE +
+                "+Conversion : +\n" +
+                Constants.LEADER_CARD_LEFT_EDGE +
+                ResourceToString.get(leaderCard.getConversionType()) +
+                Constants.LEADER_CARD_RIGHT_EDGE;
     }
 
     public String printProductionLeader(ProductionLeader leaderCard){
@@ -518,30 +517,23 @@ public class CLI implements View {
     }
 
     public String printStorageLeader(StorageLeader leaderCard){
-        StringBuilder storageLeader = new StringBuilder();
 
-        storageLeader.append(Constants.LEADER_CARD_LEFT_EDGE);
-        storageLeader.append("Shelf: ");
-        storageLeader.append(ResourceToString.get(leaderCard.getType()));
-        storageLeader.append(Constants.LEADER_CARD_RIGHT_EDGE);
-
-        storageLeader.append(Constants.LEADER_CARD_LEFT_EDGE);
-        storageLeader.append("Free space: " + (2 - leaderCard.getAmount()) + " ");
-        storageLeader.append(Constants.LEADER_CARD_RIGHT_EDGE);
-
-        return storageLeader.toString();
+        return Constants.LEADER_CARD_LEFT_EDGE +
+                "Shelf: " +
+                ResourceToString.get(leaderCard.getType()) +
+                Constants.LEADER_CARD_RIGHT_EDGE +
+                Constants.LEADER_CARD_LEFT_EDGE +
+                "Free space: " + (2 - leaderCard.getAmount()) + " " +
+                Constants.LEADER_CARD_RIGHT_EDGE;
 
     }
 
     public String printEconomyLeader(EconomyLeader leaderCard){
-        StringBuilder economyBuilder = new StringBuilder();
-        economyBuilder.append(Constants.LEADER_CARD_LEFT_EDGE);
-        economyBuilder.append("Discount: ");
-        economyBuilder.append("-1").append(ResourceToString.get(leaderCard.getDiscountType()));
-        economyBuilder.append(Constants.LEADER_CARD_RIGHT_EDGE);
 
-
-        return economyBuilder.toString();
+        return Constants.LEADER_CARD_LEFT_EDGE +
+                "Discount: " +
+                "-1" + ResourceToString.get(leaderCard.getDiscountType()) +
+                Constants.LEADER_CARD_RIGHT_EDGE;
     }
 
     public String requirementsToString(ArrayList<Requirements> requirements){
@@ -589,37 +581,34 @@ public class CLI implements View {
     }
 
     public void printStorage(StorageInfo storageInfo){
-        StringBuilder storageBuilder = new StringBuilder();
-
-        storageBuilder.append(Constants.STORAGE_TOP_BOTTOM_EDGE);
-
-        //FIRST SHELF
-        storageBuilder.append(Constants.EDGE).append(Constants.FOUR_EMPTY_SPACE);
-        storageBuilder.append(shelfToString(1,storageInfo.getShelf1Type(), storageInfo.getShelf1Amount()));
-        storageBuilder.append(Constants.FIVE_EMPTY_SPACE).append(Constants.RIGHT_EDGE);
-
-        //SECOND SHELF
-        storageBuilder.append(Constants.EDGE).append(Constants.THREE_EMPTY_SPACE);
-        storageBuilder.append(shelfToString(2,storageInfo.getShelf2Type(), storageInfo.getShelf2Amount()));
-        storageBuilder.append(Constants.FIVE_EMPTY_SPACE).append(Constants.RIGHT_EDGE);
-
-        //THIRD SHELF
-        storageBuilder.append(Constants.EDGE).append(Constants.TWO_EMPTY_SPACE);
-        storageBuilder.append(shelfToString(3,storageInfo.getShelf3Type(), storageInfo.getShelf3Amount()));
-        storageBuilder.append(Constants.FOUR_EMPTY_SPACE).append(Constants.RIGHT_EDGE);
-
-        storageBuilder.append(Constants.STORAGE_TOP_BOTTOM_EDGE);
-
-        //VAULT
-        storageBuilder.append("\n").append(Constants.VAULT).append("\n");
-        storageBuilder.append(Constants.COIN).append(":").append(storageInfo.getCoinsAmount()).append("\n");
-        storageBuilder.append(Constants.STONE).append(":").append(storageInfo.getStoneAmount()).append("\n");
-        storageBuilder.append(Constants.SERVANT).append(":").append(storageInfo.getServantsAmount()).append("\n");
-        storageBuilder.append(Constants.SHIELD).append(":").append(storageInfo.getShieldsAmount()).append("\n");
 
 
+        String storageBuilder = Constants.STORAGE_TOP_BOTTOM_EDGE +
 
-        System.out.println(storageBuilder.toString());
+                //FIRST SHELF
+                Constants.EDGE + Constants.FOUR_EMPTY_SPACE +
+                shelfToString(1, storageInfo.getShelf1Type(), storageInfo.getShelf1Amount()) +
+                Constants.FIVE_EMPTY_SPACE + Constants.RIGHT_EDGE +
+
+                //SECOND SHELF
+                Constants.EDGE + Constants.THREE_EMPTY_SPACE +
+                shelfToString(2, storageInfo.getShelf2Type(), storageInfo.getShelf2Amount()) +
+                Constants.FIVE_EMPTY_SPACE + Constants.RIGHT_EDGE +
+
+                //THIRD SHELF
+                Constants.EDGE + Constants.TWO_EMPTY_SPACE +
+                shelfToString(3, storageInfo.getShelf3Type(), storageInfo.getShelf3Amount()) +
+                Constants.FOUR_EMPTY_SPACE + Constants.RIGHT_EDGE +
+                Constants.STORAGE_TOP_BOTTOM_EDGE +
+
+                //VAULT
+                "\n" + Constants.VAULT + "\n" +
+                Constants.COIN + ":" + storageInfo.getCoinsAmount() + "\n" +
+                Constants.STONE + ":" + storageInfo.getStoneAmount() + "\n" +
+                Constants.SERVANT + ":" + storageInfo.getServantsAmount() + "\n" +
+                Constants.SHIELD + ":" + storageInfo.getShieldsAmount() + "\n";
+
+        System.out.println(storageBuilder);
 
     }
 
@@ -647,7 +636,7 @@ public class CLI implements View {
     public String printMarket(Market market){
         StringBuilder marketBuilder = new StringBuilder();
 
-        marketBuilder.append("Ramp: "+BallToString.get(market.getRamp().getType())+"\n");
+        marketBuilder.append("Ramp: ").append(BallToString.get(market.getRamp().getType())).append("\n");
 
         marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE+"\n");
 
@@ -655,22 +644,22 @@ public class CLI implements View {
         for(Ball[] a: market.getMatrix()){
             marketBuilder.append("+");
             for(Ball b: a){
-                marketBuilder.append(" "+BallToString.get(b.getType()));
+                marketBuilder.append(" ").append(BallToString.get(b.getType()));
             }
-            marketBuilder.append(" +  "+Constants.LEFT_ARROW+" "+i+"\n");
+            marketBuilder.append(" +  " + Constants.LEFT_ARROW + " ").append(i).append("\n");
             i--;
         }
 
-        marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE+"\n");
+        marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE).append("\n");
 
         marketBuilder.append("  ");
         for(i=1; i<=4; i++){
-            marketBuilder.append(Constants.UPPER_ARROW+"  ");
+            marketBuilder.append(Constants.UPPER_ARROW).append("  ");
         }
-        marketBuilder.append("\n"+"  ");
+        marketBuilder.append("\n").append("  ");
 
         for(i=1; i<=4; i++){
-            marketBuilder.append(i+"  ");
+            marketBuilder.append(i).append("  ");
         }
 
         return marketBuilder.toString();
@@ -704,17 +693,17 @@ public class CLI implements View {
         for(int i=0; i<13; i++){
             faithPathBuilder.append(printFaithPathSupport(i, position));
         }
-        faithPathBuilder.append("\n"+Constants.FAITH_MIDDLE_EDGE+"\n");
+        faithPathBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE).append("\n");
         for(int j=24; j>12; j--){
             faithPathBuilder.append(printFaithPathSupport(j, position));
         }
-        faithPathBuilder.append("\n"+Constants.FAITH_BOTTOM_EDGE);
+        faithPathBuilder.append("\n").append(Constants.FAITH_BOTTOM_EDGE);
 
         if(papalPawn1 || papalPawn2 || papalPawn3){
             faithPathBuilder.append("\n       --> Active papal pawn: ");
-            if(papalPawn1) faithPathBuilder.append(Constants.PapalPOINT1 + " ");
-            if(papalPawn2) faithPathBuilder.append(Constants.PapalPOINT2 + " ");
-            if(papalPawn3) faithPathBuilder.append(Constants.PapalPOINT3 + " ");
+            if(papalPawn1) faithPathBuilder.append(Constants.PapalPOINT1).append(" ");
+            if(papalPawn2) faithPathBuilder.append(Constants.PapalPOINT2).append(" ");
+            if(papalPawn3) faithPathBuilder.append(Constants.PapalPOINT3).append(" ");
         }
 
         return faithPathBuilder.toString();
@@ -729,9 +718,9 @@ public class CLI implements View {
             faithPathSupport.append("   "+"+ "+Constants.PapalCELL+" +");
         } else {
             if((num>=5 && num<=7) || (num>=12 && num<=15) || (num>=19 && num<=23)){
-                faithPathSupport.append("   "+"+ "+Constants.ANSI_RED+num+Constants.ANSI_RESET+" +");
+                faithPathSupport.append("   " + "+ " + Constants.ANSI_RED).append(num).append(Constants.ANSI_RESET).append(" +");
             } else {
-                faithPathSupport.append("   "+"+ "+Constants.ANSI_CYAN+num+Constants.ANSI_RESET+" +");
+                faithPathSupport.append("   " + "+ " + Constants.ANSI_CYAN).append(num).append(Constants.ANSI_RESET).append(" +");
             }
         }
 
@@ -754,7 +743,7 @@ public class CLI implements View {
             }
         } else {
             actionTokenBuilder.append(Constants.TOP_CARD);
-            actionTokenBuilder.append("-2  "+TokenToString.get(((DeleteCard)actionToken).getColorType()));
+            actionTokenBuilder.append("-2  ").append(TokenToString.get(((DeleteCard) actionToken).getColorType()));
             actionTokenBuilder.append(Constants.BOTTOM_CARD);
             actionTokenBuilder.append(Constants.AT_TOP_BOTTOM_EDGE+Constants.ANSI_WHITE+"***\n"+Constants.ANSI_RESET);
         }
@@ -772,4 +761,20 @@ public class CLI implements View {
     public DevelopmentCardDeck getDevelopmentCardDeck() {
         return developmentCardDeck;
     }
+
+    public void win(String message){
+
+        System.out.println(Constants.WIN +"\n" + Constants.ANSI_WHITE + message + Constants.ANSI_RESET + "\n" + Constants.THANKS_FOR_PLAYING);
+
+    }
+
+    public void lose(String message){
+        System.out.println(Constants.LOSE + "\n" + Constants.ANSI_WHITE + message + Constants.ANSI_RESET + "\n" + Constants.THANKS_FOR_PLAYING);
+    }
+
+    public void setBackgroundColor(){
+        System.out.println("\u001B[48;5;232m");
+    }
+
+
 }
