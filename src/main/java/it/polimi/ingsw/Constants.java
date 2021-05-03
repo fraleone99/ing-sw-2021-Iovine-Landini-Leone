@@ -4,15 +4,15 @@ public class Constants {
 
 
     //ANSI COLOR
-    public static final String	ANSI_BLACK				= "\u001B[0;30m";
-    public static final String	ANSI_RED				= "\u001B[0;31m";
-    public static final String	ANSI_GREEN				= "\u001B[0;32m";
-    public static final String	ANSI_YELLOW				= "\u001B[0;33m";
-    public static final String	ANSI_BLUE				= "\u001B[0;34m";
-    public static final String	ANSI_PURPLE   			= "\u001B[0;35m";
-    public static final String	ANSI_CYAN				= "\u001B[0;36m";
-    public static final String	ANSI_GREY				= "\u001B[0;37m";
-    public static final String  ANSI_WHITE              = "\u001B[1;30m";
+    public static final String	ANSI_BLACK				= "\u001B[38;5;232m";
+    public static final String	ANSI_RED				= "\u001B[38;5;124m";
+    public static final String	ANSI_GREEN				= "\u001B[38;5;28m";
+    public static final String	ANSI_YELLOW				= "\u001B[38;5;226m";
+    public static final String	ANSI_BLUE				= "\u001B[38;5;20m";
+    public static final String	ANSI_PURPLE   			= "\u001B[38;5;55m";
+    public static final String	ANSI_CYAN			    = "\u001B[38;5;32m";
+    public static final String	ANSI_GREY			    = "\u001B[38;5;244m";
+    public static final String  ANSI_WHITE              = "\u001B[38;5;231m";
     public static final String  ANSI_RESET              = "\u001B[0m";
 
 
@@ -70,7 +70,7 @@ public class Constants {
     public final static String FAITH_BOTTOM_EDGE = "   + "+ TwentyPOINTS +" + + + + + + + + + + + + "+ SixteenPOINTS +" + + + + + + + + + + + + "+ TwelvePOINTS +" + + + + + + + + + + + + "+ NinePOINTS +" + + + + + + + + + + +\n";
 
     //SINGLE PLAYER
-    public final static String BCM = ANSI_BLACK + FAITH + ANSI_RESET;
+    public final static String BCM = ANSI_CYAN + FAITH + ANSI_RESET;
     public final static String CARD         = "▇";
     public final static String YellowCARD   = ANSI_YELLOW + CARD + ANSI_RESET;
     public final static String BlueCARD     = ANSI_BLUE + CARD + ANSI_RESET;

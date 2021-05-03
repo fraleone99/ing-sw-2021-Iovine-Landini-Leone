@@ -73,7 +73,7 @@ public class CLITest {
         int code = 18;
         cards.add(code);
 
-        code = 22;
+        code = 32;
         cards.add(code);
 
         code = 45;
