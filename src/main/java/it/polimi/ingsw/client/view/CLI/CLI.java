@@ -479,6 +479,14 @@ public class CLI implements View {
             leaderCardBuilder.append(printEconomyLeader((EconomyLeader) leaderCard));
         }
 
+        if(leaderCard.getIsDiscarded()){
+            leaderCardBuilder.append("+"+Constants.ANSI_RED+"  Discarded   "+Constants.ANSI_RESET+"+\n");
+        } else if(leaderCard.getIsActive()){
+            leaderCardBuilder.append("+"+Constants.ANSI_GREEN+"    Active    "+Constants.ANSI_RESET+"+\n");
+        } else {
+            leaderCardBuilder.append("+"+Constants.ANSI_WHITE+"Not played yet"+Constants.ANSI_RESET+"+\n");
+        }
+
         leaderCardBuilder.append(LEADER_CARD_TOP_EDGE);
 
         return leaderCardBuilder.toString();
@@ -731,7 +739,6 @@ public class CLI implements View {
 
         return faithPathSupport.toString();
     }
-
 
     public String printActionToken(ActionToken actionToken){
         StringBuilder actionTokenBuilder = new StringBuilder();

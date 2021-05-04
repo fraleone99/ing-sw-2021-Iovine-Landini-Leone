@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
+import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
@@ -148,5 +149,23 @@ public class CLITest {
         CLI cli = new CLI();
 
         cli.setBackgroundColor();
+    }
+
+    @Test
+    public void testLeaderCard() throws FileNotFoundException {
+        CLI cli = new CLI();
+        GameBoard gameBoard = new GameBoard(2);
+
+        LeaderCard leader1 = gameBoard.getLeaderDeck().get(5);
+        leader1.setIsActive();
+
+        LeaderCard leader2 = gameBoard.getLeaderDeck().get(7);
+        leader2.setIsDiscarded();
+
+        LeaderCard leader3 = gameBoard.getLeaderDeck().get(9);
+
+        System.out.println((cli.printLeaderCard(leader1)));
+        System.out.println((cli.printLeaderCard(leader2)));
+        System.out.println((cli.printLeaderCard(leader3)));
     }
 }
