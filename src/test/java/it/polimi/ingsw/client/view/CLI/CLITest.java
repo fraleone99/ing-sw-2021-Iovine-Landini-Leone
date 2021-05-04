@@ -95,6 +95,13 @@ public class CLITest {
     }
 
     @Test
+    public void printLorenzoFaith(){
+        CLI cli = new CLI();
+        FaithPath path=new FaithPath();
+        cli.printLorenzoFaith(path.getPositionLorenzo());
+    }
+
+    @Test
     public void printStorage(){
         CLI cli = new CLI();
 
@@ -168,4 +175,5 @@ public class CLITest {
         System.out.println((cli.printLeaderCard(leader2)));
         System.out.println((cli.printLeaderCard(leader3)));
     }
+
 }

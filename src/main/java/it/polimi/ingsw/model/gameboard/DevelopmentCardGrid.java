@@ -124,12 +124,19 @@ public class DevelopmentCardGrid {
         }
     }
 
-    public void removeCard(CardColor color, int level) throws InvalidChoiceException{
+    public void removeCard(CardColor color, int level) throws InvalidChoiceException {
         getDeck(color, level).draw();
     }
 
     public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
         return getDeck(color, level).get();
+    }
+
+    public boolean sameColorDeckAreEmpty(CardColor color) throws InvalidChoiceException {
+        if(getDeck(color, 1).isEmpty() && getDeck(color, 2).isEmpty() && getDeck(color,3).isEmpty()){
+            return true;
+        }
+        return false;
     }
 
     public void initializeDevCards() throws FileNotFoundException {

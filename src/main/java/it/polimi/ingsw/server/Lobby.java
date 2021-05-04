@@ -102,7 +102,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         //removeConnection(clientHandler);
         clientHandler.unregisterObserver(this);
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new Disconnection("Player "+clientToNames.get(clientHandler)+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."));
+            namesToClient.get(nick).send(new Disconnection(Constants.ANSI_RED+"Player "+clientToNames.get(clientHandler)+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."+Constants.ANSI_RESET));
         }
         removeConnection(clientHandler);
     }

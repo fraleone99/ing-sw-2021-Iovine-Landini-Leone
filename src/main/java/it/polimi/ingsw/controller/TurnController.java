@@ -27,6 +27,9 @@ public class TurnController {
     Boolean[] DevCardsSpace = new Boolean[3];
     Boolean[] ProductionLeader = new Boolean[2];
 
+    //TODO
+    private final ArrayList<String> players=new ArrayList<>();
+
     int marketChoice;
     String storageOrg;
     int shelfToAdd; /*This is the shelf where the player wants to put the resource chosen from the market this should be
@@ -35,8 +38,9 @@ public class TurnController {
     int level;
     int space;
 
-    public TurnController(Game game) {
+    public TurnController(Game game, ArrayList<String> players) {
         this.game = game;
+        this.players.addAll(players);
     }
 
     /*At this moment i use a string for what the player wants to do. And i assume that somewhere the variable of this class
@@ -131,5 +135,45 @@ public class TurnController {
         player.getPlayerDashboard().getDevCardsSpace().AddCard(gameBoard.getDevelopmentCardGrid().getCard(color,level), space);
     }
 
+
+
+
+    //FROM CONTROLLER
+
+    public void setPlayers(int player){
+        game.createPlayer(players.get(player));
+    }
+
+    public void addInitialResource(int player, int resource, int shelf) throws NotExistingPlayerException{
+        try {
+            switch (resource) {
+                case 1: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
+                    break;
+                case 2: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
+                    break;
+                case 3: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
+                    break;
+                case 4: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
+                    break;
+            }
+        } catch(NotEnoughSpaceException | AnotherShelfHasTheSameTypeException| ShelfHasDifferentTypeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setInitialLeaderCards(int player) throws NotExistingPlayerException {
+        for(int i=0; i<4; i++){
+            game.getGameBoard().getLeaderDeck().shuffle();
+            game.getPlayer(players.get(player)).getLeaders().add(game.getGameBoard().getLeaderDeck().drawFromTail());
+        }
+    }
+
+    public void activeLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
+        game.getPlayer(players.get(player)).ActiveLeader(pos);
+    }
+
+    public void discardLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
+        game.getPlayer(players.get(player)).DiscardLeader(pos);
+    }
 
 }

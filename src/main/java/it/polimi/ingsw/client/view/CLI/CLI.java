@@ -677,19 +677,12 @@ public class CLI implements View {
     }
 
 
-
-
     public String printDevelopmentCardGrid(ArrayList<Integer> cardsID){
         StringBuilder gridByLevelBuilder = new StringBuilder();
 
-            for(DevelopmentCard card: developmentCardDeck.getDeck()){
-                for(Integer i: cardsID){
-                    if(i==card.getCardID()){
-                        gridByLevelBuilder.append(printDevelopmentCard(card));
-                    }
-                }
-            }
-
+        for(int num: cardsID){
+            gridByLevelBuilder.append(printDevelopmentCard(developmentCardDeck.getCardByID(num)));
+        }
 
         return gridByLevelBuilder.toString();
     }
@@ -738,6 +731,24 @@ public class CLI implements View {
         }
 
         return faithPathSupport.toString();
+    }
+
+    public void printLorenzoFaith(int pos){
+        StringBuilder lorenzoBuilder = new StringBuilder();
+
+        lorenzoBuilder.append(Constants.ANSI_WHITE+"\n   This is Lorenzo Il Magnifico's faith path: "+Constants.ANSI_RESET);
+
+        lorenzoBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE).append("\n");
+        for(int i=0; i<13; i++){
+            lorenzoBuilder.append(printFaithPathSupport(i, pos));
+        }
+        lorenzoBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE).append("\n");
+        for(int j=24; j>12; j--){
+            lorenzoBuilder.append(printFaithPathSupport(j, pos));
+        }
+        lorenzoBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE);
+
+        System.out.println(lorenzoBuilder.toString());
     }
 
     public String printActionToken(ActionToken actionToken){

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
+import it.polimi.ingsw.model.enumeration.CardColor;
 
 public class EndGameController {
 
@@ -38,5 +40,41 @@ public class EndGameController {
         totalPoints=totalPoints+(storageResources+vaultResources+storageLeaderResources)/5;
 
         return totalPoints;
+    }
+
+    //SINGLE PLAYER
+
+    public boolean SinglePlayerLose(Game game) throws InvalidChoiceException {
+        boolean green   = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.GREEN);
+        boolean purple  = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.PURPLE);
+        boolean blue    = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.BLUE);
+        boolean yellow  = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.YELLOW);
+
+        if(game.getPlayers().get(0).getPlayerDashboard().getFaithPath().getPositionLorenzo()==24 || green || purple || blue || yellow){
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean SinglePlayerWins(Game game) {
+
+        if(game.getPlayers().get(0).getPlayerDashboard().getDevCardsSpace().getAmountCards()==7 || game.getPlayers().get(0).getPlayerDashboard().getFaithPath().getPositionFaithPath()==24) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean SinglePlayerIsEndGame(Game game){
+
+        try {
+            if(SinglePlayerLose(game) || SinglePlayerWins(game)){
+                return true;
+            }
+        } catch (InvalidChoiceException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
