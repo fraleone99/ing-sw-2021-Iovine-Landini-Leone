@@ -43,7 +43,7 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     private AtomicBoolean active = new AtomicBoolean(false);
 
-    private Thread heartbeat;
+    private final Thread heartbeat;
 
     ConnectionObservable connectionObservable = new ConnectionObservable();
 
@@ -113,66 +113,60 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     }
 
-    public Message readFromClient(){
+    public Message readFromClient() throws IOException {
         Object next = null;
         try {
             next = input.readObject();
 
-        } catch (IOException | ClassNotFoundException e) {
-          closeConnection();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return (Message) next;
     }
 
 
-    public synchronized void processClientMessage(Message message){
-        if(message instanceof ClientConnection){
-            answer = ((ClientConnection) message).getMessage();
-            isReady = true;
-            notifyAll();
-        }
-        else if(message instanceof SendNickname){
-            answer = ((SendNickname) message).getNickname();
-            isReady = true;
-            notifyAll();
-        }
-        else if(message instanceof NumberOfPlayers){
-            answer=((NumberOfPlayers) message).getNumber();
-            isReady = true;
-            notifyAll();
-        }
-        else if(message instanceof ChosenResource){
-            answer=String.valueOf(((ChosenResource) message).getResource());
-            isReady=true;
-            notifyAll();
-        }
-        else if(message instanceof Ping){
-            System.out.println("ping received!");
-        }
-        else if(message instanceof FirstChosenLeaders){
-            answer=String.valueOf(((FirstChosenLeaders) message).getLeader());
-            isReady=true;
-            notifyAll();
-        }
-        else if(message instanceof ChoiceGameBoard) {
-            answer=String.valueOf(((ChoiceGameBoard) message).getChoice());
-            isReady=true;
-            notifyAll();
-        }
-        else if(message instanceof TurnType) {
-            answer=String.valueOf(((TurnType) message).getTurn());
-            isReady=true;
-            notifyAll();
-        }
-        else if(message instanceof ChosenLeaderCard) {
-            answer=String.valueOf(((ChosenLeaderCard) message).getPosition());
-            isReady=true;
-            notifyAll();
-        }
-        else if(message instanceof ChosenLine) {
-            answer=String.valueOf(((ChosenLine) message).getChoice());
-            isReady=true;
-            notifyAll();
+    public void processClientMessage(Message message){
+
+        synchronized (lock) {
+            if (message instanceof ClientConnection) {
+                answer = ((ClientConnection) message).getMessage();
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof SendNickname) {
+                answer = ((SendNickname) message).getNickname();
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof NumberOfPlayers) {
+                answer = ((NumberOfPlayers) message).getNumber();
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof ChosenResource) {
+                answer = String.valueOf(((ChosenResource) message).getResource());
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof Ping) {
+                System.out.println("ping received!");
+            } else if (message instanceof FirstChosenLeaders) {
+                answer = String.valueOf(((FirstChosenLeaders) message).getLeader());
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof ChoiceGameBoard) {
+                answer = String.valueOf(((ChoiceGameBoard) message).getChoice());
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof TurnType) {
+                answer = String.valueOf(((TurnType) message).getTurn());
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof ChosenLeaderCard) {
+                answer = String.valueOf(((ChosenLeaderCard) message).getPosition());
+                isReady = true;
+                lock.notifyAll();
+            } else if (message instanceof ChosenLine) {
+                answer = String.valueOf(((ChosenLine) message).getChoice());
+                isReady = true;
+                lock.notifyAll();
+            }
         }
     }
 
@@ -197,10 +191,14 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return active.get();
     }
 
-    public void closeConnection(){
+    public synchronized void closeConnection(){
+        if(!active.get()) return;
+
+        active.set(false);
+
         System.out.println(Constants.ANSI_RED +  "[SERVER] client disconnected." + Constants.ANSI_RESET);
         notifyDisconnection(this);
-        active.set(false);
+
         isConnected = false;
 
         try {
@@ -212,6 +210,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
         } catch (IOException ignored) {
         }
+    }
+
+    public Object getLock() {
+        return lock;
     }
 
     @Override

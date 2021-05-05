@@ -20,8 +20,10 @@ public class VirtualView extends VirtualViewObservable {
 
     public String askHandShake(ClientHandler client) throws InterruptedException {
         client.send(new Connection("Welcome to this fantastic server!", true));
-        synchronized (client) {
-            while (!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while (!client.isReady()) {
+                client.getLock().wait();
+            }
             answer = client.getAnswer();
         }
         client.setReady(false);
@@ -30,10 +32,10 @@ public class VirtualView extends VirtualViewObservable {
 
     public String requestNickname(ClientHandler client){
         client.send(new RequestNickname("Please insert your nickname:"));
-        synchronized (client) {
+        synchronized (client.getLock()) {
             while(!client.isReady()) {
                 try {
-                    client.wait();
+                    client.getLock().wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -47,8 +49,8 @@ public class VirtualView extends VirtualViewObservable {
 
     public String InvalidNickname(ClientHandler client) throws InterruptedException{
         client.send(new InvalidNickname("The chosen nickname is not valid. Try again:"));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer = client.getAnswer();
         }
         client.setReady(false);
@@ -58,8 +60,8 @@ public class VirtualView extends VirtualViewObservable {
 
     public String requestPlayersNumber(ClientHandler client) throws InterruptedException {
         client.send(new PlayersNumber("Please insert the number of players:"));
-        synchronized (client) {
-            while (!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while (!client.isReady()) client.getLock().wait();
             answer = client.getAnswer();
         }
         client.setReady(false);
@@ -86,8 +88,8 @@ public class VirtualView extends VirtualViewObservable {
             client.send(new ChooseResource("You are the " + player + " player. Please choose a resource."));
         }
 
-        synchronized (client){
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()){
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -111,8 +113,8 @@ public class VirtualView extends VirtualViewObservable {
             client.send(new DiscardFirstLeaders("Please choose the second leader card to discard."));
         }
         client.send(new PassLeaderCard(IdLeader));
-        synchronized (client) {
-            while (!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while (!client.isReady()) client.getLock().wait();
             answer = client.getAnswer();
         }
 
@@ -154,8 +156,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeGameBoard("What do you want to see about the Game Board?"));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -169,8 +171,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeLeaderCards(leaderCards));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -183,8 +185,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeMarket(market));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -197,8 +199,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ChooseLine("Please choose what you want to see from the Development Cards Grid"));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -212,8 +214,8 @@ public class VirtualView extends VirtualViewObservable {
 
         client.send(new SeeGrid(id));
 
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -227,8 +229,8 @@ public class VirtualView extends VirtualViewObservable {
 
         client.send(new SeeProductions(productions));
 
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -242,8 +244,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ChooseTurn("Choose what you want to do in this turn:"));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -256,8 +258,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ActiveLeader("Which leader do you want to activate?"));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
@@ -270,8 +272,8 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new DiscardLeader("Which leader do you want to discard?"));
-        synchronized (client) {
-            while(!client.isReady()) client.wait();
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
         }
 
