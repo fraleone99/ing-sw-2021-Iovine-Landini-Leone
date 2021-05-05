@@ -93,7 +93,7 @@ public class Market implements Serializable {
 
 
     //choice indicates which is the player choice: 1-first col...4-last col
-    //                                             5-lower row...7-upper row
+    //                                             5-upper row...7-lower row
     public ArrayList<Ball> getChosenColor(int choice) throws InvalidChoiceException {
        if(choice<1 || choice>7){
            throw new InvalidChoiceException();

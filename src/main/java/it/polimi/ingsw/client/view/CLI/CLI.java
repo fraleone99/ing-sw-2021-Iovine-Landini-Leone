@@ -651,14 +651,14 @@ public class CLI implements View {
 
         marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE+"\n");
 
-        int i = 7;
+        int i = 5;
         for(Ball[] a: market.getMatrix()){
             marketBuilder.append("+");
             for(Ball b: a){
                 marketBuilder.append(" ").append(BallToString.get(b.getType()));
             }
             marketBuilder.append(" +  " + Constants.LEFT_ARROW + " ").append(i).append("\n");
-            i--;
+            i++;
         }
 
         marketBuilder.append(Constants.BALL_TOP_BOTTOM_EDGE).append("\n");
