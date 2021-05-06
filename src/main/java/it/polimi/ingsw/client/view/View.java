@@ -68,4 +68,14 @@ public interface View {
     int askLevel(String message);
 
     int askSpace(String message);
+
+    int askType(String message);
+
+    int askInput(String message);
+
+    int askOutput(String message);
+
+    int askDevelopmentCard(String message);
+
+    int askLeaderCard(String message);
 }

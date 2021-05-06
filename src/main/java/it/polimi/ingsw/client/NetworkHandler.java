@@ -220,6 +220,26 @@ public class NetworkHandler implements Runnable {
             int choice=view.askSpace(((AskSpace) inputObj).getMessage());
             send(new ChoiceGameBoard(choice));
         }
+        else if(inputObj instanceof AskType) {
+            int type=view.askType(((AskType) inputObj).getMessage());
+            send(new ChoiceGameBoard(type));
+        }
+        else if(inputObj instanceof AskInput) {
+            int input=view.askInput(((AskInput) inputObj).getMessage());
+            send(new ChoiceGameBoard(input));
+        }
+        else if(inputObj instanceof AskOutput) {
+            int output=view.askOutput(((AskOutput) inputObj).getMessage());
+            send(new ChoiceGameBoard(output));
+        }
+        else if(inputObj instanceof AskDevelopmentCard) {
+            int space=view.askDevelopmentCard(((AskDevelopmentCard) inputObj).getMessage());
+            send(new ChoiceGameBoard(space));
+        }
+        else if(inputObj instanceof AskLeaderCard) {
+            int index=view.askLeaderCard(((AskLeaderCard) inputObj).getMessage());
+            send(new ChoiceGameBoard(index));
+        }
     }
 
     public boolean isConnected() {

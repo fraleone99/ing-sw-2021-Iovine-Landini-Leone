@@ -512,6 +512,81 @@ public class CLI implements View {
         return space;
     }
 
+    public int askType(String message) {
+        int type;
+
+        System.out.println(message);
+
+        do {
+            type=Integer.parseInt(in.nextLine());
+            if(type<1 || type>4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(type<1 || type>4);
+
+        return type;
+    }
+
+    public int askInput(String message) {
+        int input;
+
+        System.out.println(message);
+
+        do {
+            input=Integer.parseInt(in.nextLine());
+            if(input<1 || input>4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(input<1 || input>4);
+
+        return input;
+    }
+
+    public int askOutput(String message) {
+        int output;
+
+        System.out.println(message);
+
+        do {
+            output=Integer.parseInt(in.nextLine());
+            if(output<1 || output>4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(output<1 || output>4);
+
+        return output;
+    }
+
+    public int askDevelopmentCard(String message) {
+        int space;
+
+        System.out.println(message);
+
+        do {
+            space=Integer.parseInt(in.nextLine());
+            if(space<1 || space>3) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(space<1 || space>3);
+
+        return space;
+    }
+
+    public int askLeaderCard(String message) {
+        int index;
+
+        System.out.println(message);
+
+        do {
+            index=Integer.parseInt(in.nextLine());
+            if(index<1 || index>2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(index<1 || index>2);
+
+        return index;
+    }
+
     public String printGood(Goods goods , String color){
         //good
         StringBuilder goodBuilder = new StringBuilder();

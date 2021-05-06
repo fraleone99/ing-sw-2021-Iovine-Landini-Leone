@@ -134,6 +134,7 @@ public class Controller {
         //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
 
         int pos;
+        int type=0;
 
         switch(answer){
             case 1 : pos = view.activeLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
@@ -167,8 +168,57 @@ public class Controller {
                      int space=view.askSpace(players.get(player));
                      buyCard(player,color,level,space);
                      break;
+
+            case 5 : do {
+                        type=view.askType(players.get(player));
+                        activeProduction(player, type);
+                     } while(type!=4);
+                     break;
+
         }
     }
+
+    public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException {
+        //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
+
+        switch(type) {
+            case 1 : Resource input1=view.askInput(players.get(player));
+                     Resource input2=view.askInput(players.get(player));
+                     Resource output=view.askOutput(players.get(player));
+                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
+                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
+                     try {
+                        gameModel.getPlayer(players.get(player)).ActiveProductionBase();
+                     } catch (NotEnoughResourceException e) {
+                        view.sendErrorMessage(players.get(player));
+                     }
+                     break;
+
+            case 2 : int space=view.askDevCard(players.get(player));
+                     try {
+                        gameModel.getPlayer(players.get(player)).ActiveProductionDevCard(space);
+                     } catch (InvalidChoiceException | NotEnoughResourceException e) {
+                         view.sendErrorMessage(players.get(player));
+                     }
+                     break;
+
+            case 3 : int index=view.askLeaderCard(players.get(player));
+                     try {
+                        gameModel.getPlayer(players.get(player)).ActiveProductionLeader(index);
+                     } catch (InvalidChoiceException | NotEnoughResourceException e) {
+                        view.sendErrorMessage(players.get(player));
+                     }
+                     break;
+
+            case 4 : try {
+                        gameModel.getPlayer(players.get(player)).doProduction();
+                     } catch (NotEnoughResourceException e) {
+                        view.sendErrorMessage(players.get(player));
+                     }
+                     break;
+        }
+    }
+
 
     public void buyCard(int player, int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
         CardColor cardColor;

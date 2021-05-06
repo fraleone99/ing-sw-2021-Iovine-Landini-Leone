@@ -162,6 +162,7 @@ public class Player {
             activatedProduction.add(playerDashboard.getDevCardsSpace().getBasicProduction());
         else throw new NotEnoughResourceException();
     }
+
     public void ActiveProductionDevCard(int space) throws InvalidChoiceException, NotEnoughResourceException {
         if(playerDashboard.CheckResource(playerDashboard.getDevCardsSpace().getCard(space).getInputProduction()))
             activatedProduction.add(playerDashboard.getDevCardsSpace().getCard(space).getProduction());

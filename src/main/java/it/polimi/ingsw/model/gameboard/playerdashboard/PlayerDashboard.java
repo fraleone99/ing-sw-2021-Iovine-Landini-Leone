@@ -146,7 +146,7 @@ public class PlayerDashboard {
 
         for(Map.Entry<Resource,Integer> mapElement: ResToAdd.entrySet()){
             Resource r = mapElement.getKey();
-            getVault().AddResource(r, mapElement.getValue());
+            vault.AddResource(r, mapElement.getValue());
         }
     }
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.gameboard.playerdashboard.*;
@@ -414,6 +415,93 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new AskSpace("Choose the space where to insert the card"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int askType(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskType("What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public Resource askInput(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskInput("Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        switch(Integer.parseInt(answer)) {
+            case 1 : return Resource.COIN;
+            case 2 : return Resource.SERVANT;
+            case 3 : return Resource.SHIELD;
+            case 4 : return Resource.STONE;
+            default : return null;
+        }
+    }
+
+    public Resource askOutput(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskOutput("Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        switch(Integer.parseInt(answer)) {
+            case 1 : return Resource.COIN;
+            case 2 : return Resource.SERVANT;
+            case 3 : return Resource.SHIELD;
+            case 4 : return Resource.STONE;
+            default : return null;
+        }
+    }
+
+    public int askDevCard(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskDevelopmentCard("Insert the number of the space containing the development card"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int askLeaderCard(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskDevelopmentCard("Insert the number of the production leader that you want to use"));
 
         synchronized (client.getLock()) {
             while(!client.isReady()) client.getLock().wait();
