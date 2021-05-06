@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.gameboard.playerdashboard.*;
+import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.observer.VirtualViewObservable;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.DiscardResource;
@@ -132,10 +133,10 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void seeFaithPath(String nickname, String player, FaithPath path) {
+    public void seeFaithPath(String nickname, String player, FaithPath path, boolean SinglePlayer) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new FaithPathInfo(("This is the Dashboard of "+player+" :"), path));
+        client.send(new FaithPathInfo(("This is the Dashboard of "+player+" :"), path, SinglePlayer));
     }
 
 
@@ -150,6 +151,12 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new DevCardsSpaceInfo(space));
+    }
+
+    public void seeActionToken(String nickname, ActionToken actionToken){
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new ActionTokenInfo(actionToken));
     }
 
 

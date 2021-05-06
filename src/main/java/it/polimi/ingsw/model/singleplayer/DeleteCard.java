@@ -5,9 +5,11 @@ import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 
-public class DeleteCard extends ActionToken {
+import java.io.Serializable;
 
-    private CardColor colorType;
+public class DeleteCard extends ActionToken implements Serializable {
+
+    private final CardColor colorType;
 
     public DeleteCard(CardColor colorType) {
         this.colorType = colorType;

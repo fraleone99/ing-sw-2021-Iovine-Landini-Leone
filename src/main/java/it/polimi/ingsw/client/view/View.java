@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.model.gameboard.Market;
+import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
@@ -48,6 +49,8 @@ public interface View {
     void printStorage(StorageInfo storageInfo);
 
     void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo);
+
+    void printActionToken(ActionToken actionToken);
 
     int ManageStorage(String message);
 

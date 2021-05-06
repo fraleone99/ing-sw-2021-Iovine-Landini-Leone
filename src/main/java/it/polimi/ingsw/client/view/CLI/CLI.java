@@ -945,6 +945,11 @@ public class CLI implements View {
             if(path.isPapal2()) faithPathBuilder.append(Constants.PapalPOINT2).append(" ");
             if(path.isPapal3()) faithPathBuilder.append(Constants.PapalPOINT3).append(" ");
         }
+        faithPathBuilder.append("\n");
+
+        if(path.isSinglePlayer()){
+            faithPathBuilder.append(printLorenzoFaith(path.getLorenzoPos()));
+        }
 
         System.out.println(faithPathBuilder.toString());
     }
@@ -967,7 +972,7 @@ public class CLI implements View {
         return faithPathSupport.toString();
     }
 
-    public void printLorenzoFaith(int pos){
+    public String printLorenzoFaith(int pos){
         StringBuilder lorenzoBuilder = new StringBuilder();
 
         lorenzoBuilder.append(Constants.ANSI_WHITE+"\n   This is Lorenzo Il Magnifico's faith path: "+Constants.ANSI_RESET);
@@ -980,12 +985,12 @@ public class CLI implements View {
         for(int j=24; j>12; j--){
             lorenzoBuilder.append(printFaithPathSupport(j, pos));
         }
-        lorenzoBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE);
+        lorenzoBuilder.append("\n").append(Constants.FAITH_MIDDLE_EDGE).append("\n");
 
-        System.out.println(lorenzoBuilder.toString());
+        return lorenzoBuilder.toString();
     }
 
-    public String printActionToken(ActionToken actionToken){
+    public void printActionToken(ActionToken actionToken){
         StringBuilder actionTokenBuilder = new StringBuilder();
 
         actionTokenBuilder.append("\n"+Constants.AT_TOP_BOTTOM_EDGE);
@@ -1005,7 +1010,7 @@ public class CLI implements View {
             actionTokenBuilder.append(Constants.AT_TOP_BOTTOM_EDGE+Constants.ANSI_WHITE+"***\n"+Constants.ANSI_RESET);
         }
 
-        return actionTokenBuilder.toString();
+        System.out.println(actionTokenBuilder.toString());
     }
 
     public void initializeTokenToString(){
