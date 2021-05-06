@@ -1,6 +1,8 @@
-package it.polimi.ingsw.server.answer;
+package it.polimi.ingsw.server.answer.turnanswer;
 
-public class SeeGameBoard implements Answer{
+import it.polimi.ingsw.server.answer.Answer;
+
+public class SeeGameBoard implements Answer {
     private final String message;
 
     public SeeGameBoard(String message) {

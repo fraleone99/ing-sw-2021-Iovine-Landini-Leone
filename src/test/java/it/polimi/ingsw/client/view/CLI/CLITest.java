@@ -1,17 +1,10 @@
 package it.polimi.ingsw.client.view.CLI;
 
-import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
-import it.polimi.ingsw.model.DevelopmentCardGridTest;
-import it.polimi.ingsw.model.GameBoardTest;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
-import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
-import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.gameboard.GameBoard;
@@ -19,7 +12,7 @@ import it.polimi.ingsw.model.gameboard.playerdashboard.*;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 import org.junit.Test;
 

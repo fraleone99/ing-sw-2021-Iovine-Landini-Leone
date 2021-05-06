@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.answer.turnanswer;
 
-import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.Answer;
 
 

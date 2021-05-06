@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.leadercard.*;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 
 import java.io.FileNotFoundException;

@@ -12,18 +12,21 @@ import it.polimi.ingsw.model.card.leadercard.*;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
-import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.gameboard.Ball;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
+import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
+import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
+import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -198,14 +201,14 @@ public class CLI implements View {
     public int seeGameBoard(String message) {
         int choice;
         System.out.println(message);
-        System.out.println("1) Leader Cards.\n2) Market.\n3) Development cards grid.\n4) Cards for production");
+        System.out.println("1) Leader Cards.\n2) Market.\n3) Development cards grid.\n4) Cards for production.\n5) Nothing.");
 
         do {
             choice=Integer.parseInt(in.nextLine());
-            if(choice<1 || choice>4) {
+            if(choice<1 || choice>5) {
                 System.out.println("Incorrect number, please try again:");
             }
-        } while(choice<1 || choice>4);
+        } while(choice<1 || choice>5);
 
         return choice;
     }
@@ -323,10 +326,10 @@ public class CLI implements View {
         return choose;
     }
 
-    public int activeLeader(String message){
+    public int activeLeader(ActiveLeader message){
         int leaderCard;
 
-        System.out.println(message);
+        System.out.println(message.getMessage());
 
         do {
             leaderCard=Integer.parseInt(in.nextLine());
@@ -334,14 +337,18 @@ public class CLI implements View {
                 System.out.println("Incorrect number, please try again:");
             }
         } while(leaderCard!=1 && leaderCard!=2);
+
+        int id=message.getLeaders().get(leaderCard-1);
+
+        LeaderDeck.getCardByID(id).setIsActive();
 
         return leaderCard;
     }
 
-    public int discardLeader(String message) {
+    public int discardLeader(DiscardLeader message) {
         int leaderCard;
 
-        System.out.println(message);
+        System.out.println(message.getMessage());
 
         do {
             leaderCard=Integer.parseInt(in.nextLine());
@@ -350,7 +357,114 @@ public class CLI implements View {
             }
         } while(leaderCard!=1 && leaderCard!=2);
 
+        int id=message.getLeaders().get(leaderCard-1);
+
+        LeaderDeck.getCardByID(id).setIsDiscarded();
+
         return leaderCard;
+    }
+
+    public void resetCard(int pos) {
+        LeaderDeck.getCardByID(pos).setIsNotActive();
+        LeaderDeck.getCardByID(pos).setIsNotDiscarded();
+    }
+
+    public int ManageStorage(String message) {
+        int choice;
+
+        System.out.println("Resources that cannot be placed, will be automatically discarded.");
+        System.out.println(message);
+        System.out.println("1) Yes\n2) No");
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice!=1 && choice!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice!=1 && choice!=2);
+
+        return choice;
+    }
+
+    public ArrayList<Integer> MoveShelves(String message) {
+        ArrayList<Integer> shelves=new ArrayList<>();
+        int cont=0;
+
+        System.out.println(message);
+        System.out.println("(first shelf, send, second shelf, send)");
+
+        do {
+            shelves.add(Integer.parseInt(in.nextLine()));
+            if(shelves.get(cont)<1 || shelves.get(cont)>3) {
+                System.out.println("Incorrect number, please try again:");
+            } else cont++;
+        } while(shelves.get(cont-1)<1 || shelves.get(cont-1)>3 || cont<2);
+
+        return shelves;
+    }
+
+    public int useMarket(String message) {
+        int line;
+
+        System.out.println(message);
+
+        do {
+            line=Integer.parseInt(in.nextLine());
+            if(line<1 || line>7) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(line<1 || line>7);
+
+        return line;
+    }
+
+    public int chooseWhiteBallLeader(String message) {
+        int choice;
+
+        System.out.println(message);
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice!=1 && choice!=2) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice!=1 && choice!=2);
+
+        return choice;
+    }
+
+    public int seeBall(SeeBall ball) {
+        int choice;
+
+        System.out.println("These are the resources taken from the market, which one do you want to place in the storage?");
+
+        for(int i=0;i<ball.getBalls().size();i++) {
+            System.out.println((i+1) + ")" + BallToString.get(ball.getBalls().get(i).getType()));
+        }
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice<1 || choice>ball.getBalls().size()) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice<1 || choice>ball.getBalls().size());
+
+        return choice;
+    }
+
+    public int chooseShelf() {
+        int shelf;
+
+        System.out.println("Which shelf do you want to put this resource on? (Press 4 if you want to use the Storage leaders)");
+
+        do {
+            shelf=Integer.parseInt(in.nextLine());
+            if(shelf<1 || shelf>4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(shelf<1 || shelf>4);
+
+        return shelf;
     }
 
     public String printGood(Goods goods , String color){

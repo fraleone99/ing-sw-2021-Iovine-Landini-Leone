@@ -9,9 +9,10 @@ import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.card.leadercard.ProductionLeader;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
+import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
+import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.playerdashboard.PlayerDashboard;
 
 import java.util.ArrayList;
@@ -114,6 +115,10 @@ public class Player {
         } else throw new InvalidChoiceException();
     }
 
+    public void move(int pos) {
+        playerDashboard.getFaithPath().moveForward(pos);
+    }
+
     public ArrayList<Integer> getProductions() {
         ArrayList<Integer> Id=new ArrayList<>();
 
@@ -178,8 +183,43 @@ public class Player {
 
         playerDashboard.AddResources(TotOutput);
         playerDashboard.getFaithPath().moveForward(TotFaithSteps);
-
-
-
     }
+
+    public int WhiteBallLeader () {
+        int cards=0;
+
+        for(LeaderCard card:getLeaders().getDeck()){
+            if((card instanceof WhiteBallLeader) && card.getIsActive())
+                cards++;
+        }
+
+        return cards;
+    }
+
+    public int indexOfStorageLeader(Resource resource) throws InvalidChoiceException {
+        int index=0;
+
+        for(LeaderCard card:getLeaders().getDeck()) {
+            if((card instanceof StorageLeader) && card.getIsActive() &&  ((StorageLeader) card).getType()==resource && ((StorageLeader) card).getAmount()<2) {
+                index=getLeaders().getDeck().indexOf(card)+1;
+            }
+        }
+
+        if(index!=0) {
+            return index;
+        } else {
+            throw new InvalidChoiceException();
+        }
+    }
+
+    public boolean StorageLeader(Resource resource) {
+        for(LeaderCard card:getLeaders().getDeck()) {
+            if((card instanceof StorageLeader) && card.getIsActive() &&  ((StorageLeader) card).getType()==resource && ((StorageLeader) card).getAmount()<2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

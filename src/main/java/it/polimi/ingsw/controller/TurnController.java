@@ -2,17 +2,14 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.GameBoard;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Ball;
+import it.polimi.ingsw.model.gameboard.Ball;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TurnController {
 

@@ -10,6 +10,8 @@ import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
+import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
+import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 
 import java.util.ArrayList;
 
@@ -123,14 +125,14 @@ public class LocalSPController {
 
         switch(answer){
             case 1 : try {
-                int pos = spCLI.activeLeader("Which leader do you want to activate?");
+                int pos = spCLI.activeLeader(new ActiveLeader("Which leader do you want to activate?",gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 turncontroller.activeLeader(0, pos);
             } catch (InvalidChoiceException e) {
                 spCLI.writeMessage("Invalid choice.");
                 localChooseTurn();
             }
             case 2 :try {
-                int pos = spCLI.discardLeader("Which leader do you want to discard?");
+                int pos = spCLI.discardLeader(new DiscardLeader("Which leader do you want to discard?",gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 turncontroller.discardLeader(0, pos);
             } catch (InvalidChoiceException e) {
                 spCLI.writeMessage("Invalid choice.");

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.gameboard.playerdashboard;
+package it.polimi.ingsw.model.gameboard;
 
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.Resource;

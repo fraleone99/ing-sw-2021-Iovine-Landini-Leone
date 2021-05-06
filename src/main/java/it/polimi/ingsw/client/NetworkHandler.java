@@ -10,13 +10,14 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
+import it.polimi.ingsw.server.answer.turnanswer.UseMarket;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
 
 public class NetworkHandler implements Runnable {
     private final Socket server;
@@ -95,11 +96,11 @@ public class NetworkHandler implements Runnable {
         }
         else if(inputObj instanceof PlayersNumber){
             String number = view.askPlayerNumber(((PlayersNumber) inputObj).getMessage());
-            output.writeObject(new NumberOfPlayers(number));
+            send(new NumberOfPlayers(number));
         }
         else if(inputObj instanceof InvalidNickname){
             String nickname = view.askNickname(((InvalidNickname)inputObj).getMessage());
-            output.writeObject(new SendNickname(nickname));
+            send(new SendNickname(nickname));
         }
         else if(inputObj instanceof WaitingRoom){
             view.readMessage(((WaitingRoom) inputObj).getMessage());
@@ -112,14 +113,14 @@ public class NetworkHandler implements Runnable {
         }
         else if(inputObj instanceof ChooseResource){
             int resource=view.askResource(((ChooseResource) inputObj).getMessage());
-            output.writeObject(new ChosenResource(resource));
+            send(new ChosenResource(resource));
         }
         else if(inputObj instanceof DiscardFirstLeaders){
             view.readMessage(((DiscardFirstLeaders) inputObj).getMessage());
         }
         else if(inputObj instanceof PassLeaderCard) {
             int card=view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());
-            output.writeObject(new FirstChosenLeaders(card));
+            send(new FirstChosenLeaders(card));
         }
         else if(inputObj instanceof StartGame) {
             view.readMessage(((StartGame) inputObj).getMessage());
@@ -129,42 +130,42 @@ public class NetworkHandler implements Runnable {
         }
         else if(inputObj instanceof ChooseTurn) {
             int turn=view.askTurnType(((ChooseTurn) inputObj).getMessage());
-            output.writeObject(new TurnType(turn));
+            send(new TurnType(turn));
         }
         else if(inputObj instanceof GameError) {
             view.readMessage(((GameError) inputObj).getMessage());
         }
         else if(inputObj instanceof SeeGameBoard) {
             int choice=view.seeGameBoard(((SeeGameBoard) inputObj).getMessage());
-            output.writeObject(new ChoiceGameBoard(choice));
+            send(new ChoiceGameBoard(choice));
         }
         else if(inputObj instanceof SeeLeaderCards) {
             int choice=view.seeLeaderCards(((SeeLeaderCards) inputObj).getMessage());
-            output.writeObject(new ChoiceGameBoard(choice));
+            send(new ChoiceGameBoard(choice));
         }
         else if(inputObj instanceof SeeMarket) {
             int choice=view.seeMarket(((SeeMarket) inputObj).getMessage());
-            output.writeObject(new ChoiceGameBoard(choice));
+            send(new ChoiceGameBoard(choice));
         }
         else if(inputObj instanceof ActiveLeader) {
-            int leaderCard=view.activeLeader(((ActiveLeader) inputObj).getMessage());
-            output.writeObject(new ChosenLeaderCard(leaderCard));
+            int leaderCard=view.activeLeader(((ActiveLeader) inputObj));
+            send(new ChosenLeaderCard(leaderCard));
         }
         else if(inputObj instanceof DiscardLeader) {
-            int leaderCard=view.discardLeader(((DiscardLeader) inputObj).getMessage());
-            output.writeObject(new ChosenLeaderCard(leaderCard));
+            int leaderCard=view.discardLeader(((DiscardLeader) inputObj));
+            send(new ChosenLeaderCard(leaderCard));
         }
         else if(inputObj instanceof ChooseLine) {
             int choice=view.chooseLine(((ChooseLine) inputObj).getMessage());
-            output.writeObject(new ChosenLine(choice));
+            send(new ChosenLine(choice));
         }
         else if(inputObj instanceof SeeGrid) {
             int choice=view.seeGrid(((SeeGrid) inputObj).getMessage());
-            output.writeObject(new ChoiceGameBoard(choice));
+            send(new ChoiceGameBoard(choice));
         }
         else if(inputObj instanceof SeeProductions) {
             int choice=view.seeProductions(((SeeProductions) inputObj).getMessage());
-            output.writeObject(new ChoiceGameBoard(choice));
+            send(new ChoiceGameBoard(choice));
         }
         else if(inputObj instanceof Disconnection){
             view.readMessage(((Disconnection) inputObj).getMessage());
@@ -177,6 +178,35 @@ public class NetworkHandler implements Runnable {
         }
         else if(inputObj instanceof DevCardsSpaceInfo){
             view.printDevelopmentCardsSpace((DevCardsSpaceInfo) inputObj);
+        }
+        else if(inputObj instanceof ManageStorage){
+            int choice=view.ManageStorage(((ManageStorage) inputObj).getMessage());
+            send(new ChoiceGameBoard(choice));
+        }
+        else if(inputObj instanceof MoveShelves) {
+            ArrayList<Integer> moves=view.MoveShelves(((MoveShelves) inputObj).getMessage());
+            send(new ChoiceGameBoard(moves.get(0)));
+            send(new ChoiceGameBoard(moves.get(1)));
+        }
+        else if(inputObj instanceof ResetCard) {
+            view.resetCard(((ResetCard) inputObj).getPos());
+        }
+        else if(inputObj instanceof UseMarket) {
+            int line=view.useMarket(((UseMarket) inputObj).getMessage());
+            send(new ChoiceGameBoard(line));
+        }
+        else if(inputObj instanceof ChooseTwoWhiteBallLeader) {
+            int choice=view.chooseWhiteBallLeader(((ChooseTwoWhiteBallLeader) inputObj).getMessage());
+            send(new ChoiceGameBoard(choice));
+        }
+        else if(inputObj instanceof DiscardBall) {
+            view.readMessage(((DiscardBall) inputObj).getMessage());
+        }
+        else if(inputObj instanceof SeeBall) {
+            int choice=view.seeBall((SeeBall)inputObj);
+            int shelf=view.chooseShelf();
+            send(new ChoiceGameBoard(choice));
+            send(new ChoiceGameBoard(shelf));
         }
     }
 

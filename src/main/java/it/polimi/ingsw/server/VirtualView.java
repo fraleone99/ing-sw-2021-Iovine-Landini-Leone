@@ -1,15 +1,15 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.Ball;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.gameboard.playerdashboard.*;
 import it.polimi.ingsw.observer.VirtualViewObservable;
 import it.polimi.ingsw.server.answer.*;
+import it.polimi.ingsw.server.answer.DiscardResource;
 import it.polimi.ingsw.server.answer.initialanswer.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -254,10 +254,10 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int activeLeader(String nickname) throws InterruptedException {
+    public int activeLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new ActiveLeader("Which leader do you want to activate?"));
+        client.send(new ActiveLeader("Which leader do you want to activate?", leaders));
         synchronized (client.getLock()) {
             while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
@@ -268,10 +268,10 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public int discardLeader(String nickname) throws InterruptedException {
+    public int discardLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new DiscardLeader("Which leader do you want to discard?"));
+        client.send(new DiscardLeader("Which leader do you want to discard?", leaders));
         synchronized (client.getLock()) {
             while(!client.isReady()) client.getLock().wait();
             answer=client.getAnswer();
@@ -280,12 +280,122 @@ public class VirtualView extends VirtualViewObservable {
         client.setReady(false);
 
         return Integer.parseInt(answer);
+    }
+
+    public int manageStorage(int number, String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        if(number==1)
+            client.send(new ManageStorage("Before using the market do you want to reorder your storage? You won't be able to do it later."));
+        else
+            client.send(new ManageStorage("Do you want to make other changes to the storage?"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public  ArrayList<Integer> moveShelves(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+        ArrayList<Integer> moves=new ArrayList<>();
+
+        client.send(new MoveShelves("Which shelves do you want to reverse?"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+            moves.add(Integer.parseInt(answer));
+        }
+
+        client.setReady(false);
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+            moves.add(Integer.parseInt(answer));
+        }
+
+        client.setReady(false);
+
+        return moves;
+    }
+
+    public int useMarket(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new UseMarket("Which market line do you want?"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public ArrayList<Integer> seeBall(String nickname, ArrayList<Ball> balls) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+        ArrayList<Integer> moves=new ArrayList<>();
+
+        client.send(new SeeBall(balls));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+            moves.add(Integer.parseInt(answer));
+        }
+
+        client.setReady(false);
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+            moves.add(Integer.parseInt(answer));
+        }
+
+        client.setReady(false);
+
+        return moves;
+    }
+
+    public int askWhiteBallLeader(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new ChooseTwoWhiteBallLeader("You have 2 active WhiteBall leaders, which one do you want to use in this turn? (1 or 2)"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public void discardResource(String nickname) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new DiscardBall("Your shelves are full, the remaining resources will be discarded"));
     }
 
     public void sendErrorMessage(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new GameError("Invalid choice."));
+    }
+
+    public void resetCard(String nickname, int pos) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new ResetCard(pos));
     }
 
 

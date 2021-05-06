@@ -26,6 +26,10 @@ public abstract class LeaderCard extends Card {
         isDiscarded=true;
     }
 
+    public void setIsNotDiscarded() {isDiscarded=false;}
+
+    public void setIsNotActive() {isActive=false;}
+
     public boolean getIsDiscarded(){
         return isDiscarded;
     }

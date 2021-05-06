@@ -3,6 +3,12 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.card.leadercard.StorageLeader;
+import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
+import it.polimi.ingsw.model.enumeration.BallColor;
+import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.Ball;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.VirtualView;
 
@@ -47,7 +53,7 @@ public class Controller {
                 }
             }
 
-        } catch (NotExistingPlayerException | IOException | InterruptedException e){
+        } catch (NotExistingPlayerException | InterruptedException | InvalidChoiceException e){
             e.printStackTrace();
         }
     }
@@ -97,9 +103,9 @@ public class Controller {
         }
     }
 
-    public void seeGameBoard(int player) throws IOException, NotExistingPlayerException, InterruptedException {
+    public void seeGameBoard(int player) throws  NotExistingPlayerException, InterruptedException {
         int answer=view.seeGameBoard(players.get(player));
-        //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production
+        //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Nothing
         int finish;
 
         switch(answer){
@@ -116,31 +122,182 @@ public class Controller {
             case 4 : finish=view.seeProduction(players.get(player), gameModel.getPlayer(players.get(player)).getProductions());
                      if(finish==1) seeGameBoard(player);
                      break;
+            case 5 : break;
         }
     }
 
 
-    public void chooseTurn(int player) throws IOException, InterruptedException, NotExistingPlayerException {
+    public void chooseTurn(int player) throws InterruptedException, NotExistingPlayerException, InvalidChoiceException {
         int answer=view.chooseTurn(players.get(player));
+        //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
+
+        int pos;
 
         switch(answer){
-            case 1 : try {
-                int pos = view.activeLeader(players.get(player));
+            case 1 : pos = view.activeLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                try {
                 turncontroller.activeLeader(player, pos);
             } catch (InvalidChoiceException e) {
                 view.sendErrorMessage(players.get(player));
+                view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
                 chooseTurn(player);
             }
                     break;
-            case 2 : try {
-                int pos = view.discardLeader(players.get(player));
+            case 2 : pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                try {
                 turncontroller.discardLeader(player, pos);
             } catch (InvalidChoiceException e) {
                 view.sendErrorMessage(players.get(player));
+                view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
                 chooseTurn(player);
             }
                     break;
+            case 3 : int choice=view.manageStorage(1, players.get(player));
+                     if(choice==1) manageStorage(player);
+                     int line=view.useMarket(players.get(player));
+                     useMarket(player, line);
+                     break;
+            case 4 :
         }
+    }
+
+    public void useMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+        ArrayList<Integer> choice=new ArrayList<>();
+        Resource resource = null;
+
+        ArrayList<Ball> market = new ArrayList<>(gameModel.getGameBoard().getMarket().getChosenColor(line));
+        ArrayList<Ball> balls = new ArrayList<>();
+        ArrayList<Ball> toPlace = new ArrayList<>();
+
+        if (gameModel.getPlayer(players.get(player)).WhiteBallLeader() == 2) {
+            int ball = view.askWhiteBallLeader(players.get(player));
+            resource = ((WhiteBallLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(ball - 1)).getConversionType();
+        } else if (gameModel.getPlayer(players.get(player)).WhiteBallLeader() == 1) {
+            if (gameModel.getPlayer(players.get(player)).getLeaders().get(0) instanceof WhiteBallLeader)
+                resource = ((WhiteBallLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(0)).getConversionType();
+            else
+                resource = ((WhiteBallLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(1)).getConversionType();
+        }
+
+        for(Ball b : market) {
+            if (b.getType().equals(BallColor.RED)) {
+                gameModel.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
+            } else if (b.getType().equals(BallColor.WHITE)) {
+                if (resource != null) {
+                    switch (resource) {
+                        case COIN:
+                            balls.add(new Ball(BallColor.YELLOW));
+                        case SERVANT:
+                            balls.add(new Ball(BallColor.PURPLE));
+                        case SHIELD:
+                            balls.add(new Ball(BallColor.BLUE));
+                        case STONE:
+                            balls.add(new Ball(BallColor.GREY));
+                    }
+                }
+            } else {
+                balls.add(new Ball(b.getType()));
+            }
+        }
+
+        for(Ball b : balls) {
+            int i = gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
+
+            if (gameModel.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
+                toPlace.add(new Ball(b.getType()));
+            } else {
+                if (i != 0) {
+                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                        //gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i-1).setResourceAmount(1);
+                    }
+                } else {
+                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                    }
+                }
+            }
+        }
+
+        if(!toPlace.isEmpty()) {
+            do {
+                choice.addAll(view.seeBall(players.get(player), toPlace));
+
+                try {
+                    if(choice.get(1)==4) {
+                        int card=gameModel.getPlayer(players.get(player)).indexOfStorageLeader(toPlace.get((choice.get(0)) - 1).getCorrespondingResource());
+                        ((StorageLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                    } else {
+                        gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                    }
+                    toPlace.remove(choice.get(0) - 1);
+                    ArrayList<Ball> temp=new ArrayList<>(checkEmptyShelves(player,toPlace));
+                    toPlace.clear();
+                    toPlace.addAll(temp);
+                } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
+                    view.sendErrorMessage(players.get(player));
+                }
+
+                choice.clear();
+            } while (toPlace.size() > 0);
+        }
+    }
+
+    public ArrayList<Ball> checkEmptyShelves(int player, ArrayList<Ball> balls) throws NotExistingPlayerException {
+        ArrayList<Ball> toPlace=new ArrayList<>();
+
+        for(Ball b : balls) {
+            int i = gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
+
+            if (gameModel.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
+                toPlace.add(new Ball(b.getType()));
+            } else {
+                if (i != 0) {
+                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                        //gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i-1).setResourceAmount(1);
+                    }
+                } else {
+                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                    }
+                }
+            }
+        }
+
+        return toPlace;
+    }
+
+    public void manageStorage(int player) throws InterruptedException, NotExistingPlayerException {
+        int action;
+        do{
+            ArrayList<Integer> choice = view.moveShelves(players.get(player));
+
+            try {
+                gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
+            } catch (NotEnoughSpaceException e) {
+                view.sendErrorMessage(players.get(player));
+            }
+
+
+            action=view.manageStorage(2, players.get(player));
+        } while(action==1);
     }
 
 

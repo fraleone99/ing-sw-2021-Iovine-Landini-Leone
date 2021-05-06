@@ -36,6 +36,15 @@ public class Storage {
         return  sum;
     }
 
+    public int typePresent(Resource type){
+        for(Shelf s : shelves){
+            if(s.getResourceType().equals(type) && s.getAmount() > 0){
+                return (shelves.indexOf(s)+1);
+            }
+        }
+        return 0;
+    }
+
     /**
      * Method isThisTypePresent searches if a type is present in the storage and if so returns the Shelf on which are
      * located the resources of that type
@@ -105,7 +114,7 @@ public class Storage {
 
         if (shelves.get(s-1).getAvailableSpace() < amount) throw new NotEnoughSpaceException();
 
-        shelves.get(s-1).ChangeResourceType(type);
+        shelves.get(s-1).changeType(type);
         shelves.get(s-1).AddResource(amount);
     }
 
@@ -160,7 +169,18 @@ public class Storage {
 
     public int getAmountShelf(int s){
         return shelves.get(s-1).getAmount();
+    }
 
+    public ArrayList<Shelf> getShelves() {
+        return shelves;
+    }
+
+    public int emptyShelves() {
+        int cont=0;
+        for(Shelf s : shelves) {
+            if(s.isFree()) cont++;
+        }
+        return cont;
     }
 
     public Resource getTypeShelf(int s){

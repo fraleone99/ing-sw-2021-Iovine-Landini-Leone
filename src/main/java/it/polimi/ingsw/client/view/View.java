@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.view;
 
-import it.polimi.ingsw.model.gameboard.playerdashboard.Market;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.StorageInfo;
+import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
+import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
+import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
 
 import java.util.ArrayList;
 
@@ -24,9 +27,9 @@ public interface View {
 
     int askTurnType(String message);
 
-    int activeLeader(String message);
+    int activeLeader(ActiveLeader message);
 
-    int discardLeader(String message);
+    int discardLeader(DiscardLeader message);
 
     int seeGameBoard(String message);
 
@@ -45,4 +48,18 @@ public interface View {
     void printStorage(StorageInfo storageInfo);
 
     void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo);
+
+    int ManageStorage(String message);
+
+    ArrayList<Integer> MoveShelves(String message);
+
+    void resetCard(int pos);
+
+    int useMarket(String message);
+
+    int chooseWhiteBallLeader(String message);
+
+    int seeBall(SeeBall ball);
+
+    int chooseShelf();
 }

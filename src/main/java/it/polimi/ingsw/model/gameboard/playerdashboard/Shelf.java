@@ -34,6 +34,10 @@ public class Shelf {
         return shelfDimension - resourceAmount;
     }
 
+    public void changeType(Resource newType) {
+        resourceType=newType;
+    }
+
     public void ChangeResourceType(Resource newType){
         resourceType = newType;
         resourceAmount = 0;
