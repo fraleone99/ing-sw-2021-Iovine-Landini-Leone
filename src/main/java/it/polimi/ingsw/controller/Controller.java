@@ -3,9 +3,11 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
 import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
 import it.polimi.ingsw.model.enumeration.BallColor;
+import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
@@ -135,29 +137,62 @@ public class Controller {
 
         switch(answer){
             case 1 : pos = view.activeLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
-                try {
-                turncontroller.activeLeader(player, pos);
-            } catch (InvalidChoiceException e) {
-                view.sendErrorMessage(players.get(player));
-                view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
-                chooseTurn(player);
-            }
-                    break;
+                     try {
+                        turncontroller.activeLeader(player, pos);
+                     } catch (InvalidChoiceException e) {
+                        view.sendErrorMessage(players.get(player));
+                        view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
+                        chooseTurn(player);
+                     }
+                     break;
+
             case 2 : pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
-                try {
-                turncontroller.discardLeader(player, pos);
-            } catch (InvalidChoiceException e) {
-                view.sendErrorMessage(players.get(player));
-                view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
-                chooseTurn(player);
-            }
-                    break;
+                     try {
+                        turncontroller.discardLeader(player, pos);
+                     } catch (InvalidChoiceException e) {
+                        view.sendErrorMessage(players.get(player));
+                        view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
+                        chooseTurn(player);
+                     }
+                     break;
+
             case 3 : int choice=view.manageStorage(1, players.get(player));
                      if(choice==1) manageStorage(player);
                      int line=view.useMarket(players.get(player));
                      useMarket(player, line);
                      break;
-            case 4 :
+
+            case 4 : int color=view.askColor(players.get(player));
+                     int level=view.askLevel(players.get(player));
+                     int space=view.askSpace(players.get(player));
+                     buyCard(player,color,level,space);
+                     break;
+        }
+    }
+
+    public void buyCard(int player, int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+        CardColor cardColor;
+
+        switch (color) {
+            case 1 : cardColor=CardColor.PURPLE;
+                     break;
+            case 2 : cardColor=CardColor.YELLOW;
+                     break;
+            case 3 : cardColor=CardColor.BLUE;
+                     break;
+            case 4 : cardColor=CardColor.GREEN;
+                     break;
+            default: cardColor=null;
+        }
+
+        DevelopmentCard card=gameModel.getGameBoard().getDevelopmentCardGrid().getCard(cardColor,level);
+
+        try {
+            gameModel.getPlayer(players.get(player)).buyCard(card, space);
+            gameModel.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
+        } catch(InvalidSpaceCardException e) {
+            view.sendErrorMessage(players.get(player));
+            chooseTurn(player);
         }
     }
 

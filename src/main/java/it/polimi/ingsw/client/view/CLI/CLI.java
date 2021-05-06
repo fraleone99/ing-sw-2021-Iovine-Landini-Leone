@@ -467,6 +467,51 @@ public class CLI implements View {
         return shelf;
     }
 
+    public int askColor(String message) {
+        int color;
+
+        System.out.println(message);
+
+        do {
+            color=Integer.parseInt(in.nextLine());
+            if(color<1 || color>4) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(color<1 || color>4);
+
+        return color;
+    }
+
+    public int askLevel(String message) {
+        int level;
+
+        System.out.println(message);
+
+        do {
+            level=Integer.parseInt(in.nextLine());
+            if(level<1 || level>3) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(level<1 || level>3);
+
+        return level;
+    }
+
+    public int askSpace(String message) {
+        int space;
+
+        System.out.println(message);
+
+        do {
+            space=Integer.parseInt(in.nextLine());
+            if(space<1 || space>3) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(space<1 || space>3);
+
+        return space;
+    }
+
     public String printGood(Goods goods , String color){
         //good
         StringBuilder goodBuilder = new StringBuilder();

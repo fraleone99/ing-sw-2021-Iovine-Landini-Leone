@@ -62,4 +62,10 @@ public interface View {
     int seeBall(SeeBall ball);
 
     int chooseShelf();
+
+    int askColor(String message);
+
+    int askLevel(String message);
+
+    int askSpace(String message);
 }

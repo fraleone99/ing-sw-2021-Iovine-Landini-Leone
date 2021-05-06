@@ -70,7 +70,12 @@ public class Player {
     }
 
     public void buyCard(DevelopmentCard Card, int space) throws InvalidSpaceCardException {
-        playerDashboard.getDevCardsSpace().AddCard(Card, space);
+        boolean check=getPlayerDashboard().CheckResource(Card.getCost());
+        if(playerDashboard.getDevCardsSpace().checkSpace(Card, space) && check) {
+            playerDashboard.getDevCardsSpace().addCard(Card, space);
+            playerDashboard.RemoveResource(Card.getCost());
+        }
+        else throw new InvalidSpaceCardException();
     }
 
     public ArrayList<Resource> UseMarket(ArrayList<Ball> balls){

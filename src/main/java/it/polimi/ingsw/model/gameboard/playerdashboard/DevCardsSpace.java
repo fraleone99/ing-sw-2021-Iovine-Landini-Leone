@@ -53,11 +53,22 @@ public class DevCardsSpace {
         return sum;
     }
 
+    public boolean checkSpace(DevelopmentCard card, int space) {
+        if(Space.get(space-1).isEmpty() && card.getLevel() == 1)
+            return true;
+        else if (!Space.get(space-1).isEmpty() && Space.get(space-1).get().getLevel() == card.getLevel() - 1)
+            return true;
+        else
+            return false;
+    }
+
+    public void addCard(DevelopmentCard card, int space) {
+        Space.get(space-1).add(card);
+    }
+
     public void AddCard(DevelopmentCard Card, int space) throws InvalidSpaceCardException {
-        if(space < 1 || space > 3) throw new InvalidSpaceCardException();
         if(Space.get(space-1).isEmpty() && Card.getLevel() == 1)
             Space.get(space-1).add(Card);
-
         else if (!Space.get(space-1).isEmpty() && Space.get(space-1).get().getLevel() == Card.getLevel() - 1)
             Space.get(space-1).add(Card);
         else

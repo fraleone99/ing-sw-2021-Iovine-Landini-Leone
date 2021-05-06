@@ -380,10 +380,49 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
-    public void discardResource(String nickname) {
+    public int askColor(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new DiscardBall("Your shelves are full, the remaining resources will be discarded"));
+        client.send(new AskColor("Choose the color of the card you want to buy.\n1) Purple\n2) Yellow\n3) Blue\n4) Green"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int askLevel(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskLevel("Choose the level of the card you want to buy"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
+    public int askSpace(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskSpace("Choose the space where to insert the card"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
     }
 
     public void sendErrorMessage(String nickname){
