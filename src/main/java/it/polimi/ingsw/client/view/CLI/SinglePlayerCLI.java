@@ -2,9 +2,14 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
+import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import it.polimi.ingsw.server.answer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.turnanswer.ManageStorage;
+import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
 
+import java.lang.reflect.Array;
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
 
 public class SinglePlayerCLI extends CLI {
@@ -31,12 +36,42 @@ public class SinglePlayerCLI extends CLI {
         return answer;
     }
 
-    public void localPrintFaithPath(FaithPathInfo infoPlayer, int LorenzoPos){
-        printFaithPath(infoPlayer);
-
-        printLorenzoFaith(LorenzoPos);
-
-        //TODO lorenzo's faith path
+    public int localManageStorage(int number) {
+        if(number==1)
+            return ManageStorage("Before using the market do you want to reorder your storage? You won't be able to do it later.");
+        else
+            return ManageStorage("Do you want to make other changes to the storage?");
     }
+
+
+    public ArrayList<Integer> localSeeBall(SeeBall ball) {
+        ArrayList<Integer> choices = new ArrayList<>();
+
+        choices.add(seeBall(ball));
+        choices.add(chooseShelf());
+
+        return choices;
+    }
+
+    public Resource localAskInput(String message){
+        int choice=askInput(message);
+        return parser(choice);
+    }
+
+    public Resource localAskOutput(String message){
+        int choice=askOutput(message);
+        return parser(choice);
+    }
+
+    public Resource parser(int answer){
+        switch(answer) {
+            case 1 : return Resource.COIN;
+            case 2 : return Resource.SERVANT;
+            case 3 : return Resource.SHIELD;
+            case 4 : return Resource.STONE;
+            default : return null;
+        }
+    }
+
 
 }

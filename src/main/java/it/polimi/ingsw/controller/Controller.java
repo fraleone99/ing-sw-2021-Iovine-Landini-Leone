@@ -380,7 +380,7 @@ public class Controller {
                         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     }
                     toPlace.remove(choice.get(0) - 1);
-                    ArrayList<Ball> temp=new ArrayList<>(checkEmptyShelves(player,toPlace));
+                    ArrayList<Ball> temp=new ArrayList<>(turncontroller.checkEmptyShelves(player,toPlace));
                     toPlace.clear();
                     toPlace.addAll(temp);
                 } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
@@ -390,39 +390,6 @@ public class Controller {
                 choice.clear();
             } while (toPlace.size() > 0);
         }
-    }
-
-    public ArrayList<Ball> checkEmptyShelves(int player, ArrayList<Ball> balls) throws NotExistingPlayerException {
-        ArrayList<Ball> toPlace=new ArrayList<>();
-
-        for(Ball b : balls) {
-            int i = gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
-
-            if (gameModel.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
-                toPlace.add(new Ball(b.getType()));
-            } else {
-                if (i != 0) {
-                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
-                        for (int j = 0; j < players.size(); j++) {
-                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
-                        }
-                    } else {
-                        toPlace.add(new Ball(b.getType()));
-                        //gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i-1).setResourceAmount(1);
-                    }
-                } else {
-                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
-                        for (int j = 0; j < players.size(); j++) {
-                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
-                        }
-                    } else {
-                        toPlace.add(new Ball(b.getType()));
-                    }
-                }
-            }
-        }
-
-        return toPlace;
     }
 
     public void manageStorage(int player) throws InterruptedException, NotExistingPlayerException {

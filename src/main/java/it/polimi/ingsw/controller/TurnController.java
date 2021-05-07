@@ -173,4 +173,37 @@ public class TurnController {
         game.getPlayer(players.get(player)).DiscardLeader(pos);
     }
 
+    public ArrayList<Ball> checkEmptyShelves(int player, ArrayList<Ball> balls) throws NotExistingPlayerException {
+        ArrayList<Ball> toPlace=new ArrayList<>();
+
+        for(Ball b : balls) {
+            int i = game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
+
+            if (game.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
+                toPlace.add(new Ball(b.getType()));
+            } else {
+                if (i != 0) {
+                    if (game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) game.getPlayer(players.get(j)).move(1);
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                        //gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i-1).setResourceAmount(1);
+                    }
+                } else {
+                    if (game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) game.getPlayer(players.get(j)).move(1);
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                    }
+                }
+            }
+        }
+
+        return toPlace;
+    }
+
 }
