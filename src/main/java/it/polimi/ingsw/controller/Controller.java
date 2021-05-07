@@ -22,9 +22,10 @@ public class Controller {
     private final TurnController turncontroller;
     private final EndGameController endgame;
     private final ArrayList<String> players=new ArrayList<>();
-    private boolean isOver;
     private final VirtualView view;
     private boolean isEnd=false;
+    private boolean isOver=false;
+    ActionToken actionToken;
 
     public Controller(ArrayList<String> players, VirtualView view) {
         this.players.addAll(players);
@@ -53,7 +54,24 @@ public class Controller {
                     seeGameBoard(i);
                     chooseTurn(i);
                 }
+
+                //TODO
+                if(players.size()==1){
+                    try{
+                        actionToken = gameModel.drawActionToken();
+                        view.seeActionToken(players.get(0), actionToken);
+                    } catch (EmptyDecksException e){
+                        break;
+                    } catch (InvalidChoiceException e){
+                        e.printStackTrace();
+                    }
+                    isEnd = endgame.SinglePlayerIsEndGame(gameModel);
+                } else {
+                    isEnd = isEndGame();
+                }
             }
+
+            endGame();
 
         } catch (NotExistingPlayerException | InterruptedException | InvalidChoiceException e){
             e.printStackTrace();
@@ -98,7 +116,11 @@ public class Controller {
 
     public void seePlayerDashboards(int player) throws NotExistingPlayerException {
         for (String s : players) {
-            view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath());
+            if(players.size()==1){
+                view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath(), true);
+            } else {
+                view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath(), false);
+            }
             view.seeStorage(players.get(player), gameModel.getPlayer(s).getPlayerDashboard().getStorage(),
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getVault());
             view.seeDevCardsSpace(players.get(player), gameModel.getPlayer(s).getPlayerDashboard().getDevCardsSpace());
@@ -425,11 +447,28 @@ public class Controller {
     }
 
     public void endGame(){
-        if(isOver){
+
+        if(players.size()==1){
+            try {
+                if(endgame.SinglePlayerLose(gameModel)){
+                    //TODO send to the server that Lorenzo won
+                } else {
+                    //TODO send to the server that player won
+                }
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Player winner = endgame.getWinner(gameModel);
+            //TODO send the winner to the server
+        }
+
+        /*if(isOver){
             if(gameModel.getPlayers().indexOf(gameModel.getCurrentPlayer())==gameModel.getPlayers().size()-1) {
                 Player winner = getEndgame().getWinner(gameModel);
                 /*send the winner to the server*/
-            }
+            /*}
         }
         else{
             for(Player p : gameModel.getPlayers()) {
@@ -437,7 +476,17 @@ public class Controller {
                     isOver = true;
                 }
             }
+        }*/
+    }
+
+    public boolean isEndGame(){
+        for(Player p : gameModel.getPlayers()) {
+            if (p.getPlayerDashboard().getDevCardsSpace().getAmountCards() == 7 || p.getPlayerDashboard().getFaithPath().getPositionFaithPath() == 24) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     //SINGLE PLAYER

@@ -14,7 +14,7 @@ public class SinglePlayerCLI extends CLI {
     }
 
     public void localHandShake(String nickname) {
-        handShake("\nWelcome to the game"+ Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET);
+        handShake("\nWelcome to the game "+ Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET);
     }
 
     public int discardFirstLeader(int number, ArrayList<Integer> leaderID){

@@ -30,6 +30,8 @@ public class LorenzoMagnifico{
 
         temp=new DeleteCard(CardColor.GREEN);
         tokens.add(temp);
+
+        shuffle();
     }
 
     public ArrayList<ActionToken> getTokens(){

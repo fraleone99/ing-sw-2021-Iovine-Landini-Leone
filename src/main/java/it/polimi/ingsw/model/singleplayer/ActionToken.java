@@ -1,4 +1,6 @@
 package it.polimi.ingsw.model.singleplayer;
 
-public abstract class ActionToken {
+import java.io.Serializable;
+
+public abstract class ActionToken implements Serializable {
 }

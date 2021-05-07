@@ -240,6 +240,9 @@ public class NetworkHandler implements Runnable {
             int index=view.askLeaderCard(((AskLeaderCard) inputObj).getMessage());
             send(new ChoiceGameBoard(index));
         }
+        else if(inputObj instanceof ActionTokenInfo){
+            view.printActionToken(((ActionTokenInfo) inputObj).getMessage());
+        }
         else if(inputObj instanceof EndTurn) {
             int choice=view.endTurn(((EndTurn) inputObj).getMessage());
             send(new ChoiceGameBoard(choice));

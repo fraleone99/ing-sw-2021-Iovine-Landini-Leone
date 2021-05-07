@@ -83,7 +83,7 @@ public class CLITest {
     public void printFaithPath(){
         CLI cli = new CLI();
         FaithPath path=new FaithPath();
-        FaithPathInfo msg=new FaithPathInfo("ciao",path);
+        FaithPathInfo msg=new FaithPathInfo("ciao",path, true);
         cli.printFaithPath( msg);
     }
 
@@ -135,13 +135,13 @@ public class CLITest {
         LorenzoMagnifico lorenzoMagnifico = new LorenzoMagnifico();
         CLI cli = new CLI();
 
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(0)));
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(1)));
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(2)));
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(3)));
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(4)));
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(5)));
-        System.out.println(cli.printActionToken(lorenzoMagnifico.getTokens().get(6)));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(0));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(1));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(2));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(3));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(4));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(5));
+        cli.printActionToken(lorenzoMagnifico.getTokens().get(6));
     }
 
     @Test

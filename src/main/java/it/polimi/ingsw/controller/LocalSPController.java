@@ -56,7 +56,8 @@ public class LocalSPController {
 
                 try {
                     currentActionToken = gameModel.drawActionToken();
-                    spCLI.writeMessage("Drawn action token: " + spCLI.printActionToken(currentActionToken));
+                    spCLI.writeMessage("Drawn action token: ");
+                    spCLI.printActionToken(currentActionToken);
                 } catch (EmptyDecksException e) {
                     break;
                 } catch (InvalidChoiceException e) {
@@ -90,8 +91,7 @@ public class LocalSPController {
     }
 
     public void localSeePlayerDashboard(){
-        spCLI.localPrintFaithPath(new FaithPathInfo(("This is the Dashboard of "+players.get(0)+" :"), gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath()),
-                gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath().getPositionLorenzo());
+        spCLI.printFaithPath(new FaithPathInfo(("This is the Dashboard of "+players.get(0)+" :"), gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath(), true));
         spCLI.printStorage(new StorageInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getStorage(),
                 gameModel.getPlayers().get(0).getPlayerDashboard().getVault()));
         spCLI.printDevelopmentCardsSpace(new DevCardsSpaceInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getDevCardsSpace()));
@@ -117,27 +117,33 @@ public class LocalSPController {
             case 4:finish=spCLI.seeProductions(gameModel.getPlayer(players.get(0)).getProductions());
                 if(finish==1) localSeeGameBoard();
                 break;
+            case 5 : break;
         }
     }
 
     public void localChooseTurn() throws NotExistingPlayerException {
-        int answer=spCLI.askTurnType("Choose what you want to do in this turn:");
+        int answer = spCLI.askTurnType("Choose what you want to do in this turn:");
 
-        switch(answer){
-            case 1 : try {
-                int pos = spCLI.activeLeader(new ActiveLeader("Which leader do you want to activate?",gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
-                turncontroller.activeLeader(0, pos);
-            } catch (InvalidChoiceException e) {
-                spCLI.writeMessage("Invalid choice.");
-                localChooseTurn();
-            }
-            case 2 :try {
-                int pos = spCLI.discardLeader(new DiscardLeader("Which leader do you want to discard?",gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
-                turncontroller.discardLeader(0, pos);
-            } catch (InvalidChoiceException e) {
-                spCLI.writeMessage("Invalid choice.");
-                localChooseTurn();
-            }
+        switch (answer) {
+            case 1:
+                try {
+                    int pos = spCLI.activeLeader(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+                    turncontroller.activeLeader(0, pos);
+                } catch (InvalidChoiceException e) {
+                    spCLI.writeMessage("Invalid choice.");
+                    localChooseTurn();
+                }
+                break;
+
+            case 2:
+                try {
+                    int pos = spCLI.discardLeader(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+                    turncontroller.discardLeader(0, pos);
+                } catch (InvalidChoiceException e) {
+                    spCLI.writeMessage("Invalid choice.");
+                    localChooseTurn();
+                }
+                break;
         }
     }
 

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.singleplayer;
 
-import it.polimi.ingsw.model.singleplayer.ActionToken;
+import java.io.Serializable;
 
-public class BlackCrossMover extends ActionToken {
+public class BlackCrossMover extends ActionToken implements Serializable {
 
     int steps;
     boolean shuffle;
