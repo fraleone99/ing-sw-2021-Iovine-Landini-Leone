@@ -587,6 +587,21 @@ public class CLI implements View {
         return index;
     }
 
+    public int endTurn(String message) {
+        int choice;
+
+        System.out.println(message);
+
+        do {
+            choice=Integer.parseInt(in.nextLine());
+            if(choice<1 || choice>3) {
+                System.out.println("Incorrect number, please try again:");
+            }
+        } while(choice<1 || choice>3);
+
+        return choice;
+    }
+
     public String printGood(Goods goods , String color){
         //good
         StringBuilder goodBuilder = new StringBuilder();

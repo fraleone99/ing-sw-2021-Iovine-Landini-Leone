@@ -78,4 +78,6 @@ public interface View {
     int askDevelopmentCard(String message);
 
     int askLeaderCard(String message);
+
+    int endTurn(String message);
 }

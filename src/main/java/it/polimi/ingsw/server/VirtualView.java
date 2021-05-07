@@ -513,6 +513,21 @@ public class VirtualView extends VirtualViewObservable {
         return Integer.parseInt(answer);
     }
 
+    public int endTurn(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new AskDevelopmentCard("What do you want to do?\n1) Active Leader\n2) Discard Leader\n3) End turn"));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            answer=client.getAnswer();
+        }
+
+        client.setReady(false);
+
+        return Integer.parseInt(answer);
+    }
+
     public void sendErrorMessage(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 

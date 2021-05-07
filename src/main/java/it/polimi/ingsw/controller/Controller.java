@@ -130,53 +130,87 @@ public class Controller {
 
 
     public void chooseTurn(int player) throws InterruptedException, NotExistingPlayerException, InvalidChoiceException {
-        int answer=view.chooseTurn(players.get(player));
+        int answer;
         //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
 
         int pos;
         int type=0;
 
-        switch(answer){
-            case 1 : pos = view.activeLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
-                     try {
+        do {
+            answer=view.chooseTurn(players.get(player));
+            switch (answer) {
+                case 1:
+                    pos = view.activeLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    try {
                         turncontroller.activeLeader(player, pos);
-                     } catch (InvalidChoiceException e) {
+                    } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
-                        view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
+                        view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                         chooseTurn(player);
-                     }
-                     break;
+                    }
+                    break;
 
-            case 2 : pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
-                     try {
+                case 2:
+                    pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    try {
                         turncontroller.discardLeader(player, pos);
-                     } catch (InvalidChoiceException e) {
+                    } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
-                        view.resetCard(players.get(player),gameModel.getPlayer(players.get(player)).getLeaders().get(pos-1).getCardID());
+                        view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                         chooseTurn(player);
-                     }
-                     break;
+                    }
+                    break;
 
-            case 3 : int choice=view.manageStorage(1, players.get(player));
-                     if(choice==1) manageStorage(player);
-                     int line=view.useMarket(players.get(player));
-                     useMarket(player, line);
-                     break;
+                case 3:
+                    int choice = view.manageStorage(1, players.get(player));
+                    if (choice == 1) manageStorage(player);
+                    int line = view.useMarket(players.get(player));
+                    useMarket(player, line);
+                    break;
 
-            case 4 : int color=view.askColor(players.get(player));
-                     int level=view.askLevel(players.get(player));
-                     int space=view.askSpace(players.get(player));
-                     buyCard(player,color,level,space);
-                     break;
+                case 4:
+                    int color = view.askColor(players.get(player));
+                    int level = view.askLevel(players.get(player));
+                    int space = view.askSpace(players.get(player));
+                    buyCard(player, color, level, space);
+                    break;
 
-            case 5 : do {
-                        type=view.askType(players.get(player));
+                case 5:
+                    do {
+                        type = view.askType(players.get(player));
                         activeProduction(player, type);
-                     } while(type!=4);
-                     break;
+                    } while (type != 4);
+                    break;
 
+            }
+        } while(answer==1 || answer==2);
+
+            answer=view.endTurn(players.get(player));
+
+            while(answer==1 || answer==2) {
+                if (answer == 1) {
+                    pos = view.activeLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    try {
+                        turncontroller.activeLeader(player, pos);
+                    } catch (InvalidChoiceException e) {
+                        view.sendErrorMessage(players.get(player));
+                        view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
+                        chooseTurn(player);
+                    }
+                } else {
+                    pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    try {
+                        turncontroller.discardLeader(player, pos);
+                    } catch (InvalidChoiceException e) {
+                        view.sendErrorMessage(players.get(player));
+                        view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
+                        chooseTurn(player);
+                    }
+                }
+                answer=view.endTurn(players.get(player));
+            }
         }
-    }
+
 
     public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
