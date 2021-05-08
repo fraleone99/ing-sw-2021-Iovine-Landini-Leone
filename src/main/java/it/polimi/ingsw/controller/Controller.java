@@ -41,18 +41,24 @@ public class Controller {
                 turncontroller.setPlayers(i);
             }
             for (int i = 0; i < players.size(); i++) {
+                view.sendTurnStatus("START", players.get(i));
                 setInitialBenefits(i);
                 turncontroller.setInitialLeaderCards(i);
                 discardFirstLeaders(i);
+                view.sendTurnStatus("END", players.get(i));
             }
             for(int i=0; i<players.size(); i++){
                 startGame(i);
             }
             while(!isEnd){
                 for(int i=0; i<players.size();i++){
+                    //send start turn
+                    view.sendTurnStatus("START", players.get(i));
                     seePlayerDashboards(i);
                     seeGameBoard(i);
                     chooseTurn(i);
+                    view.sendTurnStatus("END", players.get(i));
+                    //send end turn
                 }
 
                 //TODO

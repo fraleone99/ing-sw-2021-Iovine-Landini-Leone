@@ -16,8 +16,6 @@ public class Server {
     private int playersInLastLobby;
     private boolean lobbyFull;
 
-    private int DEFAULT_PORT = 3456;
-
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -32,7 +30,7 @@ public class Server {
         System.out.println("Default configuration?[y/n]");
         String config = scanner.nextLine();
         if(config.equalsIgnoreCase("y")){
-            PORT_NUMBER = DEFAULT_PORT;
+            PORT_NUMBER = 3456;
         }
         else {
             do {

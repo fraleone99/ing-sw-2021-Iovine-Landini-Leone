@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentNavigableMap;
 
 
 public class Lobby implements ConnectionObserver, VirtualViewObserver {
@@ -47,9 +46,12 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         System.out.println(str + " has joined the lobby number " + lobbyID);
 
         playersNumber = Integer.parseInt(view.requestPlayersNumber(firstClient) );
+
         System.out.println("The lobby number "+ lobbyID +" will contain " + playersNumber + " players");
 
         view.waitingRoom(firstClient);
+
+        firstClient.send(new InitialSetup());
     }
 
     public void add(ClientHandler clientHandler) throws IOException, InterruptedException {
@@ -86,6 +88,8 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
 
         String str= clientToNames.get(clientHandler);
         System.out.println(str + " has joined the lobby number " + lobbyID);
+
+        clientHandler.send(new InitialSetup());
     }
 
     public void removeConnection(ClientHandler clientHandler){

@@ -7,17 +7,17 @@ import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
 import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.server.InitialSetup;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.initialanswer.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 import it.polimi.ingsw.server.answer.turnanswer.UseMarket;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NetworkHandler implements Runnable {
     private final Socket server;
@@ -30,6 +30,10 @@ public class NetworkHandler implements Runnable {
     private final View view;
 
     private boolean isConnected;
+
+    private AtomicBoolean isMyTurn = new AtomicBoolean(false);
+
+
     public NetworkHandler(Socket server, Client owner) {
         this.server = server;
         this.owner = owner;
@@ -54,7 +58,7 @@ public class NetworkHandler implements Runnable {
         }
     }
 
-    private void handleClientConnection() throws IOException{
+    public void handleClientConnection() throws IOException{
         heartbeat = new Heartbeat(this);
         Thread heartbeatThread = new Thread(heartbeat);
         heartbeatThread.start();
@@ -247,9 +251,42 @@ public class NetworkHandler implements Runnable {
             int choice=view.endTurn(((EndTurn) inputObj).getMessage());
             send(new ChoiceGameBoard(choice));
         }
+        else if(inputObj instanceof TurnStatus){
+            if(((TurnStatus) inputObj).getMessage().equals("END")){
+
+                isMyTurn.set(false);
+                waitForYourTurn();
+            }
+            else if(((TurnStatus) inputObj).getMessage().equals("START")){
+               isMyTurn.set(true);
+            }
+        }
+        else if(inputObj instanceof InitialSetup){
+            waitForYourTurn();
+        }
     }
 
     public boolean isConnected() {
         return isConnected;
+    }
+
+    public void waitForYourTurn(){
+        new Thread(()->{
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            try
+                {  while (!isMyTurn.get()) {
+                    if (br.ready()) {
+                        System.out.print("It is not your turn please wait!\n");
+                        br.readLine();
+                    } else {
+                        Thread.sleep(200);
+                        }
+                    }
+                }
+            catch (IOException | InterruptedException ignored){
+            }
+
+        }).start();
     }
 }

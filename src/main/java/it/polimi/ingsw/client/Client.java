@@ -9,9 +9,6 @@ import java.util.Scanner;
 public class Client implements Runnable {
     NetworkHandler networkHandler;
 
-    private final String LOCALHOST = "127.0.0.1";
-    private final int DEFAULT_PORT = 3456;
-
     public static void main(String[] args) {
         Client client = new Client();
         client.run();
@@ -40,16 +37,17 @@ public class Client implements Runnable {
             System.out.println("Default configuration? (localhost) [y/n]");
             config = scanner.nextLine();
             if (config.equalsIgnoreCase("y")) {
-                PORT_NUMBER = DEFAULT_PORT;
-                ip = LOCALHOST;
+                PORT_NUMBER = 3456;
+                ip = "127.0.0.1";
             } else {
                 do {
                     System.out.println("ip:");
                     ip = scanner.nextLine();
                     System.out.println("Insert port number:");
-                    PORT_NUMBER = scanner.nextInt();
+                    PORT_NUMBER = Integer.parseInt(scanner.nextLine());
                 } while (PORT_NUMBER < 1024);
             }
+
 
             Socket server;
             try {
