@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-/*public class PlayerTest {
+public class PlayerTest {
     private Player player;
 
     @Before public void initialize(){
@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
     }
 
     @Test
-    public void buyCard() throws InvalidSpaceCardException, InvalidChoiceException {
+    public void buyCard() throws InvalidSpaceCardException, InvalidChoiceException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -31,8 +31,9 @@ import static org.junit.Assert.*;
         output.add(new Goods(Resource.SERVANT,1));
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
-        Production production=new Production(input, output);
-        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 3);
+        Production production=new Production(input, output, 3);
+        DevelopmentCard devCard=new DevelopmentCard(3, 0, CardColor.PURPLE, 1, cost, production);
+        player.getPlayerDashboard().getStorage().AddResource(3, Resource.SERVANT, 3);
 
         player.buyCard(devCard,2);
 
@@ -41,7 +42,7 @@ import static org.junit.Assert.*;
     }
 
     @Test(expected = InvalidSpaceCardException.class)
-    public void buyCard_InvalidSpace() throws InvalidSpaceCardException{
+    public void buyCard_InvalidSpace() throws InvalidSpaceCardException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -50,10 +51,10 @@ import static org.junit.Assert.*;
         output.add(new Goods(Resource.SERVANT,1));
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
-        Production production=new Production(input, output);
-        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 3);
+        Production production=new Production(input, output, 3);
+        DevelopmentCard devCard=new DevelopmentCard(3, 1, CardColor.PURPLE, 1, cost, production);
 
-        player.buyCard(devCard,5);
+        player.buyCard(devCard,3);
     }
 
     @Test(expected=NotEnoughResourceException.class)
@@ -70,9 +71,9 @@ import static org.junit.Assert.*;
         ArrayList<Goods> output = new ArrayList<>();
         Goods g2 = new Goods(Resource.UNKNOWN,1);
         output.add(g2);
-        Production production = new Production(input,output);
-        Requirements req1=new Requirements(CardColor.PURPLE,2,1, cost);
-        LeaderCard leader=new ProductionLeader(4,production,req1);
+        Production production = new Production(input, output,2);
+        Requirements req1=new Requirements(CardColor.PURPLE, 2, 1, cost);
+        LeaderCard leader=new ProductionLeader(4, 12, production, req1);
 
         player.getPlayerDashboard().getLeaders().add(leader);
 
@@ -96,9 +97,9 @@ import static org.junit.Assert.*;
         ArrayList<Goods> output = new ArrayList<>();
         Goods g2 = new Goods(Resource.UNKNOWN,1);
         output.add(g2);
-        Production production = new Production(input,output);
-        Requirements req1=new Requirements(CardColor.PURPLE,2,1, cost);
-        LeaderCard leader=new ProductionLeader(4,production,req1);
+        Production production = new Production(input, output, 2);
+        Requirements req1=new Requirements(CardColor.PURPLE, 2, 1, cost);
+        LeaderCard leader=new ProductionLeader(4, 12, production, req1);
 
         player.getPlayerDashboard().getLeaders().add(leader);
 
@@ -120,16 +121,16 @@ import static org.junit.Assert.*;
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,req1,shelf);
+        LeaderCard leader=new StorageLeader(3,12, req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         req1=new Requirements(CardColor.GREEN,0,2, cost);
         Requirements req2=new Requirements(CardColor.PURPLE,0,1, cost);
-        leader=new WhiteBallLeader(5,Resource.SHIELD,req1,req2);
+        leader=new WhiteBallLeader(5,2,Resource.SHIELD,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
-        player.DiscardLeader(0);
         player.DiscardLeader(1);
+        player.DiscardLeader(2);
 
         assert(player.getPlayerDashboard().getLeaders().get(0).getIsDiscarded());
         assert(player.getPlayerDashboard().getLeaders().get(1).getIsDiscarded());
@@ -140,8 +141,7 @@ import static org.junit.Assert.*;
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,req1,shelf);
-        player.getPlayerDashboard().getLeaders().add(leader);
+        LeaderCard leader=new StorageLeader(3,3,req1,shelf);
 
         player.DiscardLeader(2);
     }
@@ -163,8 +163,8 @@ import static org.junit.Assert.*;
         output.add(new Goods(Resource.SERVANT,1));
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
-        Production production=new Production(input, output);
-        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost1, production, 0);
+        Production production=new Production(input, output,0);
+        DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
 
         DevelopmentCardDeck GreenOne = new DevelopmentCardDeck();
@@ -173,8 +173,8 @@ import static org.junit.Assert.*;
         input=new ArrayList<>();
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
-        production=new Production(input, output);
-        devCard=new DevelopmentCard(1, CardColor.GREEN, 1, cost1, production, 1);
+        production=new Production(input, output, 1);
+        devCard=new DevelopmentCard(1,18, CardColor.GREEN, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
 
         cost1=new ArrayList<>();
@@ -185,8 +185,8 @@ import static org.junit.Assert.*;
         input.add(new Goods(Resource.SERVANT, 1));
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 2));
-        production=new Production(input, output);
-        devCard=new DevelopmentCard(4, CardColor.GREEN, 1, cost1, production, 1);
+        production=new Production(input, output, 1);
+        devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,3);
 
         cost1 = new ArrayList<>();
@@ -197,8 +197,8 @@ import static org.junit.Assert.*;
         input.add(new Goods(Resource.STONE, 1));
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 3));
-        production=new Production(input, output);
-        devCard=new DevelopmentCard(6, CardColor.BLUE, 2, cost1, production, 0);
+        production=new Production(input, output, 0);
+        devCard=new DevelopmentCard(6,38, CardColor.BLUE, 2, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
 
         player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,2);
@@ -208,18 +208,18 @@ import static org.junit.Assert.*;
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,req1,shelf);
+        LeaderCard leader=new StorageLeader(3,3,req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         cost=new Goods(Resource.COIN, 0);
         req1=new Requirements(CardColor.GREEN,0,2, cost);
         Requirements req2=new Requirements(CardColor.PURPLE,0,1, cost);
-        leader=new WhiteBallLeader(5,Resource.SHIELD,req1,req2);
+        leader=new WhiteBallLeader(5,5,Resource.SHIELD,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         req1=new Requirements(CardColor.GREEN,0,1, cost);
         req2=new Requirements(CardColor.BLUE,0,1, cost);
-        leader=new EconomyLeader(2,Resource.STONE,req1,req2);
+        leader=new EconomyLeader(2,2,Resource.STONE,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         input = new ArrayList<>();
@@ -228,15 +228,15 @@ import static org.junit.Assert.*;
         output = new ArrayList<>();
         Goods g2 = new Goods(Resource.UNKNOWN,1);
         output.add(g2);
-        production = new Production(input,output);
+        production = new Production(input,output,2);
         req1=new Requirements(CardColor.BLUE,2,1, cost);
-        leader=new ProductionLeader(4,production,req1);
+        leader=new ProductionLeader(4,12,production,req1);
         player.getPlayerDashboard().getLeaders().add(leader);
 
-        player.ActiveLeader(0);
         player.ActiveLeader(1);
         player.ActiveLeader(2);
         player.ActiveLeader(3);
+        player.ActiveLeader(4);
 
         assertEquals((player.getPlayerDashboard().getStorage().getAmountShelf(3)),0);
         assertEquals((player.getPlayerDashboard().getStorage().getAmountShelf(2)),2);
@@ -275,8 +275,8 @@ import static org.junit.Assert.*;
         output.add(new Goods(Resource.SERVANT,1));
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
-        Production production=new Production(input, output);
-        DevelopmentCard devCard=new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 0);
+        Production production=new Production(input, output, 0);
+        DevelopmentCard devCard=new DevelopmentCard(3, 4, CardColor.PURPLE, 1, cost, production);
 
         player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
 
@@ -304,34 +304,38 @@ import static org.junit.Assert.*;
     public void testCalculateVictoryPoints() throws InvalidSpaceCardException {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> output=new ArrayList<>();
-        Production production=new Production(input, output);
 
         ArrayList<Goods> cost=new ArrayList<>();
 
-        DevelopmentCard card = new DevelopmentCard(4, CardColor.GREEN, 1, cost, production, 2);
+        Production production=new Production(input, output, 2);
+        DevelopmentCard card = new DevelopmentCard(4, 5, CardColor.GREEN, 1, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
 
-        card = new DevelopmentCard(8, CardColor.BLUE, 2, cost, production, 5);
+        production=new Production(input, output, 5);
+        card = new DevelopmentCard(8, 6, CardColor.BLUE, 2, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
 
-        card = new DevelopmentCard(12, CardColor.GREEN, 3, cost, production, 9);
+        production=new Production(input, output, 9);
+        card = new DevelopmentCard(12, 7, CardColor.GREEN, 3, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
 
-        card = new DevelopmentCard(3, CardColor.PURPLE, 1, cost, production, 2);
+        production=new Production(input, output, 2);
+        card = new DevelopmentCard(3, 8, CardColor.PURPLE, 1, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 2);
 
-        card = new DevelopmentCard(6, CardColor.YELLOW, 2, cost, production, 2);
+        production=new Production(input, output, 2);
+        card = new DevelopmentCard(6, 9, CardColor.YELLOW, 2, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 2);
 
 
         Goods good=new Goods(Resource.COIN, 3);
         Requirements requirements = new Requirements(CardColor.GREEN, 2, 3, good);
 
-        LeaderCard leader=new ProductionLeader(4, production, requirements);
+        LeaderCard leader=new ProductionLeader(4, 10, production, requirements);
         leader.setIsDiscarded();
         player.getLeaders().add(leader);
 
-        leader=new ProductionLeader(10, production, requirements);
+        leader=new ProductionLeader(10, 11, production, requirements);
         leader.setIsActive();
         player.getLeaders().add(leader);
 
@@ -339,4 +343,4 @@ import static org.junit.Assert.*;
 
     }
 
-}*/
+}
