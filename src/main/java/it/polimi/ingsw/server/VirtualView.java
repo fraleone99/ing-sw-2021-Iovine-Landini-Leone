@@ -557,6 +557,10 @@ public class VirtualView extends VirtualViewObservable {
     }
 
     public void sendTurnStatus(String message, String nickname){
+        if(message.equals("START")){
+            notifyPlayingNick(nickname);
+        }
+
         ClientHandler client = namesToClient.get(nickname);
 
         client.send(new TurnStatus(message));

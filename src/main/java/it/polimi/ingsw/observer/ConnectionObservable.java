@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ConnectionObservable {
 
-    private List<ConnectionObserver> observersList=new ArrayList<>();
+    private final List<ConnectionObserver> observersList=new ArrayList<>();
 
     /**
      * this method is used to add a new ConnectionObserver
