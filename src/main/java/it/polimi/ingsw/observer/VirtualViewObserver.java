@@ -10,4 +10,6 @@ public interface VirtualViewObserver {
 
     void updatePreparationOfLobby() throws IOException;
 
+    void updatePlayingNick(String nickname);
+
 }

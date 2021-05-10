@@ -32,4 +32,12 @@ public class VirtualViewObservable {
             }
         }
     }
+
+    public void notifyPlayingNick(String nick) {
+        synchronized (observersList){
+            for(VirtualViewObserver obs: observersList){
+                obs.updatePlayingNick(nick);
+            }
+        }
+    }
 }

@@ -437,19 +437,6 @@ public class Controller {
             //TODO send the winner to the server
         }
 
-        /*if(isOver){
-            if(gameModel.getPlayers().indexOf(gameModel.getCurrentPlayer())==gameModel.getPlayers().size()-1) {
-                Player winner = getEndgame().getWinner(gameModel);
-                /*send the winner to the server*/
-            /*}
-        }
-        else{
-            for(Player p : gameModel.getPlayers()) {
-                if (p.getPlayerDashboard().getDevCardsSpace().getAmountCards() == 7 || p.getPlayerDashboard().getFaithPath().getPositionFaithPath() == 24) {
-                    isOver = true;
-                }
-            }
-        }*/
     }
 
     public boolean isEndGame(){

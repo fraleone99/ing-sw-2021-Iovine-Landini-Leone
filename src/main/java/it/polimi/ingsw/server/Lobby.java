@@ -7,6 +7,7 @@ import it.polimi.ingsw.observer.VirtualViewObserver;
 import it.polimi.ingsw.server.answer.initialanswer.JoiningPlayer;
 import it.polimi.ingsw.server.answer.initialanswer.PrepareTheLobby;
 import it.polimi.ingsw.server.answer.turnanswer.Disconnection;
+import it.polimi.ingsw.server.answer.turnanswer.PlayingNick;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,29 +93,41 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         clientHandler.send(new InitialSetup());
     }
 
-    public void removeConnection(ClientHandler clientHandler){
-        System.out.println("Removing player "+clientToNames.get(clientHandler));
-        namesToClient.remove(clientToNames.get(clientHandler));
-        nicknames.remove(clientToNames.get(clientHandler));
-        view.removeNamesToClient(clientToNames.get(clientHandler), clientHandler);
+    public String removeConnection(ClientHandler clientHandler){
+        String nick=clientToNames.get(clientHandler);
+        System.out.println("Removing player "+nick);
+        namesToClient.remove(nick);
+        nicknames.remove(nick);
+        view.removeNamesToClient(nick, clientHandler);
         clientToNames.remove(clientHandler);
-        playersNumber=-1;
+        playersNumber=playersNumber-1;
+
+        return nick;
     }
 
     @Override
     public void updateDisconnection(ClientHandler clientHandler) {
-        //removeConnection(clientHandler);
-        clientHandler.unregisterObserver(this);
+        //clientHandler.unregisterObserver(this);
+        String nickname=removeConnection(clientHandler);
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new Disconnection(Constants.ANSI_RED+"Player "+clientToNames.get(clientHandler)+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."+Constants.ANSI_RESET));
+            namesToClient.get(nick).send(new Disconnection(Constants.ANSI_RED+"Player "+/*clientToNames.get(clientHandler)*/nickname+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."+Constants.ANSI_RESET));
         }
-        removeConnection(clientHandler);
+        //removeConnection(clientHandler);
     }
 
     @Override
     public void updatePreparationOfLobby(){
         for(String nick: nicknames){
             namesToClient.get(nick).send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
+        }
+    }
+
+    @Override
+    public void updatePlayingNick(String nickname){
+        for(String nick: nicknames){
+            if(!nick.equals(nickname)){
+                namesToClient.get(nick).send(new PlayingNick(Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
+            }
         }
     }
 
