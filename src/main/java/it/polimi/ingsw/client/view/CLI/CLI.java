@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class CLI implements View {
+public class CLI implements View{
     private final Scanner in;
     private final HashMap<CardColor, String> CardColorToString = new HashMap<>();
     private final HashMap<Resource, String> ResourceToString = new HashMap<>();
@@ -54,10 +54,6 @@ public class CLI implements View {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public Scanner getScanner() {
-        return in;
     }
 
     private void initializeDevelopmentCard() throws FileNotFoundException {
@@ -136,16 +132,20 @@ public class CLI implements View {
     public String askPlayerNumber(String message) {
         String number;
         System.out.println(message);
+        while (true)
+            try
+                {
+                    number = in.nextLine();
+                    if (Integer.parseInt(number) < 1 || Integer.parseInt(number) > 4) {
+                        System.out.println("Incorrect number, please try again:");
+                    }
+                    else
+                        break;
+                }
+        catch (NumberFormatException e){
+            System.out.print("You should insert a number!\n" + message);
 
-        do {
-            number = in.nextLine();
-            if(Integer.parseInt(number)<1 || Integer.parseInt(number)>4){
-                System.out.println("Incorrect number, please try again:");
-            }
-            /*else if(Integer.parseInt(number) == 1){
-                System.out.println("Sorry, single player is still under development. Try again: ");
-            }*/
-        } while (Integer.parseInt(number)<1 || Integer.parseInt(number)>4);
+        }
         return number;
     }
 
@@ -157,18 +157,34 @@ public class CLI implements View {
         return  nickname;
     }
 
+    public int askInt (int min, int max, String message){
+        String input;
+        System.out.println(message);
+        while (true)
+            try
+            {
+                input = in.nextLine();
+                if (Integer.parseInt(input) < min || Integer.parseInt(input) > max) {
+                    System.out.println("Incorrect number, please try again:");
+                }
+                else
+                    break;
+            }
+            catch (NumberFormatException e){
+                System.out.println("You should insert a number!\n" + message);
+
+            }
+        return Integer.parseInt(input);
+    }
+
     public int askResource(String message) {
         int resource;
 
         System.out.println(message);
-        System.out.println("Press the corresponding number:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
+        //System.out.println("Press the corresponding number:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
 
-        do {
-            resource=Integer.parseInt(in.nextLine());
-            if(resource<1 || resource >4) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(resource<1 || resource>4);
+        resource = askInt(1, 4, "Press the corresponding number:" +
+                "\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
 
         return resource;
     }
@@ -180,19 +196,12 @@ public class CLI implements View {
     public int askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
         int card;
 
-        System.out.println("Entering the corresponding number");
-
         for(int i=0;i<IdLeaders.size();i++){
             System.out.println(i+1+")");
             System.out.println(printLeaderCard(LeaderDeck.getFromID(IdLeaders.get(i))));
         }
 
-        do {
-            card=Integer.parseInt(in.nextLine());
-            if(card<1 || card>IdLeaders.size()) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(card<1 || card>IdLeaders.size());
+        card = askInt(1, IdLeaders.size(),"Enter the corresponding number:" );
 
         return card;
     }
@@ -222,12 +231,7 @@ public class CLI implements View {
 
         System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice!=1 && choice!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice!=1 && choice!=2);
+        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
         return choice;
     }
@@ -237,14 +241,7 @@ public class CLI implements View {
 
         System.out.println(printMarket(market));
 
-        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice!=1 && choice!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice!=1 && choice!=2);
+        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
         return choice;
     }
@@ -253,14 +250,9 @@ public class CLI implements View {
         int choice;
 
         System.out.println(message);
-        System.out.println("1) Level one cards\n2) Level two cards\n3) Level three cards\n4) Purple cards\n5) Yellow Cards\n6) Blue Cards\n7) Green Cards");
 
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice<1 || choice>7) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice<1 || choice>7);
+        choice = askInt(1,7, "1) Level one cards\n2) Level two cards\n3) Level three cards\n" +
+                "4) Purple cards\n5) Yellow Cards\n6) Blue Cards\n7) Green Cards");
 
         return choice;
     }
@@ -272,14 +264,7 @@ public class CLI implements View {
             System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(devCard)));
         }
 
-        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice!=1 && choice!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice!=1 && choice!=2);
+        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
         return choice;
     }
@@ -298,14 +283,7 @@ public class CLI implements View {
             }
         }
 
-        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice!=1 && choice!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice!=1 && choice!=2);
+        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
         return choice;
     }
@@ -314,14 +292,9 @@ public class CLI implements View {
         int choose;
 
         System.out.println(message);
-        System.out.println("1) Active Leader Card.\n2) Discard Leader Card.\n3) Use Market.\n4) Buy Development Card.\n5) Active Productions");
 
-        do {
-            choose=Integer.parseInt(in.nextLine());
-            if(choose<1 || choose>5) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choose<1 || choose>5);
+        choose = askInt(1,5,"1) Active Leader Card.\n2) Discard Leader Card.\n3) Use Market.\n" +
+                "4) Buy Development Card.\n5) Active Productions");
 
         return choose;
     }
@@ -329,14 +302,7 @@ public class CLI implements View {
     public int activeLeader(ActiveLeader message){
         int leaderCard;
 
-        System.out.println(message.getMessage());
-
-        do {
-            leaderCard=Integer.parseInt(in.nextLine());
-            if(leaderCard!=1 && leaderCard!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(leaderCard!=1 && leaderCard!=2);
+        leaderCard =  askInt(1,2, message.getMessage());
 
         int id=message.getLeaders().get(leaderCard-1);
 
@@ -348,14 +314,8 @@ public class CLI implements View {
     public int discardLeader(DiscardLeader message) {
         int leaderCard;
 
-        System.out.println(message.getMessage());
 
-        do {
-            leaderCard=Integer.parseInt(in.nextLine());
-            if(leaderCard!=1 && leaderCard!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(leaderCard!=1 && leaderCard!=2);
+        leaderCard =  askInt(1,2, message.getMessage());
 
         int id=message.getLeaders().get(leaderCard-1);
 
@@ -372,33 +332,25 @@ public class CLI implements View {
     public int ManageStorage(String message) {
         int choice;
 
-        System.out.println("Resources that cannot be placed, will be automatically discarded.");
-        System.out.println(message);
-        System.out.println("1) Yes\n2) No");
 
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice!=1 && choice!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice!=1 && choice!=2);
+        choice = askInt(1,2, "Resources that cannot be placed, will be automatically discarded.\n"+
+                message + "\n1) Yes\n2) No");
 
         return choice;
     }
 
     public ArrayList<Integer> MoveShelves(String message) {
         ArrayList<Integer> shelves=new ArrayList<>();
-        int cont=0;
+        int firstShelf;
+        int secondShelf;
 
         System.out.println(message);
-        System.out.println("(first shelf, send, second shelf, send)");
 
-        do {
-            shelves.add(Integer.parseInt(in.nextLine()));
-            if(shelves.get(cont)<1 || shelves.get(cont)>3) {
-                System.out.println("Incorrect number, please try again:");
-            } else cont++;
-        } while(shelves.get(cont-1)<1 || shelves.get(cont-1)>3 || cont<2);
+        firstShelf = askInt(1,3, "FirstShelf:");
+        secondShelf = askInt(1,3,"Second Shelf:");
+
+        shelves.add(firstShelf);
+        shelves.add(secondShelf);
 
         return shelves;
     }
@@ -406,14 +358,7 @@ public class CLI implements View {
     public int useMarket(String message) {
         int line;
 
-        System.out.println(message);
-
-        do {
-            line=Integer.parseInt(in.nextLine());
-            if(line<1 || line>7) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(line<1 || line>7);
+        line = askInt(1,7, message);
 
         return line;
     }
@@ -421,14 +366,7 @@ public class CLI implements View {
     public int chooseWhiteBallLeader(String message) {
         int choice;
 
-        System.out.println(message);
-
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice!=1 && choice!=2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice!=1 && choice!=2);
+        choice = askInt(1,2, message);
 
         return choice;
     }
@@ -442,12 +380,7 @@ public class CLI implements View {
             System.out.println((i+1) + ")" + BallToString.get(ball.getBalls().get(i).getType()));
         }
 
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice<1 || choice>ball.getBalls().size()) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice<1 || choice>ball.getBalls().size());
+        choice = askInt(1, ball.getBalls().size(), "");
 
         return choice;
     }
@@ -455,150 +388,63 @@ public class CLI implements View {
     public int chooseShelf() {
         int shelf;
 
-        System.out.println("Which shelf do you want to put this resource on? (Press 4 if you want to use the Storage leaders)");
-
-        do {
-            shelf=Integer.parseInt(in.nextLine());
-            if(shelf<1 || shelf>4) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(shelf<1 || shelf>4);
+        shelf = askInt(1,4,"Which shelf do you want to put this resource on? " +
+                "(Press 4 if you want to use the Storage leaders)");
 
         return shelf;
     }
 
     public int askColor(String message) {
         int color;
-
-        System.out.println(message);
-
-        do {
-            color=Integer.parseInt(in.nextLine());
-            if(color<1 || color>4) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(color<1 || color>4);
-
+        color = askInt(1,4, message);
         return color;
     }
 
     public int askLevel(String message) {
         int level;
-
-        System.out.println(message);
-
-        do {
-            level=Integer.parseInt(in.nextLine());
-            if(level<1 || level>3) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(level<1 || level>3);
-
+        level = askInt(1,3,message);
         return level;
     }
 
     public int askSpace(String message) {
         int space;
-
-        System.out.println(message);
-
-        do {
-            space=Integer.parseInt(in.nextLine());
-            if(space<1 || space>3) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(space<1 || space>3);
-
+        space = askInt(1,3, message);
         return space;
     }
 
     public int askType(String message) {
         int type;
-
-        System.out.println(message);
-
-        do {
-            type=Integer.parseInt(in.nextLine());
-            if(type<1 || type>4) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(type<1 || type>4);
-
+        type = askInt(1,4,message);
         return type;
     }
 
     public int askInput(String message) {
         int input;
-
-        System.out.println(message);
-
-        do {
-            input=Integer.parseInt(in.nextLine());
-            if(input<1 || input>4) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(input<1 || input>4);
-
+        input = askInt(1,4,message);
         return input;
     }
 
     public int askOutput(String message) {
         int output;
-
-        System.out.println(message);
-
-        do {
-            output=Integer.parseInt(in.nextLine());
-            if(output<1 || output>4) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(output<1 || output>4);
-
+        output = askInt(1,4,message);
         return output;
     }
 
     public int askDevelopmentCard(String message) {
         int space;
-
-        System.out.println(message);
-
-        do {
-            space=Integer.parseInt(in.nextLine());
-            if(space<1 || space>3) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(space<1 || space>3);
-
+        space = askInt(1,3,message);
         return space;
     }
 
     public int askLeaderCard(String message) {
         int index;
-
-        System.out.println(message);
-
-        do {
-            index=Integer.parseInt(in.nextLine());
-            if(index<1 || index>2) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(index<1 || index>2);
-
+        index = askInt(1,2,message);
         return index;
     }
 
     public int endTurn(String message) {
         int choice;
-
-        System.out.println(message);
-
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice<1 || choice>3) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice<1 || choice>3);
-
+        choice = askInt(1,3,message);
         return choice;
     }
 
@@ -888,7 +734,7 @@ public class CLI implements View {
             }
         });
 
-        System.out.println(devCardsSpaceBuilder.toString());
+        System.out.println(devCardsSpaceBuilder);
 
     }
 
@@ -966,7 +812,7 @@ public class CLI implements View {
             faithPathBuilder.append(printLorenzoFaith(path.getLorenzoPos()));
         }
 
-        System.out.println(faithPathBuilder.toString());
+        System.out.println(faithPathBuilder);
     }
 
     public String printFaithPathSupport(int num, int position){
@@ -1025,7 +871,7 @@ public class CLI implements View {
             actionTokenBuilder.append(Constants.AT_TOP_BOTTOM_EDGE+Constants.ANSI_WHITE+"***\n"+Constants.ANSI_RESET);
         }
 
-        System.out.println(actionTokenBuilder.toString());
+        System.out.println(actionTokenBuilder);
     }
 
     public void initializeTokenToString(){
