@@ -63,10 +63,9 @@ public class NetworkHandler implements Runnable {
 
         while (isConnected) {
             try {
-                Object next = input.readObject();
-                Answer answer = (Answer) next;
-                if(!(answer instanceof Pong))
-                    processServerAnswer(answer);
+                Answer next = (Answer) input.readObject();
+                if(!(next instanceof Pong))
+                    processServerAnswer(next);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
 

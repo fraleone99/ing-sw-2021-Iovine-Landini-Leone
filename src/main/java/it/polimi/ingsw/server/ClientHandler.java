@@ -89,16 +89,16 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     }
 
     public Message readFromClient() throws IOException {
-        Object next = null;
+        Message next = null;
         try {
-            next = input.readObject();
+            next = (Message) input.readObject();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         /*if(!(next instanceof Ping))
             System.out.println("[SERVER] Reading from client " + nickname + " " +  next.toString());*/
-        return (Message) next;
+        return next;
     }
 
 
@@ -115,54 +115,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
             isReady=true;
             lock.notifyAll();
         }
-
-        /*
-        synchronized (lock) {
-            if (message instanceof ClientConnection) {
-                answer = ((ClientConnection) message).getMessage();
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof SendNickname) {
-                answer = ((SendNickname) message).getNickname();
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof NumberOfPlayers) {
-                answer = ((NumberOfPlayers) message).getNumber();
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof ChosenResource) {
-                answer = String.valueOf(((ChosenResource) message).getResource());
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof Ping) {
-                System.out.println("ping received!");
-            } else if (message instanceof FirstChosenLeaders) {
-                answer = String.valueOf(((FirstChosenLeaders) message).getLeader());
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof ChoiceGameBoard) {
-                answer = String.valueOf(((ChoiceGameBoard) message).getChoice());
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof TurnType) {
-                answer = String.valueOf(((TurnType) message).getTurn());
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof ChosenLeaderCard) {
-                answer = String.valueOf(((ChosenLeaderCard) message).getPosition());
-                isReady = true;
-                lock.notifyAll();
-            } else if (message instanceof ChosenLine) {
-                answer = String.valueOf(((ChosenLine) message).getChoice());
-                isReady = true;
-                lock.notifyAll();
-            } else if(message instanceof Choice) {
-                answer=String.valueOf(((Choice) message).getChoice1());
-                answer2=String.valueOf(((Choice) message).getChoice2());
-                isReady=true;
-                lock.notifyAll();
-            }
-        }*/
     }
 
     public boolean isReady() {
