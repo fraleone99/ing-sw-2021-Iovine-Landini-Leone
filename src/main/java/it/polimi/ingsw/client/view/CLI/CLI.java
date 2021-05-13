@@ -211,8 +211,6 @@ public class CLI implements View{
             System.out.println(printLeaderCard(LeaderDeck.getFromID(leaderCard)));
         }
 
-        System.out.println("Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
         choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
         return choice;

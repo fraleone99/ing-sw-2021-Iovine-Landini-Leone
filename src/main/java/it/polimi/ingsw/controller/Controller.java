@@ -59,6 +59,8 @@ public class Controller {
                     chooseTurn(i);
                     view.sendTurnStatus("END", players.get(i));
                     //send end turn
+
+
                 }
 
                 //TODO
@@ -417,7 +419,7 @@ public class Controller {
         return endgame;
     }
 
-    public void endGame(){
+    public void endGame() throws NotExistingPlayerException {
 
         if(players.size()==1){
             try {
@@ -432,7 +434,13 @@ public class Controller {
         }
         else {
             Player winner = endgame.getWinner(gameModel);
-            //TODO send the winner to the server
+            view.win(winner.getNickname(),endgame.totalVictoryPoints(winner));
+
+            for(int i=0; i<players.size(); i++) {
+                if(i!=players.indexOf(winner.getNickname())) {
+                    view.lose(players.get(i),endgame.totalVictoryPoints(gameModel.getPlayer(players.get(i))));
+                }
+            }
         }
 
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
@@ -521,6 +522,22 @@ public class VirtualView extends VirtualViewObservable {
         client.setReady(false);
 
         return number;
+    }
+
+    public void win(String nickname, int victoryPoints) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new Win("You had accumulated " + Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET + " victory points"));
+
+        client.closeConnection();
+    }
+
+    public void lose(String nickname, int victoryPoints) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new Lose("You had accumulated "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points"));
+
+        client.closeConnection();
     }
 
     public void sendErrorMessage(String nickname){

@@ -139,8 +139,15 @@ public class NetworkHandler implements Runnable {
                              break;
             }
             send(new SendInt(choice));
-        } else if(inputObj instanceof SendMessage) {
+        }
+        else if(inputObj instanceof SendMessage) {
             view.readMessage(((SendMessage) inputObj).getMessage());
+        }
+        else if(inputObj instanceof Win) {
+            view.win(((Win) inputObj).getMessage());
+        }
+        else if(inputObj instanceof Lose) {
+            view.lose(((Lose) inputObj).getMessage());
         }
         else if (inputObj instanceof FaithPathInfo) {
             view.printFaithPath((FaithPathInfo) inputObj);

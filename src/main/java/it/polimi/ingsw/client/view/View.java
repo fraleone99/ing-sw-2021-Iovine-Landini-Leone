@@ -83,4 +83,8 @@ public interface View {
     int askLeaderCard(String message);
 
     int endTurn(String message);
+
+    void win(String message);
+
+    void lose(String message);
 }
