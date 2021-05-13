@@ -25,7 +25,6 @@ import java.util.Arrays;
  * @author Lorenzo Iovine, Nicola Landini, Francesco Leone.
  */
 
-//tested class
 public class DevelopmentCardGrid {
     private final ArrayList<DevelopmentCardDeck> devCardsDecks = new ArrayList<>();
 
