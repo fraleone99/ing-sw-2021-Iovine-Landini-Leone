@@ -22,11 +22,7 @@ public class Heartbeat implements Runnable {
                 e.printStackTrace();
             }
 
-            try {
-                networkHandler.send(new Ping());
-            } catch (IOException e) {
-                System.out.println("Server unreachable");
-            }
+            networkHandler.send(new Ping());
         }
     }
 }

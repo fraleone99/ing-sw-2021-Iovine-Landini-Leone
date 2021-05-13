@@ -52,14 +52,14 @@ public class Client implements Runnable {
             Socket server;
             try {
                 server = new Socket(ip, PORT_NUMBER);
+                networkHandler = new NetworkHandler(server, this);
+                Thread networkHandlerThread = new Thread(networkHandler, "server" + server.getInetAddress().getHostAddress());
+                networkHandlerThread.start();
             } catch (IOException e) {
-                System.out.println("server unreachable");
-                return;
+                networkHandler.closeConnection();
             }
 
-            networkHandler = new NetworkHandler(server, this);
-            Thread networkHandlerThread = new Thread(networkHandler, "server" + server.getInetAddress().getHostAddress());
-            networkHandlerThread.start();
+
         }
     }
 }

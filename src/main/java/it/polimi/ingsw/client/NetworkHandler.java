@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.message.Ping;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
@@ -23,7 +24,6 @@ public class NetworkHandler implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
-    private Heartbeat heartbeat;
     private Client owner;
     private final View view;
 
@@ -52,12 +52,12 @@ public class NetworkHandler implements Runnable {
         try {
             handleClientConnection();
         } catch (IOException e) {
-            e.printStackTrace();
+            closeConnection();
         }
     }
 
     public void handleClientConnection() throws IOException{
-        heartbeat = new Heartbeat(this);
+        Heartbeat heartbeat = new Heartbeat(this);
         Thread heartbeatThread = new Thread(heartbeat);
         heartbeatThread.start();
 
@@ -68,25 +68,26 @@ public class NetworkHandler implements Runnable {
                     processServerAnswer(next);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-
-            }
-            catch (SocketTimeoutException e){
-                System.out.println("Server unreachable!");
-                isConnected = false;
             }
         }
     }
 
-    public void send(Object message) throws IOException{
+    public void send(Object message) {
         /*if(!(message instanceof Ping))
             System.out.println("[DEBUG] sending message to server." + message.toString());
         else
             System.out.println(".\n");*/
-        output.writeObject(message);
-        output.flush();
+        try {
+            output.writeObject(message);
+            output.flush();
+        }
+        catch (IOException e){
+            closeConnection();
+            System.exit(1);
+        }
     }
 
-    public void processServerAnswer(Object inputObj) throws IOException {
+    public void processServerAnswer(Object inputObj){
         String string;
         int choice=0;
 
@@ -225,5 +226,20 @@ public class NetworkHandler implements Runnable {
             }
 
         }).start();
+    }
+
+    public synchronized void closeConnection(){
+        System.out.println("Closing connection!");
+        isConnected = false;
+        try {
+
+            input.close();
+            output.close();
+            server.close();
+            System.exit(1);
+
+
+        } catch (IOException ignored) {
+        }
     }
 }
