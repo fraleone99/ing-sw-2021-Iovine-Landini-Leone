@@ -33,7 +33,7 @@ public class LocalSPController {
     public LocalSPController(String nickname) {
         this.players.add(nickname);
         gameModel=new Game(players.size(), players);
-        turncontroller=new TurnController(gameModel, players);
+        turncontroller=new TurnController(gameModel, players, null);
         endgame=new EndGameController();
         spCLI = new SinglePlayerCLI();
     }

@@ -61,6 +61,21 @@ public class FaithPath {
         return papalPawn3;
     }
 
+    public void setPapalPawn1() {
+        this.papalPawn1 = true;
+        papalPoints=papalPoints+1;
+    }
+
+    public void setPapalPawn2() {
+        this.papalPawn2 = true;
+        papalPoints=papalPoints+2;
+    }
+
+    public void setPapalPawn3() {
+        this.papalPawn3 = true;
+        papalPoints=papalPoints+3;
+    }
+
     public int getPositionFaithPath() { return positionFaithPath; }
 
     public int getPositionLorenzo() { return positionLorenzo; }
@@ -79,28 +94,25 @@ public class FaithPath {
 
     //this method is called every times some player reaches papal favor position
     //spaceIndicator indicates which papal space
-    public void activatePapalPawn(int spaceIndicator) throws NotExistingSpaceException {
-        if (spaceIndicator != 1 && spaceIndicator != 2 && spaceIndicator != 3) {
-            throw new NotExistingSpaceException();
-        }
-
+    public boolean activatePapalPawn(int spaceIndicator) {
         switch(spaceIndicator){
             case 1: if(positionFaithPath>4){
                 papalPawn1=true;
                 papalPoints=papalPoints+1;
+                return true;
             }
-            break;
             case 2: if(positionFaithPath>11){
                 papalPawn2=true;
                 papalPoints=papalPoints+2;
+                return true;
             }
-            break;
             case 3: if(positionFaithPath>18){
                 papalPawn3=true;
                 papalPoints=papalPoints+3;
+                return true;
             }
-            break;
         }
+        return false;
     }
 
     public int getTotalPoint() {

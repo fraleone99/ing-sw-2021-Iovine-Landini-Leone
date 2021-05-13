@@ -509,6 +509,17 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+    public void papalPawn(ArrayList<String> nicknames) {
+        for(ClientHandler client : namesToClient.values()) {
+            client.send(new SendMessage("A Vatican report was activated. The following players will get the points of the Pope's Favor tile:"));
+            for(String s : nicknames) {
+                client.send(new SendMessage(Constants.ANSI_BLUE + s + Constants.ANSI_RESET));
+            }
+        }
+        //namesToClient.get(nickname).send(new SendMessage("You have activated a Vatican report!"));
+        //notify everyone
+    }
+
     public int endTurn(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 

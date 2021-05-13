@@ -23,6 +23,7 @@ public class Game {
     private ArrayList<String> nicknames=new ArrayList<>();
     private Player currentPlayer;
     private GameBoard gameBoard;
+    private int papalPawn=0;
 
     public Game(int playersNumber, ArrayList<String> nickname) {
         players = new ArrayList<> ();
@@ -33,6 +34,14 @@ public class Game {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updatePapalPawn() {
+        papalPawn++;
+    }
+
+    public int getPapalPawn() {
+        return papalPawn;
     }
 
     public ArrayList<Player> getPlayers() {

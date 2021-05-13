@@ -8,7 +8,9 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.gameboard.Ball;
+import it.polimi.ingsw.server.VirtualView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TurnController {
@@ -23,9 +25,10 @@ public class TurnController {
     Resource basicOutput;
     Boolean[] DevCardsSpace = new Boolean[3];
     Boolean[] ProductionLeader = new Boolean[2];
+    VirtualView view;
 
     //TODO
-    private final ArrayList<String> players=new ArrayList<>();
+    private final ArrayList<String> players = new ArrayList<>();
 
     int marketChoice;
     String storageOrg;
@@ -35,131 +38,41 @@ public class TurnController {
     int level;
     int space;
 
-    public TurnController(Game game, ArrayList<String> players) {
+    public TurnController(Game game, ArrayList<String> players, VirtualView view) {
         this.game = game;
         this.players.addAll(players);
+        this.view=view;
     }
-
-    /*At this moment i use a string for what the player wants to do. And i assume that somewhere the variable of this class
-    * are properly set*/
-    public void playerAction(String action) throws InvalidChoiceException {
-        switch (action) {
-            case ("production"):
-                try {
-                    production(basicProduction, basicInput1, basicInput2, basicOutput, DevCardsSpace, ProductionLeader);
-                } catch (NotEnoughResourceException | InvalidChoiceException e) {
-                    //TODO
-                }
-            case ("market"):
-                market(marketChoice);
-            case ("buyDevCard"):
-                try {
-                    buyCard();
-                } catch (InvalidSpaceCardException e) {
-                    //TODO
-                }
-            default:
-                throw new InvalidChoiceException();
-        }
-    }
-
-    /*if the player choose to do production i need to know what production he wants to activate.
-    * I now suppose that i receive an indication of basic production, of the three spaces of DevCards Space
-    * and the production leader.*/
-    public void production(boolean basicProduction, Resource basicInput1, Resource basicInput2, Resource basicOutput,
-                           Boolean[] DevCardsSpace, Boolean[] ProductionLeader) throws NotEnoughResourceException, InvalidChoiceException {
-        if(basicProduction){
-            player.getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(basicInput1, basicInput2);
-            player.getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(basicOutput);
-            player.ActiveProductionBase();
-        }
-
-        for(int i = 0; i < 3; i++){
-            if(DevCardsSpace[i]){
-                player.ActiveProductionDevCard(i); //there might be an issue of index if i starts from 0 and getCard does -1
-            }
-        }
-
-        for(int i = 0; i < player.getPlayerDashboard().getLeaders().size() ; i++){
-            if(ProductionLeader[i]) {
-                //TODO: Ask the player the unknown resource
-                player.ActiveProductionLeader(i); //same problem of the previous for
-                }
-        }
-
-        player.doProduction();
-    }
-
-
-    /*if the player wants to use the market he needs to communicate the choice and in case he can't add all the
-    * resources he needs to discard or reorganize res*/
-    public void market(int marketChoice) throws InvalidChoiceException {
-        ArrayList<Ball> balls = gameBoard.getMarket().getChosenColor(marketChoice);
-
-        while(!balls.isEmpty()) {
-            for (Ball b : balls) {
-                if (b.getType().equals(BallColor.RED)) {
-                    player.getPlayerDashboard().getFaithPath().moveForward(1);
-                    balls.remove(b);
-                } else if (b.getType().equals(BallColor.WHITE)) {
-                    if (player.getPlayerDashboard().bothWhiteLeader()) {
-                        //TODO: User needs to chose which of the white Leader he wants to activate
-                    } else if (player.getLeaders().isWhitePresent() != null) {
-                        /*The player needs to choose where to put this resource something must happen to update the shelfToAdd variable */
-                        try {
-                            player.getPlayerDashboard().getStorage().AddResource(shelfToAdd, player.getLeaders().isWhitePresent().getConversionType(), 1);
-                            balls.remove(b);
-                        } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
-                            //TODO: if the resource can't be added where the player wants he must discard something or reorganize the shelves
-                        }
-                    }
-                } else {
-                    /*The player needs to choose where to put this resource something must happen to update the shelfToAdd variable */
-                    try {
-                        player.getPlayerDashboard().getStorage().AddResource(shelfToAdd, b.getCorrespondingResource(), 1);
-                        balls.remove(b);
-                    } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
-                        //TODO: if the resource can't be added where the player wants he must discard something or reorganize the shelves
-                    }
-                }
-            }
-        }
-    }
-
-    /*There might be a problem because if the buyCards doesn't goes well we have used the draw method and so we have
-    * removed the card from the devCardsSpace*/
-    public void buyCard() throws InvalidChoiceException, InvalidSpaceCardException {
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(gameBoard.getDevelopmentCardGrid().getCard(color,level), space);
-    }
-
-
-
 
     //FROM CONTROLLER
 
-    public void setPlayers(int player){
+    public void setPlayers(int player) {
         game.createPlayer(players.get(player));
     }
 
-    public void addInitialResource(int player, int resource, int shelf) throws NotExistingPlayerException{
+    public void addInitialResource(int player, int resource, int shelf) throws NotExistingPlayerException {
         try {
             switch (resource) {
-                case 1: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
+                case 1:
+                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
                     break;
-                case 2: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
+                case 2:
+                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
                     break;
-                case 3: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
+                case 3:
+                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
                     break;
-                case 4: game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
+                case 4:
+                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
                     break;
             }
-        } catch(NotEnoughSpaceException | AnotherShelfHasTheSameTypeException| ShelfHasDifferentTypeException e) {
+        } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
             e.printStackTrace();
         }
     }
 
     public void setInitialLeaderCards(int player) throws NotExistingPlayerException {
-        for(int i=0; i<4; i++){
+        for (int i = 0; i < 4; i++) {
             game.getGameBoard().getLeaderDeck().shuffle();
             game.getPlayer(players.get(player)).getLeaders().add(game.getGameBoard().getLeaderDeck().drawFromTail());
         }
@@ -174,9 +87,9 @@ public class TurnController {
     }
 
     public ArrayList<Ball> checkEmptyShelves(int player, ArrayList<Ball> balls) throws NotExistingPlayerException {
-        ArrayList<Ball> toPlace=new ArrayList<>();
+        ArrayList<Ball> toPlace = new ArrayList<>();
 
-        for(Ball b : balls) {
+        for (Ball b : balls) {
             int i = game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
 
             if (game.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
@@ -185,7 +98,13 @@ public class TurnController {
                 if (i != 0) {
                     if (game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
                         for (int j = 0; j < players.size(); j++) {
-                            if (j != player) game.getPlayer(players.get(j)).move(1);
+                            if (j != player) {
+                                game.getPlayer(players.get(j)).move(1);
+                                ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    view.papalPawn(nick);
+                                }
+                            }
                         }
                     } else {
                         toPlace.add(new Ball(b.getType()));
@@ -194,7 +113,13 @@ public class TurnController {
                 } else {
                     if (game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
                         for (int j = 0; j < players.size(); j++) {
-                            if (j != player) game.getPlayer(players.get(j)).move(1);
+                            if (j != player) {
+                                game.getPlayer(players.get(j)).move(1);
+                                ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    view.papalPawn(nick);
+                                }
+                            }
                         }
                     } else {
                         toPlace.add(new Ball(b.getType()));
@@ -206,4 +131,61 @@ public class TurnController {
         return toPlace;
     }
 
+    public ArrayList<String> checkPapalPawn() {
+        ArrayList<String> players=new ArrayList<>();
+        switch (game.getPapalPawn()) {
+            case 0:
+                for (Player p : game.getPlayers()) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 7) {
+                        p.getPlayerDashboard().getFaithPath().setPapalPawn1();
+                        for (Player p2 : game.getPlayers()) {
+                            if (!(p.getNickname()).equals(p2.getNickname())) {
+                                if(p2.getPlayerDashboard().getFaithPath().activatePapalPawn(1)) {
+                                    if(!players.contains(p2.getNickname()))
+                                        players.add(p2.getNickname());
+                                }
+                            }
+                            game.updatePapalPawn();
+                            players.add(p.getNickname());
+                            break;
+                        }
+                    }
+                }
+            case 1:
+                for (Player p : game.getPlayers()) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 15) {
+                        p.getPlayerDashboard().getFaithPath().setPapalPawn2();
+                        for (Player p2 : game.getPlayers()) {
+                            if (!(p.getNickname()).equals(p2.getNickname())) {
+                                if(p2.getPlayerDashboard().getFaithPath().activatePapalPawn(2)) {
+                                    if(!players.contains(p2.getNickname()))
+                                        players.add(p2.getNickname());
+                                }
+                            }
+                        }
+                        game.updatePapalPawn();
+                        players.add(p.getNickname());
+                        break;
+                    }
+                }
+            case 2:
+                for (Player p : game.getPlayers()) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 23) {
+                        p.getPlayerDashboard().getFaithPath().setPapalPawn3();
+                        for (Player p2 : game.getPlayers()) {
+                            if (!(p.getNickname()).equals(p2.getNickname())) {
+                                if(p2.getPlayerDashboard().getFaithPath().activatePapalPawn(3)) {
+                                    if(!players.contains(p2.getNickname()))
+                                        players.add(p2.getNickname());
+                                }
+                            }
+                        }
+                        game.updatePapalPawn();
+                        players.add(p.getNickname());
+                        break;
+                    }
+                }
+        }
+        return players;
+    }
 }

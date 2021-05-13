@@ -60,14 +60,6 @@ public class Player {
         this.playerDashboard = new PlayerDashboard();
     }
 
-    public boolean isFirst() {
-        return first;
-    }
-
-    public void discardLeaderFirstRound(int pos1, int pos2) throws InvalidChoiceException {
-        playerDashboard.getLeaders().DrawFromPosition(pos1);
-        playerDashboard.getLeaders().DrawFromPosition(pos2);
-    }
 
     public void buyCard(DevelopmentCard Card, int space) throws InvalidSpaceCardException {
         boolean check=getPlayerDashboard().CheckResource(Card.getCost());
@@ -76,22 +68,6 @@ public class Player {
             playerDashboard.RemoveResource(Card.getCost());
         }
         else throw new InvalidSpaceCardException();
-    }
-
-    public ArrayList<Resource> UseMarket(ArrayList<Ball> balls){
-        ArrayList<Resource> ris = new ArrayList<>();
-
-        for(Ball b : balls){
-            if(b.getType().equals(BallColor.RED)) playerDashboard.getFaithPath().moveForward(1);
-            else if(b.getType().equals(BallColor.WHITE)) ris.add(Resource.UNKNOWN); // to check
-            else if(b.getType().equals(BallColor.BLUE)) ris.add(Resource.SHIELD);
-            else if(b.getType().equals(BallColor.YELLOW)) ris.add(Resource.COIN);
-            else if(b.getType().equals(BallColor.GREY)) ris.add(Resource.STONE);
-            else if(b.getType().equals(BallColor.PURPLE)) ris.add(Resource.SERVANT);
-        }
-
-        return  ris;
-
     }
 
     public void ActiveLeader(int pos) throws InvalidChoiceException{

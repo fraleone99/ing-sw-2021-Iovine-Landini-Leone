@@ -30,7 +30,7 @@ public class Controller {
     public Controller(ArrayList<String> players, VirtualView view) {
         this.players.addAll(players);
         gameModel=new Game(players.size(), players);
-        turncontroller=new TurnController(gameModel, players);
+        turncontroller=new TurnController(gameModel, players, view);
         endgame=new EndGameController();
         this.view=view;
     }
@@ -179,6 +179,10 @@ public class Controller {
                     pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
                     try {
                         turncontroller.discardLeader(player, pos);
+                        ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                        if(!nick.isEmpty()) {
+                            view.papalPawn(nick);
+                        }
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
                         view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
@@ -272,6 +276,7 @@ public class Controller {
                             chooseTurn(player);
                         } else {
                             gameModel.getPlayer(players.get(player)).doProduction();
+                            turncontroller.checkPapalPawn();
                         }
                      } catch (NotEnoughResourceException e) {
                         view.sendErrorMessage(players.get(player));
@@ -329,6 +334,10 @@ public class Controller {
         for(Ball b : market) {
             if (b.getType().equals(BallColor.RED)) {
                 gameModel.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
+                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                if(!nick.isEmpty()) {
+                    view.papalPawn(nick);
+                }
             } else if (b.getType().equals(BallColor.WHITE)) {
                 if (resource != null) {
                     switch (resource) {
@@ -356,7 +365,13 @@ public class Controller {
                 if (i != 0) {
                     if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
                         for (int j = 0; j < players.size(); j++) {
-                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                            if (j != player) {
+                                gameModel.getPlayer(players.get(j)).move(1);
+                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    view.papalPawn(nick);
+                                }
+                            }
                         }
                     } else {
                         toPlace.add(new Ball(b.getType()));
@@ -365,7 +380,13 @@ public class Controller {
                 } else {
                     if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
                         for (int j = 0; j < players.size(); j++) {
-                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                            if (j != player) {
+                                gameModel.getPlayer(players.get(j)).move(1);
+                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    view.papalPawn(nick);
+                                }
+                            }
                         }
                     } else {
                         toPlace.add(new Ball(b.getType()));
@@ -424,9 +445,9 @@ public class Controller {
         if(players.size()==1){
             try {
                 if(endgame.SinglePlayerLose(gameModel)){
-                    //TODO send to the server that Lorenzo won
+                    view.lose(players.get(0),endgame.totalVictoryPoints(gameModel.getPlayer(players.get(0))));
                 } else {
-                    //TODO send to the server that player won
+                    view.win(players.get(0),endgame.totalVictoryPoints(gameModel.getPlayer(players.get(0))));
                 }
             } catch (InvalidChoiceException e) {
                 e.printStackTrace();
