@@ -197,14 +197,9 @@ public class CLI implements View{
     public int seeGameBoard(String message) {
         int choice;
         System.out.println(message);
-        System.out.println("1) Leader Cards.\n2) Market.\n3) Development cards grid.\n4) Cards for production.\n5) Nothing.");
 
-        do {
-            choice=Integer.parseInt(in.nextLine());
-            if(choice<1 || choice>5) {
-                System.out.println("Incorrect number, please try again:");
-            }
-        } while(choice<1 || choice>5);
+        choice = askInt(1 , 5, "1) Leader Cards.\n2) Market.\n3) Development cards grid.\n" +
+                "4) Cards for production.\n5) Nothing.");
 
         return choice;
     }

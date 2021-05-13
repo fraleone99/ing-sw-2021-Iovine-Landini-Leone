@@ -102,7 +102,7 @@ public class Storage {
      * @param amount is the amount of resources that will be added
      * @throws NotEnoughSpaceException when there isn't enough space to store all the resources in the selected  shelf
      * @throws AnotherShelfHasTheSameTypeException when there is another shelf with the same type of Resources
-     * @throws ShelfHasDifferentTypeException when the selected shelf contains already dome resources of a different type
+     * @throws ShelfHasDifferentTypeException when the selected shelf contains already some resources of a different type
      */
     public void AddResource(int s, Resource type, int amount) throws NotEnoughSpaceException, AnotherShelfHasTheSameTypeException,
             ShelfHasDifferentTypeException {

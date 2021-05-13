@@ -25,12 +25,12 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     private boolean isConnected;
 
+    private String nickname;
 
-    private static final int CONNECTION_TIMEOUT = 4000;
+
+    private static final int CONNECTION_TIMEOUT = 10000;
 
     private AtomicBoolean active = new AtomicBoolean(false);
-
-    private final Thread heartbeat;
 
     ConnectionObservable connectionObservable = new ConnectionObservable();
 
@@ -40,20 +40,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     public ClientHandler(Socket socketClient) {
         this.socketClient = socketClient;
         this.isReady=false;
-
-        heartbeat = new Thread(()->{
-            while(active.get()){
-                try {
-                    Thread.sleep(CONNECTION_TIMEOUT/2);
-                    send(new Pong());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     public void send(Object message) {
+        //System.out.println("[SERVER] Sending message " + message.toString() + "to" + nickname);
         synchronized (lock) {
             while (!active.get()) {
                 try {
@@ -85,8 +75,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
                 lock.notifyAll();
             }
 
-            heartbeat.start();
-
             while(active.get()) {
                 Message message = readFromClient();
                 if(!(message instanceof Ping))
@@ -108,6 +96,8 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        /*if(!(next instanceof Ping))
+            System.out.println("[SERVER] Reading from client " + nickname + " " +  next.toString());*/
         return (Message) next;
     }
 
@@ -226,6 +216,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     public Object getLock() {
         return lock;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Override

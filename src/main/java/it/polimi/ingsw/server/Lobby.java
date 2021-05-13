@@ -34,6 +34,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         clientToNames.put(firstClient, s);
         namesToClient.put(s, firstClient);
         nicknames.add(s);
+        firstClient.setNickname(s);
         view.setNamesToClient(s,firstClient);
 
 
@@ -58,6 +59,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         System.out.println(s);
 
         s = view.requestNickname(clientHandler);
+        clientHandler.setNickname(s);
 
         while(nicknames.contains(s) || s.equals("laulo") || s.equals("Laulo")){
             s=view.InvalidNickname(clientHandler);

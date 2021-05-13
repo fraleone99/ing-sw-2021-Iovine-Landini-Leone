@@ -71,13 +71,13 @@ public class StorageTest {
     }
 
     @Test
-    public void testMoveResourceToEmpty() throws NotEnoughSpaceException, ShelfNotEmptyException {
+    public void testMoveResourceToEmpty() throws NotEnoughSpaceException{
         Shelf shelf1 = new Shelf(1, 1, Resource.STONE);
         Shelf shelf2 = new Shelf(2, 2, Resource.SERVANT);
         Shelf shelf3 = new Shelf(3, 0, Resource.STONE);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.MoveResourceToEmptyShelf(2,3);
+        storage.InvertShelvesContent(2,3);
 
         assertEquals(shelf3.getResourceType(), Resource.SERVANT);
         assertEquals(shelf3.getAmount(), 2);

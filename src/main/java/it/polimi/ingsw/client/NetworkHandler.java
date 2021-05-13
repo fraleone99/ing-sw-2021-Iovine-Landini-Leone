@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.message.Ping;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
@@ -62,7 +63,6 @@ public class NetworkHandler implements Runnable {
 
         while (isConnected) {
             try {
-                server.setSoTimeout(4000);
                 Object next = input.readObject();
                 Answer answer = (Answer) next;
                 if(!(answer instanceof Pong))
@@ -79,7 +79,10 @@ public class NetworkHandler implements Runnable {
     }
 
     public void send(Object message) throws IOException{
-        output.reset();
+        /*if(!(message instanceof Ping))
+            System.out.println("[DEBUG] sending message to server." + message.toString());
+        else
+            System.out.println(".\n");*/
         output.writeObject(message);
         output.flush();
     }
