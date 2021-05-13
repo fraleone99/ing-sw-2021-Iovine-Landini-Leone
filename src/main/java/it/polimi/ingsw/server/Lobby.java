@@ -4,10 +4,8 @@ import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.observer.ConnectionObserver;
 import it.polimi.ingsw.observer.VirtualViewObserver;
-import it.polimi.ingsw.server.answer.initialanswer.JoiningPlayer;
-import it.polimi.ingsw.server.answer.initialanswer.PrepareTheLobby;
-import it.polimi.ingsw.server.answer.turnanswer.Disconnection;
-import it.polimi.ingsw.server.answer.turnanswer.PlayingNick;
+import it.polimi.ingsw.server.answer.InitialSetup;
+import it.polimi.ingsw.server.answer.SendMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         String str = clientToNames.get(firstClient);
         System.out.println(str + " has joined the lobby number " + lobbyID);
 
-        playersNumber = Integer.parseInt(view.requestPlayersNumber(firstClient) );
+        playersNumber = view.requestPlayersNumber(firstClient);
 
         System.out.println("The lobby number "+ lobbyID +" will contain " + playersNumber + " players");
 
@@ -67,7 +65,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
 
 
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new JoiningPlayer(Constants.ANSI_BLUE +  s + " joins the game. "+(nicknames.size()+1)+" players have already joined this Lobby."+Constants.ANSI_RESET));
+            namesToClient.get(nick).send(new SendMessage(Constants.ANSI_BLUE +  s + " joins the game. "+(nicknames.size()+1)+" players have already joined this Lobby."+Constants.ANSI_RESET));
         }
 
 
@@ -110,7 +108,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         //clientHandler.unregisterObserver(this);
         String nickname=removeConnection(clientHandler);
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new Disconnection(Constants.ANSI_RED+"Player "+/*clientToNames.get(clientHandler)*/nickname+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."+Constants.ANSI_RESET));
+            namesToClient.get(nick).send(new SendMessage(Constants.ANSI_RED+"Player "+/*clientToNames.get(clientHandler)*/nickname+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."+Constants.ANSI_RESET));
         }
         //removeConnection(clientHandler);
     }
@@ -118,7 +116,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     @Override
     public void updatePreparationOfLobby(){
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new PrepareTheLobby("All players joined the lobby. We are preparing the game!"));
+            namesToClient.get(nick).send(new SendMessage("All players joined the lobby. We are preparing the game!"));
         }
     }
 
@@ -126,7 +124,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     public void updatePlayingNick(String nickname){
         for(String nick: nicknames){
             if(!nick.equals(nickname)){
-                namesToClient.get(nick).send(new PlayingNick(Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
+                namesToClient.get(nick).send(new SendMessage(Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
             }
         }
     }

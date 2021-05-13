@@ -1,11 +1,7 @@
 package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
-import it.polimi.ingsw.server.answer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.turnanswer.ManageStorage;
 import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
 
 import java.lang.reflect.Array;

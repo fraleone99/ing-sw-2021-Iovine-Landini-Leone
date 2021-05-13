@@ -14,9 +14,9 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
-import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
@@ -26,7 +26,6 @@ import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -129,23 +128,11 @@ public class CLI implements View{
     }
 
     @Override
-    public String askPlayerNumber(String message) {
-        String number;
-        System.out.println(message);
-        while (true)
-            try
-                {
-                    number = in.nextLine();
-                    if (Integer.parseInt(number) < 1 || Integer.parseInt(number) > 4) {
-                        System.out.println("Incorrect number, please try again:");
-                    }
-                    else
-                        break;
-                }
-        catch (NumberFormatException e){
-            System.out.print("You should insert a number!\n" + message);
+    public int askPlayerNumber(String message) {
+        int number;
 
-        }
+        number=askInt(1,4,message);
+
         return number;
     }
 

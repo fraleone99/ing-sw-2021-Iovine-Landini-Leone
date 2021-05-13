@@ -2,9 +2,9 @@ package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
-import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
@@ -16,7 +16,7 @@ public interface View {
     void handShake(String welcome);
 
     //Method for Players' input
-    String askPlayerNumber(String message);
+    int askPlayerNumber(String message);
 
     String askNickname(String message);
 

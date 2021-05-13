@@ -145,7 +145,7 @@ public class Storage {
      * resources of the other shelf
      */
     public void InvertShelvesContent(int s1, int s2) throws NotEnoughSpaceException{
-        if(shelves.get(s1-1).getShelfDimension() < shelves.get(s2-1).getAmount() || shelves.get(s2-1).getShelfDimension() < shelves.get(s2-1).getAmount())
+        if(shelves.get(s1-1).getShelfDimension() < shelves.get(s2-1).getAmount() || shelves.get(s2-1).getShelfDimension() < shelves.get(s1-1).getAmount())
             throw new NotEnoughSpaceException();
 
         Resource TempType = shelves.get(s1-1).getResourceType();

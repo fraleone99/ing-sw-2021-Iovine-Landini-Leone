@@ -228,4 +228,7 @@ public class Player {
         return false;
     }
 
+    public ArrayList<Production> getActivatedProduction() {
+        return activatedProduction;
+    }
 }

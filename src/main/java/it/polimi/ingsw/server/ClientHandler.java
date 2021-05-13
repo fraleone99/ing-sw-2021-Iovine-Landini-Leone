@@ -1,30 +1,15 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.message.action.ChoiceGameBoard;
-import it.polimi.ingsw.client.message.action.ChosenLeaderCard;
-import it.polimi.ingsw.client.message.action.ChosenResource;
-import it.polimi.ingsw.client.message.action.TurnType;
-import it.polimi.ingsw.client.message.action.*;
-import it.polimi.ingsw.client.message.initialmessage.ClientConnection;
 import it.polimi.ingsw.client.message.Message;
-import it.polimi.ingsw.client.message.initialmessage.FirstChosenLeaders;
-import it.polimi.ingsw.client.message.initialmessage.NumberOfPlayers;
-import it.polimi.ingsw.client.message.initialmessage.SendNickname;
 import it.polimi.ingsw.observer.ConnectionObservable;
-import it.polimi.ingsw.observer.VirtualViewObserver;
-import it.polimi.ingsw.server.answer.ChooseResource;
 import it.polimi.ingsw.client.message.*;
 import it.polimi.ingsw.server.answer.Pong;
-import it.polimi.ingsw.server.answer.turnanswer.ChooseLine;
-
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientHandler extends ConnectionObservable implements Runnable {
@@ -35,6 +20,8 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     private boolean isReady;
     private String answer;
+    private int number;
+    private int number2;
 
     private boolean isConnected;
 
@@ -126,7 +113,20 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
 
     public void processClientMessage(Message message){
+        synchronized (lock) {
+            if(message instanceof SendString) {
+                answer=((SendString) message).getString();
+            } else if(message instanceof SendInt) {
+                number=(((SendInt) message).getChoice());
+            } else if(message instanceof SendDoubleInt) {
+                number=(((SendDoubleInt) message).getChoice1());
+                number2=(((SendDoubleInt) message).getChoice2());
+            }
+            isReady=true;
+            lock.notifyAll();
+        }
 
+        /*
         synchronized (lock) {
             if (message instanceof ClientConnection) {
                 answer = ((ClientConnection) message).getMessage();
@@ -166,8 +166,13 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
                 answer = String.valueOf(((ChosenLine) message).getChoice());
                 isReady = true;
                 lock.notifyAll();
+            } else if(message instanceof Choice) {
+                answer=String.valueOf(((Choice) message).getChoice1());
+                answer2=String.valueOf(((Choice) message).getChoice2());
+                isReady=true;
+                lock.notifyAll();
             }
-        }
+        }*/
     }
 
     public boolean isReady() {
@@ -182,6 +187,13 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return answer;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public int getNumber2() {
+        return number2;
+    }
 
     public boolean isConnected() {
         return isConnected;

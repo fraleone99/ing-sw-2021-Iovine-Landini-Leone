@@ -122,11 +122,7 @@ public class Controller {
 
     public void seePlayerDashboards(int player) throws NotExistingPlayerException {
         for (String s : players) {
-            if(players.size()==1){
-                view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath(), true);
-            } else {
-                view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath(), false);
-            }
+            view.seeFaithPath(players.get(player), s, gameModel.getPlayer(s).getPlayerDashboard().getFaithPath(), players.size() == 1);
             view.seeStorage(players.get(player), gameModel.getPlayer(s).getPlayerDashboard().getStorage(),
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getVault());
             view.seeDevCardsSpace(players.get(player), gameModel.getPlayer(s).getPlayerDashboard().getDevCardsSpace());
@@ -162,7 +158,7 @@ public class Controller {
         //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
 
         int pos;
-        int type=0;
+        int type;
 
         do {
             answer=view.chooseTurn(players.get(player));
@@ -174,7 +170,6 @@ public class Controller {
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
                         view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
-                        chooseTurn(player);
                     }
                     break;
 
@@ -185,7 +180,6 @@ public class Controller {
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
                         view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
-                        chooseTurn(player);
                     }
                     break;
 
@@ -223,7 +217,6 @@ public class Controller {
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
                         view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
-                        chooseTurn(player);
                     }
                 } else {
                     pos = view.discardLeader(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
@@ -232,7 +225,6 @@ public class Controller {
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player));
                         view.resetCard(players.get(player), gameModel.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
-                        chooseTurn(player);
                     }
                 }
                 answer=view.endTurn(players.get(player));
@@ -240,7 +232,7 @@ public class Controller {
         }
 
 
-    public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException {
+    public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException, InvalidChoiceException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
         switch(type) {
@@ -273,9 +265,15 @@ public class Controller {
                      break;
 
             case 4 : try {
-                        gameModel.getPlayer(players.get(player)).doProduction();
+                        if(gameModel.getPlayer(players.get(player)).getActivatedProduction().isEmpty()) {
+                            view.sendErrorMessage(players.get(player));
+                            chooseTurn(player);
+                        } else {
+                            gameModel.getPlayer(players.get(player)).doProduction();
+                        }
                      } catch (NotEnoughResourceException e) {
                         view.sendErrorMessage(players.get(player));
+                        chooseTurn(player);
                      }
                      break;
         }

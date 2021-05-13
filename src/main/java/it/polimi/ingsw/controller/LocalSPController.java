@@ -12,9 +12,9 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
-import it.polimi.ingsw.server.answer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
+import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
@@ -131,7 +131,7 @@ public class LocalSPController {
         int answer;
 
         int pos;
-        int type=0;
+        int type;
 
         do{
             answer = spCLI.askTurnType("Choose what you want to do in this turn:");
@@ -227,7 +227,7 @@ public class LocalSPController {
 
     }
 
-    public void localUseMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+    public void localUseMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException {
         ArrayList<Integer> choice=new ArrayList<>();
         Resource resource = null;
 
@@ -343,7 +343,7 @@ public class LocalSPController {
         }
     }
 
-    public void localActiveProduction(int type) throws NotExistingPlayerException, InterruptedException {
+    public void localActiveProduction(int type) throws NotExistingPlayerException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
         switch(type) {
