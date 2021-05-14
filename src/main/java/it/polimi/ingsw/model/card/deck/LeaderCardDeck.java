@@ -63,6 +63,16 @@ public class LeaderCardDeck {
         return deck.get(deck.size()-1);
     }
 
+    public ArrayList<Integer> idDeckActive() {
+        ArrayList<Integer> IdDeck=new ArrayList<>();
+        for (LeaderCard leaderCard : deck) {
+            if(leaderCard.getIsActive()) {
+                IdDeck.add(leaderCard.getCardID());
+            }
+        }
+        return IdDeck;
+    }
+
     public ArrayList<Integer> IdDeck(){
         ArrayList<Integer> IdDeck=new ArrayList<>();
         for (LeaderCard leaderCard : deck) {

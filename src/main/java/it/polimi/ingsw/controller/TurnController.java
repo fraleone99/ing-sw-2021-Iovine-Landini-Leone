@@ -41,7 +41,8 @@ public class TurnController {
 
     public void seeGameBoard(int player) throws  NotExistingPlayerException, InterruptedException {
         int answer=view.seeGameBoard(players.get(player));
-        //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Nothing
+        //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Active Leader Cards of the other players
+        //6) Development Cards of the other players, 7) Nothing
         int finish;
 
         switch(answer){
@@ -58,8 +59,36 @@ public class TurnController {
             case 4 : finish=view.seeProduction(players.get(player), game.getPlayer(players.get(player)).getProductions());
                 if(finish==1) seeGameBoard(player);
                 break;
-            case 5 : break;
+            case 5 : finish=leaderCard(player);
+                if(finish==1) seeGameBoard(player);
+                break;
+            case 6 : finish=devCard(player);
+                if(finish==1) seeGameBoard(player);
+                break;
+            case 7 : break;
         }
+    }
+
+
+    public int leaderCard(int player) throws NotExistingPlayerException, InterruptedException {
+        for(String s : players) {
+            if(!s.equals(players.get(player))) {
+                view.seeOtherLeader(players.get(player), s, game.getPlayer(s).getLeaders().idDeckActive());
+            }
+        }
+
+        return view.askChoice(players.get(player));
+    }
+
+
+    public int devCard(int player) throws NotExistingPlayerException, InterruptedException {
+        for(String s : players) {
+            if(!s.equals(players.get(player))) {
+                view.seeOtherDev(players.get(player), s, game.getPlayer(s).getDevCards());
+            }
+        }
+
+        return view.askChoice(players.get(player));
     }
 
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.answer.turnanswer;
+package it.polimi.ingsw.server.answer.seegameboard;
 
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.server.answer.Answer;
