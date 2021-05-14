@@ -53,4 +53,17 @@ public class GameTest {
             assertEquals(game.getGameBoard().getLorenzoMagnifico().getTokens().get(6), element);
         }
     }
+
+    @Test
+    public void testCreatePlayer(){
+        ArrayList<String> nickname=new ArrayList<>();
+        game=new Game(1, nickname);
+        String nick="nick";
+
+        game.createPlayer(nick);
+
+        assertEquals(1, game.getPlayers().size());
+        assertEquals("nick", game.getPlayers().get(0).getNickname());
+    }
+
 }
