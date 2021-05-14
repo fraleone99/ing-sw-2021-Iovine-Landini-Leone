@@ -22,6 +22,7 @@ public class VirtualView extends VirtualViewObservable {
     private int number2;
     private final Map<String, ClientHandler> namesToClient = new HashMap<>();
 
+
     public String askHandShake(ClientHandler client) throws InterruptedException {
         client.send(new Connection("Welcome to this fantastic server!", true));
         synchronized (client.getLock()) {
@@ -33,6 +34,7 @@ public class VirtualView extends VirtualViewObservable {
         client.setReady(false);
         return answer;
     }
+
 
     public String requestNickname(ClientHandler client){
         client.send(new RequestString("Please insert your nickname:"));
@@ -73,6 +75,12 @@ public class VirtualView extends VirtualViewObservable {
         //notify everyone the players number
     }
 
+
+    public void waitingRoom(ClientHandler client){
+        client.send(new SendMessage("You are now in the waiting room. The game will start soon!"));
+    }
+
+
     public void prepareTheLobby() throws IOException {
         notifyPreparationOfLobby();
     }
@@ -100,11 +108,6 @@ public class VirtualView extends VirtualViewObservable {
         client.setReady(false);
 
         return number;
-    }
-
-
-    public void waitingRoom(ClientHandler client){
-        client.send(new SendMessage("You are now in the waiting room. The game will start soon!"));
     }
 
 
@@ -155,11 +158,13 @@ public class VirtualView extends VirtualViewObservable {
         client.send(new DevCardsSpaceInfo(space));
     }
 
+
     public void seeActionToken(String nickname, ActionToken actionToken){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ActionTokenInfo(actionToken));
     }
+
 
     public int seeGameBoard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -190,6 +195,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public int seeMarket(String nickname, Market market) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -203,6 +209,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public int chooseLine(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -218,6 +225,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public int seeGrid(String nickname, ArrayList<Integer> id) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -232,6 +240,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public int seeProduction(String nickname, ArrayList<Integer> productions) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -263,6 +272,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public int activeLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -277,6 +287,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public int discardLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -290,6 +301,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public int manageStorage(int number, String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -308,6 +320,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public ArrayList<Integer> moveShelves(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -328,6 +341,7 @@ public class VirtualView extends VirtualViewObservable {
         return moves;
     }
 
+
     public int useMarket(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -342,6 +356,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public ArrayList<Integer> seeBall(String nickname, ArrayList<Ball> balls) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -362,6 +377,7 @@ public class VirtualView extends VirtualViewObservable {
         return moves;
     }
 
+
     public int askWhiteBallLeader(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -376,6 +392,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public int askColor(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -392,6 +409,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public int askLevel(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -406,6 +424,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public int askSpace(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -422,6 +441,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public int askType(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -436,6 +456,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public Resource askInput(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -458,6 +479,7 @@ public class VirtualView extends VirtualViewObservable {
         }
     }
 
+
     public Resource askOutput(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -479,6 +501,7 @@ public class VirtualView extends VirtualViewObservable {
         }
     }
 
+
     public int askDevCard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -493,6 +516,7 @@ public class VirtualView extends VirtualViewObservable {
 
         return number;
     }
+
 
     public int askLeaderCard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -509,6 +533,7 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public void papalPawn(ArrayList<String> nicknames) {
         for(ClientHandler client : namesToClient.values()) {
             client.send(new SendMessage("A Vatican report was activated. The following players will get the points of the Pope's Favor tile:"));
@@ -519,6 +544,7 @@ public class VirtualView extends VirtualViewObservable {
         //namesToClient.get(nickname).send(new SendMessage("You have activated a Vatican report!"));
         //notify everyone
     }
+
 
     public int endTurn(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
@@ -535,27 +561,27 @@ public class VirtualView extends VirtualViewObservable {
         return number;
     }
 
+
     public void win(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new Win("You had accumulated " + Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET + " victory points"));
-
-        client.closeConnection();
     }
+
 
     public void lose(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new Lose("You had accumulated "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points"));
-
-        client.closeConnection();
     }
+
 
     public void sendErrorMessage(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SendMessage("Invalid choice."));
     }
+
 
     public void resetCard(String nickname, int pos) {
         ClientHandler client=namesToClient.get(nickname);
@@ -564,13 +590,22 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    public void closeConnection() {
+        for(ClientHandler client : namesToClient.values()) {
+            client.closeConnection();
+        }
+    }
+
+
     public void setNamesToClient(String nickname, ClientHandler client) {
         namesToClient.put(nickname,client);
     }
 
+
     public void removeNamesToClient(String nickname, ClientHandler client){
         namesToClient.remove(nickname, client);
     }
+
 
     public void sendTurnStatus(String message, String nickname){
         if(message.equals("START")){
@@ -581,14 +616,4 @@ public class VirtualView extends VirtualViewObservable {
 
         client.send(new TurnStatus(message));
     }
-
-    /*public void sendTurnStatus(String message, String nickname){
-        if(message.equals("START")){
-            notifyPlayingNick(nickname);
-        }
-
-        ClientHandler client = namesToClient.get(nickname);
-
-        client.send(new TurnStatus(message));
-    }*/
 }

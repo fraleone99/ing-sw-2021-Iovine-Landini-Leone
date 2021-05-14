@@ -46,10 +46,10 @@ public class LocalSPController {
         gameModel.createPlayer(players.get(0));
         spCLI.localHandShake(players.get(0));
 
-        turncontroller.setPlayers(0);
+        setPlayers();
 
         try{
-            turncontroller.setInitialLeaderCards(0);
+            localSetInitialLeaderCards();
 
             localDiscardFirstLeader();
 
@@ -83,6 +83,18 @@ public class LocalSPController {
             }
         } catch (InvalidChoiceException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setPlayers() {
+        gameModel.createPlayer(players.get(0));
+    }
+
+
+    public void localSetInitialLeaderCards() throws NotExistingPlayerException {
+        for (int i = 0; i < 4; i++) {
+            gameModel.getGameBoard().getLeaderDeck().shuffle();
+            gameModel.getPlayer(players.get(0)).getLeaders().add(gameModel.getGameBoard().getLeaderDeck().drawFromTail());
         }
     }
 
