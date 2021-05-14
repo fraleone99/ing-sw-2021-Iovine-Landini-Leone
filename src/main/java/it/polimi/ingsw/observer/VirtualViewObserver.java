@@ -12,4 +12,6 @@ public interface VirtualViewObserver {
 
     void updatePlayingNick(String nickname);
 
+    void updateTurnChoice(String nickname, String message);
+
 }

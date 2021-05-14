@@ -275,6 +275,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public int activeLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+        notifyTurnChoice(nickname, " is activating a leader");
 
         client.send(new ActiveLeader("Which leader do you want to activate?", leaders));
         synchronized (client.getLock()) {
@@ -290,6 +291,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public int discardLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+        notifyTurnChoice(nickname, " is discarding a leader");
 
         client.send(new DiscardLeader("Which leader do you want to discard?", leaders));
         synchronized (client.getLock()) {
@@ -306,8 +308,10 @@ public class VirtualView extends VirtualViewObservable {
     public int manageStorage(int number, String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 
-        if(number==1)
+        if(number==1){
+            notifyTurnChoice(nickname, " is managing his storage");
             client.send(new RequestInt("STORAGE","Before using the market do you want to reorder your storage? You won't be able to do it later."));
+        }
         else
             client.send(new RequestInt("STORAGE","Do you want to make other changes to the storage?"));
 
@@ -344,6 +348,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public int useMarket(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+        notifyTurnChoice(nickname, " is using market");
 
         client.send(new RequestInt("MARKET","Which market line do you want?"));
 
@@ -396,6 +401,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public int askColor(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+        notifyTurnChoice(nickname, " is buying a card");
 
         client.send(new RequestInt("COLOR","Choose the color of the card you want to buy.\n1) Purple\n2) Yellow\n3) Blue\n4) Green"));
 
@@ -444,6 +450,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public int askType(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+        notifyTurnChoice(nickname, " is activating a production");
 
         client.send(new RequestInt("TYPE","What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
 

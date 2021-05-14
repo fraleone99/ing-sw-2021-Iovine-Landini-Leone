@@ -110,7 +110,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         //clientHandler.unregisterObserver(this);
         String nickname=removeConnection(clientHandler);
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new SendMessage(Constants.ANSI_RED+"Player "+/*clientToNames.get(clientHandler)*/nickname+" left the game. Now there are "+(nicknames.size()-1)+" players in this Lobby."+Constants.ANSI_RESET));
+            namesToClient.get(nick).send(new SendMessage(Constants.ANSI_RED+"Player "+/*clientToNames.get(clientHandler)*/nickname+" left the game. Now there are "+playersNumber+" players in this Lobby."+Constants.ANSI_RESET));
         }
         //removeConnection(clientHandler);
     }
@@ -126,7 +126,17 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     public void updatePlayingNick(String nickname){
         for(String nick: nicknames){
             if(!nick.equals(nickname)){
-                namesToClient.get(nick).send(new SendMessage(Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
+                namesToClient.get(nick).send(new SendMessage("++++++++++++++++++++++++++++++++++++++++++++++\n"
+                        +Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
+            }
+        }
+    }
+
+    @Override
+    public void updateTurnChoice(String nickname, String message){
+        for(String nick: nicknames){
+            if(!nick.equals(nickname)){
+                namesToClient.get(nick).send(new SendMessage(">"+nickname+message));
             }
         }
     }

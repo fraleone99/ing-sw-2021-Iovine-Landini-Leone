@@ -163,6 +163,10 @@ public class LocalSPController {
                     pos = spCLI.discardLeader(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     try{
                         turncontroller.discardLeader(0, pos);
+                        ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                        if(!nick.isEmpty()) {
+                            spCLI.writeMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile");
+                        }
                     } catch (InvalidChoiceException e) {
                         spCLI.writeMessage("Invalid choice.");
                         spCLI.resetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID());
@@ -204,7 +208,6 @@ public class LocalSPController {
                 } catch (InvalidChoiceException e) {
                     spCLI.writeMessage("Invalid choice.");
                     spCLI.resetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID());
-                    localChooseTurn();
                 }
             } else {
                 pos = spCLI.discardLeader(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
@@ -213,7 +216,6 @@ public class LocalSPController {
                 } catch (InvalidChoiceException e) {
                     spCLI.writeMessage("Invalid choice.");
                     spCLI.resetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID());
-                    localChooseTurn();
                 }
             }
             answer=spCLI.endTurn("What do you want to do?\n1) Active Leader\n2) Discard Leader\n3) End turn");
@@ -230,7 +232,7 @@ public class LocalSPController {
             try {
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
             } catch (NotEnoughSpaceException e) {
-                System.out.println("Invalid choice");
+                spCLI.writeMessage("Invalid choice.");
             }
 
 
@@ -260,6 +262,10 @@ public class LocalSPController {
         for(Ball b : market) {
             if (b.getType().equals(BallColor.RED)) {
                 gameModel.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
+                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                if(!nick.isEmpty()) {
+                    spCLI.writeMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile");
+                }
             } else if (b.getType().equals(BallColor.WHITE)) {
                 if (resource != null) {
                     switch (resource) {
@@ -287,7 +293,13 @@ public class LocalSPController {
                 if (i != 0) {
                     if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
                         for (int j = 0; j < players.size(); j++) {
-                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                            if (j != player) {
+                                gameModel.getPlayer(players.get(j)).move(1);
+                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    spCLI.writeMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile");
+                                }
+                            }
                         }
                     } else {
                         toPlace.add(new Ball(b.getType()));
@@ -296,7 +308,13 @@ public class LocalSPController {
                 } else {
                     if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
                         for (int j = 0; j < players.size(); j++) {
-                            if (j != player) gameModel.getPlayer(players.get(j)).move(1);
+                            if (j != player) {
+                                gameModel.getPlayer(players.get(j)).move(1);
+                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    spCLI.writeMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile");
+                                }
+                            }
                         }
                     } else {
                         toPlace.add(new Ball(b.getType()));
@@ -321,7 +339,7 @@ public class LocalSPController {
                     toPlace.clear();
                     toPlace.addAll(temp);
                 } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
-                    System.out.println("Invalid choice");
+                    spCLI.writeMessage("Invalid choice.");
                 }
 
                 choice.clear();
@@ -350,48 +368,62 @@ public class LocalSPController {
             gameModel.getPlayer(players.get(0)).buyCard(card, space);
             gameModel.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
         } catch(InvalidSpaceCardException e) {
-            System.out.println("Invalid choice");
+            spCLI.writeMessage("Invalid choice.");
             localChooseTurn();
         }
     }
 
-    public void localActiveProduction(int type) throws NotExistingPlayerException {
+    public void localActiveProduction(int type) throws NotExistingPlayerException, InvalidChoiceException, InterruptedException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
-        switch(type) {
-            case 1 : Resource input1=spCLI.localAskInput("Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE");
-                Resource input2=spCLI.localAskInput("Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE");
-                Resource output=spCLI.localAskOutput("Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE");
+        switch (type) {
+            case 1:
+                Resource input1 = spCLI.localAskInput("Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE");
+                Resource input2 = spCLI.localAskInput("Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE");
+                Resource output = spCLI.localAskOutput("Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE");
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
                 try {
                     gameModel.getPlayer(players.get(0)).ActiveProductionBase();
                 } catch (NotEnoughResourceException e) {
-                    System.out.println("Invalid choice");
+                    spCLI.writeMessage("Invalid choice.");
                 }
                 break;
 
-            case 2 : int space=spCLI.askDevelopmentCard("Insert the number of the space containing the development card");
+            case 2:
+                int space = spCLI.askDevelopmentCard("Insert the number of the space containing the development card");
                 try {
                     gameModel.getPlayer(players.get(0)).ActiveProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
-                    System.out.println("Invalid choice");
+                    spCLI.writeMessage("Invalid choice.");
                 }
                 break;
 
-            case 3 : int index=spCLI.askLeaderCard("Insert the number of the production leader that you want to use");
+            case 3:
+                int index = spCLI.askLeaderCard("Insert the number of the production leader that you want to use");
                 try {
                     gameModel.getPlayer(players.get(0)).ActiveProductionLeader(index);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
-                    System.out.println("Invalid choice");
+                    spCLI.writeMessage("Invalid choice.");
                 }
                 break;
 
-            case 4 : try {
-                gameModel.getPlayer(players.get(0)).doProduction();
-            } catch (NotEnoughResourceException e) {
-                System.out.println("Invalid choice");
-            }
+            case 4:
+                try {
+                    if (gameModel.getPlayer(players.get(0)).getActivatedProduction().isEmpty()) {
+                        spCLI.writeMessage("Invalid choice.");
+                        localChooseTurn();
+                    } else {
+                        gameModel.getPlayer(players.get(0)).doProduction();
+                        ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                        if(!nick.isEmpty()) {
+                            spCLI.writeMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile");
+                        }
+                    }
+                } catch (NotEnoughResourceException e) {
+                    spCLI.writeMessage("Invalid choice.");
+                    localChooseTurn();
+                }
                 break;
         }
     }

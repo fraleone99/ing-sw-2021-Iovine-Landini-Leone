@@ -40,4 +40,12 @@ public class VirtualViewObservable {
             }
         }
     }
+
+    public void notifyTurnChoice(String nick, String message){
+        synchronized (observersList){
+            for(VirtualViewObserver obs: observersList){
+                obs.updateTurnChoice(nick, message);
+            }
+        }
+    }
 }
