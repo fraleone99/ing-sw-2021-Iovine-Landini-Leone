@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
-import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
+import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 
 import java.util.ArrayList;
 
@@ -87,4 +87,8 @@ public interface View {
     void win(String message);
 
     void lose(String message);
+
+    void seeOtherCards(ArrayList<Integer> leaderCards);
+
+    int choice();
 }

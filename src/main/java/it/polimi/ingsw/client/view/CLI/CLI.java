@@ -22,7 +22,7 @@ import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
-import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
+import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -198,8 +198,9 @@ public class CLI implements View{
         int choice;
         System.out.println(message);
 
-        choice = askInt(1 , 5, "1) Leader Cards.\n2) Market.\n3) Development cards grid.\n" +
-                "4) Cards for production.\n5) Nothing.");
+        choice = askInt(1 , 7, "1) Leader Cards.\n2) Market.\n3) Development cards grid.\n" +
+                "4) Cards for production.\n5) Active Leader Cards of the other players.\n6) Development Cards" +
+                "that can be used by the other players.\n7) Nothing");
 
         return choice;
     }
@@ -262,6 +263,23 @@ public class CLI implements View{
                     System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(production)));
             }
         }
+
+        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+        return choice;
+    }
+
+    public void seeOtherCards(ArrayList<Integer> cards) {
+        for(Integer card : cards) {
+            if (card < 17)
+                System.out.println(printLeaderCard(LeaderDeck.getFromID(card)));
+            else
+                System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(card)));
+        }
+    }
+
+    public int choice() {
+        int choice;
 
         choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 

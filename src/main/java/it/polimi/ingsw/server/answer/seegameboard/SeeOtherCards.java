@@ -1,13 +1,13 @@
-package it.polimi.ingsw.server.answer.turnanswer;
+package it.polimi.ingsw.server.answer.seegameboard;
 
 import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
-public class SeeLeaderCards implements Answer {
+public class SeeOtherCards implements Answer {
     private final ArrayList<Integer> IdLeaders;
 
-    public SeeLeaderCards(ArrayList<Integer> idLeaders) {
+    public SeeOtherCards(ArrayList<Integer> idLeaders) {
         IdLeaders = idLeaders;
     }
 
@@ -15,4 +15,3 @@ public class SeeLeaderCards implements Answer {
         return IdLeaders;
     }
 }
-

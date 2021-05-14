@@ -100,6 +100,18 @@ public class Player {
         playerDashboard.getFaithPath().moveForward(pos);
     }
 
+    public ArrayList<Integer> getDevCards() {
+        ArrayList<Integer> Id=new ArrayList<>();
+
+        for(int i=0; i<3; i++) {
+            if(!playerDashboard.getDevCardsSpace().getSpace().get(i).isEmpty()) {
+                Id.add(playerDashboard.getDevCardsSpace().getSpace().get(i).get().getCardID());
+            }
+        }
+
+        return Id;
+    }
+
     public ArrayList<Integer> getProductions() {
         ArrayList<Integer> Id=new ArrayList<>();
 
@@ -144,7 +156,6 @@ public class Player {
             activatedProduction.add(playerDashboard.getDevCardsSpace().getCard(space).getProduction());
         else throw new NotEnoughResourceException();
     }
-
 
 
     public void doProduction() throws NotEnoughResourceException {

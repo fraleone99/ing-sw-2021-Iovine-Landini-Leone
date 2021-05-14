@@ -1,11 +1,11 @@
-package it.polimi.ingsw.server.answer.turnanswer;
+package it.polimi.ingsw.server.answer.finalanswer;
 
 import it.polimi.ingsw.server.answer.Answer;
 
-public class Lose implements Answer {
+public class Win implements Answer {
     private String message;
 
-    public Lose(String message) {
+    public Win(String message) {
         this.message = message;
     }
 
@@ -14,3 +14,4 @@ public class Lose implements Answer {
         return message;
     }
 }
+

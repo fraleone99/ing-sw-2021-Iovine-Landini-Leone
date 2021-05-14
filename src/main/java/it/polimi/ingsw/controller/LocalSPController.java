@@ -17,7 +17,7 @@ import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
-import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
+import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 
 import java.util.ArrayList;
 

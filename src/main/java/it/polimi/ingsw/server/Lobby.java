@@ -4,8 +4,8 @@ import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.observer.ConnectionObserver;
 import it.polimi.ingsw.observer.VirtualViewObserver;
-import it.polimi.ingsw.server.answer.InitialSetup;
-import it.polimi.ingsw.server.answer.SendMessage;
+import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
+import it.polimi.ingsw.server.answer.request.SendMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;

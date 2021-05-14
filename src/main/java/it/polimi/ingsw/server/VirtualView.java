@@ -7,8 +7,15 @@ import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.gameboard.playerdashboard.*;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.observer.VirtualViewObservable;
-import it.polimi.ingsw.server.answer.*;
+import it.polimi.ingsw.server.answer.finalanswer.Lose;
+import it.polimi.ingsw.server.answer.finalanswer.Win;
 import it.polimi.ingsw.server.answer.infoanswer.*;
+import it.polimi.ingsw.server.answer.initialanswer.Connection;
+import it.polimi.ingsw.server.answer.request.RequestDoubleInt;
+import it.polimi.ingsw.server.answer.request.RequestInt;
+import it.polimi.ingsw.server.answer.request.RequestString;
+import it.polimi.ingsw.server.answer.request.SendMessage;
+import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.IOException;
@@ -246,6 +253,46 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeProductions(productions));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            number=client.getNumber();
+        }
+
+        client.setReady(false);
+
+        return number;
+    }
+
+
+    public void seeOtherLeader(String nickname, String player, ArrayList<Integer> leaderCards) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        if(leaderCards.isEmpty()) {
+            client.send(new SendMessage(Constants.ANSI_BLUE + player + Constants.ANSI_RESET + " has no active leader cards"));
+        } else {
+            client.send(new SendMessage(Constants.ANSI_BLUE + player + Constants.ANSI_RESET + " has these active leader cards:"));
+            client.send(new SeeOtherCards(leaderCards));
+        }
+    }
+
+
+    public void seeOtherDev(String nickname, String player, ArrayList<Integer> devCards) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        if(devCards.isEmpty()) {
+            client.send(new SendMessage(Constants.ANSI_BLUE + player + Constants.ANSI_RESET + " has no development card that he can use"));
+        } else {
+            client.send(new SendMessage(Constants.ANSI_BLUE + player + Constants.ANSI_RESET + " has these development cards that he can use:"));
+            client.send(new SeeOtherCards(devCards));
+        }
+    }
+
+
+    public int askChoice(String nickname) throws InterruptedException {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new RequestInt("CHOICE", null));
 
         synchronized (client.getLock()) {
             while(!client.isReady()) client.getLock().wait();

@@ -2,10 +2,8 @@ package it.polimi.ingsw.client.view.CLI;
 
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.server.answer.turnanswer.SeeBall;
+import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 
-import java.lang.reflect.Array;
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
 
 public class SinglePlayerCLI extends CLI {

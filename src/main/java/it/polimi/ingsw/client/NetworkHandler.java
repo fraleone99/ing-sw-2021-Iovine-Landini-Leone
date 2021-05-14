@@ -1,20 +1,25 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.message.Ping;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.CLI.CLI;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.server.answer.InitialSetup;
+import it.polimi.ingsw.server.answer.finalanswer.Lose;
+import it.polimi.ingsw.server.answer.finalanswer.Win;
+import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
 import it.polimi.ingsw.server.answer.*;
 import it.polimi.ingsw.server.answer.infoanswer.*;
+import it.polimi.ingsw.server.answer.initialanswer.Connection;
+import it.polimi.ingsw.server.answer.request.RequestDoubleInt;
+import it.polimi.ingsw.server.answer.request.RequestInt;
+import it.polimi.ingsw.server.answer.request.RequestString;
+import it.polimi.ingsw.server.answer.request.SendMessage;
+import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -135,6 +140,8 @@ public class NetworkHandler implements Runnable {
                                  break;
                 case "LEADCARD" : choice=view.askLeaderCard(((RequestInt) inputObj).getMessage());
                                   break;
+                case "CHOICE" : choice=view.choice();
+                                break;
                 case "END" : choice=view.endTurn(((RequestInt) inputObj).getMessage());
                              break;
             }
@@ -151,6 +158,9 @@ public class NetworkHandler implements Runnable {
         }
         else if (inputObj instanceof FaithPathInfo) {
             view.printFaithPath((FaithPathInfo) inputObj);
+        }
+        else if (inputObj instanceof SeeOtherCards) {
+            view.seeOtherCards(((SeeOtherCards) inputObj).getMessage());
         }
         else if (inputObj instanceof StorageInfo) {
             view.printStorage((StorageInfo) inputObj);
