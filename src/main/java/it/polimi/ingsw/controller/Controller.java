@@ -57,7 +57,7 @@ public class Controller {
                     //send start turn
                     view.sendTurnStatus("START", players.get(i));
                     turncontroller.seePlayerDashboards(i);
-                    turncontroller.seeGameBoard(i);
+                    turncontroller.seeGameBoard(true, i);
                     turncontroller.chooseTurn(i);
                     view.sendTurnStatus("END", players.get(i));
                     //send end turn

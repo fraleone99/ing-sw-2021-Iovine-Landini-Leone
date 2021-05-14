@@ -132,10 +132,10 @@ public class LocalSPController {
                 finish=spCLI.seeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 4:finish=spCLI.seeProductions(gameModel.getPlayer(players.get(0)).getProductions());
+            case 4: finish=spCLI.seeProductions(gameModel.getPlayer(players.get(0)).getProductions());
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 5 : break;
+            case 5: break;
         }
     }
 

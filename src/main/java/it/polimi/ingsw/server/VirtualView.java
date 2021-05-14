@@ -173,8 +173,10 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int seeGameBoard(String nickname) throws InterruptedException {
+    public int seeGameBoard(boolean first, String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+
+        if(first) notifyTurnChoice(nickname, " is watching the game board");
 
         client.send(new RequestInt("GAMEBOARD","What do you want to see about the Game Board?"));
         synchronized (client.getLock()) {
@@ -395,7 +397,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public int useMarket(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
-        notifyTurnChoice(nickname, " is using market");
+        notifyTurnChoice(nickname, " is using the market");
 
         client.send(new RequestInt("MARKET","Which market line do you want?"));
 

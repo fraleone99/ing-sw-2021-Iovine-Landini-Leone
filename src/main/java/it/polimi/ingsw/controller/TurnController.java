@@ -39,31 +39,31 @@ public class TurnController {
     }
 
 
-    public void seeGameBoard(int player) throws  NotExistingPlayerException, InterruptedException {
-        int answer=view.seeGameBoard(players.get(player));
+    public void seeGameBoard(boolean first, int player) throws  NotExistingPlayerException, InterruptedException {
+        int answer=view.seeGameBoard(first, players.get(player));
         //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Active Leader Cards of the other players
         //6) Development Cards of the other players, 7) Nothing
         int finish;
 
         switch(answer){
             case 1 : finish=view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                if(finish==1) seeGameBoard(player);
+                if(finish==1) seeGameBoard(false, player);
                 break;
             case 2 : finish=view.seeMarket(players.get(player), game.getGameBoard().getMarket());
-                if(finish==1) seeGameBoard(player);
+                if(finish==1) seeGameBoard(false, player);
                 break;
             case 3 : int choice=view.chooseLine(players.get(player));
                 finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
-                if(finish==1) seeGameBoard(player);
+                if(finish==1) seeGameBoard(false, player);
                 break;
             case 4 : finish=view.seeProduction(players.get(player), game.getPlayer(players.get(player)).getProductions());
-                if(finish==1) seeGameBoard(player);
+                if(finish==1) seeGameBoard(false, player);
                 break;
             case 5 : finish=leaderCard(player);
-                if(finish==1) seeGameBoard(player);
+                if(finish==1) seeGameBoard(false, player);
                 break;
             case 6 : finish=devCard(player);
-                if(finish==1) seeGameBoard(player);
+                if(finish==1) seeGameBoard(false, player);
                 break;
             case 7 : break;
         }
