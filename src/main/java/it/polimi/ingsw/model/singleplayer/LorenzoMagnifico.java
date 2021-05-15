@@ -5,10 +5,19 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This class initializes action tokens and allows to do every possible action of Lorenzo
+ *
+ * @author Nicola Landini
+ */
+
 public class LorenzoMagnifico{
 
     private ArrayList<ActionToken> tokens=new ArrayList<>();
 
+    /**
+     * LorenzoMagnifico constructor: it initializes the action tokens
+     */
     public LorenzoMagnifico(){
         ActionToken temp=new BlackCrossMover(2, false);
         tokens.add(temp);
@@ -38,14 +47,19 @@ public class LorenzoMagnifico{
         return tokens;
     }
 
+    /**
+     * It shuffles action tokens
+     */
     public void shuffle(){
         Collections.shuffle(tokens);
     }
 
-    //this method allow the player to draw a token and put it in the last position of the ArrayList
+    /**
+     * This method allows the player to draw a token and put it in the last position of the ArrayList
+     * @return drawn action token
+     */
     public ActionToken draw() {
         ActionToken element;
-        // remove last element, add it to front of the ArrayList
         element = tokens.remove(0);
         tokens.add(element);
 

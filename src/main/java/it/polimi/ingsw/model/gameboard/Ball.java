@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.enumeration.Resource;
 import java.io.Serializable;
 
 /**
- * Ball Class manages every ball of the market
+ * Ball Class manages every marble of the market
  *
  * @author Nicola Landini
  */

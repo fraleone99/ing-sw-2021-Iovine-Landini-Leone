@@ -7,10 +7,22 @@ import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 
 import java.io.Serializable;
 
+/**
+ * This class extends ActionToken and represents the action token
+ * that imposes the elimination of two Development Card from colorType
+ * deck
+ *
+ * @author Nicola Landini
+ */
+
 public class DeleteCard extends ActionToken implements Serializable {
 
     private final CardColor colorType;
 
+    /**
+     * DeleteCard constructor: it sets card color
+     * @param colorType indicates cards color
+     */
     public DeleteCard(CardColor colorType) {
         this.colorType = colorType;
     }
@@ -19,6 +31,13 @@ public class DeleteCard extends ActionToken implements Serializable {
         return colorType;
     }
 
+    /**
+     * This method draw 1 card from color deck
+     * @param color card color deck from which card has to be drawn
+     * @param developmentCardGrid development card grid
+     * @throws InvalidChoiceException if color is not present or level is invalid
+     * @throws EmptyDecksException if color deck is empty
+     */
     public void draw(CardColor color, DevelopmentCardGrid developmentCardGrid) throws InvalidChoiceException, EmptyDecksException {
         if(!developmentCardGrid.getDeck(color, 1).isEmpty()){
             developmentCardGrid.removeCard(color, 1);

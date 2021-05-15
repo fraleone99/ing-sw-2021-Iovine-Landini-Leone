@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 
 /**
+ * This class implements player
  *
  * @author  Francesco Leone, Lorenzo Iovine, Nicola Landini
  */
@@ -55,6 +56,10 @@ public class Player {
         return victoryPoints;
     }
 
+    /**
+     * Player constructor: set nickname and create the player dashboard
+     * @param nickname given nickname
+     */
     public Player(String nickname) {
         this.nickname = nickname;
         this.playerDashboard = new PlayerDashboard();
