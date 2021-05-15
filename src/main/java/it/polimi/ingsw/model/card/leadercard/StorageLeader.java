@@ -20,6 +20,14 @@ public class StorageLeader extends LeaderCard {
     private Shelf LeaderShelf;
     private ArrayList<Requirements> requirements = new ArrayList<>();
 
+
+    /**
+     * Constructor StorageLeader creates a new StorageLeader instance
+     * @param VictoryPoints is the number of the victory points of the card
+     * @param CardID is the ID of the card
+     * @param req is the requirements of the card
+     * @param s is the shelf of the card
+     */
     public StorageLeader(int VictoryPoints, int CardID, Requirements req, Shelf s)
     {
         super(VictoryPoints, CardID);
@@ -27,6 +35,12 @@ public class StorageLeader extends LeaderCard {
         this.LeaderShelf=s;
     }
 
+
+    /**
+     * Remove resources from the shelf of the card
+     * @param amount is the number of resources to be removed
+     * @return the available space of the shelf
+     */
     public int DiscardResources(int amount) {
         if(LeaderShelf.getAmount() >= amount){
             LeaderShelf.discardResource(amount);
@@ -39,6 +53,14 @@ public class StorageLeader extends LeaderCard {
         }
     }
 
+
+    /**
+     * Add resources at the shelf of the card
+     * @param type is the type of the resource to be added
+     * @param amount is the number of resources to be added
+     * @throws NotEnoughSpaceException if the shelf doesn't have enough available space
+     * @throws ShelfHasDifferentTypeException if the shelf cannot contain this type of resource
+     */
     public void AddResources(Resource type, int amount) throws NotEnoughSpaceException, ShelfHasDifferentTypeException {
 
         if (!LeaderShelf.getResourceType().equals(type)) throw new ShelfHasDifferentTypeException();
@@ -48,18 +70,35 @@ public class StorageLeader extends LeaderCard {
         LeaderShelf.AddResource(amount);
     }
 
+
+    /**
+     * Get the type of resource that the shelf can contain
+     * @return the type of resource
+     */
     public Resource getType(){
         return LeaderShelf.getResourceType();
     }
 
+
+    /**
+     * Get the available space of the shelf
+     * @return the number of free spaces
+     */
     public int getAmount(){return LeaderShelf.getAmount();}
 
+
+    /**
+     * {@inheritDoc}
+     */
     public ArrayList<Requirements> getRequirements(){
         return requirements;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public boolean checkRequirements(PlayerDashboard dashboard){
         return dashboard.CheckResource(requirements.get(0).getCost());
     }
-
 }

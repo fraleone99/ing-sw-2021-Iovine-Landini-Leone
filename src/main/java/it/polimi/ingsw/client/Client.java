@@ -46,10 +46,21 @@ public class Client implements Runnable {
                     System.out.println("Insert port number:");
                     PORT_NUMBER = Integer.parseInt(scanner.nextLine());
                 } while (PORT_NUMBER < 1024);
+
+                Socket server;
+                try {
+                    server = new Socket(ip, PORT_NUMBER);
+                    networkHandler = new NetworkHandler(server, this);
+                    Thread networkHandlerThread = new Thread(networkHandler, "server" + server.getInetAddress().getHostAddress());
+                    networkHandlerThread.start();
+                } catch (IOException e) {
+                    networkHandler.closeConnection();
+                }
+
             }
 
 
-            Socket server;
+            /*Socket server;
             try {
                 server = new Socket(ip, PORT_NUMBER);
                 networkHandler = new NetworkHandler(server, this);
@@ -57,7 +68,7 @@ public class Client implements Runnable {
                 networkHandlerThread.start();
             } catch (IOException e) {
                 networkHandler.closeConnection();
-            }
+            }*/
 
 
         }

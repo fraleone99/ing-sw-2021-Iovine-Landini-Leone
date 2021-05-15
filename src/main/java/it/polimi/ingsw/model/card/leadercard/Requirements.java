@@ -11,13 +11,20 @@ import java.util.ArrayList;
  *
  * @author Lorenzo Iovine.
  */
-
 public class Requirements {
     private final CardColor color;
     private final int level;
     private final int amount;
     private final ArrayList<Goods> activationCost = new ArrayList<>();
 
+
+    /**
+     * Constructor Requirements creates a new Requirements instance
+     * @param Color is the color of the card required
+     * @param Level is the level of the card required
+     * @param Amount is the amount of cards required
+     * @param cost is the cost to activate the card
+     */
     public Requirements(CardColor Color, int Level, int Amount, Goods cost){
         this.color=Color;
         this.level=Level;
@@ -25,17 +32,37 @@ public class Requirements {
         activationCost.add(cost);
     }
 
+
+    /**
+     * Get the color of the card required
+     * @return the parameter color
+     */
     public CardColor getColor(){
         return color;
     }
 
+
+    /**
+     * Get the level of the card required
+     * @return the parameter level
+     */
     public int getLevel(){
         return level;
     }
 
+
+    /**
+     * Get the amount of cards required
+     * @return the parameter amount
+     */
     public int getAmount(){
         return amount;
     }
 
+
+    /**
+     * Get the cost to activate the card
+     * @return the parameter activationCost
+     */
     public ArrayList<Goods> getCost() { return activationCost; }
 }

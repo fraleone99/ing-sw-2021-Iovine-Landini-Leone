@@ -18,32 +18,75 @@ public abstract class LeaderCard extends Card {
     private boolean isDiscarded;
     private boolean isActive;
 
+
+    /**
+     * Constructor LeaderCard creates a new LeaderCard instance
+     * @param VictoryPoints is the number of the victory points of the card
+     * @param CardID is the ID of the card
+     */
     public LeaderCard(int VictoryPoints, int CardID) {
         super(VictoryPoints, CardID);
     }
 
+
+    /**
+     * Set the isDiscarded parameter to true
+     */
     public void setIsDiscarded(){
         isDiscarded=true;
     }
 
+
+    /**
+     * Set the isDiscarded parameter to false
+     */
     public void setIsNotDiscarded() {isDiscarded=false;}
 
-    public void setIsNotActive() {isActive=false;}
 
-    public boolean getIsDiscarded(){
-        return isDiscarded;
-    }
-
+    /**
+     * Set the isActive parameter to true
+     */
     public void setIsActive(){
         isActive=true;
     }
 
+
+    /**
+     * Set the isActive parameter to false
+     */
+    public void setIsNotActive() {isActive=false;}
+
+
+    /**
+     * Get the value of the parameter isDiscarded
+     * @return the value of isDiscarded
+     */
+    public boolean getIsDiscarded(){
+        return isDiscarded;
+    }
+
+
+    /**
+     * Get the value of the parameter isActive
+     * @return the value of isActive
+     */
     public boolean getIsActive(){
         return isActive;
     }
 
+
+    /**
+     * Get the requirements to activate the card
+     * @return an ArrayList that contains the requirements
+     */
     public abstract ArrayList<Requirements> getRequirements();
 
+
+    /**
+     * Check if the requirements to activate the card are met
+     * @param playerDashboard represent where the requirements must be checked
+     * @return true if the requirements are met, otherwise false
+     */
     public abstract boolean checkRequirements(PlayerDashboard playerDashboard);
 
 }

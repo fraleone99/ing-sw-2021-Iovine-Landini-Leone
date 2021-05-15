@@ -1,9 +1,15 @@
 package it.polimi.ingsw.model.card.deck;
 
-
 import it.polimi.ingsw.model.card.Card;
 
+/**
+ * Deck interface
+ *
+ * @author Francesco Leone
+ */
+
 public interface Deck {
+
 
     /**
      * Shuffles the Deck
@@ -16,6 +22,7 @@ public interface Deck {
      * @return the last card of the deck
      */
     Card get();
+
 
     /**
      *

@@ -13,15 +13,31 @@ public abstract class Card{
     private final int victoryPoints;
     private final int cardID;
 
+
+    /**
+     * Constructor Card creates a new Card instance
+     * @param VictoryPoints is the number of the victory points of the card
+     * @param CardID is the ID of the card
+     */
     public Card(int VictoryPoints, int CardID) {
         this.victoryPoints = VictoryPoints;
         this.cardID = CardID;
     }
 
+
+    /**
+     * Get the victory points of the card
+     * @return the victory points
+     */
     public int getVictoryPoints(){
         return victoryPoints;
     }
 
+
+    /**
+     * Get the ID of the card
+     * @return the ID
+     */
     public int getCardID() {
         return cardID;
     }

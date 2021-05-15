@@ -200,7 +200,7 @@ public class CLI implements View{
 
         choice = askInt(1 , 7, "1) Leader Cards.\n2) Market.\n3) Development cards grid.\n" +
                 "4) Cards for production.\n5) Active Leader Cards of the other players.\n6) Development Cards" +
-                "that can be used by the other players.\n7) Nothing");
+                " that can be used by the other players.\n7) Nothing");
 
         return choice;
     }
@@ -304,7 +304,7 @@ public class CLI implements View{
 
         int id=message.getLeaders().get(leaderCard-1);
 
-        LeaderDeck.getCardByID(id).setIsActive();
+        LeaderDeck.getFromID(id).setIsActive();
 
         return leaderCard;
     }
@@ -317,14 +317,14 @@ public class CLI implements View{
 
         int id=message.getLeaders().get(leaderCard-1);
 
-        LeaderDeck.getCardByID(id).setIsDiscarded();
+        LeaderDeck.getFromID(id).setIsDiscarded();
 
         return leaderCard;
     }
 
     public void resetCard(int pos) {
-        LeaderDeck.getCardByID(pos).setIsNotActive();
-        LeaderDeck.getCardByID(pos).setIsNotDiscarded();
+        LeaderDeck.getFromID(pos).setIsNotActive();
+        LeaderDeck.getFromID(pos).setIsNotDiscarded();
     }
 
     public int ManageStorage(String message) {
