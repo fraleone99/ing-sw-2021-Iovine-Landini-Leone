@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.guiController">
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.GUI">
    <children>
-      <Button fx:id="singlePlayerButton" layoutX="258.0" layoutY="175.0" mnemonicParsing="false" onAction="#startSinglePlayer" text="Single Player" textAlignment="CENTER" />
-      <Button fx:id="multiplayerButton" layoutX="262.0" layoutY="214.0" mnemonicParsing="false" onAction="#startMultiplayerGame" text="Multiplayer" textAlignment="CENTER" />
+      <Button fx:id="singlePlayerButton" layoutX="260.0" layoutY="175.0" mnemonicParsing="false" text="Local Match" textAlignment="CENTER" />
+      <Button fx:id="multiplayerButton" layoutX="245.0" layoutY="212.0" mnemonicParsing="false" text="Connected Match" textAlignment="CENTER" />
       <Label fx:id="title" layoutX="127.0" layoutY="61.0" text="I MAESTRI DEL RINASCIMENTO">
          <font>
             <Font size="25.0" />

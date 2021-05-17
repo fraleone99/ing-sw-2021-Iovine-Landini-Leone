@@ -40,6 +40,10 @@ public class CLI implements View{
     private final LeaderCardDeck LeaderDeck = new LeaderCardDeck();
     private final DevelopmentCardDeck developmentCardDeck = new DevelopmentCardDeck();
 
+    private  int gameMode;
+    private  String ip;
+    private int portNumber;
+
     public CLI() {
         this.in = new Scanner(System.in);
         initializeCardColorToString();
@@ -120,6 +124,35 @@ public class CLI implements View{
         System.out.println(Constants.MAESTRI_RINASCIMENTO + Constants.AUTHORS);
         }
 
+
+    @Override
+    public void setupConnection() {
+        System.out.println("Default configuration? (localhost) [y/n]");
+        String config = in.nextLine();
+
+        if(config.equals("y")){
+            ip = "127.0.0.1";
+            portNumber = 3456;
+        }
+        else{
+            System.out.println("ip:");
+            ip = in.nextLine();
+            portNumber = askInt(1024, 65535, "Insert Port number: ");
+        }
+
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public int getPortNumber() {
+        return portNumber;
+    }
+
+    public int gameType(){
+        return askInt(1,2 ,"Choose game mode:\n1) Local \n2) Connected match");
+    }
 
     @Override
     public void handShake(String welcome) {

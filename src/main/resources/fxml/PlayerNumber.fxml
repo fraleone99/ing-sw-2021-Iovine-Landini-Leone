@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="274.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.GUI">
+   <children>
+      <ChoiceBox fx:id="numberChoice" layoutX="240.0" layoutY="124.0" prefWidth="150.0" />
+      <Button fx:id="okButton" layoutX="203.0" layoutY="209.0" mnemonicParsing="false" text="OK" />
+      <Label layoutX="84.0" layoutY="129.0" text="Choose player number" />
+   </children>
+</AnchorPane>

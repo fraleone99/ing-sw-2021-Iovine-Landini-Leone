@@ -37,10 +37,10 @@ public class NetworkHandler implements Runnable {
     private AtomicBoolean isMyTurn = new AtomicBoolean(false);
 
 
-    public NetworkHandler(Socket server, Client owner) {
+    public NetworkHandler(Socket server, Client owner ,View view) {
         this.server = server;
         this.owner = owner;
-        view = new CLI();
+        this.view = view;
         isConnected = true;
     }
 

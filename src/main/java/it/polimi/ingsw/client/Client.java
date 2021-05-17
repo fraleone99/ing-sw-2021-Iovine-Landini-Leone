@@ -1,65 +1,76 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.view.CLI.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.LocalSPController;
+import javafx.application.Application;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client implements Runnable {
     NetworkHandler networkHandler;
+    private static View view;
+
+    public Client(View view) {
+        Client.view = view;
+    }
 
     public static void main(String[] args) {
-        Client client = new Client();
-        client.run();
+        String arg = args[0];
+        View userView;
+
+        if(arg.equals("cli")){
+            userView = new CLI();
+            Client  client = new Client(userView);
+            client.run();
+        }
+        else if(arg.equals("gui")){
+            Application.launch(GUI.class);
+        }
     }
+
 
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
         int PORT_NUMBER;
-        String ip;
+        String ip ;
         int match;
         String nick;
         String config;
 
-        do {
-            System.out.println("Choose game mode:\n1) Local \n2) Connected match");
-            match = Integer.parseInt(scanner.nextLine());
-        } while (match != 1 && match != 2);
+        int LOCAL_GAME = 1;
+        int CONNECTED_GAME = 2;
 
-        if (match == 1) {
+        match = view.gameType();
+
+        if (match == LOCAL_GAME) {
             System.out.println("Please insert your nickname: ");
             nick = scanner.nextLine();
             LocalSPController localController = new LocalSPController(nick);
             localController.localGame();
         } else {
-            System.out.println("Default configuration? (localhost) [y/n]");
-            config = scanner.nextLine();
-            if (config.equalsIgnoreCase("y")) {
-                PORT_NUMBER = 3456;
-                ip = "127.0.0.1";
-            } else {
-                do {
-                    System.out.println("ip:");
-                    ip = scanner.nextLine();
-                    System.out.println("Insert port number:");
-                    PORT_NUMBER = Integer.parseInt(scanner.nextLine());
-                } while (PORT_NUMBER < 1024);
-            }
+            view.setupConnection();
+            ip = view.getIp();
+            PORT_NUMBER = view.getPortNumber();
 
 
             Socket server;
             try {
                 server = new Socket(ip, PORT_NUMBER);
-                networkHandler = new NetworkHandler(server, this);
+                networkHandler = new NetworkHandler(server, this, view);
                 Thread networkHandlerThread = new Thread(networkHandler, "server" + server.getInetAddress().getHostAddress());
                 networkHandlerThread.start();
             } catch (IOException e) {
-                networkHandler.closeConnection();
+                System.out.println("Unable to connect!");
+                System.exit(0);
             }
+        }
 
 
         }
     }
-}

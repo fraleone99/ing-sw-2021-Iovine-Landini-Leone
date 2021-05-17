@@ -13,6 +13,14 @@ import java.util.ArrayList;
 
 public interface View {
 
+    void setupConnection();
+
+    String getIp();
+
+    int getPortNumber();
+
+    int gameType();
+
     void handShake(String welcome);
 
     //Method for Players' input
