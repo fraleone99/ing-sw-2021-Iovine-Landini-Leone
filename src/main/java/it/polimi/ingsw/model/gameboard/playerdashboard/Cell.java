@@ -13,6 +13,13 @@ public class Cell {
     private final boolean isPopeSpace3;
     private final int points;
 
+    /**
+     * Cell constructor: every cell indicates if it is a pope space and the points given by his position
+     * @param isPopeSpace1 is a boolean that is set to true if only the cells matches with the first pope space
+     * @param isPopeSpace2 is a boolean that is set to true if only the cells matches with the second pope space
+     * @param isPopeSpace3 is a boolean that is set to true if only the cells matches with the third pope space
+     * @param points indicates the corresponding points of that cell
+     */
     public Cell(boolean isPopeSpace1, boolean isPopeSpace2, boolean isPopeSpace3, int points) {
         this.isPopeSpace1=isPopeSpace1;
         this.isPopeSpace2=isPopeSpace2;
@@ -21,18 +28,6 @@ public class Cell {
     }
 
     public int getPoints() { return points; }
-
-    public boolean isPopeSpace1(){
-        return isPopeSpace1;
-    }
-
-    public boolean isPopeSpace2(){
-        return isPopeSpace2;
-    }
-
-    public boolean isPopeSpace3(){
-        return isPopeSpace3;
-    }
 
     @Override
     public String toString(){

@@ -4,8 +4,6 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.Production;
 import it.polimi.ingsw.model.card.Card;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +11,7 @@ import java.util.ArrayList;
  * Each Development Card has a color, a level, a cost and an input production;
  * while the output can be of resources and/or faith points
  *
- * @author Lorenzo Iovine.
+ * @author Lorenzo Iovine, Francesco Leone
  */
 
 public class DevelopmentCard extends Card {
@@ -23,6 +21,15 @@ public class DevelopmentCard extends Card {
     private final Production production;
 
 
+    /**
+     * Constructor DevelopmentCard creates a new DevelopmentCard instance
+     * @param VictoryPoints is the number of the victory points of the card
+     * @param CardID is the id of the card
+     * @param Color is the color of the card
+     * @param Level is the level of the card
+     * @param Cost is the cost to activate the card
+     * @param production is the production of the card
+     */
     public DevelopmentCard(int VictoryPoints, int CardID, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
         super(VictoryPoints, CardID);
         this.color=Color;
@@ -31,40 +38,74 @@ public class DevelopmentCard extends Card {
         this.production = production;
     }
 
+
+    /**
+     * Gets the color of the card
+     * @return the color of the card
+     */
     public CardColor getColor() {
         return color;
     }
 
+
+    /**
+     * Gets the level of the card
+     * @return the level of the card
+     */
     public int getLevel() {
         return level;
     }
 
+
+    /**
+     * Gets the cost of the card
+     * @return an ArrayList of Goods that represents the cost to activate the card
+     */
     public ArrayList<Goods> getCost() {
         return cost;
     }
 
-    /*public ArrayList<Goods> getInputProduction() {
-        return inputProduction;
-    }
-    public ArrayList<Goods> getOutputProduction() {
-        return outputProduction;
-    }*/
 
+    /**
+     * Gets the faith steps of the card production
+     * @return the faith steps
+     */
     public int getFaithSteps() {
         return production.getFaithSteps();
     }
 
+
+    /**
+     * Gets the input of the production of the card
+     * @return the input of the production
+     */
     public ArrayList<Goods> getInputProduction(){
         return production.getInputProduction();
     }
+
+
+    /**
+     * Gets the output of the production of the card
+     * @return the output of the production
+     */
     public ArrayList<Goods> getOutputProduction(){
         return production.getOutputProduction();
     }
 
+
+    /**
+     * Gets the production of the card
+     * @return the production
+     */
     public Production getProduction() {
         return production;
     }
 
+
+    /**
+     * This is the string representation of a Development Card
+     * @return a string that represent the card
+     */
     @Override
     public String toString() {
         return "DevelopmentCard{" +

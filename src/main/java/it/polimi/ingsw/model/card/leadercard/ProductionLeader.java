@@ -17,35 +17,76 @@ import java.util.ArrayList;
 
 public class ProductionLeader extends LeaderCard {
     private final Production production;
-
     private final ArrayList<Requirements> requirements = new ArrayList<>();
 
 
+    /**
+     * Constructor ProductionLeader creates a new ProductionLeader instance
+     * @param VictoryPoints is the number of the victory points of the card
+     * @param CardID is the ID of the card
+     * @param production is the production of the card
+     * @param req is the requirement of the card
+     */
     public ProductionLeader(int VictoryPoints, int CardID, Production production, Requirements req) {
         super(VictoryPoints, CardID);
         requirements.add(req);
         this.production = production;
     }
 
+
+    /**
+     * Gets the input of the production of the card
+     * @return the input of the production
+     */
     public ArrayList<Goods> getInputProduction(){
         return production.getInputProduction();
     }
+
+
+    /**
+     * Gets the output of the production of the card
+     * @return the output of the production
+     */
     public ArrayList<Goods> getOutputProduction(){
         return production.getOutputProduction();
     }
+
+
+    /**
+     * Gets the production of the card
+     * @return the production
+     */
     public Production getProduction(){  return production;}
 
+
+    /**
+     * {@inheritDoc}
+     */
     public ArrayList<Requirements> getRequirements(){ return requirements; }
 
+
+    /**
+     * {@inheritDoc}
+     */
     public boolean checkRequirements(PlayerDashboard playerDashboard){
         return playerDashboard.getDevCardsSpace().checkSpace(requirements.get(0).getColor(), requirements.get(0).getLevel()) >= 1;
     }
 
+
+    /**
+     * Sets the output of the production of the card
+     * @param resource is the type of the output of the production
+     */
     public void setOutputProduction(Resource resource){
         Goods good = new Goods(resource, 1);
         production.setOutputProduction(good);
     }
 
+
+    /**
+     * Gets the faith steps of the production of the card
+     * @return the faith steps
+     */
     public int getFaithSteps() {
         return production.getFaithSteps();
     }

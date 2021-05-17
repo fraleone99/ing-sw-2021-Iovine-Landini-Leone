@@ -32,16 +32,31 @@ public class DevelopmentCardGrid {
         return devCardsDecks;
     }
 
-    public DevelopmentCardGrid() throws FileNotFoundException {
-        initializeDevCards();
+    /**
+     * DevelopmentCardGrid constructor: creates new instance of DevelopmentCardGrid
+     */
+    public DevelopmentCardGrid() {
+        try {
+            initializeDevCards();
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * This method shuffles all decks of the development card grid
+     */
     public void ShufflesAllDecks(){
         for(DevelopmentCardDeck d: devCardsDecks){
             d.shuffle();
         }
     }
 
+    /**
+     * This method gets the line of the grid requested by the player
+     * @param choice player choice
+     * @return the line of the grid requested by the player
+     */
     public DevelopmentCardDeck getLine(int choice) {
         // 1-3 level, 4-7 color
         DevelopmentCardDeck deck = new DevelopmentCardDeck();
@@ -76,6 +91,12 @@ public class DevelopmentCardGrid {
         return deck;
     }
 
+    /**
+     * This method returns a deck containing the cards on the top of the grid for the requested level
+     * @param level cards level
+     * @return a deck containing the cards on the top of the grid for the requested level
+     * @throws InvalidChoiceException if level is invalid
+     */
     public DevelopmentCardDeck addFromLevel(int level) throws InvalidChoiceException {
         DevelopmentCardDeck devCards = new DevelopmentCardDeck();
 
@@ -87,6 +108,12 @@ public class DevelopmentCardGrid {
         return devCards;
     }
 
+    /**
+     * This method returns a deck containing the cards on the top of the grid for the requested color
+     * @param color cards color
+     * @return a deck containing the cards on the top of the grid for the requested color
+     * @throws InvalidChoiceException if color is invalid
+     */
     public DevelopmentCardDeck addFromColor(CardColor color) throws InvalidChoiceException {
         DevelopmentCardDeck devCards = new DevelopmentCardDeck();
 
@@ -97,6 +124,13 @@ public class DevelopmentCardGrid {
         return devCards;
     }
 
+    /**
+     * This method returns the corresponding deck by color and level
+     * @param color card color
+     * @param level card level
+     * @return the corresponding deck
+     * @throws InvalidChoiceException if color or level are invalid
+     */
     public DevelopmentCardDeck getDeck(CardColor color, int level) throws InvalidChoiceException {
         switch (color){
             case PURPLE: switch (level){
@@ -123,21 +157,41 @@ public class DevelopmentCardGrid {
         }
     }
 
+    /**
+     * This method remove a card of given color and level
+     * @param color card color
+     * @param level card level
+     * @throws InvalidChoiceException if color or level are invalid
+     */
     public void removeCard(CardColor color, int level) throws InvalidChoiceException {
         getDeck(color, level).draw();
     }
 
+    /**
+     * This method returns a card of given color and level
+     * @param color card color
+     * @param level card level
+     * @return the card corresponding to color and level
+     * @throws InvalidChoiceException if color or level are invalid
+     */
     public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
         return getDeck(color, level).get();
     }
 
+    /**
+     * This method returns true if all decks of the same selected color, are empty
+     * @param color card color
+     * @return true if all decks of the same selected color are empty
+     * @throws InvalidChoiceException if color is invalid
+     */
     public boolean sameColorDeckAreEmpty(CardColor color) throws InvalidChoiceException {
-        if(getDeck(color, 1).isEmpty() && getDeck(color, 2).isEmpty() && getDeck(color,3).isEmpty()){
-            return true;
-        }
-        return false;
+        return getDeck(color, 1).isEmpty() && getDeck(color, 2).isEmpty() && getDeck(color, 3).isEmpty();
     }
 
+    /**
+     * This method initializes the development cards
+     * @throws FileNotFoundException if the file can't be found
+     */
     public void initializeDevCards() throws FileNotFoundException {
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/DevelopmentCards.json"));

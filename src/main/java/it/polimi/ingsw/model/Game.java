@@ -13,9 +13,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
- * In this class we create the instances of Leader Card.
+ * In this class we manage the main actions of the match.
  *
- * @author Lorenzo Iovine.
+ * @author Lorenzo Iovine, Francesco Leone, Nicola Landini
  */
 
 public class Game {
@@ -25,29 +25,49 @@ public class Game {
     private GameBoard gameBoard;
     private int papalPawn=0;
 
+
+    /**
+     * Constructor Game creates a new Game instance
+     * @param playersNumber is the players number of the game
+     * @param nickname is an Arraylist that contains all nicknames
+     */
     public Game(int playersNumber, ArrayList<String> nickname) {
         players = new ArrayList<> ();
         nicknames.addAll(nickname);
-
-        try {
-            gameBoard=new GameBoard(playersNumber);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        gameBoard=new GameBoard(playersNumber);
     }
 
+
+    /**
+     * Increments the papalPawn variable
+     */
     public void updatePapalPawn() {
         papalPawn++;
     }
 
+
+    /**
+     * Gets the papalPawn variable
+     * @return papalPawn variable
+     */
     public int getPapalPawn() {
         return papalPawn;
     }
 
+
+    /**
+     * Gets the players of the match
+     * @return players variable
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+
+    /**
+     * Creates a new Player instance
+     * @param nickname is the nickname of the player
+     */
     public void createPlayer(String nickname){
         Player p = new Player(nickname);
         players.add(p);
@@ -57,6 +77,13 @@ public class Game {
         }
     }
 
+
+    /**
+     * Gets a player by nickname
+     * @param nickname is the nickname of the player we are looking for
+     * @return the player we are looking for
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
     public Player getPlayer(String nickname) throws NotExistingPlayerException{
         for (Player p:players) {
             if(p.getNickname().equals(nickname))
@@ -65,46 +92,31 @@ public class Game {
         throw  new NotExistingPlayerException();
     }
 
+
+    /**
+     * Gets the player who is playing
+     * @return currentPlayer variable
+     */
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
+
+    /**
+     * Sets the player who is playing
+     * @param player is the player who is playing
+     */
     public void setCurrentPlayer(Player player){
         this.currentPlayer = player;
     }
 
-    public void choiceDevCard(CardColor color, int level, int space) throws InvalidChoiceException, InvalidSpaceCardException, NotEnoughResourceException {
-        ArrayList<Goods> cost=new ArrayList<>();
-        Shelf shelf;
-        /*cost=gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost();*/
 
-        for(int i=0; i<gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost().size(); i++) {
-            cost.add(new Goods(gameBoard.getDevelopmentCardGrid().getCard(color, level).getCost().get(i)));
-        }
-
-        //check if currentPlayer has an economy leader and set discount
-        for(int i=0; i<currentPlayer.getLeaders().size(); i++){
-            if(currentPlayer.getLeaders().get(i) instanceof EconomyLeader){
-                for(Goods g: cost){
-                    if(g.getType().equals(((EconomyLeader) currentPlayer.getLeaders().get(i)).getDiscountType()) && currentPlayer.getLeaders().get(i).getIsActive()){
-                        g.setAmount(g.getAmount()-1);
-                    }
-                }
-            }
-        }
-
-        if(!currentPlayer.getPlayerDashboard().CheckResource(cost)){
-            throw new NotEnoughResourceException();
-        }
-
-        currentPlayer.buyCard(gameBoard.getDevelopmentCardGrid().getCard(color, level),space);
-
-        gameBoard.getDevelopmentCardGrid().removeCard(color, level);
-
-        currentPlayer.getPlayerDashboard().RemoveResource(cost);
-
-    }
-
+    /**
+     * Draws an action Token from the arrayList of LorenzoMagnifico
+     * @return the action token drawn
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws EmptyDecksException if the deck is empty
+     */
     public ActionToken drawActionToken() throws InvalidChoiceException, EmptyDecksException {
         ActionToken element = gameBoard.getLorenzoMagnifico().draw();
 
@@ -122,6 +134,11 @@ public class Game {
         return element;
     }
 
+
+    /**
+     * Gets the gameBoard instance
+     * @return gameBoard variable
+     */
     public GameBoard getGameBoard() {
         return gameBoard;
     }

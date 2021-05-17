@@ -13,13 +13,14 @@ import java.util.Arrays;
  * @author Nicola Landini
  */
 
-//Tested Class
-
 public class Market implements Serializable {
     private Ball[][] matrix = new Ball[3][4];
     private Ball ramp;
     private ArrayList<Ball>randomBall=new ArrayList<>();
 
+    /**
+     * Market constructor: creates a new instance of market
+     */
     public Market() {
         Ball ball=new Ball(BallColor.WHITE);
         randomBall.add(ball);
@@ -64,10 +65,6 @@ public class Market implements Serializable {
     }
 
 
-    public ArrayList<Ball> getRandomBall() {
-        return randomBall;
-    }
-
     public Ball[][] getMatrix() {
         return matrix;
     }
@@ -76,6 +73,9 @@ public class Market implements Serializable {
         return ramp;
     }
 
+    /**
+     * This method randomly fills the market matrix
+     */
     public void fillMatrix(){
         int cont=13;
 
@@ -91,9 +91,14 @@ public class Market implements Serializable {
         randomBall.clear();
     }
 
-
-    //choice indicates which is the player choice: 1-first col...4-last col
-    //                                             5-upper row...7-lower row
+    /**
+     * This method returns drawn marbles by the player choice
+     * @param choice indicates which row or column has to be shifted:
+     *               1-first column, 4-last column
+     *               5-upper row, 7-lower row
+     * @return drawn marbles
+     * @throws InvalidChoiceException if the choice is invalid
+     */
     public ArrayList<Ball> getChosenColor(int choice) throws InvalidChoiceException {
        if(choice<1 || choice>7){
            throw new InvalidChoiceException();

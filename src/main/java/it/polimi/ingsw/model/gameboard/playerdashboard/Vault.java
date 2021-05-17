@@ -14,6 +14,9 @@ public class Vault {
     private int stoneAmount;
     private int shieldsAmount;
 
+    /**
+     * Vault constructor: creates a new instance of vault
+     */
     public Vault() {
         coinsAmount = 0;
         servantsAmount = 0;
@@ -21,6 +24,11 @@ public class Vault {
         shieldsAmount = 0;
     }
 
+    /**
+     * This method increases the selected resources amount of a number equal to amount
+     * @param type resource type
+     * @param amount of resource to add
+     */
     public void AddResource(Resource type, int amount){
         if(type.equals(Resource.COIN)) coinsAmount += amount;
         else if(type.equals(Resource.SERVANT)) servantsAmount += amount;
@@ -28,6 +36,11 @@ public class Vault {
         else if(type.equals(Resource.STONE)) stoneAmount += amount;
     }
 
+    /**
+     * This method returns the amount of a selected resource
+     * @param type resource type
+     * @return resource amount
+     */
     public int getResource(Resource type){
         if(type.equals(Resource.COIN)) return coinsAmount;
         else if(type.equals(Resource.SERVANT)) return servantsAmount;
@@ -35,6 +48,11 @@ public class Vault {
         else return stoneAmount;
     }
 
+    /**
+     * This method decreases the selected resources amount of a number equal to amount
+     * @param type resource type
+     * @param amount of resource to add
+     */
     public void removeResource(Resource type, int amount){
         if(type.equals(Resource.COIN)) coinsAmount -= amount;
         else if(type.equals(Resource.SERVANT)) servantsAmount -= amount;
@@ -42,6 +60,11 @@ public class Vault {
         else if(type.equals(Resource.STONE)) stoneAmount -= amount;
     }
 
+    /**
+     * This method remove all resources that can be removed from the vault
+     * @param needed resources that have to be removed
+     * @return number of remaining resources that cannot be removed
+     */
     public int checkInput(Goods needed){
 
         if(getResource(needed.getType()) == 0) return needed.getAmount();
@@ -49,22 +72,10 @@ public class Vault {
         else return needed.getAmount() - getResource(needed.getType());
     }
 
-    public int getCoinsAmount() {
-        return coinsAmount;
-    }
-
-    public int getServantsAmount() {
-        return servantsAmount;
-    }
-
-    public int getShieldsAmount() {
-        return shieldsAmount;
-    }
-
-    public int getStoneAmount() {
-        return stoneAmount;
-    }
-
+    /**
+     * This method calculates the total amount of resources
+     * @return the total amount of resources in the vault
+     */
     public int getTotalResources(){
         return coinsAmount+servantsAmount+stoneAmount+shieldsAmount;
     }

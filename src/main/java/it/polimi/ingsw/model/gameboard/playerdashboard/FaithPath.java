@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 /**
- * FaithPath Class is used for handling the position changes of each player
+ * This class is used to represent the faith path of each player
  *
  * @author Nicola Landini
  */
@@ -25,6 +25,9 @@ public class FaithPath {
     private boolean papalPawn2;
     private boolean papalPawn3;
 
+    /**
+     * FaithPath constructor: creates a new instance of the faith path
+     */
     public FaithPath() {
         positionFaithPath=0;
         positionLorenzo=0;
@@ -35,15 +38,17 @@ public class FaithPath {
         initializeCells();
     }
 
+    /**
+     * This method initializes faith path cells
+     */
     public void initializeCells(){
         try{
             Gson gson = new Gson();
             JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/Cells.json"));
             ArrayList<Cell> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<Cell>>(){}.getType());
 
-            for(Cell cell: data){
-                space.add(cell);
-            }
+            space.addAll(data);
+
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -80,10 +85,18 @@ public class FaithPath {
 
     public int getPositionLorenzo() { return positionLorenzo; }
 
+    /**
+     * This method shifts player's position forward of move steps
+     * @param move steps forward for the player
+     */
     public void moveForward(int move){
         positionFaithPath = positionFaithPath+move;
     }
 
+    /**
+     * This method shifts Lorenzo il Magnifico's position forward of move steps
+     * @param move steps forward for Lorenzo il Magnifico
+     */
     public void moveForwardBCM(int move){
         positionLorenzo = positionLorenzo+move;
     }
@@ -94,6 +107,13 @@ public class FaithPath {
 
     //this method is called every times some player reaches papal favor position
     //spaceIndicator indicates which papal space
+
+    /**
+     * This method is called every times some player reaches papal favor position
+     * and it establishes if the player has the right to activate the corresponding papal pawn
+     * @param spaceIndicator indicates the papal space
+     * @return a boolean that indicates if the pawn has to be activated
+     */
     public boolean activatePapalPawn(int spaceIndicator) {
         switch(spaceIndicator){
             case 1: if(positionFaithPath>4){
@@ -115,6 +135,11 @@ public class FaithPath {
         return false;
     }
 
+    /**
+     * This method calculate how much points the player accumulated from his position
+     * and eventual papal pawns
+     * @return the total number of point accumulated with faith path position and eventual papal pawns
+     */
     public int getTotalPoint() {
         return space.get(positionFaithPath).getPoints()+papalPoints;
     }

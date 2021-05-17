@@ -17,8 +17,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TurnController {
-    private Game game;
-    private VirtualView view;
+    private final Game game;
+    private final VirtualView view;
     private final ArrayList<String> players = new ArrayList<>();
 
 
@@ -213,7 +213,10 @@ public class TurnController {
                     chooseTurn(player);
                 } else {
                     game.getPlayer(players.get(player)).doProduction();
-                    checkPapalPawn();
+                    ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                    if(!nick.isEmpty()) {
+                        view.papalPawn(nick);
+                    }
                 }
             } catch (NotEnoughResourceException e) {
                 view.sendErrorMessage(players.get(player));

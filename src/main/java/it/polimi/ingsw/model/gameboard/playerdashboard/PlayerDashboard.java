@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class implements the dash board that belongs to every player
+ *
+ * @author Nicola Landini, Francesco Leone
+ */
+
 public class PlayerDashboard {
 
     private final FaithPath faithPath;
@@ -33,6 +39,9 @@ public class PlayerDashboard {
         return vault;
     }
 
+    /**
+     * PlayerDashboard constructor: creates a new instance of player's dashboard
+     */
     public PlayerDashboard() {
         faithPath = new FaithPath();
         vault = new Vault();
@@ -54,6 +63,11 @@ public class PlayerDashboard {
         return leaders;
     }
 
+    /**
+     * This method checks if goods needed belongs to the player
+     * @param needed goods needed
+     * @return a boolean that represents if requirements are satisfied
+     */
     public boolean CheckResource(ArrayList<Goods> needed){
         ArrayList<Goods> neededClone = new ArrayList<>();
         boolean RequirementsSatisfied = true;
@@ -97,6 +111,11 @@ public class PlayerDashboard {
 
     }
 
+    /**
+     * This method at first removes goods from storage, then from the eventual
+     * storage leaders and finally from the vault
+     * @param toRemove goods that have to be removed
+     */
     public void RemoveResource(ArrayList<Goods> toRemove) {
 
         HashMap<Resource, Integer> ResToRemove = new HashMap<>();
@@ -133,6 +152,10 @@ public class PlayerDashboard {
         }
     }
 
+    /**
+     * This method adds resources to the vault
+     * @param toAdd goods that have to be added
+     */
     public void AddResources(ArrayList<Goods> toAdd){
         HashMap<Resource, Integer> ResToAdd = new HashMap<>();
         ResToAdd.put(Resource.COIN, 0);

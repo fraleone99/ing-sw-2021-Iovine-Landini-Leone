@@ -25,7 +25,7 @@ public class CLITest {
 
 
     @Test
-    public void printDevelopmentCard() throws FileNotFoundException {
+    public void printDevelopmentCard() {
         DevelopmentCardGrid d = new DevelopmentCardGrid();
         CLI cli = new CLI();
 
@@ -40,7 +40,7 @@ public class CLITest {
     }
 
     @Test
-    public void printLeaderCard() throws FileNotFoundException {
+    public void printLeaderCard() {
         GameBoard gameBoard = new GameBoard(2);
         CLI cli = new CLI();
 
@@ -115,14 +115,20 @@ public class CLITest {
 
 
     @Test
-    public void printDevelopmentCardSpace() throws InvalidSpaceCardException {
+    public void printDevelopmentCardSpace() {
         CLI cli = new CLI();
 
 
         DevCardsSpace devCardsSpace = new DevCardsSpace();
-        devCardsSpace.AddCard(cli.getDevelopmentCardDeck().getCardByID(17), 1);
-        devCardsSpace.AddCard(cli.getDevelopmentCardDeck().getCardByID(18), 2);
-        devCardsSpace.AddCard(cli.getDevelopmentCardDeck().getCardByID(29), 3);
+
+        devCardsSpace.checkSpace(cli.getDevelopmentCardDeck().getCardByID(17), 1);
+        devCardsSpace.addCard(cli.getDevelopmentCardDeck().getCardByID(17), 1);
+
+        devCardsSpace.checkSpace(cli.getDevelopmentCardDeck().getCardByID(17), 2);
+        devCardsSpace.addCard(cli.getDevelopmentCardDeck().getCardByID(17), 2);
+
+        devCardsSpace.checkSpace(cli.getDevelopmentCardDeck().getCardByID(17), 3);
+        devCardsSpace.addCard(cli.getDevelopmentCardDeck().getCardByID(17), 3);
 
         DevCardsSpaceInfo devCardsSpaceInfo = new DevCardsSpaceInfo(devCardsSpace);
 
@@ -152,7 +158,7 @@ public class CLITest {
     }
 
     @Test
-    public void testLeaderCard() throws FileNotFoundException {
+    public void testLeaderCard() {
         CLI cli = new CLI();
         GameBoard gameBoard = new GameBoard(2);
 
