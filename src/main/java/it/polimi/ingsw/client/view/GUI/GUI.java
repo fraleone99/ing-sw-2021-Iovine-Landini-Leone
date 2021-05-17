@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.GUI;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
@@ -30,6 +31,7 @@ public class GUI extends Application implements View {
     private Scene SetupScene;
     private Scene NicknameScene;
     private Scene ChooseNumberScene;
+    private Scene LoadingScene;
 
     private final Map<String, Scene> sceneMap = new HashMap<>();
     private final String MENU = "MainMenu";
@@ -63,6 +65,9 @@ public class GUI extends Application implements View {
 
         Parent ChooseNumber = FXMLLoader.load(getClass().getResource("/fxml/PlayerNumber.fxml"));
         ChooseNumberScene = new Scene(ChooseNumber);
+
+        Parent Loading = FXMLLoader.load(getClass().getResource("/fxml/loading.fxml"));
+        LoadingScene = new Scene(Loading);
     }
 
     @Override
@@ -283,7 +288,16 @@ public class GUI extends Application implements View {
 
     @Override
     public void readMessage(String message) {
+        if(message.equals("You are now in the waiting room. The game will start soon!")){
+            Platform.runLater(()->{
+                stage.setScene(LoadingScene);
+                stage.show();
 
+                ProgressBar progressBar = (ProgressBar) LoadingScene.lookup("#progressBar");
+                progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+
+            });
+        }
     }
 
     @Override

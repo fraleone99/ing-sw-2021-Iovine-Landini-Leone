@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.GUI">
+   <children>
+      <ProgressBar fx:id="progressBar" layoutX="200.0" layoutY="313.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="176.0" layoutY="158.0" text="Please wait! We are waiting for the other player" />
+   </children>
+</AnchorPane>
