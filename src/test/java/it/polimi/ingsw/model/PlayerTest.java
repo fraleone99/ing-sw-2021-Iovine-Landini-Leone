@@ -42,7 +42,7 @@ public class PlayerTest {
     }
 
     @Test(expected = InvalidSpaceCardException.class)
-    public void buyCard_InvalidSpace() throws InvalidSpaceCardException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException {
+    public void buyCard_InvalidSpace() throws InvalidSpaceCardException {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -148,7 +148,7 @@ public class PlayerTest {
 
     @Test
     public void testActiveLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException,
-            NotEnoughSpaceException, InvalidSpaceCardException, InvalidChoiceException {
+            NotEnoughSpaceException, InvalidChoiceException {
 
         player.getPlayerDashboard().getStorage().AddResource(3,Resource.SHIELD,3);
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,4);
@@ -165,7 +165,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output,0);
         DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
         DevelopmentCardDeck GreenOne = new DevelopmentCardDeck();
         cost1=new ArrayList<>();
@@ -175,7 +176,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,18, CardColor.GREEN, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
         cost1=new ArrayList<>();
         cost1.add(new Goods(Resource.SHIELD, 2));
@@ -187,7 +189,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.COIN, 2));
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,3);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,3);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,3);
 
         cost1 = new ArrayList<>();
         cost1.add(new Goods(Resource.COIN, 3));
@@ -199,7 +202,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.SERVANT, 3));
         production=new Production(input, output, 0);
         devCard=new DevelopmentCard(6,38, CardColor.BLUE, 2, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
         player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,2);
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,4);
@@ -263,7 +267,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testGetDevCards() throws InvalidSpaceCardException {
+    public void testGetDevCards() {
         ArrayList<Integer> cards = new ArrayList<>();
 
 
@@ -277,7 +281,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output,0);
         DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
 
         cost1=new ArrayList<>();
@@ -287,7 +292,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,19, CardColor.GREEN, 2, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
         cards.add(devCard.getCardID());
 
 
@@ -301,7 +307,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.SERVANT, 3));
         production=new Production(input, output, 0);
         devCard=new DevelopmentCard(6,38, CardColor.BLUE, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
 
         cost1=new ArrayList<>();
@@ -311,7 +318,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,18, CardColor.GREEN, 2, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
 
         cost1=new ArrayList<>();
@@ -321,7 +329,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,18, CardColor.GREEN, 3, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
         cards.add(devCard.getCardID());
 
 
@@ -335,7 +344,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.COIN, 2));
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,3);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,3);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,3);
         cards.add(devCard.getCardID());
 
 
@@ -346,7 +356,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testGetProductions() throws InvalidSpaceCardException {
+    public void testGetProductions() {
         ArrayList<Integer> cards = new ArrayList<>();
 
 
@@ -360,7 +370,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output,0);
         DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
 
         cost1=new ArrayList<>();
@@ -370,7 +381,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,19, CardColor.GREEN, 2, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
         cards.add(devCard.getCardID());
 
 
@@ -384,7 +396,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.SERVANT, 3));
         production=new Production(input, output, 0);
         devCard=new DevelopmentCard(6,38, CardColor.BLUE, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
 
         cost1=new ArrayList<>();
@@ -394,7 +407,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,18, CardColor.GREEN, 2, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
 
         cost1=new ArrayList<>();
@@ -404,7 +418,8 @@ public class PlayerTest {
         output=new ArrayList<>();
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(1,18, CardColor.GREEN, 3, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
         cards.add(devCard.getCardID());
 
 
@@ -418,7 +433,8 @@ public class PlayerTest {
         output.add(new Goods(Resource.COIN, 2));
         production=new Production(input, output, 1);
         devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,3);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,3);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,3);
         cards.add(devCard.getCardID());
 
 
@@ -465,7 +481,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void ProductionDevCard() throws InvalidSpaceCardException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+    public void ProductionDevCard() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -477,7 +493,8 @@ public class PlayerTest {
         Production production=new Production(input, output, 0);
         DevelopmentCard devCard=new DevelopmentCard(3, 4, CardColor.PURPLE, 1, cost, production);
 
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
         player.getPlayerDashboard().getStorage().AddResource(1,Resource.STONE,1);
         player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,1);
@@ -500,7 +517,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testCalculateVictoryPoints() throws InvalidSpaceCardException {
+    public void testCalculateVictoryPoints() {
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> output=new ArrayList<>();
 
@@ -508,23 +525,28 @@ public class PlayerTest {
 
         Production production=new Production(input, output, 2);
         DevelopmentCard card = new DevelopmentCard(4, 5, CardColor.GREEN, 1, cost, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(card,1);
 
         production=new Production(input, output, 5);
         card = new DevelopmentCard(8, 6, CardColor.BLUE, 2, cost, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(card,1);
 
         production=new Production(input, output, 9);
         card = new DevelopmentCard(12, 7, CardColor.GREEN, 3, cost, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 1);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(card,1);
 
         production=new Production(input, output, 2);
         card = new DevelopmentCard(3, 8, CardColor.PURPLE, 1, cost, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(card,2);
 
         production=new Production(input, output, 2);
         card = new DevelopmentCard(6, 9, CardColor.YELLOW, 2, cost, production);
-        player.getPlayerDashboard().getDevCardsSpace().AddCard(card, 2);
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(card,2);
 
 
         Goods good=new Goods(Resource.COIN, 3);

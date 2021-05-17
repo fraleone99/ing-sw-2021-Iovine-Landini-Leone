@@ -19,7 +19,7 @@ public class Market implements Serializable {
     private ArrayList<Ball>randomBall=new ArrayList<>();
 
     /**
-     * Market constructor: it initializes the marbles and calls fillMatrix
+     * Market constructor: creates a new instance of market
      */
     public Market() {
         Ball ball=new Ball(BallColor.WHITE);
@@ -64,10 +64,6 @@ public class Market implements Serializable {
         fillMatrix();
     }
 
-
-    public ArrayList<Ball> getRandomBall() {
-        return randomBall;
-    }
 
     public Ball[][] getMatrix() {
         return matrix;

@@ -29,18 +29,6 @@ public class Cell {
 
     public int getPoints() { return points; }
 
-    public boolean isPopeSpace1(){
-        return isPopeSpace1;
-    }
-
-    public boolean isPopeSpace2(){
-        return isPopeSpace2;
-    }
-
-    public boolean isPopeSpace3(){
-        return isPopeSpace3;
-    }
-
     @Override
     public String toString(){
         return "Cell{" +

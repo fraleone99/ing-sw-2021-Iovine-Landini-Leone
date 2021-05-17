@@ -40,8 +40,7 @@ public class PlayerDashboard {
     }
 
     /**
-     * PlayerDashboard constructor: it declares the faith path, the vault, the shelves,
-     * the development card space, the leaders deck and the storage
+     * PlayerDashboard constructor: creates a new instance of player's dashboard
      */
     public PlayerDashboard() {
         faithPath = new FaithPath();

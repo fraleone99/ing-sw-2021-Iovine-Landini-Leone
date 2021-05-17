@@ -20,7 +20,7 @@ public class DeleteCard extends ActionToken implements Serializable {
     private final CardColor colorType;
 
     /**
-     * DeleteCard constructor: it sets card color
+     * DeleteCard constructor: creates a new instance of DeleteCard
      * @param colorType indicates cards color
      */
     public DeleteCard(CardColor colorType) {

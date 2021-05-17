@@ -17,6 +17,12 @@ import java.util.ArrayList;
 public class Storage {
     private final ArrayList<Shelf> shelves = new ArrayList<>();
 
+    /**
+     * Storage constructor: creates a new instance of storage
+     * @param shelf1 is the first shelf
+     * @param shelf2 is the second shelf
+     * @param shelf3 is the third shelf
+     */
     public Storage(Shelf shelf1, Shelf shelf2, Shelf shelf3) {
         shelves.add(shelf1);
         shelves.add(shelf2);
@@ -36,6 +42,12 @@ public class Storage {
         return  sum;
     }
 
+    /**
+     * This method returns the shelf of the resource type given as parameter or 0
+     * if not present
+     * @param type resource that we are looking for
+     * @return the number of the shelf that contains the resource, otherwise returns 0
+     */
     public int typePresent(Resource type){
         for(Shelf s : shelves){
             if(s.getResourceType().equals(type) && s.getAmount() > 0){
@@ -62,22 +74,11 @@ public class Storage {
     }
 
     /**
-     * Method DiscardResources discards the selected amount of resources from the selected shelf
-     *
-     * @param s is the shelf from which the resources wil be discarded
-     * @param amount is the amount of resources that will be discarded from the selected shelf
-     * @throws NotEnoughResourceException when amount is grater then the amount of resources on the shelf
-     * @throws InvalidChoiceException when the chosen shelf doesn't exist
+     * Method DiscardResources discards the selected amount of resources from the storage
+     * @param type is the resource type
+     * @param amount is the number of resources that have to be removed
+     * @return how many resources still need to be removed
      */
-    public void DiscardResources(int s, int amount) throws NotEnoughResourceException, InvalidChoiceException{
-        if(s<0 || s>3) throw new  InvalidChoiceException();
-
-        if(shelves.get(s-1).getAmount() >= amount){
-            shelves.get(s-1).discardResource(amount);
-        }
-        else throw new NotEnoughResourceException();
-    }
-
     public int DiscardResources(Resource type, int amount){
         Shelf s = isThisTypePresent(type);
 
@@ -159,6 +160,12 @@ public class Storage {
 
     }
 
+    /**
+     * This method checks if the given resource is present in the storage and calculates how many
+     * resources can be placed in the shelves. It returns the amount of resources that can't ve placed
+     * @param needed resources that have to be placed
+     * @return the amount of resources that can't be placed
+     */
     public int checkInput(Goods needed){
         Shelf shelf = isThisTypePresent(needed.getType());
 
@@ -167,6 +174,11 @@ public class Storage {
         else return needed.getAmount() - shelf.getAmount();
     }
 
+    /**
+     * This method return the amount of resources in a selected shelf
+     * @param s number of the shelf
+     * @return the amount of resources of the shelf
+     */
     public int getAmountShelf(int s){
         return shelves.get(s-1).getAmount();
     }
@@ -175,6 +187,10 @@ public class Storage {
         return shelves;
     }
 
+    /**
+     * This method calculates the number of empty shelves
+     * @return the total amount of empty shelves
+     */
     public int emptyShelves() {
         int cont=0;
         for(Shelf s : shelves) {
@@ -183,6 +199,11 @@ public class Storage {
         return cont;
     }
 
+    /**
+     * This method return the resource type of a selected shelf
+     * @param s number of the shelf
+     * @return the resource of the selected shelf
+     */
     public Resource getTypeShelf(int s){
         return shelves.get(s-1).getResourceType();
     }

@@ -15,7 +15,7 @@ public class BlackCrossMover extends ActionToken implements Serializable {
     boolean shuffle;
 
     /**
-     * BlackCrossMover constructor: it sets steps and if action token have to be shuffled
+     * BlackCrossMover constructor: creates a new instance of BlackCrossMover
      * @param steps indicates how many steps are imposes to Lorenzo's faith path
      * @param shuffle indicates if action token have to be shuffled
      */

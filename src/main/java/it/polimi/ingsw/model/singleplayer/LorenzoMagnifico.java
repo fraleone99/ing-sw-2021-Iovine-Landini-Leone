@@ -16,7 +16,8 @@ public class LorenzoMagnifico{
     private ArrayList<ActionToken> tokens=new ArrayList<>();
 
     /**
-     * LorenzoMagnifico constructor: it initializes the action tokens
+     * LorenzoMagnifico constructor: creates a new instance of LorenzoMagnifico and
+     * initializes the action tokens
      */
     public LorenzoMagnifico(){
         ActionToken temp=new BlackCrossMover(2, false);

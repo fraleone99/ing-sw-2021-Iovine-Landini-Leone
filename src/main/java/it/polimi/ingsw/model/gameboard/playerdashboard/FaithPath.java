@@ -26,8 +26,7 @@ public class FaithPath {
     private boolean papalPawn3;
 
     /**
-     * FaithPath constructor: it initializes player's position to 0, Lorenzo
-     * il Magnifico's position to 0 and it sets the papal pawns to false
+     * FaithPath constructor: creates a new instance of the faith path
      */
     public FaithPath() {
         positionFaithPath=0;
@@ -48,9 +47,8 @@ public class FaithPath {
             JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/Cells.json"));
             ArrayList<Cell> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<Cell>>(){}.getType());
 
-            for(Cell cell: data){
-                space.add(cell);
-            }
+            space.addAll(data);
+
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
