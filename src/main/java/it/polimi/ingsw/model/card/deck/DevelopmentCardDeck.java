@@ -25,7 +25,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Draw a card from the deck. The Card is removed from the deck
+     * Draws a card from the deck. The Card is removed from the deck
      * @return the last card of the deck.
      */
     public DevelopmentCard draw() throws InvalidChoiceException {
@@ -37,7 +37,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Add a card to the deck
+     * Adds a card to the deck
      * @param card will be added to the deck
      */
     public void add(DevelopmentCard card){
@@ -46,7 +46,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Add all the card to the deck
+     * Adds all the card to the deck
      * @param devCards will be added to the deck
      */
     public void addAll(DevelopmentCardDeck devCards) {deck.addAll(devCards.getDeck());}
@@ -69,7 +69,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Check how many cards of a certain type are in the deck
+     * Checks how many cards of a certain type are in the deck
      * @param color is the color of the cards we are looking for
      * @param level is the level of the cards we are looking for
      * @return the number of cards of this type present in the deck
@@ -88,14 +88,14 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Calculate the size of the deck
+     * Calculates the size of the deck
      * @return the size of the deck
      */
     public int size(){ return deck.size(); }
 
 
     /**
-     * Set the initial deck
+     * Sets the initial deck
      * @param deck is the initial deck
      */
     public void setDeck(List<DevelopmentCard> deck){
@@ -104,7 +104,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Calculate the total victory points of the cards in the deck
+     * Calculates the total victory points of the cards in the deck
      * @return the victory points
      */
     public int victoryPointsAmount(){
@@ -118,7 +118,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Get the deck
+     * Gets the deck
      * @return the deck
      */
     public List<DevelopmentCard> getDeck() {
@@ -127,7 +127,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Search a card in the deck by an ID
+     * Searches a card in the deck by an ID
      * @param ID is the ID of the card that we are looking for
      * @return the card if it is present in the deck
      */
@@ -142,7 +142,7 @@ public class DevelopmentCardDeck implements Deck {
 
 
     /**
-     * Get all the cards of the deck with their IDs
+     * Gets all the cards of the deck with their IDs
      * @return an ArrayList of the IDs of the cards
      */
     public ArrayList<Integer> IdDeck(){

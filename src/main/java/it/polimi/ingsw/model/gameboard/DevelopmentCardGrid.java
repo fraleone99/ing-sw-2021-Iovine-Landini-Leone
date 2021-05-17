@@ -32,8 +32,12 @@ public class DevelopmentCardGrid {
         return devCardsDecks;
     }
 
-    public DevelopmentCardGrid() throws FileNotFoundException {
-        initializeDevCards();
+    public DevelopmentCardGrid() {
+        try {
+            initializeDevCards();
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void ShufflesAllDecks(){

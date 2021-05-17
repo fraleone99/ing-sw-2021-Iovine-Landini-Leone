@@ -35,7 +35,7 @@ public class ProductionLeader extends LeaderCard {
 
 
     /**
-     * Get the input of the production of the card
+     * Gets the input of the production of the card
      * @return the input of the production
      */
     public ArrayList<Goods> getInputProduction(){
@@ -44,7 +44,7 @@ public class ProductionLeader extends LeaderCard {
 
 
     /**
-     * Get the output of the production of the card
+     * Gets the output of the production of the card
      * @return the output of the production
      */
     public ArrayList<Goods> getOutputProduction(){
@@ -53,7 +53,7 @@ public class ProductionLeader extends LeaderCard {
 
 
     /**
-     * Get the production of the card
+     * Gets the production of the card
      * @return the production
      */
     public Production getProduction(){  return production;}
@@ -74,7 +74,7 @@ public class ProductionLeader extends LeaderCard {
 
 
     /**
-     * Set the output of the production of the card
+     * Sets the output of the production of the card
      * @param resource is the type of the output of the production
      */
     public void setOutputProduction(Resource resource){
@@ -84,7 +84,7 @@ public class ProductionLeader extends LeaderCard {
 
 
     /**
-     * Get the faith steps of the production of the card
+     * Gets the faith steps of the production of the card
      * @return the faith steps
      */
     public int getFaithSteps() {

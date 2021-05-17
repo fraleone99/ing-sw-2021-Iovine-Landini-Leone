@@ -34,7 +34,7 @@ public class Requirements {
 
 
     /**
-     * Get the color of the card required
+     * Gets the color of the card required
      * @return the parameter color
      */
     public CardColor getColor(){
@@ -43,7 +43,7 @@ public class Requirements {
 
 
     /**
-     * Get the level of the card required
+     * Gets the level of the card required
      * @return the parameter level
      */
     public int getLevel(){
@@ -52,7 +52,7 @@ public class Requirements {
 
 
     /**
-     * Get the amount of cards required
+     * Gets the amount of cards required
      * @return the parameter amount
      */
     public int getAmount(){
@@ -61,7 +61,7 @@ public class Requirements {
 
 
     /**
-     * Get the cost to activate the card
+     * Gets the cost to activate the card
      * @return the parameter activationCost
      */
     public ArrayList<Goods> getCost() { return activationCost; }

@@ -22,7 +22,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Get the deck
+     * Gets the deck
      * @return the deck
      */
     public ArrayList<LeaderCard> getDeck() {
@@ -39,14 +39,14 @@ public class LeaderCardDeck {
 
 
     /**
-     * Remove a card from the deck
+     * Removes a card from the deck
      * @param pos is the index of the card that will be removed
      */
     public void remove(int pos) {deck.remove(pos);}
 
 
     /**
-     * Draw a card from the deck. The Card is removed from the deck
+     * Draws a card from the deck. The Card is removed from the deck
      * @return the last card of the deck.
      */
     public LeaderCard drawFromTail(){
@@ -55,7 +55,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Add a card to the deck
+     * Adds a card to the deck
      * @param card will be added to the deck
      */
     public void add(LeaderCard card){
@@ -72,7 +72,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Search the ID of the cards of the deck that are active
+     * Searches the ID of the cards of the deck that are active
      * @return an ArrayList with the ID of the active cards
      */
     public ArrayList<Integer> idDeckActive() {
@@ -87,7 +87,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Get all the cards of the deck with their IDs
+     * Gets all the cards of the deck with their IDs
      * @return an ArrayList of the IDs of the cards
      */
     public ArrayList<Integer> IdDeck(){
@@ -100,7 +100,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Search a card in the deck by an ID
+     * Searches a card in the deck by an ID
      * @param ID is the ID of the card that we are looking for
      * @return the card if it is present in the deck
      */
@@ -114,7 +114,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Get a card from the deck by index
+     * Gets a card from the deck by index
      * @param pos is the index of the card that we are looking for
      * @return the card that we are looking for
      */
@@ -124,7 +124,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Calculate the size of the deck
+     * Calculates the size of the deck
      * @return the size of the deck
      */
     public int size(){
@@ -133,7 +133,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Check if the deck is empty
+     * Checks if the deck is empty
      * @return true if the deck is empty, false if it is not empty
      */
     public boolean isEmpty(){
@@ -142,7 +142,7 @@ public class LeaderCardDeck {
 
 
     /**
-     * Calculate the total victory points of the cards in the deck
+     * Calculates the total victory points of the cards in the deck
      * @return the victory points
      */
     public int victoryPointsAmount(){

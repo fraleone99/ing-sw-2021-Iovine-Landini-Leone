@@ -35,7 +35,7 @@ public class WhiteBallLeader extends LeaderCard {
 
 
     /**
-     * Get the type of the conversion that the card offers
+     * Gets the type of the conversion that the card offers
      * @return the type of the conversion
      */
     public Resource getConversionType(){

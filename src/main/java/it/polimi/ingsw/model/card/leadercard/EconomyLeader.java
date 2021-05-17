@@ -35,7 +35,7 @@ public class EconomyLeader extends LeaderCard {
 
 
     /**
-     * Get the discount type of the card
+     * Gets the discount type of the card
      * @return the discount type
      */
     public Resource getDiscountType()

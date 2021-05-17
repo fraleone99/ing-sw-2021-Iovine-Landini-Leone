@@ -30,7 +30,7 @@ public abstract class LeaderCard extends Card {
 
 
     /**
-     * Set the isDiscarded parameter to true
+     * Sets the isDiscarded parameter to true
      */
     public void setIsDiscarded(){
         isDiscarded=true;
@@ -38,13 +38,13 @@ public abstract class LeaderCard extends Card {
 
 
     /**
-     * Set the isDiscarded parameter to false
+     * Sets the isDiscarded parameter to false
      */
     public void setIsNotDiscarded() {isDiscarded=false;}
 
 
     /**
-     * Set the isActive parameter to true
+     * Sets the isActive parameter to true
      */
     public void setIsActive(){
         isActive=true;
@@ -52,13 +52,13 @@ public abstract class LeaderCard extends Card {
 
 
     /**
-     * Set the isActive parameter to false
+     * Sets the isActive parameter to false
      */
     public void setIsNotActive() {isActive=false;}
 
 
     /**
-     * Get the value of the parameter isDiscarded
+     * Gets the value of the parameter isDiscarded
      * @return the value of isDiscarded
      */
     public boolean getIsDiscarded(){
@@ -67,7 +67,7 @@ public abstract class LeaderCard extends Card {
 
 
     /**
-     * Get the value of the parameter isActive
+     * Gets the value of the parameter isActive
      * @return the value of isActive
      */
     public boolean getIsActive(){
@@ -76,14 +76,14 @@ public abstract class LeaderCard extends Card {
 
 
     /**
-     * Get the requirements to activate the card
+     * Gets the requirements to activate the card
      * @return an ArrayList that contains the requirements
      */
     public abstract ArrayList<Requirements> getRequirements();
 
 
     /**
-     * Check if the requirements to activate the card are met
+     * Checks if the requirements to activate the card are met
      * @param playerDashboard represent where the requirements must be checked
      * @return true if the requirements are met, otherwise false
      */

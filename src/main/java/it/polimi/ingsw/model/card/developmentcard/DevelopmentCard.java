@@ -40,7 +40,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the color of the card
+     * Gets the color of the card
      * @return the color of the card
      */
     public CardColor getColor() {
@@ -49,7 +49,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the level of the card
+     * Gets the level of the card
      * @return the level of the card
      */
     public int getLevel() {
@@ -58,7 +58,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the cost of the card
+     * Gets the cost of the card
      * @return an ArrayList of Goods that represents the cost to activate the card
      */
     public ArrayList<Goods> getCost() {
@@ -67,7 +67,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the faith steps of the card production
+     * Gets the faith steps of the card production
      * @return the faith steps
      */
     public int getFaithSteps() {
@@ -76,7 +76,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the input of the production of the card
+     * Gets the input of the production of the card
      * @return the input of the production
      */
     public ArrayList<Goods> getInputProduction(){
@@ -85,7 +85,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the output of the production of the card
+     * Gets the output of the production of the card
      * @return the output of the production
      */
     public ArrayList<Goods> getOutputProduction(){
@@ -94,7 +94,7 @@ public class DevelopmentCard extends Card {
 
 
     /**
-     * Get the production of the card
+     * Gets the production of the card
      * @return the production
      */
     public Production getProduction() {

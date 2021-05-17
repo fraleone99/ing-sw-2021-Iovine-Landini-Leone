@@ -26,7 +26,7 @@ public abstract class Card{
 
 
     /**
-     * Get the victory points of the card
+     * Gets the victory points of the card
      * @return the victory points
      */
     public int getVictoryPoints(){
@@ -35,7 +35,7 @@ public abstract class Card{
 
 
     /**
-     * Get the ID of the card
+     * Gets the ID of the card
      * @return the ID
      */
     public int getCardID() {

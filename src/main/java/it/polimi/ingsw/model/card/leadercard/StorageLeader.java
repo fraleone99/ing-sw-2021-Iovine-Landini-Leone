@@ -37,7 +37,7 @@ public class StorageLeader extends LeaderCard {
 
 
     /**
-     * Remove resources from the shelf of the card
+     * Removes resources from the shelf of the card
      * @param amount is the number of resources to be removed
      * @return the available space of the shelf
      */
@@ -55,7 +55,7 @@ public class StorageLeader extends LeaderCard {
 
 
     /**
-     * Add resources at the shelf of the card
+     * Adds resources at the shelf of the card
      * @param type is the type of the resource to be added
      * @param amount is the number of resources to be added
      * @throws NotEnoughSpaceException if the shelf doesn't have enough available space
@@ -72,7 +72,7 @@ public class StorageLeader extends LeaderCard {
 
 
     /**
-     * Get the type of resource that the shelf can contain
+     * Gets the type of resource that the shelf can contain
      * @return the type of resource
      */
     public Resource getType(){
@@ -81,7 +81,7 @@ public class StorageLeader extends LeaderCard {
 
 
     /**
-     * Get the available space of the shelf
+     * Gets the available space of the shelf
      * @return the number of free spaces
      */
     public int getAmount(){return LeaderShelf.getAmount();}
