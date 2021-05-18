@@ -73,27 +73,27 @@ public interface View {
 
     void chooseWhiteBallLeader(String message);
 
-    int seeBall(SeeBall ball);
+    void seeBall(SeeBall ball);
 
-    int chooseShelf();
+    void chooseShelf();
 
-    int askColor(String message);
+    void askColor(String message);
 
-    int askLevel(String message);
+    void askLevel(String message);
 
-    int askSpace(String message);
+    void askSpace(String message);
 
-    int askType(String message);
+    void askType(String message);
 
-    int askInput(String message);
+    void askInput(String message);
 
-    int askOutput(String message);
+    void askOutput(String message);
 
-    int askDevelopmentCard(String message);
+    void askDevelopmentCard(String message);
 
-    int askLeaderCard(String message);
+    void askLeaderCard(String message);
 
-    int endTurn(String message);
+    void endTurn(String message);
 
     void win(String message);
 
@@ -101,5 +101,5 @@ public interface View {
 
     void seeOtherCards(ArrayList<Integer> leaderCards);
 
-    int choice();
+    void choice();
 }

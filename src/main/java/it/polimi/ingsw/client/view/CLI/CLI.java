@@ -201,12 +201,13 @@ public class CLI implements View{
     }
 
     public int askInt (int min, int max, String message){
+        Scanner scanner = new Scanner(System.in);
         String input;
         System.out.println(message);
         while (true)
             try
             {
-                input = in.nextLine();
+                input = scanner.nextLine();
                 if (Integer.parseInt(input) < min || Integer.parseInt(input) > max) {
                     System.out.println("Incorrect number, please try again:");
                 }
@@ -366,12 +367,12 @@ public class CLI implements View{
         }
     }
 
-    public int choice() {
-        int choice;
-
-        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        return choice;
+    public void choice() {
+        Thread t = new Thread(() -> {
+            int choice = askInt(1, 2, "Do you want to see more from the Game Board?\n1) Yes\n2) No");
+            handler.send(new SendInt(choice));
+        });
+        t.start();
     }
 
     public void askTurnType(String message) {
@@ -480,81 +481,109 @@ public class CLI implements View{
         t.start();
     }
 
-    public int seeBall(SeeBall ball) {
-        int choice;
+    public void seeBall(SeeBall ball) {
+        Thread t = new Thread(()->{
+            System.out.println("These are the resources taken from the market, which one do you want to place in the storage?");
+            for(int i=0;i<ball.getBalls().size();i++) {
+                System.out.println((i+1) + ")" + BallToString.get(ball.getBalls().get(i).getType()));
+            }
+            int choice = askInt(1,ball.getBalls().size(),"");
+            handler.send(new SendInt(choice));
 
-        System.out.println("These are the resources taken from the market, which one do you want to place in the storage?");
+        });
+        t.start();
 
-        for(int i=0;i<ball.getBalls().size();i++) {
-            System.out.println((i+1) + ")" + BallToString.get(ball.getBalls().get(i).getType()));
-        }
 
-        choice = askInt(1, ball.getBalls().size(), "");
-
-        return choice;
     }
 
-    public int chooseShelf() {
-        int shelf;
+    public void chooseShelf() {
+        Thread t = new Thread(()->{
+            int shelf = askInt(1,4,"Which shelf do you want to put this resource on? " +
+                    "(Press 4 if you want to use the Storage leaders)");
+            handler.send(new SendInt(shelf));
 
-        shelf = askInt(1,4,"Which shelf do you want to put this resource on? " +
-                "(Press 4 if you want to use the Storage leaders)");
-
-        return shelf;
+        });
+        t.start();
     }
 
-    public int askColor(String message) {
-        int color;
-        color = askInt(1,4, message);
-        return color;
+    public void askColor(String message) {
+        Thread t = new Thread(()->{
+            int color = askInt(1,4,message);
+            handler.send(new SendInt(color));
+
+        });
+        t.start();
     }
 
-    public int askLevel(String message) {
-        int level;
-        level = askInt(1,3,message);
-        return level;
+    public void askLevel(String message) {
+        Thread t = new Thread(()->{
+            int level = askInt(1,3,message);
+            handler.send(new SendInt(level));
+
+        });
+        t.start();
     }
 
-    public int askSpace(String message) {
-        int space;
-        space = askInt(1,3, message);
-        return space;
+    public void askSpace(String message) {
+        Thread t = new Thread(()->{
+            int space = askInt(1,3,message);
+            handler.send(new SendInt(space));
+
+        });
+        t.start();
     }
 
-    public int askType(String message) {
-        int type;
-        type = askInt(1,4,message);
-        return type;
+    public void askType(String message) {
+        Thread t = new Thread(()->{
+            int type = askInt(1,4,message);
+            handler.send(new SendInt(type));
+
+        });
+        t.start();
     }
 
-    public int askInput(String message) {
-        int input;
-        input = askInt(1,4,message);
-        return input;
+    public void askInput(String message) {
+        Thread t = new Thread(()->{
+            int input = askInt(1,4,message);
+            handler.send(new SendInt(input));
+
+        });
+        t.start();
     }
 
-    public int askOutput(String message) {
-        int output;
-        output = askInt(1,4,message);
-        return output;
+    public void askOutput(String message) {
+        Thread t = new Thread(()->{
+            int output = askInt(1,4,message);
+            handler.send(new SendInt(output));
+
+        });
+        t.start();
     }
 
-    public int askDevelopmentCard(String message) {
-        int space;
-        space = askInt(1,3,message);
-        return space;
+    public void askDevelopmentCard(String message) {
+        Thread t = new Thread(()->{
+            int space = askInt(1,3,message);
+            handler.send(new SendInt(space));
+
+        });
+        t.start();
     }
 
-    public int askLeaderCard(String message) {
-        int index;
-        index = askInt(1,2,message);
-        return index;
+    public void askLeaderCard(String message) {
+        Thread t = new Thread(()->{
+            int index = askInt(1,2,message);
+            handler.send(new SendInt(index));
+        });
+        t.start();
     }
 
-    public int endTurn(String message) {
-        int choice;
-        choice = askInt(1,3,message);
-        return choice;
+    public void endTurn(String message) {
+        Thread t = new Thread(()->{
+            int choice = askInt(1,3,message);
+            handler.send(new SendInt(choice));
+        });
+        t.start();
+
     }
 
     public String printGood(Goods goods , String color){
