@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.NetworkHandler;
+import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.View;
@@ -219,109 +220,141 @@ public class CLI implements View{
         return Integer.parseInt(input);
     }
 
-    public int askResource(String message) {
-        int resource;
+    public void askResource(String message) {
+        Thread t=new Thread( () -> {
+            int resource;
 
-        System.out.println(message);
-        //System.out.println("Press the corresponding number:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
+            System.out.println(message);
+            //System.out.println("Press the corresponding number:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
 
-        resource = askInt(1, 4, "Press the corresponding number:" +
-                "\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
+            resource = askInt(1, 4, "Press the corresponding number:" +
+                    "\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT");
 
-        return resource;
+            handler.send(new SendInt(resource));
+        }
+        );
+        t.start();
     }
 
     public void readMessage(String message) {
         System.out.println(message);
     }
 
-    public int askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
-        int card;
+    public void askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
+        Thread t=new Thread( () -> {
+            int card;
 
-        for(int i=0;i<IdLeaders.size();i++){
-            System.out.println(i+1+")");
-            System.out.println(printLeaderCard(LeaderDeck.getFromID(IdLeaders.get(i))));
-        }
-
-        card = askInt(1, IdLeaders.size(),"Enter the corresponding number:" );
-
-        return card;
-    }
-
-
-    public int seeGameBoard(String message) {
-        int choice;
-        System.out.println(message);
-
-        choice = askInt(1 , 7, "1) Leader Cards.\n2) Market.\n3) Development cards grid.\n" +
-                "4) Cards for production.\n5) Active Leader Cards of the other players.\n6) Development Cards" +
-                " that can be used by the other players.\n7) Nothing");
-
-        return choice;
-    }
-
-    public int seeLeaderCards(ArrayList<Integer> leaderCards) {
-        int choice;
-
-        for (Integer leaderCard : leaderCards) {
-            System.out.println(printLeaderCard(LeaderDeck.getFromID(leaderCard)));
-        }
-
-        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        return choice;
-    }
-
-    public int seeMarket(Market market) {
-        int choice;
-
-        System.out.println(printMarket(market));
-
-        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        return choice;
-    }
-
-    public int chooseLine(String message) {
-        int choice;
-
-        System.out.println(message);
-
-        choice = askInt(1,7, "1) Level one cards\n2) Level two cards\n3) Level three cards\n" +
-                "4) Purple cards\n5) Yellow Cards\n6) Blue Cards\n7) Green Cards");
-
-        return choice;
-    }
-
-    public int seeGrid(ArrayList<Integer> devCards) {
-        int choice;
-
-        for (Integer devCard : devCards) {
-            System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(devCard)));
-        }
-
-        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
-
-        return choice;
-    }
-
-    public int seeProductions(ArrayList<Integer> productions) {
-        int choice;
-
-        if(productions.size()==0) {
-            System.out.println("You haven't cards to make productions.");
-        } else {
-            for (Integer production : productions) {
-                if (production < 17)
-                    System.out.println(printLeaderCard(LeaderDeck.getFromID(production)));
-                else
-                    System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(production)));
+            for (int i = 0; i < IdLeaders.size(); i++) {
+                System.out.println(i + 1 + ")");
+                System.out.println(printLeaderCard(LeaderDeck.getFromID(IdLeaders.get(i))));
             }
+
+            card = askInt(1, IdLeaders.size(), "Enter the corresponding number:");
+
+            handler.send(new SendInt(card));
         }
+        );
+        t.start();
+    }
 
-        choice = askInt(1,2,"Do you want to see more from the Game Board?\n1) Yes\n2) No");
 
-        return choice;
+    public void seeGameBoard(String message) {
+        Thread t=new Thread( () -> {
+            int choice;
+            System.out.println(message);
+
+            choice = askInt(1, 7, "1) Leader Cards.\n2) Market.\n3) Development cards grid.\n" +
+                    "4) Cards for production.\n5) Active Leader Cards of the other players.\n6) Development Cards" +
+                    " that can be used by the other players.\n7) Nothing");
+
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
+    }
+
+    public void seeLeaderCards(ArrayList<Integer> leaderCards) {
+        Thread t=new Thread( () -> {
+            int choice;
+
+            for (Integer leaderCard : leaderCards) {
+                System.out.println(printLeaderCard(LeaderDeck.getFromID(leaderCard)));
+            }
+
+            choice = askInt(1, 2, "Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
+    }
+
+    public void seeMarket(Market market) {
+        Thread t=new Thread( () -> {
+            int choice;
+
+            System.out.println(printMarket(market));
+
+            choice = askInt(1, 2, "Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
+    }
+
+    public void chooseLine(String message) {
+        Thread t=new Thread( () -> {
+            int choice;
+
+            System.out.println(message);
+
+            choice = askInt(1, 7, "1) Level one cards\n2) Level two cards\n3) Level three cards\n" +
+                    "4) Purple cards\n5) Yellow Cards\n6) Blue Cards\n7) Green Cards");
+
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
+    }
+
+    public void seeGrid(ArrayList<Integer> devCards) {
+        Thread t=new Thread( () -> {
+            int choice;
+
+            for (Integer devCard : devCards) {
+                System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(devCard)));
+            }
+
+            choice = askInt(1, 2, "Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
+    }
+
+    public void seeProductions(ArrayList<Integer> productions) {
+        Thread t=new Thread( () -> {
+            int choice;
+
+            if (productions.size() == 0) {
+                System.out.println("You haven't cards to make productions.");
+            } else {
+                for (Integer production : productions) {
+                    if (production < 17)
+                        System.out.println(printLeaderCard(LeaderDeck.getFromID(production)));
+                    else
+                        System.out.println(printDevelopmentCard(developmentCardDeck.getCardByID(production)));
+                }
+            }
+
+            choice = askInt(1, 2, "Do you want to see more from the Game Board?\n1) Yes\n2) No");
+
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
     }
 
     public void seeOtherCards(ArrayList<Integer> cards) {
@@ -341,40 +374,51 @@ public class CLI implements View{
         return choice;
     }
 
-    public int askTurnType(String message) {
-        int choose;
+    public void askTurnType(String message) {
+        Thread t=new Thread( () -> {
+            int choose;
 
-        System.out.println(message);
+            System.out.println(message);
 
-        choose = askInt(1,5,"1) Active Leader Card.\n2) Discard Leader Card.\n3) Use Market.\n" +
-                "4) Buy Development Card.\n5) Active Productions");
+            choose = askInt(1, 5, "1) Active Leader Card.\n2) Discard Leader Card.\n3) Use Market.\n" +
+                    "4) Buy Development Card.\n5) Active Productions");
 
-        return choose;
+            handler.send(new SendInt(choose));
+        }
+        );
+        t.start();
     }
 
-    public int activeLeader(ActiveLeader message){
-        int leaderCard;
+    public void activeLeader(ActiveLeader message){
+        Thread t=new Thread( () -> {
+            int leaderCard;
 
-        leaderCard =  askInt(1,2, message.getMessage());
+            leaderCard = askInt(1, 2, message.getMessage());
 
-        int id=message.getLeaders().get(leaderCard-1);
+            int id = message.getLeaders().get(leaderCard - 1);
 
-        LeaderDeck.getFromID(id).setIsActive();
+            LeaderDeck.getFromID(id).setIsActive();
 
-        return leaderCard;
+            handler.send(new SendInt(leaderCard));
+        }
+        );
+        t.start();
     }
 
-    public int discardLeader(DiscardLeader message) {
-        int leaderCard;
+    public void discardLeader(DiscardLeader message) {
+        Thread t=new Thread( () -> {
+            int leaderCard;
 
+            leaderCard = askInt(1, 2, message.getMessage());
 
-        leaderCard =  askInt(1,2, message.getMessage());
+            int id = message.getLeaders().get(leaderCard - 1);
 
-        int id=message.getLeaders().get(leaderCard-1);
+            LeaderDeck.getFromID(id).setIsDiscarded();
 
-        LeaderDeck.getFromID(id).setIsDiscarded();
-
-        return leaderCard;
+            handler.send(new SendInt(id));
+        }
+        );
+        t.start();
     }
 
     public void resetCard(int pos) {
@@ -382,46 +426,58 @@ public class CLI implements View{
         LeaderDeck.getFromID(pos).setIsNotDiscarded();
     }
 
-    public int ManageStorage(String message) {
-        int choice;
+    public void ManageStorage(String message) {
+        Thread t=new Thread( () -> {
+            int choice;
 
 
-        choice = askInt(1,2, "Resources that cannot be placed, will be automatically discarded.\n"+
-                message + "\n1) Yes\n2) No");
+            choice = askInt(1, 2, "Resources that cannot be placed, will be automatically discarded.\n" +
+                    message + "\n1) Yes\n2) No");
 
-        return choice;
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
     }
 
-    public ArrayList<Integer> MoveShelves(String message) {
-        ArrayList<Integer> shelves=new ArrayList<>();
-        int firstShelf;
-        int secondShelf;
+    public void MoveShelves(String message) {
+        Thread t=new Thread( () -> {
+            int firstShelf;
+            int secondShelf;
 
-        System.out.println(message);
+            System.out.println(message);
 
-        firstShelf = askInt(1,3, "FirstShelf:");
-        secondShelf = askInt(1,3,"Second Shelf:");
+            firstShelf = askInt(1, 3, "FirstShelf:");
+            secondShelf = askInt(1, 3, "Second Shelf:");
 
-        shelves.add(firstShelf);
-        shelves.add(secondShelf);
-
-        return shelves;
+            handler.send(new SendDoubleInt(firstShelf,secondShelf));
+        }
+        );
+        t.start();
     }
 
-    public int useMarket(String message) {
-        int line;
+    public void useMarket(String message) {
+        Thread t=new Thread( () -> {
+            int line;
 
-        line = askInt(1,7, message);
+            line = askInt(1, 7, message);
 
-        return line;
+            handler.send(new SendInt(line));
+        }
+        );
+        t.start();
     }
 
-    public int chooseWhiteBallLeader(String message) {
-        int choice;
+    public void chooseWhiteBallLeader(String message) {
+        Thread t=new Thread( () -> {
+            int choice;
 
-        choice = askInt(1,2, message);
+            choice = askInt(1, 2, message);
 
-        return choice;
+            handler.send(new SendInt(choice));
+        }
+        );
+        t.start();
     }
 
     public int seeBall(SeeBall ball) {

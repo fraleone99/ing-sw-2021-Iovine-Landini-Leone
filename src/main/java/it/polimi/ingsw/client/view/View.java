@@ -33,27 +33,27 @@ public interface View {
 
     void readMessage(String message);
 
-    int askResource(String message);
+    void askResource(String message);
 
-    int askLeaderToDiscard(ArrayList<Integer> IdLeaders);
+    void askLeaderToDiscard(ArrayList<Integer> IdLeaders);
 
-    int askTurnType(String message);
+    void askTurnType(String message);
 
-    int activeLeader(ActiveLeader message);
+    void activeLeader(ActiveLeader message);
 
-    int discardLeader(DiscardLeader message);
+    void discardLeader(DiscardLeader message);
 
-    int seeGameBoard(String message);
+    void seeGameBoard(String message);
 
-    int seeLeaderCards(ArrayList<Integer> leaderCards);
+    void seeLeaderCards(ArrayList<Integer> leaderCards);
 
-    int seeMarket(Market market);
+    void seeMarket(Market market);
 
-    int chooseLine(String message);
+    void chooseLine(String message);
 
-    int seeGrid(ArrayList<Integer> devCards);
+    void seeGrid(ArrayList<Integer> devCards);
 
-    int seeProductions(ArrayList<Integer> productions);
+    void seeProductions(ArrayList<Integer> productions);
 
     void printFaithPath(FaithPathInfo path);
 
@@ -63,15 +63,15 @@ public interface View {
 
     void printActionToken(ActionToken actionToken);
 
-    int ManageStorage(String message);
+    void ManageStorage(String message);
 
-    ArrayList<Integer> MoveShelves(String message);
+    void MoveShelves(String message);
 
     void resetCard(int pos);
 
-    int useMarket(String message);
+    void useMarket(String message);
 
-    int chooseWhiteBallLeader(String message);
+    void chooseWhiteBallLeader(String message);
 
     int seeBall(SeeBall ball);
 

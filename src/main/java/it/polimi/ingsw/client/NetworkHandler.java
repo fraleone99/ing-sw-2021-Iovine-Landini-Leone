@@ -169,8 +169,7 @@ public class NetworkHandler implements Runnable {
             view.resetCard(((ResetCard) inputObj).getPos());
         }
         else if (inputObj instanceof RequestDoubleInt) {
-            ArrayList<Integer> moves = view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
-            send(new SendDoubleInt(moves.get(0), moves.get(1)));
+            view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
         }
         else if (inputObj instanceof SeeBall) {
             view.seeBall((SeeBall) inputObj);
