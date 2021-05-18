@@ -2,6 +2,9 @@ package it.polimi.ingsw.server;
 
 //import it.polimi.ingsw.observer.LobbyObserver;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.server.answer.request.SendMessage;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,6 +18,8 @@ public class Server {
     private int numberOfLobbies;
     private int playersInLastLobby;
     private boolean lobbyFull;
+    private boolean playerReady=true;
+    private final Object lock=new Object();
 
 
     public static void main(String[] args) {
@@ -54,7 +59,37 @@ public class Server {
 
                 clients.add(clientHandler);
 
+
+                synchronized (lock) {
+                    while(!playerReady) {
+                        try {
+                            clientHandler.send(new SendMessage("We are creating the lobby, please wait..."));
+                            lock.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                playerReady=false;
+
+                createLobby(clientHandler);
+
                 //if there is no lobby or the existing lobbies are full we need to create a new lobby
+            } catch (IOException  e) {
+                System.out.println("Connection dropped1");
+            }
+        }
+    }
+
+
+    public void createLobby(ClientHandler clienthandler) {
+        final ClientHandler clientHandler1=clienthandler;
+        Thread t = new Thread(new Runnable() {
+            ClientHandler clientHandler = clientHandler1;
+
+            @Override
+            public void run() {
                 if (clients.size() == 1 || lobbyFull) {
                     try {
                         numberOfLobbies++;
@@ -62,35 +97,42 @@ public class Server {
                         lobby.newLobby(clientHandler);
                         lobbies.add(lobby);
                         playersInLastLobby++;
-                        if(lobbyFull){
+                        synchronized (lock) {
+                            playerReady=true;
+                            lock.notifyAll();
+                        }
+                        if (lobbyFull) {
                             lobbyFull = false;
                         }
-                        if(playersInLastLobby == lobbies.get(numberOfLobbies-1).getPlayersNumber()) {
+                        if (playersInLastLobby == lobbies.get(numberOfLobbies - 1).getPlayersNumber()) {
                             lobbyFull = true;
                             System.out.println("This lobby is now full. Next player will create a new lobby.");
-                            lobbies.get(numberOfLobbies-1).prepareTheGame();
-                            playersInLastLobby=0;
+                            lobbies.get(numberOfLobbies - 1).prepareTheGame();
+                            playersInLastLobby = 0;
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    lobbies.get(numberOfLobbies-1).add(clientHandler);
+                    try {
+                        lobbies.get(numberOfLobbies - 1).add(clientHandler);
+                        synchronized (lock) {
+                            playerReady=true;
+                            lock.notifyAll();
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     playersInLastLobby++;
-                    if(playersInLastLobby == lobbies.get(numberOfLobbies-1).getPlayersNumber()) {
+                    if (playersInLastLobby == lobbies.get(numberOfLobbies - 1).getPlayersNumber()) {
                         lobbyFull = true;
                         System.out.println("This lobby is now full. Next player will create a new lobby.");
-                        lobbies.get(numberOfLobbies-1).prepareTheGame();
+                        lobbies.get(numberOfLobbies - 1).prepareTheGame();
                         playersInLastLobby = 0;
                     }
                 }
-            } catch (IOException  e) {
-                System.out.println("Connection dropped1");
             }
-            catch (InterruptedException e){
-                System.out.println("Connection dropped2");
-            }
-        }
+        });
+        t.start();
     }
-
 }
