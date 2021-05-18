@@ -99,53 +99,50 @@ public class NetworkHandler implements Runnable {
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnection()){
                 view.handShake(((Connection) inputObj).getMessage());
-                send(new SendString("Client connected!"));
             }
         }
         else if(inputObj instanceof RequestString) {
-            string=view.askNickname(((RequestString) inputObj).getMessage());
-            send(new SendString(string));
+            view.askNickname(((RequestString) inputObj).getMessage());
         }
         else if(inputObj instanceof RequestInt) {
             switch(((RequestInt) inputObj).getType()) {
-                case "NUMBER" : choice=view.askPlayerNumber(((RequestInt) inputObj).getMessage());
+                case "NUMBER" : view.askPlayerNumber(((RequestInt) inputObj).getMessage());
                                 break;
-                case "RESOURCE" : choice=view.askResource(((RequestInt) inputObj).getMessage());
+                case "RESOURCE" : view.askResource(((RequestInt) inputObj).getMessage());
                                   break;
-                case "GAMEBOARD" : choice=view.seeGameBoard(((RequestInt) inputObj).getMessage());
+                case "GAMEBOARD" : view.seeGameBoard(((RequestInt) inputObj).getMessage());
                                       break;
-                case "LINE" : choice=view.chooseLine(((RequestInt) inputObj).getMessage());
+                case "LINE" : view.chooseLine(((RequestInt) inputObj).getMessage());
                               break;
-                case "TURN" : choice= view.askTurnType(((RequestInt) inputObj).getMessage());
+                case "TURN" : view.askTurnType(((RequestInt) inputObj).getMessage());
                               break;
-                case "STORAGE" : choice=view.ManageStorage(((RequestInt) inputObj).getMessage());
+                case "STORAGE" : view.ManageStorage(((RequestInt) inputObj).getMessage());
                                  break;
-                case "MARKET" : choice=view.useMarket(((RequestInt) inputObj).getMessage());
+                case "MARKET" : view.useMarket(((RequestInt) inputObj).getMessage());
                                 break;
-                case "WHITE" : choice=view.chooseWhiteBallLeader(((RequestInt) inputObj).getMessage());
+                case "WHITE" : view.chooseWhiteBallLeader(((RequestInt) inputObj).getMessage());
                                break;
-                case "COLOR" : choice=view.askColor(((RequestInt) inputObj).getMessage());
+                case "COLOR" : view.askColor(((RequestInt) inputObj).getMessage());
                                break;
-                case "LEVEL" : choice=view.askLevel(((RequestInt) inputObj).getMessage());
+                case "LEVEL" : view.askLevel(((RequestInt) inputObj).getMessage());
                                break;
-                case "SPACE" : choice=view.askSpace(((RequestInt) inputObj).getMessage());
+                case "SPACE" : view.askSpace(((RequestInt) inputObj).getMessage());
                                break;
-                case "TYPE" : choice=view.askType(((RequestInt) inputObj).getMessage());
+                case "TYPE" : view.askType(((RequestInt) inputObj).getMessage());
                               break;
-                case "INPUT" : choice=view.askInput(((RequestInt) inputObj).getMessage());
+                case "INPUT" : view.askInput(((RequestInt) inputObj).getMessage());
                                break;
-                case "OUTPUT" : choice=view.askOutput(((RequestInt) inputObj).getMessage());
+                case "OUTPUT" : view.askOutput(((RequestInt) inputObj).getMessage());
                                 break;
-                case "DEVCARD" : choice=view.askDevelopmentCard(((RequestInt) inputObj).getMessage());
+                case "DEVCARD" : view.askDevelopmentCard(((RequestInt) inputObj).getMessage());
                                  break;
-                case "LEADCARD" : choice=view.askLeaderCard(((RequestInt) inputObj).getMessage());
+                case "LEADCARD" : view.askLeaderCard(((RequestInt) inputObj).getMessage());
                                   break;
-                case "CHOICE" : choice=view.choice();
+                case "CHOICE" : view.choice();
                                 break;
-                case "END" : choice=view.endTurn(((RequestInt) inputObj).getMessage());
+                case "END" : view.endTurn(((RequestInt) inputObj).getMessage());
                              break;
             }
-            send(new SendInt(choice));
         }
         else if(inputObj instanceof SendMessage) {
             view.readMessage(((SendMessage) inputObj).getMessage());
@@ -176,9 +173,8 @@ public class NetworkHandler implements Runnable {
             send(new SendDoubleInt(moves.get(0), moves.get(1)));
         }
         else if (inputObj instanceof SeeBall) {
-            choice = view.seeBall((SeeBall) inputObj);
-            int shelf = view.chooseShelf();
-            send(new SendDoubleInt(choice, shelf));
+            view.seeBall((SeeBall) inputObj);
+            view.chooseShelf();
         }
         else if (inputObj instanceof ActionTokenInfo) {
             view.printActionToken(((ActionTokenInfo) inputObj).getMessage());
@@ -196,21 +192,20 @@ public class NetworkHandler implements Runnable {
         }
         else {
             if (inputObj instanceof PassLeaderCard) {
-                choice = view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());
+                view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());
             } else if (inputObj instanceof SeeLeaderCards) {
-                choice = view.seeLeaderCards(((SeeLeaderCards) inputObj).getMessage());
+                view.seeLeaderCards(((SeeLeaderCards) inputObj).getMessage());
             } else if (inputObj instanceof SeeMarket) {
-                choice = view.seeMarket(((SeeMarket) inputObj).getMessage());
+                view.seeMarket(((SeeMarket) inputObj).getMessage());
             } else if (inputObj instanceof ActiveLeader) {
-                choice = view.activeLeader(((ActiveLeader) inputObj));
+                view.activeLeader(((ActiveLeader) inputObj));
             } else if (inputObj instanceof DiscardLeader) {
-                choice = view.discardLeader(((DiscardLeader) inputObj));
+                view.discardLeader(((DiscardLeader) inputObj));
             } else if (inputObj instanceof SeeGrid) {
-                choice = view.seeGrid(((SeeGrid) inputObj).getMessage());
+                view.seeGrid(((SeeGrid) inputObj).getMessage());
             } else if (inputObj instanceof SeeProductions) {
-                choice = view.seeProductions(((SeeProductions) inputObj).getMessage());
+                view.seeProductions(((SeeProductions) inputObj).getMessage());
             }
-            send(new SendInt(choice));
         }
     }
 

@@ -3,6 +3,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Constants;
+import it.polimi.ingsw.client.NetworkHandler;
+import it.polimi.ingsw.client.message.SendInt;
+import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
@@ -20,6 +23,7 @@ import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
+import it.polimi.ingsw.server.answer.request.RequestInt;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
@@ -43,6 +47,7 @@ public class CLI implements View{
     private  int gameMode;
     private  String ip;
     private int portNumber;
+    private NetworkHandler handler;
 
     public CLI() {
         this.in = new Scanner(System.in);
@@ -57,6 +62,10 @@ public class CLI implements View{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setHandler(NetworkHandler handler) {
+        this.handler = handler;
     }
 
     private void initializeDevelopmentCard() throws FileNotFoundException {
@@ -156,25 +165,38 @@ public class CLI implements View{
 
     @Override
     public void handShake(String welcome) {
-        startGame();
-        System.out.println(welcome);
+        Thread t=new Thread( () -> {
+            startGame();
+            System.out.println(welcome);
+            handler.send(new SendString("Client connected!"));
+        }
+        );
+        t.start();
     }
 
     @Override
-    public int askPlayerNumber(String message) {
-        int number;
+    public void askPlayerNumber(String message) {
+        Thread t=new Thread( () -> {
+            int number;
 
-        number=askInt(1,4,message);
+            number = askInt(1, 4, message);
 
-        return number;
+            handler.send(new SendInt(number));
+        }
+        );
+        t.start();
     }
 
     @Override
-    public String askNickname(String message) {
-        String nickname;
-        System.out.println(message);
-        nickname = in.nextLine();
-        return  nickname;
+    public void askNickname(String message) {
+        Thread t=new Thread( () -> {
+            String nickname;
+            System.out.println(message);
+            nickname = in.nextLine();
+            handler.send(new SendString(nickname));
+        }
+        );
+        t.start();
     }
 
     public int askInt (int min, int max, String message){

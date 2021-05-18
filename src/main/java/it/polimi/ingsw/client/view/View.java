@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view;
 
+import it.polimi.ingsw.client.NetworkHandler;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 
 public interface View {
 
+    void setHandler(NetworkHandler handler);
+
     void setupConnection();
 
     String getIp();
@@ -24,9 +27,9 @@ public interface View {
     void handShake(String welcome);
 
     //Method for Players' input
-    int askPlayerNumber(String message);
+    void askPlayerNumber(String message);
 
-    String askNickname(String message);
+    void askNickname(String message);
 
     void readMessage(String message);
 

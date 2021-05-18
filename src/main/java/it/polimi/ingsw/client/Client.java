@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.CLI.CLI;
-import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.LocalSPController;
 import javafx.application.Application;
@@ -29,7 +28,7 @@ public class Client implements Runnable {
             client.run();
         }
         else if(arg.equals("gui")){
-            Application.launch(GUI.class);
+            //Application.launch(GUI.class);
         }
     }
 
@@ -63,6 +62,7 @@ public class Client implements Runnable {
             try {
                 server = new Socket(ip, PORT_NUMBER);
                 networkHandler = new NetworkHandler(server, this, view);
+                view.setHandler(networkHandler);
                 Thread networkHandlerThread = new Thread(networkHandler, "server" + server.getInetAddress().getHostAddress());
                 networkHandlerThread.start();
             } catch (IOException e) {

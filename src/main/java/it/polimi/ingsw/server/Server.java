@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 //import it.polimi.ingsw.observer.LobbyObserver;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
 import it.polimi.ingsw.server.answer.request.SendMessage;
 
 import java.io.IOException;
@@ -64,6 +65,7 @@ public class Server {
                     while(!playerReady) {
                         try {
                             clientHandler.send(new SendMessage("We are creating the lobby, please wait..."));
+                            clientHandler.send(new InitialSetup());
                             lock.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
