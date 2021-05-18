@@ -564,4 +564,140 @@ public class PlayerTest {
 
     }
 
+    @Test
+    public void testDoProduction() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+        player.getPlayerDashboard().getStorage().AddResource(1, Resource.SHIELD, 1);
+        player.getPlayerDashboard().getStorage().AddResource(2, Resource.STONE, 2);
+        player.getPlayerDashboard().getStorage().AddResource(3, Resource.SERVANT, 3);
+
+        player.getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(Resource.SHIELD, Resource.STONE);
+        player.getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(Resource.COIN);
+        player.ActiveProductionBase();
+
+
+        ArrayList<Goods> input=new ArrayList<>();
+        ArrayList<Goods> cost=new ArrayList<>();
+        cost.add(new Goods(Resource.SERVANT, 2));
+        input.add(new Goods(Resource.STONE, 1));
+        input.add(new Goods(Resource.SERVANT, 2));
+        ArrayList<Goods> output=new ArrayList<>();
+        output.add(new Goods(Resource.SERVANT,2));
+        output.add(new Goods(Resource.SHIELD,3));
+        output.add(new Goods(Resource.STONE,1));
+        Production production=new Production(input, output, 0);
+        DevelopmentCard devCard=new DevelopmentCard(3, 4, CardColor.PURPLE, 1, cost, production);
+
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
+
+        player.ActiveProductionDevCard(1);
+
+
+
+        player.doProduction();
+        assertEquals(0, player.getPlayerDashboard().getStorage().getAmountShelf(1));
+        assertEquals(0, player.getPlayerDashboard().getStorage().getAmountShelf(2));
+        assertEquals(1, player.getPlayerDashboard().getStorage().getAmountShelf(3));
+        assertEquals(1, player.getPlayerDashboard().getVault().getResource(Resource.COIN));
+        assertEquals(1, player.getPlayerDashboard().getVault().getResource(Resource.STONE));
+        assertEquals(2, player.getPlayerDashboard().getVault().getResource(Resource.SERVANT));
+        assertEquals(3, player.getPlayerDashboard().getVault().getResource(Resource.SHIELD));
+
+    }
+
+    @Test
+    public void testWhiteBallLeader() {
+        Goods cost=new Goods(Resource.SHIELD,5);
+        Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        Requirements req2=new Requirements(CardColor.BLUE,0,0, cost);
+        LeaderCard leader=new WhiteBallLeader(5, 12, Resource.COIN, req1, req2);
+        leader.setIsActive();
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        req2=new Requirements(CardColor.BLUE,0,0, cost);
+        leader=new WhiteBallLeader(11, 28, Resource.SERVANT, req1, req2);
+        leader.setIsActive();
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        req2=new Requirements(CardColor.BLUE,0,0, cost);
+        leader=new WhiteBallLeader(9, 32, Resource.SHIELD, req1, req2);
+        leader.setIsDiscarded();
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        assertEquals(2, player.WhiteBallLeader());
+    }
+
+    @Test
+    public void testStorageLeader() {
+        Shelf shelf=new Shelf(2,0,Resource.COIN);
+        Goods cost=new Goods(Resource.SHIELD,5);
+        Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        LeaderCard leader=new StorageLeader(3,12, req1,shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+        leader.setIsActive();
+
+        shelf=new Shelf(2,2,Resource.SERVANT);
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,45, req1, shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+        leader.setIsDiscarded();
+
+        shelf=new Shelf(2,1,Resource.SHIELD);
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,22, req1, shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+        leader.setIsActive();
+
+        assert(player.StorageLeader(Resource.COIN));
+        assert(!player.StorageLeader(Resource.SERVANT));
+        assert(player.StorageLeader(Resource.SHIELD));
+    }
+
+    @Test
+    public void testIndexOfStorageLeader() throws InvalidChoiceException {
+        Goods cost=new Goods(Resource.SHIELD,5);
+        Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        Requirements req2=new Requirements(CardColor.BLUE,0,0, cost);
+        LeaderCard leader=new WhiteBallLeader(5, 12, Resource.COIN, req1, req2);
+        leader.setIsActive();
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        req2=new Requirements(CardColor.BLUE,0,0, cost);
+        leader=new WhiteBallLeader(11, 28, Resource.SERVANT, req1, req2);
+        leader.setIsActive();
+        player.getPlayerDashboard().getLeaders().add(leader);
+
+        Shelf shelf=new Shelf(2,2,Resource.SERVANT);
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,45, req1, shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+        leader.setIsDiscarded();
+
+        shelf=new Shelf(2,0,Resource.COIN);
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,12, req1,shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+        leader.setIsActive();
+
+        shelf=new Shelf(2,0,Resource.SHIELD);
+        cost=new Goods(Resource.SHIELD,5);
+        req1=new Requirements(CardColor.PURPLE,0,0, cost);
+        leader=new StorageLeader(3,12, req1,shelf);
+        player.getPlayerDashboard().getLeaders().add(leader);
+        leader.setIsActive();
+
+
+        assertEquals(4, player.indexOfStorageLeader(Resource.COIN));
+    }
+
 }

@@ -30,6 +30,10 @@ public class LocalSPController {
     private boolean isEnd=false;
     private SinglePlayerCLI spCLI;
 
+    /**
+     * LocalSPController constructor: creates a new instance of LocalSPController
+     * @param nickname player's nickname
+     */
     public LocalSPController(String nickname) {
         this.players.add(nickname);
         gameModel=new Game(players.size(), players);
@@ -38,8 +42,9 @@ public class LocalSPController {
         spCLI = new SinglePlayerCLI();
     }
 
-    //LOCAL SINGLE PLAYER
-
+    /**
+     * This method handles the single player local match
+     */
     public void localGame() {
         ActionToken currentActionToken;
 
@@ -71,7 +76,7 @@ public class LocalSPController {
                 }
                 isEnd = endgame.SinglePlayerIsEndGame(gameModel);
             }
-        } catch(NotExistingPlayerException | InterruptedException | InvalidChoiceException e){
+        } catch(NotExistingPlayerException | InvalidChoiceException e){
             e.printStackTrace();
         }
 
@@ -86,11 +91,18 @@ public class LocalSPController {
         }
     }
 
+    /**
+     * This method sets the player
+     */
     public void setPlayers() {
         gameModel.createPlayer(players.get(0));
     }
 
 
+    /**
+     * This method sets player's initial leader cards
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
     public void localSetInitialLeaderCards() throws NotExistingPlayerException {
         for (int i = 0; i < 4; i++) {
             gameModel.getGameBoard().getLeaderDeck().shuffle();
@@ -98,6 +110,10 @@ public class LocalSPController {
         }
     }
 
+    /**
+     * This method allow player to discard 2 of his initial 4 leaders
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
     public void localDiscardFirstLeader() throws NotExistingPlayerException {
         int card;
 
@@ -108,6 +124,9 @@ public class LocalSPController {
         gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().remove(card-1);
     }
 
+    /**
+     * This method handles the call of player dashboard print in the CLI
+     */
     public void localSeePlayerDashboard(){
         spCLI.printFaithPath(new FaithPathInfo(("This is the Dashboard of "+players.get(0)+" :"), gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath(), true));
         spCLI.printStorage(new StorageInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getStorage(),
@@ -115,6 +134,10 @@ public class LocalSPController {
         spCLI.printDevelopmentCardsSpace(new DevCardsSpaceInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getDevCardsSpace()));
     }
 
+    /**
+     * This method handles the call of game board print in the CLI
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
     public void localSeeGameBoard() throws NotExistingPlayerException {
         //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production
         int answer=spCLI.seeGameBoard("What do you want to see from the game board:");
@@ -139,7 +162,12 @@ public class LocalSPController {
         }
     }
 
-    public void localChooseTurn() throws NotExistingPlayerException, InterruptedException, InvalidChoiceException {
+    /**
+     * This method handles player's turn choice
+     * @throws NotExistingPlayerException if the player doesn't exist
+     * @throws InvalidChoiceException if the choice is invalid
+     */
+    public void localChooseTurn() throws NotExistingPlayerException, InvalidChoiceException {
         int answer;
 
         int pos;
@@ -222,7 +250,10 @@ public class LocalSPController {
         }
     }
 
-
+    /**
+     * This method allows player to manage his storage
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
     public void localManageStorage() throws NotExistingPlayerException {
         int action;
 
@@ -241,6 +272,13 @@ public class LocalSPController {
 
     }
 
+    /**
+     * This method allows player to buy from the market
+     * @param player player position
+     * @param line chosen market line
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
     public void localUseMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException {
         ArrayList<Integer> choice=new ArrayList<>();
         Resource resource = null;
@@ -347,7 +385,15 @@ public class LocalSPController {
         }
     }
 
-    public void localBuyCard(int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+    /**
+     * This method allows player to buy a card
+     * @param color card color
+     * @param level card level
+     * @param space is the space where we want to insert the card
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws NotExistingPlayerException if the player doesn't exist
+     */
+    public void localBuyCard(int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException {
         CardColor cardColor;
 
         switch (color) {
@@ -373,7 +419,13 @@ public class LocalSPController {
         }
     }
 
-    public void localActiveProduction(int type) throws NotExistingPlayerException, InvalidChoiceException, InterruptedException {
+    /**
+     * This method handles the activation of a production
+     * @param type production type
+     * @throws NotExistingPlayerException if the choice is invalid
+     * @throws InvalidChoiceException if the player doesn't exist
+     */
+    public void localActiveProduction(int type) throws NotExistingPlayerException, InvalidChoiceException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
         switch (type) {
@@ -428,11 +480,17 @@ public class LocalSPController {
         }
     }
 
+    /**
+     * This method handles the local game lose
+     */
     public void localLose(){
         int victoryPoints = endgame.totalVictoryPoints(gameModel.getCurrentPlayer());
         spCLI.lose("You had accumulated "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points");
     }
 
+    /**
+     * This method handles the local game win
+     */
     public void localWin(){
         int victoryPoints = endgame.totalVictoryPoints(gameModel.getCurrentPlayer());
         spCLI.win("You had accumulated "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points...that's amazing.");

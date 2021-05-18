@@ -120,24 +120,6 @@ public class Storage {
     }
 
     /**
-     * Method MoveResourceToEmptyShelf moves resources from a shelf to another that is empty
-     *
-     * @param s1 is the shelf form which the resources will be moved from
-     * @param s2 is the shelf form which the resources will be moved to
-     * @throws ShelfNotEmptyException when s2 is not empty
-     * @throws NotEnoughSpaceException when in s2 there isn't enough space for all the resources in s1
-     */
-    public void MoveResourceToEmptyShelf(int s1, int s2) throws ShelfNotEmptyException, NotEnoughSpaceException{
-        if(!shelves.get(s2-1).isFree()) throw new ShelfNotEmptyException();
-        if(shelves.get(s2-1).getAvailableSpace() < shelves.get(s1-1).getAmount()) throw new NotEnoughSpaceException();
-
-        shelves.get(s2-1).ChangeResourceType(shelves.get(s1-1).getResourceType());
-        shelves.get(s2-1).AddResource(shelves.get(s1-1).getAmount());
-        shelves.get(s1-1).discardResource(shelves.get(s1-1).getAmount());
-    }
-
-
-    /**
      * Method InvertShelvesContent moves resources form shelf1 to shelf2 and from shelf2 to shelf1
      *
      * @param s1 first shelf
