@@ -140,6 +140,8 @@ public class NetworkHandler implements Runnable {
                                   break;
                 case "CHOICE" : view.choice();
                                 break;
+                case "SHELF" : view.chooseShelf();
+                               break;
                 case "END" : view.endTurn(((RequestInt) inputObj).getMessage());
                              break;
             }
@@ -173,7 +175,6 @@ public class NetworkHandler implements Runnable {
         }
         else if (inputObj instanceof SeeBall) {
             view.seeBall((SeeBall) inputObj);
-            view.chooseShelf();
         }
         else if (inputObj instanceof ActionTokenInfo) {
             view.printActionToken(((ActionTokenInfo) inputObj).getMessage());

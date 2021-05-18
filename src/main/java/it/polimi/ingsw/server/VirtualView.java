@@ -414,6 +414,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public ArrayList<Integer> seeBall(String nickname, ArrayList<Ball> balls) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
+
         ArrayList<Integer> moves=new ArrayList<>();
 
         client.send(new SeeBall(balls));
@@ -421,8 +422,16 @@ public class VirtualView extends VirtualViewObservable {
         synchronized (client.getLock()) {
             while(!client.isReady()) client.getLock().wait();
             number=client.getNumber();
-            number2=client.getNumber2();
             moves.add(number);
+        }
+
+        client.setReady(false);
+
+        client.send(new RequestInt("SHELF",""));
+
+        synchronized (client.getLock()) {
+            while(!client.isReady()) client.getLock().wait();
+            number2=client.getNumber();
             moves.add(number2);
         }
 
