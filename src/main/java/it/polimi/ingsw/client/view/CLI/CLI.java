@@ -417,7 +417,7 @@ public class CLI implements View{
 
             LeaderDeck.getFromID(id).setIsDiscarded();
 
-            handler.send(new SendInt(id));
+            handler.send(new SendInt(leaderCard));
         }
         );
         t.start();

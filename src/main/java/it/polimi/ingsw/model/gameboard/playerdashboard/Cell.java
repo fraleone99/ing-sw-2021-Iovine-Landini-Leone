@@ -29,13 +29,4 @@ public class Cell {
 
     public int getPoints() { return points; }
 
-    @Override
-    public String toString(){
-        return "Cell{" +
-                "isPopeSpace1=" + isPopeSpace1 +
-                ",isPopeSpace2=" + isPopeSpace2 +
-                ",isPopeSpace3=" + isPopeSpace3 +
-                ",points=" + points +
-                '}';
-    }
 }

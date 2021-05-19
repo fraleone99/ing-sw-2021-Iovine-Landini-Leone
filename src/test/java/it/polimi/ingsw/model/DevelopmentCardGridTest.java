@@ -12,7 +12,7 @@ public class DevelopmentCardGridTest {
     DevelopmentCardGrid devCardGrid=new DevelopmentCardGrid();
     DevelopmentCard card;
 
-    public DevelopmentCardGridTest() throws FileNotFoundException, InvalidChoiceException {
+    public DevelopmentCardGridTest() throws InvalidChoiceException {
         System.out.println(devCardGrid.getCard(CardColor.GREEN,2));
     }
 
