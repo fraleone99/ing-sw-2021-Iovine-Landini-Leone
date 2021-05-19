@@ -1,11 +1,10 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.CLI.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.View;
-//import it.polimi.ingsw.controller.LocalSPController;
 import javafx.application.Application;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
@@ -28,19 +27,16 @@ public class Client implements Runnable {
             client.run();
         }
         else if(arg.equals("gui")){
-            //Application.launch(GUI.class);
+            Application.launch(GUI.class);
         }
     }
 
 
     @Override
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         int PORT_NUMBER;
         String ip ;
         int match;
-        String nick;
-        String config;
 
         int LOCAL_GAME = 1;
         int CONNECTED_GAME = 2;
@@ -51,9 +47,8 @@ public class Client implements Runnable {
             HandlerSP handlerSP = new HandlerSP(view);
             view.setHandler(handlerSP);
             handlerSP.run();
-            //LocalSPController localController = new LocalSPController(nick);
-           // localController.localGame();
-        } else {
+        }
+        else if (match == CONNECTED_GAME) {
             view.setupConnection();
             ip = view.getIp();
             PORT_NUMBER = view.getPortNumber();

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.view.GUI;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.message.Message;
+import it.polimi.ingsw.client.Handler;
+import it.polimi.ingsw.client.message.SendInt;
+import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
@@ -19,10 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+
+
 
 public class GUI extends Application implements View {
     private Stage stage;
@@ -40,7 +43,9 @@ public class GUI extends Application implements View {
     private final String LOCAL_SP = "setupLocalSP";
     private final String WELCOME = "Welcome";
 
-    private guiController controller;
+    //private guiController controller;
+
+    Handler handler;
 
     private final Object lock = new Object();
     private boolean notReady = true;
@@ -139,8 +144,14 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    @Override
     public void setupConnection() {
         notReady = true;
+
         System.out.println("Entering setup connection\n");
         Platform.runLater(()->{
             stage.setScene(SetupScene);
@@ -159,6 +170,7 @@ public class GUI extends Application implements View {
                     notReady = false;
                     lock.notifyAll();
                 }
+
             });
 
 
@@ -168,6 +180,7 @@ public class GUI extends Application implements View {
 
     @Override
     public String getIp() {
+        System.out.println("getting ip");
         synchronized (lock) {
             while (notReady) {
                 try {
@@ -182,6 +195,7 @@ public class GUI extends Application implements View {
 
     @Override
     public int getPortNumber() {
+        System.out.println("getting port number");
         synchronized (lock) {
             while (notReady) {
                 try {
@@ -191,7 +205,6 @@ public class GUI extends Application implements View {
                 }
             }
             return portNumber;
-
         }
     }
 
@@ -199,16 +212,16 @@ public class GUI extends Application implements View {
 
     @Override
     public void handShake(String welcome) {
-
+        System.out.println("Handshake");
+        handler.send(new SendString("Client connected"));
     }
 
     @Override
-    public int askPlayerNumber(String message) {
-        notReady = true;
-        AtomicInteger number = new AtomicInteger();
-
+    public void askPlayerNumber(String message) {
+        System.out.println("asking player number");
         Platform.runLater(()->{
 
+            AtomicInteger playersNumber = new AtomicInteger();
 
             stage.setScene(ChooseNumberScene);
             stage.show();
@@ -222,38 +235,19 @@ public class GUI extends Application implements View {
             choiceBox.getItems().add("4");
 
             okButton.setOnAction(actionEvent -> {
-                synchronized (lock){
-                    number.set(Integer.parseInt((String) choiceBox.getValue()));
-                    notReady = false;
-                    lock.notifyAll();
-                }
+                playersNumber.set(Integer.parseInt((String) choiceBox.getValue()));
+                handler.send(new SendInt(playersNumber.get()));
             });
 
-
-
-        System.out.println("player num:" + number.get());
         });
-
-        synchronized (lock){
-            while(notReady) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            System.out.println("returning int");
-            return number.get();
-        }
     }
 
     @Override
-    public String askNickname(String message) {
-       AtomicReference<String> nickname = new AtomicReference<>();
-        notReady = true;
+    public void askNickname(String message) {
+        System.out.println("asking nickname");
 
        Platform.runLater(() -> {
-
+           AtomicReference<String> nickname = new AtomicReference<>();
            stage.setScene(NicknameScene);
            stage.show();
 
@@ -262,27 +256,12 @@ public class GUI extends Application implements View {
 
            okButton.setOnAction(actionEvent ->
            {
-               synchronized (lock) {
-                   nickname.set(nicknameBox.getText());
-                   notReady = false;
-                   lock.notifyAll();
-               }
+               nickname.set(nicknameBox.getText());
+               handler.send(new SendString(nickname.get()));
            });
 
 
        });
-
-
-        synchronized (lock) {
-            while (notReady) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return nickname.get();
-        }
 
     }
 
@@ -301,58 +280,58 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public int askResource(String message) {
-        return 0;
+    public void askResource(String message) {
+
     }
 
     @Override
-    public int askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
-        return 0;
+    public void askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
+
     }
 
     @Override
-    public int askTurnType(String message) {
-        return 0;
+    public void askTurnType(String message) {
+
     }
 
     @Override
-    public int activeLeader(ActiveLeader message) {
-        return 0;
+    public void activeLeader(ActiveLeader message) {
+
     }
 
     @Override
-    public int discardLeader(DiscardLeader message) {
-        return 0;
+    public void discardLeader(DiscardLeader message) {
+
     }
 
     @Override
-    public int seeGameBoard(String message) {
-        return 0;
+    public void seeGameBoard(String message) {
+
     }
 
     @Override
-    public int seeLeaderCards(ArrayList<Integer> leaderCards) {
-        return 0;
+    public void seeLeaderCards(ArrayList<Integer> leaderCards) {
+
     }
 
     @Override
-    public int seeMarket(Market market) {
-        return 0;
+    public void seeMarket(Market market) {
+
     }
 
     @Override
-    public int chooseLine(String message) {
-        return 0;
+    public void chooseLine(String message) {
+
     }
 
     @Override
-    public int seeGrid(ArrayList<Integer> devCards) {
-        return 0;
+    public void seeGrid(ArrayList<Integer> devCards) {
+
     }
 
     @Override
-    public int seeProductions(ArrayList<Integer> productions) {
-        return 0;
+    public void seeProductions(ArrayList<Integer> productions) {
+
     }
 
     @Override
@@ -376,13 +355,13 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public int ManageStorage(String message) {
-        return 0;
+    public void ManageStorage(String message) {
+
     }
 
     @Override
-    public ArrayList<Integer> MoveShelves(String message) {
-        return null;
+    public void MoveShelves(String message) {
+
     }
 
     @Override
@@ -391,68 +370,68 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public int useMarket(String message) {
-        return 0;
+    public void useMarket(String message) {
+
     }
 
     @Override
-    public int chooseWhiteBallLeader(String message) {
-        return 0;
+    public void chooseWhiteBallLeader(String message) {
+
     }
 
     @Override
-    public int seeBall(SeeBall ball) {
-        return 0;
+    public void seeBall(SeeBall ball) {
+
     }
 
     @Override
-    public int chooseShelf() {
-        return 0;
+    public void chooseShelf() {
+
     }
 
     @Override
-    public int askColor(String message) {
-        return 0;
+    public void askColor(String message) {
+
     }
 
     @Override
-    public int askLevel(String message) {
-        return 0;
+    public void askLevel(String message) {
+
     }
 
     @Override
-    public int askSpace(String message) {
-        return 0;
+    public void askSpace(String message) {
+
     }
 
     @Override
-    public int askType(String message) {
-        return 0;
+    public void askType(String message) {
+
     }
 
     @Override
-    public int askInput(String message) {
-        return 0;
+    public void askInput(String message) {
+
     }
 
     @Override
-    public int askOutput(String message) {
-        return 0;
+    public void askOutput(String message) {
+
     }
 
     @Override
-    public int askDevelopmentCard(String message) {
-        return 0;
+    public void askDevelopmentCard(String message) {
+
     }
 
     @Override
-    public int askLeaderCard(String message) {
-        return 0;
+    public void askLeaderCard(String message) {
+
     }
 
     @Override
-    public int endTurn(String message) {
-        return 0;
+    public void endTurn(String message) {
+
     }
 
     @Override
@@ -471,7 +450,9 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public int choice() {
-        return 0;
+    public void choice() {
+
     }
+
+
 }

@@ -87,16 +87,12 @@ public class Server {
 
     public void createLobby(ClientHandler clienthandler) {
         final ClientHandler clientHandler1=clienthandler;
-        Thread t = new Thread(new Runnable() {
-            ClientHandler clientHandler = clientHandler1;
-
-            @Override
-            public void run() {
-                if (clients.size() == 1 || lobbyFull) {
+        Thread t = new Thread(()-> {
+            if (clients.size() == 1 || lobbyFull) {
                     try {
                         numberOfLobbies++;
                         Lobby lobby = new Lobby(numberOfLobbies);
-                        lobby.newLobby(clientHandler);
+                        lobby.newLobby(clientHandler1);
                         lobbies.add(lobby);
                         playersInLastLobby++;
                         synchronized (lock) {
@@ -117,7 +113,7 @@ public class Server {
                     }
                 } else {
                     try {
-                        lobbies.get(numberOfLobbies - 1).add(clientHandler);
+                        lobbies.get(numberOfLobbies - 1).add(clientHandler1);
                         synchronized (lock) {
                             playerReady=true;
                             lock.notifyAll();
@@ -133,7 +129,7 @@ public class Server {
                         playersInLastLobby = 0;
                     }
                 }
-            }
+
         });
         t.start();
     }
