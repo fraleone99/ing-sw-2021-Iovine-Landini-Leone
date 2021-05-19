@@ -23,7 +23,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class NetworkHandler implements Runnable {
+public class NetworkHandler implements Runnable, Handler {
     private final Socket server;
 
     private ObjectOutputStream output;

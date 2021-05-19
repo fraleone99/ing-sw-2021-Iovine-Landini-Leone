@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Constants;
+import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.NetworkHandler;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
@@ -48,7 +49,7 @@ public class CLI implements View{
     private  int gameMode;
     private  String ip;
     private int portNumber;
-    private NetworkHandler handler;
+    private Handler handler;
 
     public CLI() {
         this.in = new Scanner(System.in);
@@ -65,7 +66,7 @@ public class CLI implements View{
         }
     }
 
-    public void setHandler(NetworkHandler handler) {
+    public void setHandler(Handler handler) {
         this.handler = handler;
     }
 

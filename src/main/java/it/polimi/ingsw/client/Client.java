@@ -2,7 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.view.CLI.CLI;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.controller.LocalSPController;
+//import it.polimi.ingsw.controller.LocalSPController;
 import javafx.application.Application;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
@@ -48,10 +48,11 @@ public class Client implements Runnable {
         match = view.gameType();
 
         if (match == LOCAL_GAME) {
-            System.out.println("Please insert your nickname: ");
-            nick = scanner.nextLine();
-            LocalSPController localController = new LocalSPController(nick);
-            localController.localGame();
+            HandlerSP handlerSP = new HandlerSP(view);
+            view.setHandler(handlerSP);
+            handlerSP.run();
+            //LocalSPController localController = new LocalSPController(nick);
+           // localController.localGame();
         } else {
             view.setupConnection();
             ip = view.getIp();
