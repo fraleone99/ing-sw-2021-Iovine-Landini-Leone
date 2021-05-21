@@ -17,6 +17,7 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     private  ObjectOutputStream output;
     private  ObjectInputStream input;
+    private Server server;
 
     private boolean isReady;
     private String answer;
@@ -37,7 +38,8 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     private final Object lock = new Object();
 
 
-    public ClientHandler(Socket socketClient) {
+    public ClientHandler(Socket socketClient,Server server) {
+        this.server=server;
         this.socketClient = socketClient;
         this.isReady=false;
     }
@@ -149,6 +151,13 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         if(!active.get()) return;
 
         active.set(false);
+
+        synchronized (server.getLock()) {
+            server.setPlayerReady(true);
+            server.getLock().notifyAll();
+        }
+
+        server.getClients().remove(this);
 
         System.out.println(Constants.ANSI_RED +  "[SERVER] client disconnected." + Constants.ANSI_RESET);
         notifyDisconnection(this);

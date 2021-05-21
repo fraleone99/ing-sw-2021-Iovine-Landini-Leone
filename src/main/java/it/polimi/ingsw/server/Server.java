@@ -54,12 +54,11 @@ public class Server {
             try {
                 System.out.println("Waiting for connection...");
                 Socket newSocket = Socket.accept();
-                ClientHandler clientHandler = new ClientHandler(newSocket);
+                ClientHandler clientHandler = new ClientHandler(newSocket,this);
                 Thread t = new Thread(clientHandler, "Server_" + newSocket.getInetAddress());
                 t.start();
 
                 clients.add(clientHandler);
-
 
                 synchronized (lock) {
                     while(!playerReady) {
@@ -84,15 +83,26 @@ public class Server {
         }
     }
 
+    public void setPlayerReady(boolean playerReady) {
+        this.playerReady = playerReady;
+    }
+
+    public Object getLock() {
+        return lock;
+    }
+
+    public ArrayList<ClientHandler> getClients() {
+        return clients;
+    }
 
     public void createLobby(ClientHandler clienthandler) {
         final ClientHandler clientHandler1=clienthandler;
         Thread t = new Thread(()-> {
             if (clients.size() == 1 || lobbyFull) {
                     try {
-                        numberOfLobbies++;
-                        Lobby lobby = new Lobby(numberOfLobbies);
+                        Lobby lobby = new Lobby(numberOfLobbies+1);
                         lobby.newLobby(clientHandler1);
+                        numberOfLobbies++;
                         lobbies.add(lobby);
                         playersInLastLobby++;
                         synchronized (lock) {
