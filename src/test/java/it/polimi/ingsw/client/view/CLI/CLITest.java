@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.CLI;
 
-import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
@@ -16,7 +15,6 @@ import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -109,7 +107,7 @@ public class CLITest {
 
         StorageInfo  s = new StorageInfo(storage, vault);
 
-        cli.printStorage(s);
+        cli.printStorageAndVault(s);
 
     }
 

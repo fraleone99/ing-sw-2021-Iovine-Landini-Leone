@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
@@ -14,15 +13,12 @@ import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.initialanswer.Connection;
-import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
 import it.polimi.ingsw.server.answer.request.RequestDoubleInt;
 import it.polimi.ingsw.server.answer.request.RequestInt;
 import it.polimi.ingsw.server.answer.request.RequestString;
 import it.polimi.ingsw.server.answer.request.SendMessage;
 import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
-
-import java.io.IOException;
 
 public class HandlerSP implements Runnable, Handler {
     private final View view;
@@ -175,7 +171,11 @@ public class HandlerSP implements Runnable, Handler {
         } else if (inputObj instanceof SeeOtherCards) {
             view.seeOtherCards(((SeeOtherCards) inputObj).getMessage());
         } else if (inputObj instanceof StorageInfo) {
-            view.printStorage((StorageInfo) inputObj);
+            if(((StorageInfo) inputObj).getCoinsAmount()==-1) {
+                view.printStorage((StorageInfo)inputObj);
+            } else {
+                view.printStorageAndVault((StorageInfo) inputObj);
+            }
         } else if (inputObj instanceof DevCardsSpaceInfo) {
             view.printDevelopmentCardsSpace((DevCardsSpaceInfo) inputObj);
         } else if (inputObj instanceof ResetCard) {

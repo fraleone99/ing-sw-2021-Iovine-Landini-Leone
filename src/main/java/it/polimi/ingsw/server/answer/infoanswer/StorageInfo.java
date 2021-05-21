@@ -35,10 +35,17 @@ public class StorageInfo implements Answer {
         this.shelf1Amount = storage.getAmountShelf(1);
         this.shelf2Amount = storage.getAmountShelf(2);
         this.shelf3Amount = storage.getAmountShelf(3);
-        this.coinsAmount = vault.getResource(Resource.COIN);
-        this.servantsAmount = vault.getResource(Resource.SERVANT);
-        this.stoneAmount = vault.getResource(Resource.STONE);
-        this.shieldsAmount = vault.getResource(Resource.SHIELD);
+        if(vault!=null) {
+            this.coinsAmount = vault.getResource(Resource.COIN);
+            this.servantsAmount = vault.getResource(Resource.SERVANT);
+            this.stoneAmount = vault.getResource(Resource.STONE);
+            this.shieldsAmount = vault.getResource(Resource.SHIELD);
+        } else {
+            coinsAmount=-1;
+            servantsAmount=-1;
+            stoneAmount=-1;
+            shieldsAmount=-1;
+        }
     }
 
     public Resource getShelf1Type() {

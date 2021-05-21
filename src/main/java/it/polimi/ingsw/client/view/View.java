@@ -60,6 +60,8 @@ public interface View {
 
     void printStorage(StorageInfo storageInfo);
 
+    void printStorageAndVault(StorageInfo storageInfo);
+
     void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo);
 
     void printActionToken(ActionToken actionToken);

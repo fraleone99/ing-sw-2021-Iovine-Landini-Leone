@@ -825,9 +825,31 @@ public class CLI implements View{
         return shelfBuilder.toString();
     }
 
-    public void printStorage(StorageInfo storageInfo){
+    public void printStorage(StorageInfo storageInfo) {
+        System.out.println("This is the new configuration of your storage:");
+        String storageBuilder = Constants.STORAGE_TOP_BOTTOM_EDGE +
 
+                //FIRST SHELF
+                Constants.EDGE + Constants.FOUR_EMPTY_SPACE +
+                shelfToString(1, storageInfo.getShelf1Type(), storageInfo.getShelf1Amount()) +
+                Constants.FIVE_EMPTY_SPACE + Constants.RIGHT_EDGE +
 
+                //SECOND SHELF
+                Constants.EDGE + Constants.THREE_EMPTY_SPACE +
+                shelfToString(2, storageInfo.getShelf2Type(), storageInfo.getShelf2Amount()) +
+                Constants.FIVE_EMPTY_SPACE + Constants.RIGHT_EDGE +
+
+                //THIRD SHELF
+                Constants.EDGE + Constants.TWO_EMPTY_SPACE +
+                shelfToString(3, storageInfo.getShelf3Type(), storageInfo.getShelf3Amount()) +
+                Constants.FOUR_EMPTY_SPACE + Constants.RIGHT_EDGE +
+                Constants.STORAGE_TOP_BOTTOM_EDGE;
+
+        System.out.println(storageBuilder);
+
+    }
+
+    public void printStorageAndVault(StorageInfo storageInfo){
         String storageBuilder = Constants.STORAGE_TOP_BOTTOM_EDGE +
 
                 //FIRST SHELF

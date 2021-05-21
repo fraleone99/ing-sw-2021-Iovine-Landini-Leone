@@ -310,6 +310,8 @@ public class TurnController {
                         ((StorageLeader) game.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     } else {
                         game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                        view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+
                     }
                     toPlace.remove(choice.get(0) - 1);
                     ArrayList<Ball> temp=new ArrayList<>(checkEmptyShelves(player,toPlace));
@@ -332,6 +334,7 @@ public class TurnController {
 
             try {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
+                view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
             } catch (NotEnoughSpaceException e) {
                 view.sendErrorMessage(players.get(player));
             }
