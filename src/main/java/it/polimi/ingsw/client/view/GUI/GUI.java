@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -108,8 +109,6 @@ public class GUI extends Application implements View {
             Button singlePlayer = (Button) MenuScene.lookup("#singlePlayerButton");
 
 
-
-
             multiplayer.setOnAction(actionEvent -> {
                 synchronized (lock) {
                     System.out.println("pressed multiplayer");
@@ -157,26 +156,63 @@ public class GUI extends Application implements View {
             stage.setScene(SetupScene);
             stage.show();
 
+
             TextField ipBox = (TextField) SetupScene.lookup("#ip");
             TextField portNumberBox = (TextField) SetupScene.lookup("#port");
 
+            ipBox.clear();
+            portNumberBox.clear();
+
             Button playButton = (Button) SetupScene.lookup("#playButton");
+            playButton.setDefaultButton(true);
 
             playButton.setOnAction( actionEvent ->{
                 synchronized (lock) {
                     IP = ipBox.getText();
-                    portNumber = Integer.parseInt(portNumberBox.getText());
-                    System.out.println("ip: " + IP + "\nport: " + portNumber);
-                    notReady = false;
-                    lock.notifyAll();
+                    try {
+                        portNumber = Integer.parseInt(portNumberBox.getText());
+                    }
+                    catch (NumberFormatException e){
+                        portNumber = -1;
+                    }
+                    if(IP.equals("") || portNumber < 1024 || portNumber >65535){
+                        errorHandling("setup");
+                    }
+                    //System.out.println("ip: " + IP + "\nport: " + portNumber);
+                    if(!(IP.equals("") || portNumber < 1024 || portNumber >65535)) {
+                        notReady = false;
+                        lock.notifyAll();
+                    }
                 }
+
+
 
             });
 
 
-
         });
     }
+
+    public void errorHandling(String error) {
+        switch (error) {
+            case "setup" : Platform.runLater(() -> {
+                errorDialog("Wrong Setup configuration!");
+                setupConnection();
+            });
+                break;
+            default : Platform.runLater(() -> errorDialog("Generic Error!"));
+        }
+    }
+
+
+    private void errorDialog(String error) {
+        Alert errorDialog = new Alert(Alert.AlertType.ERROR);
+        errorDialog.setTitle("Game Error");
+        errorDialog.setHeaderText("Error!");
+        errorDialog.setContentText(error);
+        errorDialog.showAndWait();
+    }
+
 
     @Override
     public String getIp() {
