@@ -92,9 +92,6 @@ public class NetworkHandler implements Runnable, Handler {
     }
 
     public void processServerAnswer(Object inputObj){
-        String string;
-        int choice=0;
-
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnection()){
                 view.handShake(((Connection) inputObj).getMessage());

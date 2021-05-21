@@ -7,7 +7,6 @@ import javafx.application.Application;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client implements Runnable {
     NetworkHandler networkHandler;
