@@ -264,6 +264,7 @@ public class GUI extends Application implements View {
 
             ChoiceBox choiceBox = (ChoiceBox) ChooseNumberScene.lookup("#numberChoice");
             Button okButton = (Button) ChooseNumberScene.lookup("#okButton");
+            okButton.setDefaultButton(true);
 
             choiceBox.getItems().add("1");
             choiceBox.getItems().add("2");
@@ -289,6 +290,7 @@ public class GUI extends Application implements View {
 
            TextField nicknameBox = (TextField) NicknameScene.lookup("#nicknameBox");
            Button okButton = (Button) NicknameScene.lookup("#okButton");
+           okButton.setDefaultButton(true);
 
            okButton.setOnAction(actionEvent ->
            {
