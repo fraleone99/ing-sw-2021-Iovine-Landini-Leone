@@ -31,7 +31,7 @@ public class CLITest {
 
         for(DevelopmentCardDeck p : deck){
             for(DevelopmentCard c : p.getDeck()){
-                System.out.println(cli.printDevelopmentCard(c) + c.toString());
+                System.out.println(cli.getInitialize().printDevelopmentCard(c) + c.toString());
 
             }
         }
@@ -45,7 +45,7 @@ public class CLITest {
         LeaderCardDeck deck = gameBoard.getLeaderDeck();
 
         for(LeaderCard d: deck.getDeck()){
-            System.out.println(cli.printLeaderCard(d));
+            System.out.println(cli.getInitialize().printLeaderCard(d));
         }
     }
 
@@ -54,27 +54,7 @@ public class CLITest {
         CLI cli = new CLI();
         Market market=new Market();
 
-        System.out.println(cli.printMarket(market));
-    }
-
-    @Test
-    public void printDevelopmentCardGrid(){
-        CLI cli = new CLI();
-        ArrayList<Integer> cards = new ArrayList<>();
-
-        int code = 18;
-        cards.add(code);
-
-        code = 32;
-        cards.add(code);
-
-        code = 45;
-        cards.add(code);
-
-        code = 54;
-        cards.add(code);
-
-        System.out.println(cli.printDevelopmentCardGrid(cards));
+        System.out.println(cli.getPrint().printMarket(market));
     }
 
     @Test
@@ -89,7 +69,7 @@ public class CLITest {
     public void printLorenzoFaith(){
         CLI cli = new CLI();
         FaithPath path=new FaithPath();
-        cli.printLorenzoFaith(path.getPositionLorenzo());
+        cli.getPrint().printLorenzoFaith(path.getPositionLorenzo());
     }
 
     @Test
@@ -119,14 +99,14 @@ public class CLITest {
 
         DevCardsSpace devCardsSpace = new DevCardsSpace();
 
-        devCardsSpace.checkSpace(cli.getDevelopmentCardDeck().getCardByID(17), 1);
-        devCardsSpace.addCard(cli.getDevelopmentCardDeck().getCardByID(17), 1);
+        devCardsSpace.checkSpace(cli.getInitialize().getDevelopmentCardDeck().getCardByID(17), 1);
+        devCardsSpace.addCard(cli.getInitialize().getDevelopmentCardDeck().getCardByID(17), 1);
 
-        devCardsSpace.checkSpace(cli.getDevelopmentCardDeck().getCardByID(17), 2);
-        devCardsSpace.addCard(cli.getDevelopmentCardDeck().getCardByID(17), 2);
+        devCardsSpace.checkSpace(cli.getInitialize().getDevelopmentCardDeck().getCardByID(17), 2);
+        devCardsSpace.addCard(cli.getInitialize().getDevelopmentCardDeck().getCardByID(17), 2);
 
-        devCardsSpace.checkSpace(cli.getDevelopmentCardDeck().getCardByID(17), 3);
-        devCardsSpace.addCard(cli.getDevelopmentCardDeck().getCardByID(17), 3);
+        devCardsSpace.checkSpace(cli.getInitialize().getDevelopmentCardDeck().getCardByID(17), 3);
+        devCardsSpace.addCard(cli.getInitialize().getDevelopmentCardDeck().getCardByID(17), 3);
 
         DevCardsSpaceInfo devCardsSpaceInfo = new DevCardsSpaceInfo(devCardsSpace);
 
@@ -149,13 +129,6 @@ public class CLITest {
     }
 
     @Test
-    public void setBackgroundColor(){
-        CLI cli = new CLI();
-
-        cli.setBackgroundColor();
-    }
-
-    @Test
     public void testLeaderCard() {
         CLI cli = new CLI();
         GameBoard gameBoard = new GameBoard(2);
@@ -168,9 +141,9 @@ public class CLITest {
 
         LeaderCard leader3 = gameBoard.getLeaderDeck().get(9);
 
-        System.out.println((cli.printLeaderCard(leader1)));
-        System.out.println((cli.printLeaderCard(leader2)));
-        System.out.println((cli.printLeaderCard(leader3)));
+        System.out.println((cli.getInitialize().printLeaderCard(leader1)));
+        System.out.println((cli.getInitialize().printLeaderCard(leader2)));
+        System.out.println((cli.getInitialize().printLeaderCard(leader3)));
     }
 
 }

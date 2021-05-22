@@ -220,4 +220,12 @@ public class CLI implements View {
     public void lose(String message) {
         System.out.println(Constants.LOSE + "\n" + Constants.ANSI_WHITE + message + Constants.ANSI_RESET + "\n" + Constants.THANKS_FOR_PLAYING);
     }
+
+    public CLIInitialize getInitialize() {
+        return initialize;
+    }
+
+    public CLIPrint getPrint() {
+        return print;
+    }
 }
