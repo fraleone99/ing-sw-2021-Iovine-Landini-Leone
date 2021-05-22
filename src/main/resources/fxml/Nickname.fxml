@@ -5,11 +5,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="244.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.GUI">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController">
    <children>
-      <TextField fx:id="nicknameBox" layoutX="180.0" layoutY="110.0" />
-      <Label layoutX="57.0" layoutY="114.0" text="Insert nickname:" />
-      <Button fx:id="okButton" layoutX="154.0" layoutY="170.0" mnemonicParsing="false" text="OK" />
+      <TextField fx:id="nicknameBox" layoutX="713.0" layoutY="385.0" />
+      <Label layoutX="573.0" layoutY="389.0" text="Insert nickname:" />
+      <Button fx:id="okButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="748.0" layoutY="560.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="40.0" text="Play" />
    </children>
 </AnchorPane>

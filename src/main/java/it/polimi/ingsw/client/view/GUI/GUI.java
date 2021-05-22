@@ -4,6 +4,10 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
+import it.polimi.ingsw.client.view.GUI.sceneControllers.MainMenuController;
+import it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController;
+import it.polimi.ingsw.client.view.GUI.sceneControllers.PlayerNumberController;
+import it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
@@ -16,16 +20,15 @@ import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-
 
 
 public class GUI extends Application implements View {
@@ -37,14 +40,21 @@ public class GUI extends Application implements View {
     private Scene ChooseNumberScene;
     private Scene LoadingScene;
 
-    private final Map<String, Scene> sceneMap = new HashMap<>();
-    private final String MENU = "MainMenu";
-    private final String SETUP = "setup";
-    private final String SINGLE_PLAYER = "SinglePlayer";
-    private final String LOCAL_SP = "setupLocalSP";
-    private final String WELCOME = "Welcome";
+    private MainMenuController mainMenuController;
+    private SetupController setupController;
+    private NicknameController nicknameController;
+    private PlayerNumberController playerNumberController;
 
-    //private guiController controller;
+    private final Map<String, Scene> sceneMap = new HashMap<>();
+    public static final String MENU = "MainMenu";
+    public static final String SETUP = "setup";
+    public static final String NICKNAME = "Nickname";
+    public static final String NUMBER = "Number";
+    public static final String LOADING = "Loading";
+    public static final String SINGLE_PLAYER = "SinglePlayer";
+    public static final String LOCAL_SP = "setupLocalSP";
+    public static final String WELCOME = "Welcome";
+
 
     Handler handler;
 
@@ -60,20 +70,35 @@ public class GUI extends Application implements View {
 
     @Override
     public void init() throws Exception {
-        Parent menu = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
-        MenuScene = new Scene(menu);
+        FXMLLoader menu = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+        MenuScene = new Scene(menu.load());
+        mainMenuController = menu.getController();
+        mainMenuController.setGui(this);
 
-        Parent setup = FXMLLoader.load(getClass().getResource("/fxml/setup.fxml"));
-        SetupScene = new Scene(setup);
+        FXMLLoader setup = new FXMLLoader(getClass().getResource("/fxml/setup.fxml"));
+        SetupScene = new Scene(setup.load());
+        setupController = setup.getController();
+        setupController.setGui(this);
 
-        Parent nickname = FXMLLoader.load(getClass().getResource("/fxml/Nickname.fxml"));
-        NicknameScene = new Scene(nickname);
+        FXMLLoader nickname = new FXMLLoader(getClass().getResource(("/fxml/Nickname.fxml")));
+        NicknameScene = new Scene(nickname.load());
+        nicknameController = nickname.getController();
+        nicknameController.setGui(this);
 
-        Parent ChooseNumber = FXMLLoader.load(getClass().getResource("/fxml/PlayerNumber.fxml"));
-        ChooseNumberScene = new Scene(ChooseNumber);
 
-        Parent Loading = FXMLLoader.load(getClass().getResource("/fxml/loading.fxml"));
-        LoadingScene = new Scene(Loading);
+        FXMLLoader number = new FXMLLoader(getClass().getResource("/fxml/PlaYerNumber.fxml"));
+        ChooseNumberScene = new Scene(number.load());
+        playerNumberController = number.getController();
+        playerNumberController.setGui(this);
+
+        FXMLLoader loading = new FXMLLoader(getClass().getResource(("/fxml/loading.fxml")));
+        LoadingScene = new Scene(loading.load());
+
+        sceneMap.put(MENU, MenuScene);
+        sceneMap.put(SETUP, SetupScene);
+        sceneMap.put(NICKNAME, NicknameScene);
+        sceneMap.put(NUMBER, ChooseNumberScene);
+        sceneMap.put(LOADING, LoadingScene);
     }
 
     @Override
@@ -82,7 +107,12 @@ public class GUI extends Application implements View {
 
         stage = primaryStage;
         stage.setTitle("I Maestri del Rinascimento");
-        primaryStage.show();
+        stage.centerOnScreen();
+        stage.setHeight(810);
+        stage.setWidth(1440);
+        stage.setFullScreen(true);
+        stage.setMaximized(true);
+        stage.show();
 
         Client client = new Client(this);
         Thread clientThread = new Thread(client);
@@ -91,42 +121,27 @@ public class GUI extends Application implements View {
     }
 
     public void changeStage(String scene){
+        currentScene = sceneMap.get(scene);
+        stage.setScene(currentScene);
+        stage.show();
     }
 
-    public void initialize() {
+    public Object getLock() {
+        return lock;
+    }
 
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setNotReady(boolean notReady) {
+        this.notReady = notReady;
     }
 
     @Override
     public int gameType() {
-        notReady = true;
-        AtomicInteger ris = new AtomicInteger();
         Platform.runLater(()->{
-            stage.setScene(MenuScene);
-            stage.show();
-
-            Button multiplayer = (Button) MenuScene.lookup("#multiplayerButton");
-            Button singlePlayer = (Button) MenuScene.lookup("#singlePlayerButton");
-
-
-            multiplayer.setOnAction(actionEvent -> {
-                synchronized (lock) {
-                    System.out.println("pressed multiplayer");
-                    ris.set(2);
-                    notReady = false;
-                    lock.notifyAll();
-                }
-            });
-
-            singlePlayer.setOnAction(actionEvent -> {
-                synchronized (lock) {
-                    notReady = false;
-                    ris.set(1);
-                    lock.notifyAll();
-                }
-            });
-
-
+            mainMenuController.start();
         });
 
         synchronized (lock){
@@ -137,8 +152,7 @@ public class GUI extends Application implements View {
                     e.printStackTrace();
                 }
             }
-            System.out.println("returning int");
-            return ris.get();
+            return mainMenuController.getRis();
         }
     }
 
@@ -150,47 +164,7 @@ public class GUI extends Application implements View {
     @Override
     public void setupConnection() {
         notReady = true;
-
-        System.out.println("Entering setup connection\n");
-        Platform.runLater(()->{
-            stage.setScene(SetupScene);
-            stage.show();
-
-
-            TextField ipBox = (TextField) SetupScene.lookup("#ip");
-            TextField portNumberBox = (TextField) SetupScene.lookup("#port");
-
-            ipBox.clear();
-            portNumberBox.clear();
-
-            Button playButton = (Button) SetupScene.lookup("#playButton");
-            playButton.setDefaultButton(true);
-
-            playButton.setOnAction( actionEvent ->{
-                synchronized (lock) {
-                    IP = ipBox.getText();
-                    try {
-                        portNumber = Integer.parseInt(portNumberBox.getText());
-                    }
-                    catch (NumberFormatException e){
-                        portNumber = -1;
-                    }
-                    if(IP.equals("") || portNumber < 1024 || portNumber >65535){
-                        errorHandling("setup");
-                    }
-                    //System.out.println("ip: " + IP + "\nport: " + portNumber);
-                    if(!(IP.equals("") || portNumber < 1024 || portNumber >65535)) {
-                        notReady = false;
-                        lock.notifyAll();
-                    }
-                }
-
-
-
-            });
-
-
-        });
+        Platform.runLater(()-> setupController.setupConnection());
     }
 
     public void errorHandling(String error) {
@@ -216,7 +190,6 @@ public class GUI extends Application implements View {
 
     @Override
     public String getIp() {
-        System.out.println("getting ip");
         synchronized (lock) {
             while (notReady) {
                 try {
@@ -229,9 +202,12 @@ public class GUI extends Application implements View {
         }
     }
 
+    public void setIP(String IP) {
+        this.IP = IP;
+    }
+
     @Override
     public int getPortNumber() {
-        System.out.println("getting port number");
         synchronized (lock) {
             while (notReady) {
                 try {
@@ -244,62 +220,23 @@ public class GUI extends Application implements View {
         }
     }
 
-
+    public void setPortNumber(int portNumber) {
+        this.portNumber = portNumber;
+    }
 
     @Override
     public void handShake(String welcome) {
-        System.out.println("Handshake");
         handler.send(new SendString("Client connected"));
     }
 
     @Override
     public void askPlayerNumber(String message) {
-        System.out.println("asking player number");
-        Platform.runLater(()->{
-
-            AtomicInteger playersNumber = new AtomicInteger();
-
-            stage.setScene(ChooseNumberScene);
-            stage.show();
-
-            ChoiceBox choiceBox = (ChoiceBox) ChooseNumberScene.lookup("#numberChoice");
-            Button okButton = (Button) ChooseNumberScene.lookup("#okButton");
-            okButton.setDefaultButton(true);
-
-            choiceBox.getItems().add("1");
-            choiceBox.getItems().add("2");
-            choiceBox.getItems().add("3");
-            choiceBox.getItems().add("4");
-
-            okButton.setOnAction(actionEvent -> {
-                playersNumber.set(Integer.parseInt((String) choiceBox.getValue()));
-                handler.send(new SendInt(playersNumber.get()));
-            });
-
-        });
+        Platform.runLater(()-> playerNumberController.setupPlayersNumber());
     }
 
     @Override
     public void askNickname(String message) {
-        System.out.println("asking nickname");
-
-       Platform.runLater(() -> {
-           AtomicReference<String> nickname = new AtomicReference<>();
-           stage.setScene(NicknameScene);
-           stage.show();
-
-           TextField nicknameBox = (TextField) NicknameScene.lookup("#nicknameBox");
-           Button okButton = (Button) NicknameScene.lookup("#okButton");
-           okButton.setDefaultButton(true);
-
-           okButton.setOnAction(actionEvent ->
-           {
-               nickname.set(nicknameBox.getText());
-               handler.send(new SendString(nickname.get()));
-           });
-
-
-       });
+       Platform.runLater(() -> nicknameController.setupNickname());
 
     }
 
@@ -307,12 +244,9 @@ public class GUI extends Application implements View {
     public void readMessage(String message) {
         if(message.equals("You are now in the waiting room. The game will start soon!")){
             Platform.runLater(()->{
-                stage.setScene(LoadingScene);
-                stage.show();
-
+                changeStage(LOADING);
                 ProgressBar progressBar = (ProgressBar) LoadingScene.lookup("#progressBar");
                 progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-
             });
         }
     }

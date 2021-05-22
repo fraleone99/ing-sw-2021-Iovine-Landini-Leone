@@ -10,8 +10,10 @@ public class Maestri {
         String[] mode = new String[1];
         Scanner scanner = new Scanner(System.in);
         String input;
-        input = scanner.nextLine();
-
+        do {
+            System.out.println("Insert your choice: ");
+            input = scanner.nextLine();
+        }while (!(input.equals("0") || input.equals("1") || input.equals("2")));
 
 
         switch (input){
