@@ -44,4 +44,8 @@ public abstract class Card{
     public int getCardID() {
         return cardID;
     }
+
+    public String getGraphicPath() {
+        return "src/main/resources/graphics/" + this.getCardID() + ".png";
+    }
 }

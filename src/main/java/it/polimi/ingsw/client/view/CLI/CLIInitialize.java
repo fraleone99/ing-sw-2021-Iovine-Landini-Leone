@@ -43,7 +43,7 @@ public class CLIInitialize {
 
     private void initializeDevelopmentCard() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/DevelopmentCards.json"));
+        JsonReader jsonReader = new JsonReader(new FileReader("src/main/resources/JSON/DevelopmentCards.json"));
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
 
         developmentCardDeck.setDeck(data);
@@ -51,10 +51,10 @@ public class CLIInitialize {
 
     private void initializeLeaderCard() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReaderEcon = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/EconomyLeaders.json"));
-        JsonReader jsonReaderProd = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/ProductionLeaders.json"));
-        JsonReader jsonReaderStorage = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/StorageLeaders.json"));
-        JsonReader jsonReaderWhite = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/WhiteBallLeaders.json"));
+        JsonReader jsonReaderEcon = new JsonReader(new FileReader("src/main/resources/JSON/EconomyLeaders.json"));
+        JsonReader jsonReaderProd = new JsonReader(new FileReader("src/main/resources/JSON/ProductionLeaders.json"));
+        JsonReader jsonReaderStorage = new JsonReader(new FileReader("src/main/resources/JSON/StorageLeaders.json"));
+        JsonReader jsonReaderWhite = new JsonReader(new FileReader("src/main/resources/JSON/WhiteBallLeaders.json"));
 
         ArrayList<EconomyLeader> leadersEcon ;
         ArrayList<ProductionLeader> leadersProd;
