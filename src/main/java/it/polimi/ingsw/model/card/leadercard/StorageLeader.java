@@ -28,9 +28,9 @@ public class StorageLeader extends LeaderCard {
      * @param req is the requirements of the card
      * @param s is the shelf of the card
      */
-    public StorageLeader(int VictoryPoints, int CardID, Requirements req, Shelf s)
+    public StorageLeader(int VictoryPoints, int CardID, String graphicPath, Requirements req, Shelf s)
     {
-        super(VictoryPoints, CardID);
+        super(VictoryPoints, CardID, graphicPath);
         requirements.add(req);
         this.LeaderShelf=s;
     }
