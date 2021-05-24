@@ -44,7 +44,7 @@ public class FaithPath {
     public void initializeCells(){
         try{
             Gson gson = new Gson();
-            JsonReader jsonReader = new JsonReader(new FileReader("src/main/java/it/polimi/ingsw/model/resources/Cells.json"));
+            JsonReader jsonReader = new JsonReader(new FileReader("src/main/resources/JSON/Cells.json"));
             ArrayList<Cell> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<Cell>>(){}.getType());
 
             space.addAll(data);

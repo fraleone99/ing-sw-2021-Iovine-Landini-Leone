@@ -30,8 +30,8 @@ public class DevelopmentCard extends Card {
      * @param Cost is the cost to activate the card
      * @param production is the production of the card
      */
-    public DevelopmentCard(int VictoryPoints, int CardID, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
-        super(VictoryPoints, CardID);
+    public DevelopmentCard(int VictoryPoints, int CardID, String graphicPath, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
+        super(VictoryPoints, CardID, graphicPath);
         this.color=Color;
         this.level=Level;
         this.cost.addAll(Cost);
@@ -111,7 +111,7 @@ public class DevelopmentCard extends Card {
         return "DevelopmentCard{" +
                 "color=" + color +
                 ", level=" + level +
-                ", cost=" + cost.toString() +
+                ", cost=" + cost +
                 ", victoryPoints=" + getVictoryPoints() +
                 ", production=(" + "input->" + production.getInputProduction().toString() +
                                     "output->" + production.getOutputProduction().toString() + ")"+

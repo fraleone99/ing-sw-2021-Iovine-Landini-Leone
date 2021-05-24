@@ -12,16 +12,19 @@ package it.polimi.ingsw.model.card;
 public abstract class Card{
     private final int victoryPoints;
     private final int cardID;
+    private final String graphicPath;
 
 
     /**
      * Constructor Card creates a new Card instance
      * @param VictoryPoints is the number of the victory points of the card
      * @param CardID is the ID of the card
+     * @param graphicPath is the path to the image of the card
      */
-    public Card(int VictoryPoints, int CardID) {
+    public Card(int VictoryPoints, int CardID, String graphicPath) {
         this.victoryPoints = VictoryPoints;
         this.cardID = CardID;
+        this.graphicPath = graphicPath;
     }
 
 
@@ -40,5 +43,9 @@ public abstract class Card{
      */
     public int getCardID() {
         return cardID;
+    }
+
+    public String getGraphicPath() {
+        return "src/main/resources/graphics/" + this.getCardID() + ".png";
     }
 }

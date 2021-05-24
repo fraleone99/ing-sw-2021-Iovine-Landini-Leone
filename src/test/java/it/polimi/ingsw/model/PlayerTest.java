@@ -23,6 +23,7 @@ public class PlayerTest {
 
     @Test
     public void buyCard() throws InvalidSpaceCardException, InvalidChoiceException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException {
+        String s = "path";
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -32,7 +33,7 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output, 3);
-        DevelopmentCard devCard=new DevelopmentCard(3, 0, CardColor.PURPLE, 1, cost, production);
+        DevelopmentCard devCard=new DevelopmentCard(3, 0, s, CardColor.PURPLE, 1, cost, production);
         player.getPlayerDashboard().getStorage().AddResource(3, Resource.SERVANT, 3);
 
         player.buyCard(devCard,2);
@@ -43,6 +44,7 @@ public class PlayerTest {
 
     @Test(expected = InvalidSpaceCardException.class)
     public void buyCard_InvalidSpace() throws InvalidSpaceCardException {
+        String s = "path";
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -52,13 +54,14 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output, 3);
-        DevelopmentCard devCard=new DevelopmentCard(3, 1, CardColor.PURPLE, 1, cost, production);
+        DevelopmentCard devCard=new DevelopmentCard(3, 1, s, CardColor.PURPLE, 1, cost, production);
 
         player.buyCard(devCard,3);
     }
 
     @Test(expected=NotEnoughResourceException.class)
     public void ProductionLeader_NotEnoughResource() throws NotEnoughResourceException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, InvalidChoiceException {
+        String s = "path";
         player.getPlayerDashboard().getStorage().AddResource(1,Resource.SHIELD,1);
         player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,1);
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,1);
@@ -73,7 +76,7 @@ public class PlayerTest {
         output.add(g2);
         Production production = new Production(input, output,2);
         Requirements req1=new Requirements(CardColor.PURPLE, 2, 1, cost);
-        LeaderCard leader=new ProductionLeader(4, 12, production, req1);
+        LeaderCard leader=new ProductionLeader(4, 12, s, production, req1);
 
         player.getPlayerDashboard().getLeaders().add(leader);
 
@@ -84,6 +87,8 @@ public class PlayerTest {
 
     @Test
     public void ProductionLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+        String s = "path";
+
         player.getPlayerDashboard().getStorage().AddResource(1,Resource.STONE,1);
         player.getPlayerDashboard().getStorage().AddResource(2,Resource.COIN,1);
         player.getPlayerDashboard().getVault().AddResource(Resource.STONE,1);
@@ -99,7 +104,7 @@ public class PlayerTest {
         output.add(g2);
         Production production = new Production(input, output, 2);
         Requirements req1=new Requirements(CardColor.PURPLE, 2, 1, cost);
-        LeaderCard leader=new ProductionLeader(4, 12, production, req1);
+        LeaderCard leader=new ProductionLeader(4, 12, s, production, req1);
 
         player.getPlayerDashboard().getLeaders().add(leader);
 
@@ -118,15 +123,16 @@ public class PlayerTest {
 
     @Test
     public void DiscardLeader() throws InvalidChoiceException {
+        String s = "path";
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,12, req1,shelf);
+        LeaderCard leader=new StorageLeader(3,12, s, req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         req1=new Requirements(CardColor.GREEN,0,2, cost);
         Requirements req2=new Requirements(CardColor.PURPLE,0,1, cost);
-        leader=new WhiteBallLeader(5,2,Resource.SHIELD,req1,req2);
+        leader=new WhiteBallLeader(5,2,s,Resource.SHIELD,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         player.DiscardLeader(1);
@@ -138,10 +144,11 @@ public class PlayerTest {
 
     @Test(expected = InvalidChoiceException.class)
     public void testDiscardLeader_InvalidChoice() throws InvalidChoiceException {
+        String s = "path";
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,3,req1,shelf);
+        LeaderCard leader=new StorageLeader(3,3,s,req1,shelf);
 
         player.DiscardLeader(2);
     }
@@ -149,6 +156,8 @@ public class PlayerTest {
     @Test
     public void testActiveLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException,
             NotEnoughSpaceException, InvalidChoiceException {
+
+        String s = "path";
 
         player.getPlayerDashboard().getStorage().AddResource(3,Resource.SHIELD,3);
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,4);
@@ -164,7 +173,7 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output,0);
-        DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
+        DevelopmentCard devCard=new DevelopmentCard(3,16, s, CardColor.PURPLE, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
@@ -175,7 +184,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,18, CardColor.GREEN, 1, cost1, production);
+        devCard=new DevelopmentCard(1,18, s, CardColor.GREEN, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
@@ -188,7 +197,7 @@ public class PlayerTest {
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 2));
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
+        devCard=new DevelopmentCard(4,26, s, CardColor.GREEN, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,3);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,3);
 
@@ -201,7 +210,7 @@ public class PlayerTest {
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 3));
         production=new Production(input, output, 0);
-        devCard=new DevelopmentCard(6,38, CardColor.BLUE, 2, cost1, production);
+        devCard=new DevelopmentCard(6,38, s, CardColor.BLUE, 2, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
@@ -212,18 +221,18 @@ public class PlayerTest {
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,3,req1,shelf);
+        LeaderCard leader=new StorageLeader(3,3,s,req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         cost=new Goods(Resource.COIN, 0);
         req1=new Requirements(CardColor.GREEN,0,2, cost);
         Requirements req2=new Requirements(CardColor.PURPLE,0,1, cost);
-        leader=new WhiteBallLeader(5,5,Resource.SHIELD,req1,req2);
+        leader=new WhiteBallLeader(5,5,s,Resource.SHIELD,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         req1=new Requirements(CardColor.GREEN,0,1, cost);
         req2=new Requirements(CardColor.BLUE,0,1, cost);
-        leader=new EconomyLeader(2,2,Resource.STONE,req1,req2);
+        leader=new EconomyLeader(2,2,s,Resource.STONE,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         input = new ArrayList<>();
@@ -234,7 +243,7 @@ public class PlayerTest {
         output.add(g2);
         production = new Production(input,output,2);
         req1=new Requirements(CardColor.BLUE,2,1, cost);
-        leader=new ProductionLeader(4,12,production,req1);
+        leader=new ProductionLeader(4,12,s,production,req1);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         player.ActiveLeader(1);
@@ -268,6 +277,8 @@ public class PlayerTest {
 
     @Test
     public void testGetDevCards() {
+        String s = "path";
+
         ArrayList<Integer> cards = new ArrayList<>();
 
 
@@ -280,7 +291,7 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output,0);
-        DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
+        DevelopmentCard devCard=new DevelopmentCard(3,16, s, CardColor.PURPLE, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
@@ -291,7 +302,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,19, CardColor.GREEN, 2, cost1, production);
+        devCard=new DevelopmentCard(1,19, s, CardColor.GREEN, 2, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
         cards.add(devCard.getCardID());
@@ -306,7 +317,7 @@ public class PlayerTest {
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 3));
         production=new Production(input, output, 0);
-        devCard=new DevelopmentCard(6,38, CardColor.BLUE, 1, cost1, production);
+        devCard=new DevelopmentCard(6,38, s, CardColor.BLUE, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
@@ -317,7 +328,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,18, CardColor.GREEN, 2, cost1, production);
+        devCard=new DevelopmentCard(1,18, s, CardColor.GREEN, 2, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
@@ -328,7 +339,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,18, CardColor.GREEN, 3, cost1, production);
+        devCard=new DevelopmentCard(1,18, s, CardColor.GREEN, 3, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
         cards.add(devCard.getCardID());
@@ -343,7 +354,7 @@ public class PlayerTest {
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 2));
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
+        devCard=new DevelopmentCard(4,26, s, CardColor.GREEN, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,3);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,3);
         cards.add(devCard.getCardID());
@@ -357,6 +368,8 @@ public class PlayerTest {
 
     @Test
     public void testGetProductions() {
+        String s = "path";
+
         ArrayList<Integer> cards = new ArrayList<>();
 
 
@@ -369,7 +382,7 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output,0);
-        DevelopmentCard devCard=new DevelopmentCard(3,16, CardColor.PURPLE, 1, cost1, production);
+        DevelopmentCard devCard=new DevelopmentCard(3,16, s, CardColor.PURPLE, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
@@ -380,7 +393,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,19, CardColor.GREEN, 2, cost1, production);
+        devCard=new DevelopmentCard(1,19, s, CardColor.GREEN, 2, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
         cards.add(devCard.getCardID());
@@ -395,7 +408,7 @@ public class PlayerTest {
         output= new ArrayList<>();
         output.add(new Goods(Resource.SERVANT, 3));
         production=new Production(input, output, 0);
-        devCard=new DevelopmentCard(6,38, CardColor.BLUE, 1, cost1, production);
+        devCard=new DevelopmentCard(6,38, s, CardColor.BLUE, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
@@ -406,7 +419,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,18, CardColor.GREEN, 2, cost1, production);
+        devCard=new DevelopmentCard(1,18, s, CardColor.GREEN, 2, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
 
@@ -417,7 +430,7 @@ public class PlayerTest {
         input.add(new Goods(Resource.COIN, 1));
         output=new ArrayList<>();
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(1,18, CardColor.GREEN, 3, cost1, production);
+        devCard=new DevelopmentCard(1,18, s, CardColor.GREEN, 3, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,2);
         cards.add(devCard.getCardID());
@@ -432,7 +445,7 @@ public class PlayerTest {
         output=new ArrayList<>();
         output.add(new Goods(Resource.COIN, 2));
         production=new Production(input, output, 1);
-        devCard=new DevelopmentCard(4,26, CardColor.GREEN, 1, cost1, production);
+        devCard=new DevelopmentCard(4,26, s, CardColor.GREEN, 1, cost1, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,3);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,3);
         cards.add(devCard.getCardID());
@@ -441,7 +454,7 @@ public class PlayerTest {
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.GREEN,0,1, cost);
         Requirements req2=new Requirements(CardColor.BLUE,0,1, cost);
-        LeaderCard leader=new EconomyLeader(2,2,Resource.STONE,req1,req2);
+        LeaderCard leader=new EconomyLeader(2,2,s,Resource.STONE,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
 
         input = new ArrayList<>();
@@ -452,7 +465,7 @@ public class PlayerTest {
         output.add(g2);
         production = new Production(input,output,2);
         req1=new Requirements(CardColor.BLUE,2,1, cost);
-        leader=new ProductionLeader(4,12,production,req1);
+        leader=new ProductionLeader(4,12,s,production,req1);
         player.getPlayerDashboard().getLeaders().add(leader);
         cards.add(devCard.getCardID());
 
@@ -482,6 +495,8 @@ public class PlayerTest {
 
     @Test
     public void ProductionDevCard() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+        String s = "path";
+
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> cost=new ArrayList<>();
         cost.add(new Goods(Resource.SERVANT, 3));
@@ -491,7 +506,7 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,1));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output, 0);
-        DevelopmentCard devCard=new DevelopmentCard(3, 4, CardColor.PURPLE, 1, cost, production);
+        DevelopmentCard devCard=new DevelopmentCard(3, 4, s, CardColor.PURPLE, 1, cost, production);
 
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
@@ -518,33 +533,35 @@ public class PlayerTest {
 
     @Test
     public void testCalculateVictoryPoints() {
+        String s = "path";
+
         ArrayList<Goods> input=new ArrayList<>();
         ArrayList<Goods> output=new ArrayList<>();
 
         ArrayList<Goods> cost=new ArrayList<>();
 
         Production production=new Production(input, output, 2);
-        DevelopmentCard card = new DevelopmentCard(4, 5, CardColor.GREEN, 1, cost, production);
+        DevelopmentCard card = new DevelopmentCard(4, 5, s, CardColor.GREEN, 1, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(card,1);
 
         production=new Production(input, output, 5);
-        card = new DevelopmentCard(8, 6, CardColor.BLUE, 2, cost, production);
+        card = new DevelopmentCard(8, 6, s, CardColor.BLUE, 2, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(card,1);
 
         production=new Production(input, output, 9);
-        card = new DevelopmentCard(12, 7, CardColor.GREEN, 3, cost, production);
+        card = new DevelopmentCard(12, 7, s, CardColor.GREEN, 3, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(card,1);
 
         production=new Production(input, output, 2);
-        card = new DevelopmentCard(3, 8, CardColor.PURPLE, 1, cost, production);
+        card = new DevelopmentCard(3, 8, s, CardColor.PURPLE, 1, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(card,2);
 
         production=new Production(input, output, 2);
-        card = new DevelopmentCard(6, 9, CardColor.YELLOW, 2, cost, production);
+        card = new DevelopmentCard(6, 9, s, CardColor.YELLOW, 2, cost, production);
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(card,2);
         player.getPlayerDashboard().getDevCardsSpace().addCard(card,2);
 
@@ -552,11 +569,11 @@ public class PlayerTest {
         Goods good=new Goods(Resource.COIN, 3);
         Requirements requirements = new Requirements(CardColor.GREEN, 2, 3, good);
 
-        LeaderCard leader=new ProductionLeader(4, 10, production, requirements);
+        LeaderCard leader=new ProductionLeader(4, 10, s, production, requirements);
         leader.setIsDiscarded();
         player.getLeaders().add(leader);
 
-        leader=new ProductionLeader(10, 11, production, requirements);
+        leader=new ProductionLeader(10, 11, s, production, requirements);
         leader.setIsActive();
         player.getLeaders().add(leader);
 
@@ -566,6 +583,8 @@ public class PlayerTest {
 
     @Test
     public void testDoProduction() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
+        String s = "path";
+
         player.getPlayerDashboard().getStorage().AddResource(1, Resource.SHIELD, 1);
         player.getPlayerDashboard().getStorage().AddResource(2, Resource.STONE, 2);
         player.getPlayerDashboard().getStorage().AddResource(3, Resource.SERVANT, 3);
@@ -585,7 +604,7 @@ public class PlayerTest {
         output.add(new Goods(Resource.SHIELD,3));
         output.add(new Goods(Resource.STONE,1));
         Production production=new Production(input, output, 0);
-        DevelopmentCard devCard=new DevelopmentCard(3, 4, CardColor.PURPLE, 1, cost, production);
+        DevelopmentCard devCard=new DevelopmentCard(3, 4, s, CardColor.PURPLE, 1, cost, production);
 
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
@@ -607,24 +626,26 @@ public class PlayerTest {
 
     @Test
     public void testWhiteBallLeader() {
+        String s = "path";
+
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
         Requirements req2=new Requirements(CardColor.BLUE,0,0, cost);
-        LeaderCard leader=new WhiteBallLeader(5, 12, Resource.COIN, req1, req2);
+        LeaderCard leader=new WhiteBallLeader(5, 12, s, Resource.COIN, req1, req2);
         leader.setIsActive();
         player.getPlayerDashboard().getLeaders().add(leader);
 
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
         req2=new Requirements(CardColor.BLUE,0,0, cost);
-        leader=new WhiteBallLeader(11, 28, Resource.SERVANT, req1, req2);
+        leader=new WhiteBallLeader(11, 28, s, Resource.SERVANT, req1, req2);
         leader.setIsActive();
         player.getPlayerDashboard().getLeaders().add(leader);
 
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
         req2=new Requirements(CardColor.BLUE,0,0, cost);
-        leader=new WhiteBallLeader(9, 32, Resource.SHIELD, req1, req2);
+        leader=new WhiteBallLeader(9, 32, s, Resource.SHIELD, req1, req2);
         leader.setIsDiscarded();
         player.getPlayerDashboard().getLeaders().add(leader);
 
@@ -633,24 +654,26 @@ public class PlayerTest {
 
     @Test
     public void testStorageLeader() {
+        String s = "path";
+
         Shelf shelf=new Shelf(2,0,Resource.COIN);
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        LeaderCard leader=new StorageLeader(3,12, req1,shelf);
+        LeaderCard leader=new StorageLeader(3,12, s, req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsActive();
 
         shelf=new Shelf(2,2,Resource.SERVANT);
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        leader=new StorageLeader(3,45, req1, shelf);
+        leader=new StorageLeader(3,45, s, req1, shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsDiscarded();
 
         shelf=new Shelf(2,1,Resource.SHIELD);
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        leader=new StorageLeader(3,22, req1, shelf);
+        leader=new StorageLeader(3,22, s, req1, shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsActive();
 
@@ -661,38 +684,40 @@ public class PlayerTest {
 
     @Test
     public void testIndexOfStorageLeader() throws InvalidChoiceException {
+        String s = "path";
+
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
         Requirements req2=new Requirements(CardColor.BLUE,0,0, cost);
-        LeaderCard leader=new WhiteBallLeader(5, 12, Resource.COIN, req1, req2);
+        LeaderCard leader=new WhiteBallLeader(5, 12, s, Resource.COIN, req1, req2);
         leader.setIsActive();
         player.getPlayerDashboard().getLeaders().add(leader);
 
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
         req2=new Requirements(CardColor.BLUE,0,0, cost);
-        leader=new WhiteBallLeader(11, 28, Resource.SERVANT, req1, req2);
+        leader=new WhiteBallLeader(11, 28, s, Resource.SERVANT, req1, req2);
         leader.setIsActive();
         player.getPlayerDashboard().getLeaders().add(leader);
 
         Shelf shelf=new Shelf(2,2,Resource.SERVANT);
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        leader=new StorageLeader(3,45, req1, shelf);
+        leader=new StorageLeader(3,45, s, req1, shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsDiscarded();
 
         shelf=new Shelf(2,0,Resource.COIN);
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        leader=new StorageLeader(3,12, req1,shelf);
+        leader=new StorageLeader(3,12, s, req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsActive();
 
         shelf=new Shelf(2,0,Resource.SHIELD);
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
-        leader=new StorageLeader(3,12, req1,shelf);
+        leader=new StorageLeader(3,12, s, req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsActive();
 

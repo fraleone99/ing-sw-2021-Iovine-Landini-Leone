@@ -26,8 +26,8 @@ public class WhiteBallLeader extends LeaderCard {
      * @param req1 is the first requirement of the card
      * @param req2 is the second requirement of the card
      */
-    public WhiteBallLeader(int VictoryPoints, int CardID, Resource type, Requirements req1, Requirements req2) {
-        super(VictoryPoints, CardID);
+    public WhiteBallLeader(int VictoryPoints, int CardID, String graphicPath, Resource type, Requirements req1, Requirements req2) {
+        super(VictoryPoints, CardID, graphicPath);
         this.conversionType = type;
         requirements.add(req1);
         requirements.add(req2);
