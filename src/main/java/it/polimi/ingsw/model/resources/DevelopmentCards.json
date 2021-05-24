@@ -760,6 +760,14 @@
         {
           "type": "COIN",
           "amount": 1
+        },
+        {
+          "type": "SERVANT",
+          "amount": 1
+        },
+        {
+          "type": "SHIELD",
+          "amount": 1
         }
       ],
       "faithSteps": 0
@@ -797,7 +805,7 @@
           "amount": 2
         }
       ],
-      "faithSteps": 0
+      "faithSteps": 1
     }
   },
   {
@@ -966,7 +974,7 @@
       ],
       "outputProduction": [
         {
-          "type": "SHIELD",
+          "type": "STONE",
           "amount": 2
         }
       ],

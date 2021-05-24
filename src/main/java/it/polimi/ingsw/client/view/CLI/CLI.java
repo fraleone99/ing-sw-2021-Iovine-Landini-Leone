@@ -19,7 +19,6 @@ public class CLI implements View {
     private final CLIGameBoard gameBoard;
     private final CLITurn turn;
     private final CLIPrint print;
-    private Handler handler;
 
     public CLI() {
         initialize = new CLIInitialize();
@@ -30,7 +29,6 @@ public class CLI implements View {
     }
 
     public void setHandler(Handler handler) {
-        this.handler = handler;
         turn.setHandler(handler);
         login.setHandler(handler);
         gameBoard.setHandler(handler);
@@ -71,152 +69,187 @@ public class CLI implements View {
         login.askNickname(message);
     }
 
+    @Override
     public void askResource(String message) {
         login.askResource(message);
     }
 
+    @Override
     public void readMessage(String message) {
         System.out.println(message);
     }
 
+    @Override
     public void askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
         login.askLeaderToDiscard(IdLeaders);
     }
 
-
+    @Override
     public void seeGameBoard(String message) {
         gameBoard.seeGameBoard(message);
     }
 
+    @Override
     public void seeLeaderCards(ArrayList<Integer> leaderCards) {
         gameBoard.seeLeaderCards(leaderCards);
     }
 
+    @Override
     public void seeMarket(Market market) {
         gameBoard.seeMarket(market);
     }
 
+    @Override
     public void chooseLine(String message) {
         gameBoard.chooseLine(message);
     }
 
+    @Override
     public void seeGrid(ArrayList<Integer> devCards) {
         gameBoard.seeGrid(devCards);
     }
 
+    @Override
     public void seeProductions(ArrayList<Integer> productions) {
         gameBoard.seeProductions(productions);
     }
 
+    @Override
     public void seeOtherCards(ArrayList<Integer> cards) {
         gameBoard.seeOtherCards(cards);
     }
 
+    @Override
     public void choice() {
         gameBoard.choice();
     }
 
+    @Override
     public void askTurnType(String message) {
         turn.askTurnType(message);
     }
 
+    @Override
     public void activeLeader(ActiveLeader message) {
         turn.activeLeader(message);
     }
 
+    @Override
     public void discardLeader(DiscardLeader message) {
         turn.discardLeader(message);
     }
 
+    @Override
     public void resetCard(int pos) {
         turn.resetCard(pos);
     }
 
+    @Override
     public void ManageStorage(String message) {
         turn.ManageStorage(message);
     }
 
+    @Override
     public void MoveShelves(String message) {
         turn.MoveShelves(message);
     }
 
+    @Override
     public void useMarket(String message) {
         turn.useMarket(message);
     }
 
+    @Override
     public void chooseWhiteBallLeader(String message) {
         turn.chooseWhiteBallLeader(message);
     }
 
+    @Override
     public void seeBall(SeeBall ball) {
         turn.seeBall(ball);
     }
 
+    @Override
     public void chooseShelf() {
         turn.chooseShelf();
     }
 
+    @Override
     public void askColor(String message) {
         turn.askColor(message);
     }
 
+    @Override
     public void askLevel(String message) {
         turn.askLevel(message);
     }
 
+    @Override
     public void askSpace(String message) {
         turn.askSpace(message);
     }
 
+    @Override
     public void askType(String message) {
         turn.askType(message);
     }
 
+    @Override
     public void askInput(String message) {
         turn.askInput(message);
     }
 
+    @Override
     public void askOutput(String message) {
         turn.askOutput(message);
     }
 
+    @Override
     public void askDevelopmentCard(String message) {
         turn.askDevelopmentCard(message);
     }
 
+    @Override
     public void askLeaderCard(String message) {
         turn.askLeaderCard(message);
     }
 
+    @Override
     public void endTurn(String message) {
         turn.endTurn(message);
-
     }
 
+    @Override
     public void printStorage(StorageInfo storageInfo) {
         print.printStorage(storageInfo);
     }
 
+    @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
         print.printStorageAndVault(storageInfo);
     }
 
+    @Override
     public void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo) {
         print.printDevelopmentCardsSpace(devCardsSpaceInfo);
     }
 
+    @Override
     public void printFaithPath(FaithPathInfo path) {
         print.printFaithPath(path);
     }
 
+    @Override
     public void printActionToken(ActionToken actionToken) {
         print.printActionToken(actionToken);
     }
 
+    @Override
     public void win(String message) {
         System.out.println(Constants.WIN + "\n" + Constants.ANSI_WHITE + message + Constants.ANSI_RESET + "\n" + Constants.THANKS_FOR_PLAYING);
     }
 
+    @Override
     public void lose(String message) {
         System.out.println(Constants.LOSE + "\n" + Constants.ANSI_WHITE + message + Constants.ANSI_RESET + "\n" + Constants.THANKS_FOR_PLAYING);
     }
