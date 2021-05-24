@@ -20,15 +20,16 @@ import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Screen;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class GUI extends Application implements View {
@@ -39,6 +40,9 @@ public class GUI extends Application implements View {
     private Scene NicknameScene;
     private Scene ChooseNumberScene;
     private Scene LoadingScene;
+
+    DialogPane DiscardLeader;
+    DialogPane InitialResources;
 
     private MainMenuController mainMenuController;
     private SetupController setupController;
@@ -94,6 +98,9 @@ public class GUI extends Application implements View {
         FXMLLoader loading = new FXMLLoader(getClass().getResource(("/fxml/loading.fxml")));
         LoadingScene = new Scene(loading.load());
 
+        DiscardLeader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/DiscardLeader.fxml")));
+        InitialResources = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/InitialResource.fxml")));
+
         sceneMap.put(MENU, MenuScene);
         sceneMap.put(SETUP, SetupScene);
         sceneMap.put(NICKNAME, NicknameScene);
@@ -140,9 +147,7 @@ public class GUI extends Application implements View {
 
     @Override
     public int gameType() {
-        Platform.runLater(()->{
-            mainMenuController.start();
-        });
+        Platform.runLater(()-> mainMenuController.start());
 
         synchronized (lock){
             while(notReady) {
@@ -253,12 +258,126 @@ public class GUI extends Application implements View {
 
     @Override
     public void askResource(String message) {
+        //1) COIN 2) STONE 3) SHIELD 4) SERVANT
+        Platform.runLater(()->{
+            ImageView coin = (ImageView) InitialResources.lookup("#coin");
+            ImageView stone = (ImageView) InitialResources.lookup("#stone");
+            ImageView servant = (ImageView) InitialResources.lookup("#servant");
+            ImageView shield = (ImageView) InitialResources.lookup("#shield");
 
+            final Dialog dlg = new Dialog();
+            // Add grid inside dialog.
+            dlg.getDialogPane().setContent(InitialResources);
+            dlg.show();
+
+            coin.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                handler.send(new SendInt(1));
+                dlg.setResult(Boolean.TRUE);
+                dlg.close();
+            });
+
+            stone.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                handler.send(new SendInt(2));
+                dlg.setResult(Boolean.TRUE);
+                dlg.close();
+            });
+
+            shield.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                handler.send(new SendInt(3));
+                dlg.setResult(Boolean.TRUE);
+                dlg.close();
+            });
+
+            servant.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                handler.send(new SendInt(4));
+                dlg.setResult(Boolean.TRUE);
+                dlg.close();
+            });
+        });
     }
 
     @Override
     public void askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
+        if(IdLeaders.size() == 4) {
+            Platform.runLater(() -> {
+                ImageView leader1 = (ImageView) DiscardLeader.lookup("#leader1");
+                leader1.setImage(new Image("/graphics/" + IdLeaders.get(0) + ".png"));
 
+                ImageView leader2 = (ImageView) DiscardLeader.lookup("#leader2");
+                leader2.setImage(new Image("/graphics/" + IdLeaders.get(1) + ".png"));
+
+                ImageView leader3 = (ImageView) DiscardLeader.lookup("#leader3");
+                leader3.setImage(new Image("/graphics/" + IdLeaders.get(2) + ".png"));
+
+                ImageView leader4 = (ImageView) DiscardLeader.lookup("#leader4");
+                leader4.setImage(new Image("/graphics/" + IdLeaders.get(3) + ".png"));
+
+                // make a dialog
+                final Dialog dlg = new Dialog();
+                // Add grid inside dialog.
+                dlg.getDialogPane().setContent(DiscardLeader);
+                dlg.show();
+
+                leader1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(1));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+                leader2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(2));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+                leader3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(3));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+                leader4.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(4));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+
+            });
+
+        } else {
+            Platform.runLater(()->{
+                ImageView leader1 = (ImageView) DiscardLeader.lookup("#leader1");
+                leader1.setImage(new Image("/graphics/" + IdLeaders.get(0) + ".png"));
+
+                ImageView leader2 = (ImageView) DiscardLeader.lookup("#leader2");
+                leader2.setImage(new Image("/graphics/" + IdLeaders.get(1) + ".png"));
+
+                ImageView leader3 = (ImageView) DiscardLeader.lookup("#leader3");
+                leader3.setImage(new Image("/graphics/" + IdLeaders.get(2) + ".png"));
+
+                ImageView leader4 = (ImageView) DiscardLeader.lookup("#leader4");
+                leader4.setImage(null);
+
+                // make a dialog
+                final Dialog dlg = new Dialog();
+                // Add grid inside dialog.
+                dlg.getDialogPane().setContent(DiscardLeader);
+                dlg.show();
+
+                leader1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(1));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+                leader2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(2));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+                leader3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    handler.send(new SendInt(3));
+                    dlg.setResult(Boolean.TRUE);
+                    dlg.close();
+                });
+            });
+        }
     }
 
     @Override
