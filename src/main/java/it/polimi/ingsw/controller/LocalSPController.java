@@ -30,6 +30,10 @@ import it.polimi.ingsw.server.answer.turnanswer.ResetCard;
 
 import java.util.ArrayList;
 
+/**
+ * LocalSPController class handles local single player match
+ * @author Nicola Landini
+ */
 public class LocalSPController {
 
     private final Game gameModel;
@@ -146,6 +150,10 @@ public class LocalSPController {
         handler.handleClient(new DevCardsSpaceInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getDevCardsSpace()));
     }
 
+    /**
+     * This method gets the string contained in handler answer
+     * @return the string contained in string answer
+     */
     public String getString() {
         synchronized (handler.getLock()) {
             while(!handler.isReady()) {
@@ -160,6 +168,10 @@ public class LocalSPController {
         return handler.getAnswer();
     }
 
+    /**
+     * This method gets the choices contained in handler answer
+     * @return the numbers contained in double int answer
+     */
     public ArrayList<Integer> getDoubleInt() {
         synchronized (handler.getLock()) {
             while(!handler.isReady()) {
@@ -177,6 +189,10 @@ public class LocalSPController {
         return doubleInt;
     }
 
+    /**
+     * This method gets the choice contained in handler answer
+     * @return the number contained in int answer
+     */
     public int getAnswer()  {
         synchronized (handler.getLock()) {
             while(!handler.isReady()) {

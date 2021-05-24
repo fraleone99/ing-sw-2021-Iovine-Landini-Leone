@@ -3,20 +3,16 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.model.card.leadercard.StorageLeader;
-import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
-import it.polimi.ingsw.model.enumeration.BallColor;
-import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.Ball;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.VirtualView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Controller class handles single and multi player matches
+ * @author Lorenzo Iovine
+ */
 public class Controller {
     private final Game gameModel;
     private final TurnController turncontroller;
@@ -24,10 +20,14 @@ public class Controller {
     private final ArrayList<String> players=new ArrayList<>();
     private final VirtualView view;
     private boolean isEnd=false;
-    private boolean isOver=false;
     ActionToken actionToken;
 
 
+    /**
+     * Controller constructor: creates a new instance of Controller
+     * @param players are the players of the match
+     * @param view is an instance of class VirtualView
+     */
     public Controller(ArrayList<String> players, VirtualView view) {
         this.players.addAll(players);
         gameModel=new Game(players.size(), players);
@@ -37,6 +37,9 @@ public class Controller {
     }
 
 
+    /**
+     * This method handles the multi and single player connected match
+     */
     public void play() {
         try {
             for(int i=0; i<players.size(); i++) {
@@ -86,11 +89,25 @@ public class Controller {
     }
 
 
+    /**
+     * This method is used to set the player in Game class in the model
+     * @param player is the player index in array list players
+     */
     public void setPlayers(int player) {
         gameModel.createPlayer(players.get(player));
     }
 
 
+    /**
+     * This method set the initial benefits based on corresponding player position:
+     * 1st player-nothing
+     * 2nd player-1 resource of his choice
+     * 3rd player-1 resource of his choice and 1 faith point
+     * 4th player-2 resource of his choice and 1 faith point
+     * @param i is the player index in array list players
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     */
     public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
@@ -116,6 +133,13 @@ public class Controller {
     }
 
 
+    /**
+     * This method is used to add the initial chosen resources to the storage
+     * @param player is the player index in array list players
+     * @param resource is the number corresponding to the chosen resource
+     * @param shelf is the number corresponding to the shelf where to place the resource on
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void addInitialResource(int player, int resource, int shelf) throws NotExistingPlayerException {
         try {
             switch (resource) {
@@ -138,6 +162,11 @@ public class Controller {
     }
 
 
+    /**
+     * This method is used to give the initial 4 leader cards to each player of the game
+     * @param player is the player index in array list players
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void setInitialLeaderCards(int player) throws NotExistingPlayerException {
         for (int i = 0; i < 4; i++) {
             gameModel.getGameBoard().getLeaderDeck().shuffle();
@@ -146,6 +175,13 @@ public class Controller {
     }
 
 
+    /**
+     * This method is used to ask to the player, two leader cards of the initial four, that he
+     * wants to discard
+     * @param player is the player index in array list players
+     * @throws InterruptedException is due to multithreading message send
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void discardFirstLeaders(int player) throws  InterruptedException, NotExistingPlayerException {
         int card;
         card=view.discardFirstLeaders(players.get(player), 1, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
@@ -155,11 +191,19 @@ public class Controller {
     }
 
 
+    /**
+     * This method is used to notify the player that the game started
+     * @param player is the player index in array list players
+     */
     public void startGame(int player) {
         view.startGame(players.get(player));
     }
 
 
+    /**
+     * This method handles end game notifications
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void endGame() throws NotExistingPlayerException {
         if(players.size()==1){
             try {
@@ -186,6 +230,10 @@ public class Controller {
     }
 
 
+    /**
+     * This method checks if the game is over
+     * @return true if the match is over, false otherwise
+     */
     public boolean isEndGame(){
         for(Player p : gameModel.getPlayers()) {
             if (p.getPlayerDashboard().getDevCardsSpace().getAmountCards() == 7 || p.getPlayerDashboard().getFaithPath().getPositionFaithPath() == 24) {
@@ -197,6 +245,10 @@ public class Controller {
     }
 
 
+    /**
+     * This method gets the instance of EndGameController
+     * @return the instance of EndGameController
+     */
     public EndGameController getEndgame() {
         return endgame;
     }

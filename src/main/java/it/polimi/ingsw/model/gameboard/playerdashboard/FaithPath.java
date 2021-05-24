@@ -3,8 +3,6 @@ package it.polimi.ingsw.model.gameboard.playerdashboard;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.exceptions.NotExistingSpaceException;
-import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class FaithPath {
-    private ArrayList<Cell> space=new ArrayList<>();
+    private final ArrayList<Cell> space=new ArrayList<>();
     private int positionFaithPath;
     private int positionLorenzo;
     private int papalPoints;

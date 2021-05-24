@@ -6,8 +6,6 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
-
 public class DevelopmentCardGridTest {
     DevelopmentCardGrid devCardGrid=new DevelopmentCardGrid();
     DevelopmentCard card;

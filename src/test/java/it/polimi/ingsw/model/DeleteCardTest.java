@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyDecksException;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.exceptions.NotExistingSpaceException;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
@@ -11,12 +10,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileNotFoundException;
-
 public class DeleteCardTest{
 
     @Test
-    public void testDraw() throws InvalidChoiceException, FileNotFoundException, EmptyDecksException {
+    public void testDraw() throws InvalidChoiceException, EmptyDecksException {
         DevelopmentCardGrid developmentCardGrid=new DevelopmentCardGrid();
         DeleteCard deleteCard=new DeleteCard(CardColor.GREEN);
 
@@ -36,7 +33,7 @@ public class DeleteCardTest{
     }
 
     @Test(expected = EmptyDecksException.class)
-    public void testDraw_EmptyDecksException() throws FileNotFoundException, InvalidChoiceException, EmptyDecksException {
+    public void testDraw_EmptyDecksException() throws InvalidChoiceException, EmptyDecksException {
         DevelopmentCardGrid developmentCardGrid=new DevelopmentCardGrid();
         DeleteCard deleteCard=new DeleteCard(CardColor.GREEN);
 

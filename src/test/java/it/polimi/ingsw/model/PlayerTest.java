@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
-import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.*;
 import it.polimi.ingsw.model.enumeration.CardColor;
@@ -149,8 +148,10 @@ public class PlayerTest {
         Goods cost=new Goods(Resource.SHIELD,5);
         Requirements req1=new Requirements(CardColor.PURPLE,0,0, cost);
         LeaderCard leader=new StorageLeader(3,3,s,req1,shelf);
+        leader.setIsDiscarded();
+        player.getLeaders().add(leader);
 
-        player.DiscardLeader(2);
+        player.DiscardLeader(1);
     }
 
     @Test
@@ -163,7 +164,6 @@ public class PlayerTest {
         player.getPlayerDashboard().getVault().AddResource(Resource.SHIELD,4);
         player.getPlayerDashboard().getVault().AddResource(Resource.COIN,1);
 
-        DevelopmentCardDeck PurpleOne = new DevelopmentCardDeck();
         ArrayList<Goods> cost1=new ArrayList<>();
         cost1.add(new Goods(Resource.SERVANT, 3));
         ArrayList<Goods> input=new ArrayList<>();
@@ -177,7 +177,6 @@ public class PlayerTest {
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
 
-        DevelopmentCardDeck GreenOne = new DevelopmentCardDeck();
         cost1=new ArrayList<>();
         cost1.add(new Goods(Resource.SHIELD, 2));
         input=new ArrayList<>();
