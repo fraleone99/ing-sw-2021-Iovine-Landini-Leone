@@ -4,10 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
-import it.polimi.ingsw.client.view.GUI.sceneControllers.MainMenuController;
-import it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController;
-import it.polimi.ingsw.client.view.GUI.sceneControllers.PlayerNumberController;
-import it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController;
+import it.polimi.ingsw.client.view.GUI.sceneControllers.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
@@ -40,6 +37,8 @@ public class GUI extends Application implements View {
     private Scene NicknameScene;
     private Scene ChooseNumberScene;
     private Scene LoadingScene;
+    private Scene GameScene;
+    private Scene MarketScene;
 
     DialogPane DiscardLeader;
     DialogPane InitialResources;
@@ -48,6 +47,8 @@ public class GUI extends Application implements View {
     private SetupController setupController;
     private NicknameController nicknameController;
     private PlayerNumberController playerNumberController;
+    private GameSceneController gameSceneController;
+    private MarketSceneController marketSceneController;
 
     private final Map<String, Scene> sceneMap = new HashMap<>();
     public static final String MENU = "MainMenu";
@@ -55,6 +56,8 @@ public class GUI extends Application implements View {
     public static final String NICKNAME = "Nickname";
     public static final String NUMBER = "Number";
     public static final String LOADING = "Loading";
+    public static final String GAME = "Game";
+    public static final String MARKET = "Market";
     public static final String SINGLE_PLAYER = "SinglePlayer";
     public static final String LOCAL_SP = "setupLocalSP";
     public static final String WELCOME = "Welcome";
@@ -98,6 +101,16 @@ public class GUI extends Application implements View {
         FXMLLoader loading = new FXMLLoader(getClass().getResource(("/fxml/loading.fxml")));
         LoadingScene = new Scene(loading.load());
 
+        FXMLLoader game = new FXMLLoader(getClass().getResource("/fxml/GameScene.fxml"));
+        GameScene = new Scene(game.load());
+        gameSceneController = game.getController();
+        gameSceneController.setGui(this);
+
+        FXMLLoader market = new FXMLLoader(getClass().getResource("/fxml/Market.fxml"));
+        MarketScene = new Scene(market.load());
+        marketSceneController = market.getController();
+        marketSceneController.setGui(this);
+
         DiscardLeader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/DiscardLeader.fxml")));
         InitialResources = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/InitialResource.fxml")));
 
@@ -106,6 +119,8 @@ public class GUI extends Application implements View {
         sceneMap.put(NICKNAME, NicknameScene);
         sceneMap.put(NUMBER, ChooseNumberScene);
         sceneMap.put(LOADING, LoadingScene);
+        sceneMap.put(GAME, GameScene);
+        sceneMap.put(MARKET, MarketScene);
     }
 
     @Override
@@ -254,6 +269,13 @@ public class GUI extends Application implements View {
                 progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
             });
         }
+
+        if(message.equals("The game start!")){
+            Platform.runLater(()->{
+                changeStage(GAME);
+            });
+        }
+
     }
 
     @Override
@@ -397,7 +419,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void seeGameBoard(String message) {
-
+        Platform.runLater(()-> gameSceneController.seePhase());
     }
 
     @Override
@@ -407,7 +429,10 @@ public class GUI extends Application implements View {
 
     @Override
     public void seeMarket(Market market) {
-
+        Platform.runLater(()->{
+            marketSceneController.updateMarket(market);
+            changeStage(MARKET);
+        });
     }
 
     @Override
