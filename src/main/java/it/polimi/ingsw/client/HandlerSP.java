@@ -151,7 +151,7 @@ public class HandlerSP implements Runnable, Handler {
                     view.askLeaderCard(((RequestInt) inputObj).getMessage());
                     break;
                 case "CHOICE":
-                    view.choice();
+                    view.seeMoreFromTheGameBoard();
                     break;
                 case "SHELF":
                     view.chooseShelf();

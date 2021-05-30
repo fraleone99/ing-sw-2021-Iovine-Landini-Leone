@@ -33,8 +33,6 @@ public class NetworkHandler implements Runnable, Handler {
 
     private boolean isConnected;
 
-    private AtomicBoolean isMyTurn = new AtomicBoolean(false);
-
 
     public NetworkHandler(Socket server, Client owner ,View view) {
         this.server = server;
@@ -134,7 +132,7 @@ public class NetworkHandler implements Runnable, Handler {
                                  break;
                 case "LEADCARD" : view.askLeaderCard(((RequestInt) inputObj).getMessage());
                                   break;
-                case "CHOICE" : view.choice();
+                case "CHOICE" : view.seeMoreFromTheGameBoard();
                                 break;
                 case "SHELF" : view.chooseShelf();
                                break;
@@ -181,14 +179,14 @@ public class NetworkHandler implements Runnable, Handler {
         }
         else if (inputObj instanceof TurnStatus) {
             if (((TurnStatus) inputObj).getMessage().equals("END")) {
-                isMyTurn.set(false);
-                waitForYourTurn();
+                view.setIsMyTurn(false);
+                view.waitForYourTurn();
             } else if (((TurnStatus) inputObj).getMessage().equals("START")) {
-                isMyTurn.set(true);
+                view.setIsMyTurn(true);
             }
         }
         else if (inputObj instanceof InitialSetup) {
-            waitForYourTurn();
+            view.waitForYourTurn();
         }
         else {
             if (inputObj instanceof PassLeaderCard) {
@@ -213,25 +211,6 @@ public class NetworkHandler implements Runnable, Handler {
         return isConnected;
     }
 
-    public void waitForYourTurn(){
-        new Thread(()->{
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            try
-                {  while (!isMyTurn.get()) {
-                    if (br.ready()) {
-                        System.out.print("It is not your turn please wait!\n");
-                        br.readLine();
-                    } else {
-                        Thread.sleep(200);
-                        }
-                    }
-                }
-            catch (IOException | InterruptedException ignored){
-            }
-
-        }).start();
-    }
 
     public synchronized void closeConnection(){
         System.out.println("Closing connection!");

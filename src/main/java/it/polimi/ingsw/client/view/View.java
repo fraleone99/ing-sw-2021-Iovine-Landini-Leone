@@ -104,5 +104,9 @@ public interface View {
 
     void seeOtherCards(ArrayList<Integer> leaderCards);
 
-    void choice();
+    void seeMoreFromTheGameBoard();
+
+    void setIsMyTurn(boolean isMyTurn);
+
+    void waitForYourTurn();
 }

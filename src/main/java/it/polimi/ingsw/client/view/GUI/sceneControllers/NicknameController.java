@@ -26,7 +26,7 @@ public class NicknameController {
         {
             nickname.set(nicknameBox.getText());
             gui.getHandler().send(new SendString(nickname.get()));
-
+            gui.setNickname(nickname.get());
         });
 
     }

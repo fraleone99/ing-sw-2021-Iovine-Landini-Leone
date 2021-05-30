@@ -1,5 +1,8 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.client.view.ProductionType;
+import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
+import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
@@ -45,27 +48,36 @@ public class TurnController {
         //6) Development Cards of the other players, 7) Nothing
         int finish;
 
-        switch(answer){
-            case 1 : finish=view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+        ToSeeFromGameBoard toSee = ToSeeFromGameBoard.fromInteger(answer);
+
+        switch(toSee){
+            case LEADER_CARDS:
+                finish=view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
                 if(finish==1) seeGameBoard(false, player);
                 break;
-            case 2 : finish=view.seeMarket(players.get(player), game.getGameBoard().getMarket());
+            case MARKET:
+                finish=view.seeMarket(players.get(player), game.getGameBoard().getMarket());
                 if(finish==1) seeGameBoard(false, player);
                 break;
-            case 3 : int choice=view.chooseLine(players.get(player));
+            case DEVELOPMENT_CARD_GRID:
+                int choice=view.chooseLine(players.get(player));
                 finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
                 if(finish==1) seeGameBoard(false, player);
                 break;
-            case 4 : finish=view.seeProduction(players.get(player), game.getPlayer(players.get(player)).getProductions());
+            case POSSIBLE_PRODUCTION:
+                finish=view.seeProduction(players.get(player), game.getPlayer(players.get(player)).getProductions());
                 if(finish==1) seeGameBoard(false, player);
                 break;
-            case 5 : finish=leaderCard(player);
+            case LEADER_CARDS_OTHER_PLAYER:
+                finish=leaderCard(player);
                 if(finish==1) seeGameBoard(false, player);
                 break;
-            case 6 : finish=devCard(player);
+            case DEVELOPMENT_CARDS_OTHER_PLAYER:
+                finish=devCard(player);
                 if(finish==1) seeGameBoard(false, player);
                 break;
-            case 7 : break;
+            case NOTHING:
+                break;
         }
     }
 
@@ -101,8 +113,9 @@ public class TurnController {
 
         do {
             answer=view.chooseTurn(players.get(player));
-            switch (answer) {
-                case 1:
+            TurnType turnType = TurnType.fromInteger(answer);
+            switch (turnType) {
+                case ACTIVE_LEADER:
                     pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
                     try {
                         activeLeader(player, pos);
@@ -112,7 +125,7 @@ public class TurnController {
                     }
                     break;
 
-                case 2:
+                case DISCARD_LEADER:
                     pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
                     try {
                         discardLeader(player, pos);
@@ -126,21 +139,21 @@ public class TurnController {
                     }
                     break;
 
-                case 3:
+                case MARKET:
                     int choice = view.manageStorage(1, players.get(player));
                     if (choice == 1) manageStorage(player);
                     int line = view.useMarket(players.get(player));
                     useMarket(player, line);
                     break;
 
-                case 4:
+                case BUY_DEVELOPMENT:
                     int color = view.askColor(players.get(player));
                     int level = view.askLevel(players.get(player));
                     int space = view.askSpace(players.get(player));
                     buyCard(player, color, level, space);
                     break;
 
-                case 5:
+                case ACTIVE_PRODUCTION:
                     do {
                         type = view.askType(players.get(player));
                         activeProduction(player, type);
@@ -178,8 +191,11 @@ public class TurnController {
     public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException, InvalidChoiceException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
-        switch(type) {
-            case 1 : Resource input1=view.askInput(players.get(player));
+
+        ProductionType productionType = ProductionType.fromInteger(type);
+        switch(productionType) {
+            case BASIC:
+                Resource input1=view.askInput(players.get(player));
                 Resource input2=view.askInput(players.get(player));
                 Resource output=view.askOutput(players.get(player));
                 game.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
@@ -191,7 +207,8 @@ public class TurnController {
                 }
                 break;
 
-            case 2 : int space=view.askDevCard(players.get(player));
+            case DEVELOPMENT_CARD:
+                int space=view.askDevCard(players.get(player));
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
@@ -199,7 +216,8 @@ public class TurnController {
                 }
                 break;
 
-            case 3 : int index=view.askLeaderCard(players.get(player));
+            case PRODUCTION_LEADER:
+                int index=view.askLeaderCard(players.get(player));
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionLeader(index);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
@@ -207,10 +225,11 @@ public class TurnController {
                 }
                 break;
 
-            case 4 : try {
-                if(game.getPlayer(players.get(player)).getActivatedProduction().isEmpty()) {
-                    view.sendErrorMessage(players.get(player));
-                    chooseTurn(player);
+            case DO_PRODUCTION:
+                try {
+                    if(game.getPlayer(players.get(player)).getActivatedProduction().isEmpty()) {
+                        view.sendErrorMessage(players.get(player));
+                        chooseTurn(player);
                 } else {
                     game.getPlayer(players.get(player)).doProduction();
                     ArrayList<String> nick=new ArrayList<>(checkPapalPawn());

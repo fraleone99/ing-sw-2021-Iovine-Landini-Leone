@@ -11,7 +11,11 @@ import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CLI implements View {
     private final CLIInitialize initialize;
@@ -19,6 +23,10 @@ public class CLI implements View {
     private final CLIGameBoard gameBoard;
     private final CLITurn turn;
     private final CLIPrint print;
+
+
+    private AtomicBoolean isMyTurn = new AtomicBoolean(false);
+
 
     public CLI() {
         initialize = new CLIInitialize();
@@ -32,6 +40,31 @@ public class CLI implements View {
         turn.setHandler(handler);
         login.setHandler(handler);
         gameBoard.setHandler(handler);
+    }
+
+    public void waitForYourTurn(){
+        new Thread(()->{
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            try
+            {  while (!isMyTurn.get()) {
+                if (br.ready()) {
+                    System.out.print("It is not your turn please wait!\n");
+                    br.readLine();
+                } else {
+                    Thread.sleep(200);
+                }
+            }
+            }
+            catch (IOException | InterruptedException ignored){
+            }
+
+        }).start();
+    }
+
+    @Override
+    public void setIsMyTurn(boolean isMyTurn) {
+        this.isMyTurn.set(isMyTurn);
     }
 
     @Override
@@ -120,7 +153,7 @@ public class CLI implements View {
     }
 
     @Override
-    public void choice() {
+    public void seeMoreFromTheGameBoard() {
         gameBoard.choice();
     }
 
