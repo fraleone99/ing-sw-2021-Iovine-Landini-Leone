@@ -61,7 +61,11 @@ public class TurnController {
                 break;
             case DEVELOPMENT_CARD_GRID:
                 int choice=view.chooseLine(players.get(player));
-                finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                if(choice==8) {
+                    finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+                } else {
+                    finish = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                }
                 if(finish==1) seeGameBoard(false, player);
                 break;
             case POSSIBLE_PRODUCTION:
@@ -82,7 +86,7 @@ public class TurnController {
     }
 
 
-    public int leaderCard(int player) throws NotExistingPlayerException, InterruptedException {
+    public int leaderCard(int player) throws NotExistingPlayerException{
         for(String s : players) {
             if(!s.equals(players.get(player))) {
                 view.seeOtherLeader(players.get(player), s, game.getPlayer(s).getLeaders().idDeckActive());
@@ -93,7 +97,7 @@ public class TurnController {
     }
 
 
-    public int devCard(int player) throws NotExistingPlayerException, InterruptedException {
+    public int devCard(int player) throws NotExistingPlayerException {
         for(String s : players) {
             if(!s.equals(players.get(player))) {
                 view.seeOtherDev(players.get(player), s, game.getPlayer(s).getDevCards());
@@ -273,7 +277,7 @@ public class TurnController {
     }
 
 
-    public void useMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+    public void useMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException {
         ArrayList<Integer> choice=new ArrayList<>();
         Resource resource = null;
 

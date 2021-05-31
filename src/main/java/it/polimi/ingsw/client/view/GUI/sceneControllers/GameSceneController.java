@@ -38,6 +38,8 @@ public class GameSceneController {
 
         toSee_market.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.MARKET))));
 
+        toSee_developmentGrid.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.DEVELOPMENT_CARD_GRID))));
+
         toSee_nothing.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.NOTHING))));
     }
 

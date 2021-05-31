@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DevelopmentCardsGridController">
+   <children>
+      <ImageView fitHeight="850.0" fitWidth="1535.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="purple3" fitHeight="240.0" fitWidth="207.0" layoutX="252.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="yellow1" fitHeight="240.0" fitWidth="207.0" layoutX="459.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="purple1" fitHeight="240.0" fitWidth="207.0" layoutX="252.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="blue2" fitHeight="240.0" fitWidth="207.0" layoutX="669.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="yellow2" fitHeight="240.0" fitWidth="207.0" layoutX="459.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="purple2" fitHeight="240.0" fitWidth="207.0" layoutX="252.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="blue3" fitHeight="240.0" fitWidth="207.0" layoutX="669.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="yellow3" fitHeight="240.0" fitWidth="207.0" layoutX="459.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="blue1" fitHeight="240.0" fitWidth="207.0" layoutX="669.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="green1" fitHeight="240.0" fitWidth="207.0" layoutX="880.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="green2" fitHeight="240.0" fitWidth="207.0" layoutX="880.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="green3" fitHeight="240.0" fitWidth="207.0" layoutX="880.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="back_button" layoutX="1242.0" layoutY="399.0" mnemonicParsing="false" text="Back" />
+   </children>
+</AnchorPane>

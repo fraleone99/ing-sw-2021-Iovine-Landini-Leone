@@ -42,6 +42,7 @@ public class GUI extends Application implements View {
     private Scene LoadingScene;
     private Scene GameScene;
     private Scene MarketScene;
+    private Scene GridScene;
 
     private MainMenuController mainMenuController;
     private SetupController setupController;
@@ -51,6 +52,7 @@ public class GUI extends Application implements View {
     private MarketSceneController marketSceneController;
     private DiscardLeaderController discardLeaderController;
     private InitialResourcesController initialResourcesController;
+    private DevelopmentCardsGridController developmentCardsGridController;
 
     private final Map<String, Scene> sceneMap = new HashMap<>();
     public static final String MENU = "MainMenu";
@@ -63,6 +65,7 @@ public class GUI extends Application implements View {
     public static final String SINGLE_PLAYER = "SinglePlayer";
     public static final String LOCAL_SP = "setupLocalSP";
     public static final String WELCOME = "Welcome";
+    public static final String GRID = "Grid";
 
 
     Handler handler;
@@ -115,6 +118,11 @@ public class GUI extends Application implements View {
         marketSceneController = market.getController();
         marketSceneController.setGui(this);
 
+        FXMLLoader grid = new FXMLLoader(getClass().getResource("/fxml/DevelopmentCardsGrid.fxml"));
+        GridScene = new Scene(grid.load());
+        developmentCardsGridController = grid.getController();
+        developmentCardsGridController.setGui(this);
+
         sceneMap.put(MENU, MenuScene);
         sceneMap.put(SETUP, SetupScene);
         sceneMap.put(NICKNAME, NicknameScene);
@@ -122,6 +130,7 @@ public class GUI extends Application implements View {
         sceneMap.put(LOADING, LoadingScene);
         sceneMap.put(GAME, GameScene);
         sceneMap.put(MARKET, MarketScene);
+        sceneMap.put(GRID, GridScene);
     }
 
     @Override
@@ -363,12 +372,16 @@ public class GUI extends Application implements View {
 
     @Override
     public void chooseLine(String message) {
-
+        handler.send(new SendInt(8));
     }
 
     @Override
     public void seeGrid(ArrayList<Integer> devCards) {
-
+        Platform.runLater( () -> {
+            developmentCardsGridController.updateGrid(devCards);
+            changeStage(GRID);
+            developmentCardsGridController.seePhase();
+        });
     }
 
     @Override
