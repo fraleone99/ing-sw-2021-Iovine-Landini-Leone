@@ -353,7 +353,11 @@ public class GUI extends Application implements View {
 
     @Override
     public void seeGameBoard(String message) {
-        Platform.runLater(()-> gameSceneController.seePhase());
+        Platform.runLater(()-> {
+            gameSceneController.seePhase();
+            changeStage(GAME);
+        }
+        );
     }
 
     @Override
