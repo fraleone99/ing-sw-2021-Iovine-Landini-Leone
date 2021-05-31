@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,37 +7,33 @@
 <?import javafx.scene.text.Font?>
 
 
-<DialogPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-   <content>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <ImageView fx:id="coin" fitHeight="72.0" fitWidth="86.0" layoutX="43.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../graphics/COIN.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="stone" fitHeight="72.0" fitWidth="86.0" layoutX="129.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../graphics/STONE.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="servant" fitHeight="72.0" fitWidth="86.0" layoutX="215.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../graphics/SERVANT.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="shield" fitHeight="72.0" fitWidth="86.0" layoutX="301.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../graphics/SHIELD.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="86.0" layoutY="39.0" text="You are not the first player you are entitled to some extra resources.">
-               <font>
-                  <Font name="System Italic" size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="205.0" layoutY="80.0" text="Click on the resources that you want" />
-         </children>
-      </AnchorPane>
-   </content>
-</DialogPane>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.InitialResourcesController">
+   <children>
+      <ImageView fx:id="coin" fitHeight="72.0" fitWidth="86.0" layoutX="43.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/COIN.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="stone" fitHeight="72.0" fitWidth="86.0" layoutX="129.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/STONE.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="servant" fitHeight="72.0" fitWidth="86.0" layoutX="215.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/SERVANT.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shield" fitHeight="72.0" fitWidth="86.0" layoutX="301.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/SHIELD.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="86.0" layoutY="39.0" text="You are not the first player you are entitled to some extra resources.">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="205.0" layoutY="80.0" text="Click on the resources that you want" />
+   </children>
+</AnchorPane>

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.Pong;
@@ -75,10 +76,10 @@ public class NetworkHandler implements Runnable, Handler {
     }
 
     public void send(Object message) {
-        /*if(!(message instanceof Ping))
-            System.out.println("[DEBUG] sending message to server." + message.toString());
-        else
-            System.out.println(".\n");*/
+        /*System.out.println("[DEBUG] sending message to server." + message.toString());
+        if(message instanceof SendInt){
+            System.out.println("[DEBUG] Int: " + ((SendInt) message).getChoice());
+        }*/
         try {
             output.writeObject(message);
             output.flush();
@@ -99,6 +100,7 @@ public class NetworkHandler implements Runnable, Handler {
             view.askNickname(((RequestString) inputObj).getMessage());
         }
         else if(inputObj instanceof RequestInt) {
+            //System.out.println("[DEBUG] reading from server" + ((RequestInt) inputObj).getMessage());
             switch(((RequestInt) inputObj).getType()) {
                 case "NUMBER" : view.askPlayerNumber(((RequestInt) inputObj).getMessage());
                                 break;

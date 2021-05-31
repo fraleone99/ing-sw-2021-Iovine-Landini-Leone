@@ -7,8 +7,8 @@ import javafx.scene.control.Button;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainMenuController {
-    @FXML public Button singlePlayerButton;
-    @FXML public Button multiplayerButton;
+    @FXML private Button singlePlayerButton;
+    @FXML private Button multiplayerButton;
 
     AtomicInteger ris = new AtomicInteger();
 
@@ -16,10 +16,6 @@ public class MainMenuController {
 
     public void setGui(GUI gui) {
         this.gui = gui;
-    }
-
-    public void play(){
-
     }
 
     public int getRis() {

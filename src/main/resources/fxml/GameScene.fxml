@@ -2,14 +2,18 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
    <children>
-      <ImageView fitHeight="1080.0" fitWidth="1920.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1080.0" fitWidth="1600.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
          </image>
@@ -24,18 +28,18 @@
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player1Board" fitHeight="258.0" fitWidth="367.0" layoutX="51.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player1Board" fitHeight="258.0" fitWidth="367.0" layoutX="146.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player3Board" fitHeight="258.0" fitWidth="367.0" layoutX="1149.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player3Board" fitHeight="258.0" fitWidth="367.0" layoutX="1021.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <Button layoutX="465.0" layoutY="348.0" mnemonicParsing="false" text="Development Card Grid" />
-      <Button fx:id="marketButton" layoutX="638.0" layoutY="348.0" mnemonicParsing="false" text="Market" />
+      <Button fx:id="toSee_developmentGrid" layoutX="663.0" layoutY="348.0" mnemonicParsing="false" text="Development Card Grid" />
+      <Button fx:id="toSee_market" layoutX="846.0" layoutY="348.0" mnemonicParsing="false" text="Market" />
       <Pane fx:id="currentPlayerFirstShelf" layoutX="547.0" layoutY="579.0" prefHeight="18.0" prefWidth="21.0">
          <children>
             <ImageView fx:id="firstResourcesFirstShelf" fitHeight="26.0" fitWidth="22.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true" />
@@ -88,5 +92,32 @@
          </children>
       </Group>
       <Pane fx:id="faithPath_1" layoutX="532.0" layoutY="482.0" prefHeight="26.0" prefWidth="30.0" />
+      <Label fx:id="usernameLabel" layoutX="907.0" layoutY="383.0" prefHeight="34.0" prefWidth="130.0" text="USERNAME" />
+      <Label layoutX="558.0" layoutY="292.0" text="WHAT DO YOU WANT TO SEE?">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="1076.0" layoutY="473.0" prefHeight="50.0" prefWidth="345.0" text="What do you want to do in this turn?">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Group layoutX="1086.0" layoutY="552.0">
+         <children>
+            <RadioButton fx:id="turn_discardLeader" layoutY="18.0" mnemonicParsing="false" text="Discard Leader">
+               <toggleGroup>
+                  <ToggleGroup fx:id="TurnType_group" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="turn_market" layoutY="36.0" mnemonicParsing="false" text="Use Market" toggleGroup="$TurnType_group" />
+            <RadioButton fx:id="turn_buyDevelopment" layoutY="53.0" mnemonicParsing="false" text="Buy Development Card" toggleGroup="$TurnType_group" />
+            <RadioButton fx:id="turn_activeProduction" layoutY="71.0" mnemonicParsing="false" text="Production" toggleGroup="$TurnType_group" />
+            <RadioButton fx:id="turn_activeLeader" mnemonicParsing="false" text="Active Leader" toggleGroup="$TurnType_group" />
+         </children>
+      </Group>
+      <Button fx:id="ok_turnType" layoutX="1120.0" layoutY="639.0" mnemonicParsing="false" text="OK" />
+      <Button fx:id="toSee_nothing" layoutX="927.0" layoutY="348.0" mnemonicParsing="false" text="NOTHING" />
+      <Label fx:id="noActionSelectedLabel" layoutX="1122.0" layoutY="691.0" opacity="0.0" text="Select an action" />
    </children>
 </AnchorPane>

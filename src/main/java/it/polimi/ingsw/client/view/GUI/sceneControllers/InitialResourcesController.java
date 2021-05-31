@@ -1,0 +1,41 @@
+package it.polimi.ingsw.client.view.GUI.sceneControllers;
+
+import it.polimi.ingsw.client.message.SendInt;
+import it.polimi.ingsw.client.view.GUI.GUI;
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
+public class InitialResourcesController {
+    @FXML private ImageView coin;
+    @FXML private ImageView stone;
+    @FXML private ImageView servant;
+    @FXML private ImageView shield;
+    GUI gui;
+
+    public void setGui(GUI gui) {
+        this.gui = gui;
+    }
+
+    public void askResource() {
+        coin.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            gui.getHandler().send(new SendInt(1));
+            gui.getSecondaryStage().close();
+        });
+
+        stone.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            gui.getHandler().send(new SendInt(2));
+            gui.getSecondaryStage().close();
+        });
+
+        shield.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            gui.getHandler().send(new SendInt(3));
+            gui.getSecondaryStage().close();
+        });
+
+        servant.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            gui.getHandler().send(new SendInt(4));
+            gui.getSecondaryStage().close();
+        });
+    }
+}

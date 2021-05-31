@@ -1,9 +1,11 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
+import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.gameboard.Ball;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -14,6 +16,15 @@ import java.util.Map;
 public class MarketSceneController {
     @FXML public GridPane marketGrid;
     @FXML public ImageView ramp;
+    @FXML public Button button_1;
+    @FXML public Button button_2;
+    @FXML public Button button_3;
+    @FXML public Button button_4;
+    @FXML public Button button_5;
+    @FXML public Button button_6;
+    @FXML public Button button_7;
+    @FXML public Button back_button;
+    @FXML public Button Use_button;
     @FXML ImageView im00;
     @FXML ImageView im01;
     @FXML ImageView im02;
@@ -77,4 +88,43 @@ public class MarketSceneController {
         ramp.setImage(rampIm);
 
     }
+
+    public void seePhase() {
+        back_button.setOnAction(actionEvent -> {
+            gui.getHandler().send(new SendInt(1)); // voglio vedere qualcos'altro
+        });
+
+        /*Use_button.setOnAction(actionEvent -> {
+            gui.getHandler().send(new SendInt(2));//non voglio vedere più niente
+            gui.getHandler().send(new SendInt(3));//in questo turno uso il mercato
+            usePhase();
+        });*/
+    }
+
+    public void usePhase() {
+
+        button_1.setDisable(false);
+        button_2.setDisable(false);
+        button_3.setDisable(false);
+        button_4.setDisable(false);
+        button_5.setDisable(false);
+        button_6.setDisable(false);
+        button_7.setDisable(false);
+
+        button_1.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(1)));
+
+        button_2.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(2)));
+
+        button_3.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(3)));
+
+        button_4.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(4)));
+
+        button_5.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(5)));
+
+        button_6.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(6)));
+
+        button_7.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(7)));
+    }
+
+
 }

@@ -28,6 +28,8 @@ public class PlayerNumberController {
         numberChoice.getItems().add("3");
         numberChoice.getItems().add("4");
 
+        numberChoice.setValue("2");
+
         okButton.setOnAction(actionEvent -> {
             playersNumber.set(Integer.parseInt((String) numberChoice.getValue()));
             gui.getHandler().send(new SendInt(playersNumber.get()));

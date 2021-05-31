@@ -26,11 +26,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 
 public class GUI extends Application implements View {
     private Stage stage;
+    private Stage secondaryStage;
+
     private Scene currentScene;
     private Scene MenuScene;
     private Scene SetupScene;
@@ -40,15 +43,14 @@ public class GUI extends Application implements View {
     private Scene GameScene;
     private Scene MarketScene;
 
-    DialogPane DiscardLeader;
-    DialogPane InitialResources;
-
     private MainMenuController mainMenuController;
     private SetupController setupController;
     private NicknameController nicknameController;
     private PlayerNumberController playerNumberController;
     private GameSceneController gameSceneController;
     private MarketSceneController marketSceneController;
+    private DiscardLeaderController discardLeaderController;
+    private InitialResourcesController initialResourcesController;
 
     private final Map<String, Scene> sceneMap = new HashMap<>();
     public static final String MENU = "MainMenu";
@@ -70,6 +72,8 @@ public class GUI extends Application implements View {
 
     private String IP;
     private int portNumber;
+
+    private boolean isMyTurn = false;
 
     public static void main(String[] args) {
         launch(args);
@@ -111,9 +115,6 @@ public class GUI extends Application implements View {
         marketSceneController = market.getController();
         marketSceneController.setGui(this);
 
-        DiscardLeader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/DiscardLeader.fxml")));
-        InitialResources = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/InitialResource.fxml")));
-
         sceneMap.put(MENU, MenuScene);
         sceneMap.put(SETUP, SetupScene);
         sceneMap.put(NICKNAME, NicknameScene);
@@ -135,6 +136,8 @@ public class GUI extends Application implements View {
         stage.setFullScreen(true);
         stage.setMaximized(true);
         stage.show();
+
+        secondaryStage = new Stage();
 
         Client client = new Client(this);
         Thread clientThread = new Thread(client);
@@ -271,9 +274,7 @@ public class GUI extends Application implements View {
         }
 
         if(message.equals("The game start!")){
-            Platform.runLater(()->{
-                changeStage(GAME);
-            });
+            Platform.runLater(()-> changeStage(GAME));
         }
 
     }
@@ -281,130 +282,54 @@ public class GUI extends Application implements View {
     @Override
     public void askResource(String message) {
         //1) COIN 2) STONE 3) SHIELD 4) SERVANT
+
         Platform.runLater(()->{
-            ImageView coin = (ImageView) InitialResources.lookup("#coin");
-            ImageView stone = (ImageView) InitialResources.lookup("#stone");
-            ImageView servant = (ImageView) InitialResources.lookup("#servant");
-            ImageView shield = (ImageView) InitialResources.lookup("#shield");
+            FXMLLoader res = new FXMLLoader(getClass().getResource("/fxml/InitialResource.fxml"));
+            Scene InitialResource = null;
+            try {
+                InitialResource = new Scene(res.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            initialResourcesController = res.getController();
+            initialResourcesController.setGui(this);
 
-            final Dialog dlg = new Dialog();
-            // Add grid inside dialog.
-            dlg.getDialogPane().setContent(InitialResources);
-            dlg.show();
-
-            coin.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                handler.send(new SendInt(1));
-                dlg.setResult(Boolean.TRUE);
-                dlg.close();
-            });
-
-            stone.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                handler.send(new SendInt(2));
-                dlg.setResult(Boolean.TRUE);
-                dlg.close();
-            });
-
-            shield.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                handler.send(new SendInt(3));
-                dlg.setResult(Boolean.TRUE);
-                dlg.close();
-            });
-
-            servant.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                handler.send(new SendInt(4));
-                dlg.setResult(Boolean.TRUE);
-                dlg.close();
-            });
+            secondaryStage.setScene(InitialResource);
+            secondaryStage.centerOnScreen();
+            initialResourcesController.askResource();
+            secondaryStage.showAndWait();
         });
+
+    }
+
+    public Stage getSecondaryStage() {
+        return secondaryStage;
     }
 
     @Override
     public void askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
-        if(IdLeaders.size() == 4) {
-            Platform.runLater(() -> {
-                ImageView leader1 = (ImageView) DiscardLeader.lookup("#leader1");
-                leader1.setImage(new Image("/graphics/" + IdLeaders.get(0) + ".png"));
+        Platform.runLater(()->{
+            FXMLLoader discard = new FXMLLoader(getClass().getResource("/fxml/DiscardLeader.fxml"));
+            Scene DiscardLeader = null;
+            try {
+                DiscardLeader = new Scene(discard.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            discardLeaderController = discard.getController();
+            discardLeaderController.setGui(this);
 
-                ImageView leader2 = (ImageView) DiscardLeader.lookup("#leader2");
-                leader2.setImage(new Image("/graphics/" + IdLeaders.get(1) + ".png"));
+            secondaryStage.setScene(DiscardLeader);
+            secondaryStage.centerOnScreen();
+            discardLeaderController.discardLeader(IdLeaders);
+            secondaryStage.showAndWait();
+        });
 
-                ImageView leader3 = (ImageView) DiscardLeader.lookup("#leader3");
-                leader3.setImage(new Image("/graphics/" + IdLeaders.get(2) + ".png"));
-
-                ImageView leader4 = (ImageView) DiscardLeader.lookup("#leader4");
-                leader4.setImage(new Image("/graphics/" + IdLeaders.get(3) + ".png"));
-
-                // make a dialog
-                final Dialog dlg = new Dialog();
-                // Add grid inside dialog.
-                dlg.getDialogPane().setContent(DiscardLeader);
-                dlg.show();
-
-                leader1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(1));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-                leader2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(2));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-                leader3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(3));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-                leader4.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(4));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-
-            });
-
-        } else {
-            Platform.runLater(()->{
-                ImageView leader1 = (ImageView) DiscardLeader.lookup("#leader1");
-                leader1.setImage(new Image("/graphics/" + IdLeaders.get(0) + ".png"));
-
-                ImageView leader2 = (ImageView) DiscardLeader.lookup("#leader2");
-                leader2.setImage(new Image("/graphics/" + IdLeaders.get(1) + ".png"));
-
-                ImageView leader3 = (ImageView) DiscardLeader.lookup("#leader3");
-                leader3.setImage(new Image("/graphics/" + IdLeaders.get(2) + ".png"));
-
-                ImageView leader4 = (ImageView) DiscardLeader.lookup("#leader4");
-                leader4.setImage(null);
-
-                // make a dialog
-                final Dialog dlg = new Dialog();
-                // Add grid inside dialog.
-                dlg.getDialogPane().setContent(DiscardLeader);
-                dlg.show();
-
-                leader1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(1));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-                leader2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(2));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-                leader3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    handler.send(new SendInt(3));
-                    dlg.setResult(Boolean.TRUE);
-                    dlg.close();
-                });
-            });
-        }
     }
 
     @Override
     public void askTurnType(String message) {
-
+        Platform.runLater(()->gameSceneController.askTurn());
     }
 
     @Override
@@ -432,6 +357,7 @@ public class GUI extends Application implements View {
         Platform.runLater(()->{
             marketSceneController.updateMarket(market);
             changeStage(MARKET);
+            marketSceneController.seePhase();
         });
     }
 
@@ -492,7 +418,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void useMarket(String message) {
-
+        marketSceneController.usePhase();
     }
 
     @Override
@@ -571,9 +497,25 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void choice() {
+    public void seeMoreFromTheGameBoard() {
 
     }
 
+    @Override
+    public void setIsMyTurn(boolean isMyTurn) {
+       if(isMyTurn)
+           gameSceneController.isMyTurn();
+       else
+           gameSceneController.notMyTurn();
+    }
 
+    @Override
+    public void waitForYourTurn() {
+        //gameSceneController.notMyTurn();
+    }
+
+
+    public void setNickname(String s) {
+        gameSceneController.setNicknameLabel(s);
+    }
 }
