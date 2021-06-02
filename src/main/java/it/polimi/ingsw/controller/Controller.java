@@ -145,15 +145,19 @@ public class Controller {
             switch (resource) {
                 case 1:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
                     break;
                 case 2:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
                     break;
                 case 3:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
                     break;
                 case 4:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
                     break;
             }
         } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
