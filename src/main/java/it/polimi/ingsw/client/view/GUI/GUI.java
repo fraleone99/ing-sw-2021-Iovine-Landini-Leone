@@ -157,6 +157,12 @@ public class GUI extends Application implements View {
 
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.exit(0);
+    }
+
     public void changeStage(String scene){
         currentScene = sceneMap.get(scene);
         stage.setScene(currentScene);
@@ -419,12 +425,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void printStorage(StorageInfo storageInfo) {
-
+        Platform.runLater(()-> gameSceneController.updateStorage(storageInfo));
     }
 
     @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
-
+        Platform.runLater(()-> gameSceneController.updateStorage(storageInfo));
     }
 
     @Override

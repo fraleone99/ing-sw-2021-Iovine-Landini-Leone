@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.gameboard.playerdashboard.Vault;
 import it.polimi.ingsw.server.answer.Answer;
 
 public class StorageInfo implements Answer {
+    String nickname;
 
     //STORAGE
     private final Resource shelf1Type;
@@ -28,7 +29,7 @@ public class StorageInfo implements Answer {
         return null;
     }
 
-    public StorageInfo(Storage storage, Vault vault) {
+    public StorageInfo(Storage storage, Vault vault, String nickname) {
         this.shelf1Type = storage.getTypeShelf(1);
         this.shelf2Type = storage.getTypeShelf(2);
         this.shelf3Type = storage.getTypeShelf(3);
@@ -86,5 +87,9 @@ public class StorageInfo implements Answer {
 
     public int getShieldsAmount() {
         return shieldsAmount;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

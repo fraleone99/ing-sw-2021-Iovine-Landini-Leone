@@ -155,7 +155,7 @@ public class VirtualView extends VirtualViewObservable {
     public void seeStorage(String nickname, Storage storage, Vault vault) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new StorageInfo(storage, vault));
+        client.send(new StorageInfo(storage, vault, nickname));
     }
 
 
