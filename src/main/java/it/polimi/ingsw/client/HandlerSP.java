@@ -22,7 +22,6 @@ import it.polimi.ingsw.server.answer.turnanswer.*;
 
 public class HandlerSP implements Runnable, Handler {
     private final View view;
-    Object input = new Object();
     final Object lock = new Object();
     String answer;
     int number;

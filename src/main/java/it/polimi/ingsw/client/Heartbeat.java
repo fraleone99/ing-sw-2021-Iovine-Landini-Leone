@@ -2,8 +2,6 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.message.Ping;
 
-import java.io.IOException;
-
 public class Heartbeat implements Runnable {
 
     NetworkHandler networkHandler;

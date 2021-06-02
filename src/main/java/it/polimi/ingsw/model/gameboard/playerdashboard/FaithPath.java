@@ -66,17 +66,17 @@ public class FaithPath {
 
     public void setPapalPawn1() {
         this.papalPawn1 = true;
-        papalPoints=papalPoints+1;
+        papalPoints=papalPoints+2;
     }
 
     public void setPapalPawn2() {
         this.papalPawn2 = true;
-        papalPoints=papalPoints+2;
+        papalPoints=papalPoints+3;
     }
 
     public void setPapalPawn3() {
         this.papalPawn3 = true;
-        papalPoints=papalPoints+3;
+        papalPoints=papalPoints+4;
     }
 
     public int getPositionFaithPath() { return positionFaithPath; }

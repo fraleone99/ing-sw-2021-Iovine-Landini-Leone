@@ -42,6 +42,7 @@ public class GUI extends Application implements View {
     private Scene LoadingScene;
     private Scene GameScene;
     private Scene MarketScene;
+    private Scene LocalGameScene;
     private Scene GridScene;
 
     private MainMenuController mainMenuController;
@@ -52,6 +53,7 @@ public class GUI extends Application implements View {
     private MarketSceneController marketSceneController;
     private DiscardLeaderController discardLeaderController;
     private InitialResourcesController initialResourcesController;
+    private GameSceneController localGameSceneController;
     private DevelopmentCardsGridController developmentCardsGridController;
 
     private final Map<String, Scene> sceneMap = new HashMap<>();
@@ -66,6 +68,7 @@ public class GUI extends Application implements View {
     public static final String LOCAL_SP = "setupLocalSP";
     public static final String WELCOME = "Welcome";
     public static final String GRID = "Grid";
+    public final static String LOCAL_GAME = "LocalGame";
 
 
     Handler handler;
@@ -184,7 +187,19 @@ public class GUI extends Application implements View {
                     e.printStackTrace();
                 }
             }
-            return mainMenuController.getRis();
+            int ris=mainMenuController.getRis();
+            if(mainMenuController.getRis()==1){
+                FXMLLoader localGame = new FXMLLoader(getClass().getResource("/fxml/LocalSinglePlayerBoard.fxml"));
+                try {
+                    LocalGameScene = new Scene(localGame.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                gameSceneController = localGame.getController();
+                gameSceneController.setGui(this);
+                sceneMap.put(GAME, LocalGameScene);
+            }
+            return ris;
         }
     }
 
@@ -284,6 +299,10 @@ public class GUI extends Application implements View {
 
         if(message.equals("The game start!")){
             Platform.runLater(()-> changeStage(GAME));
+        }
+
+        if(message.equals("The game start!\n")){
+            Platform.runLater(()->changeStage(LOCAL_GAME));
         }
 
     }
