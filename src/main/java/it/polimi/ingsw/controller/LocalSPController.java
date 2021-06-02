@@ -2,6 +2,8 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.HandlerSP;
+import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
+import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
@@ -218,16 +220,18 @@ public class LocalSPController {
 
         int finish;
 
-        switch (answer){
-            case 1: handler.handleClient(new SeeLeaderCards(gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+        ToSeeFromGameBoard toSee = ToSeeFromGameBoard.fromInteger(answer);
+
+        switch (toSee){
+            case LEADER_CARDS: handler.handleClient(new SeeLeaderCards(gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 finish=getAnswer();
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 2: handler.handleClient(new SeeMarket(gameModel.getGameBoard().getMarket()));
+            case MARKET: handler.handleClient(new SeeMarket(gameModel.getGameBoard().getMarket()));
                 finish=getAnswer();
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 3: handler.handleClient(new RequestInt("LINE","Please choose what you want to see from the Development Cards Grid"));
+            case DEVELOPMENT_CARD_GRID: handler.handleClient(new RequestInt("LINE","Please choose what you want to see from the Development Cards Grid"));
                 int choice=getAnswer();
                 if(choice==8) {
                     handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
@@ -237,15 +241,15 @@ public class LocalSPController {
                 finish=getAnswer();
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 4: handler.handleClient(new SeeProductions(gameModel.getPlayer(players.get(0)).getProductions()));
+            case POSSIBLE_PRODUCTION: handler.handleClient(new SeeProductions(gameModel.getPlayer(players.get(0)).getProductions()));
                 finish=getAnswer();
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 5:
-            case 6:
+            case LEADER_CARDS_OTHER_PLAYER:
+            case DEVELOPMENT_CARDS_OTHER_PLAYER:
                 handler.handleClient(new SendMessage("This functionality is not available in single player matches."));
                 break;
-            case 7: break;
+            case NOTHING: break;
         }
     }
 
@@ -263,8 +267,9 @@ public class LocalSPController {
         do{
             handler.handleClient(new RequestInt("TURN","Choose what you want to do in this turn:"));
             answer=getAnswer();
-            switch (answer) {
-                case 1:
+            TurnType turnType = TurnType.fromInteger(answer);
+            switch (turnType) {
+                case ACTIVE_LEADER:
                     handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     pos=getAnswer();
                     try{
@@ -272,11 +277,10 @@ public class LocalSPController {
                     } catch (InvalidChoiceException e) {
                         handler.handleClient(new SendMessage("Invalid choice."));
                         handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));
-                        localChooseTurn();
                     }
                     break;
 
-                case 2:
+                case DISCARD_LEADER:
                     handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     pos=getAnswer();
                     try{
@@ -288,11 +292,10 @@ public class LocalSPController {
                     } catch (InvalidChoiceException e) {
                         handler.handleClient(new SendMessage("Invalid choice."));
                         handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));
-                        localChooseTurn();
                     }
                     break;
 
-                case 3:
+                case MARKET:
                     handler.handleClient(new RequestInt("STORAGE","Before using the market do you want to reorder your storage? You won't be able to do it later."));
                     int choice=getAnswer();
                     if(choice==1) localManageStorage();
@@ -301,7 +304,7 @@ public class LocalSPController {
                     localUseMarket(0, line);
                     break;
 
-                case 4:
+                case BUY_DEVELOPMENT:
                     handler.handleClient(new RequestInt("COLOR","Choose the color of the card you want to buy.\n1) Purple\n2) Yellow\n3) Blue\n4) Green"));
                     int color = getAnswer();
                     handler.handleClient(new RequestInt("LEVEL", "Choose the level of the card you want to buy"));
@@ -311,15 +314,13 @@ public class LocalSPController {
                     localBuyCard(color, level, space);
                     break;
 
-                case 5:
+                case ACTIVE_PRODUCTION:
                     do{
                         handler.handleClient(new RequestInt("TYPE", "What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
                         type = getAnswer();
                         localActiveProduction(type);
                     } while (type != 4);
                     break;
-
-
 
             }
         } while (answer==1 || answer==2);
