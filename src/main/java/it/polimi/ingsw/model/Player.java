@@ -163,6 +163,22 @@ public class Player {
     }
 
 
+    public ArrayList<Integer> getDevCardsForGUI() {
+        ArrayList<Integer> Id = new ArrayList<>();
+
+        for(int i=0; i<3; i++) {
+            if(!playerDashboard.getDevCardsSpace().getSpace().get(i).isEmpty()) {
+                Id.add(i, playerDashboard.getDevCardsSpace().getSpace().get(i).get().getCardID());
+            }
+            else {
+                Id.add(i, -1);
+            }
+        }
+
+        return Id;
+    }
+
+
     /**
      * Gets the player's active Production Leader
      * @return an IDs Arraylist of the active production leader

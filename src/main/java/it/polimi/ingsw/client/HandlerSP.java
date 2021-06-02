@@ -126,12 +126,6 @@ public class HandlerSP implements Runnable, Handler {
                 case "WHITE":
                     view.chooseWhiteBallLeader(((RequestInt) inputObj).getMessage());
                     break;
-                case "COLOR":
-                    view.askColor(((RequestInt) inputObj).getMessage());
-                    break;
-                case "LEVEL":
-                    view.askLevel(((RequestInt) inputObj).getMessage());
-                    break;
                 case "SPACE":
                     view.askSpace(((RequestInt) inputObj).getMessage());
                     break;
@@ -181,8 +175,11 @@ public class HandlerSP implements Runnable, Handler {
         } else if (inputObj instanceof ResetCard) {
             view.resetCard(((ResetCard) inputObj).getPos());
         } else if (inputObj instanceof RequestDoubleInt) {
-            view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
-        } else if (inputObj instanceof SeeBall) {
+            if(((RequestDoubleInt) inputObj).getType().equals("DEVCARD")) {
+                view.askCardToBuy(((RequestDoubleInt) inputObj).getCards(), ((RequestDoubleInt) inputObj).getSpaces());
+            } else {
+                view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
+            }        } else if (inputObj instanceof SeeBall) {
             view.seeBall((SeeBall) inputObj);
         } else if (inputObj instanceof ActionTokenInfo) {
             view.printActionToken(((ActionTokenInfo) inputObj).getMessage());

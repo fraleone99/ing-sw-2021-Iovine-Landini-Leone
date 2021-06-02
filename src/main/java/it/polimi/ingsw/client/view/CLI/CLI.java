@@ -208,13 +208,8 @@ public class CLI implements View {
     }
 
     @Override
-    public void askColor(String message) {
-        turn.askColor(message);
-    }
-
-    @Override
-    public void askLevel(String message) {
-        turn.askLevel(message);
+    public void askCardToBuy(ArrayList<Integer> cards, ArrayList<Integer> spaces) {
+        turn.askCardToBuy();
     }
 
     @Override

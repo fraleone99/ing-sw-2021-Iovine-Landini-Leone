@@ -111,6 +111,9 @@ public class Controller {
     public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
+                    addInitialResource(i, 4, 2);
+                    addInitialResource(i, 4, 2);
+                    gameModel.getPlayers().get(0).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,3);
                     break;
             case 1:
                 int resource1 = view.chooseResource(players.get(i), "second", 1);

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
@@ -457,36 +458,24 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int askColor(String nickname) throws InterruptedException {
+    public ArrayList<Integer> askCardToBuy(String nickname, ArrayList<Integer> cards, ArrayList<Integer> spaces) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is buying a card");
+        ArrayList<Integer> card=new ArrayList<>();
 
-        client.send(new RequestInt("COLOR","Choose the color of the card you want to buy.\n1) Purple\n2) Yellow\n3) Blue\n4) Green"));
-
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
-    }
-
-
-    public int askLevel(String nickname) throws InterruptedException {
-        ClientHandler client=namesToClient.get(nickname);
-
-        client.send(new RequestInt("LEVEL","Choose the level of the card you want to buy"));
+        client.send(new RequestDoubleInt("DEVCARD", null, cards, spaces));
 
         synchronized (client.getLock()) {
             while(!client.isReady()) client.getLock().wait();
             number=client.getNumber();
+            number2=client.getNumber2();
+            card.add(number);
+            card.add(number2);
         }
 
         client.setReady(false);
 
-        return number;
+        return card;
     }
 
 
@@ -645,6 +634,12 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SendMessage("Invalid choice."));
+    }
+
+    public void sendInvalidInput(String nickname) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new SendMessage("INVALID"));
     }
 
 

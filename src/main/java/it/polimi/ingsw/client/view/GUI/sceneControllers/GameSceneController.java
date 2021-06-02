@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
 import it.polimi.ingsw.client.message.SendInt;
+import it.polimi.ingsw.client.view.GUI.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
@@ -13,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -40,6 +40,10 @@ public class GameSceneController {
     @FXML Button ok_turnType;
     @FXML Label noActionSelectedLabel;
     @FXML private Label usernameLabel;
+    @FXML Label turn;
+    @FXML Label see;
+    @FXML Label invalid;
+    @FXML public RadioButton end_turn;
 
     private GUI gui;
 
@@ -59,13 +63,29 @@ public class GameSceneController {
 
 
     public void seePhase(){
+        end_turn.setOpacity(0);
+        invalid.setOpacity(0);
+        turn_market.setOpacity(0);
+        turn_activeLeader.setOpacity(0);
+        turn_activeProduction.setOpacity(0);
+        turn_buyDevelopment.setOpacity(0);
+        turn_discardLeader.setOpacity(0);
+        toSee_developmentGrid.setOpacity(1);
+        toSee_market.setOpacity(1);
+        toSee_nothing.setOpacity(1);
+        see.setOpacity(1);
+        turn.setOpacity(0);
         ok_turnType.setDisable(true);
+        ok_turnType.setOpacity(0);
 
         toSee_market.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.MARKET))));
 
         toSee_developmentGrid.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.DEVELOPMENT_CARD_GRID))));
 
-        toSee_nothing.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.NOTHING))));
+        toSee_nothing.setOnAction(actionEvent -> {
+            gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.NOTHING)));
+            ok_turnType.setDisable(false);
+        });
     }
 
     public void setNicknameLabel(String nickname){
@@ -90,17 +110,24 @@ public class GameSceneController {
     }
 
     public void askTurn() {
-        AtomicReference<TurnType> turnType = new AtomicReference<>();
-        toSee_market.setDisable(true);
+        turn_market.setOpacity(1);
+        turn_activeLeader.setOpacity(1);
+        turn_activeProduction.setOpacity(1);
+        turn_buyDevelopment.setOpacity(1);
+        turn_discardLeader.setOpacity(1);
+        ok_turnType.setOpacity(1);
+        turn.setOpacity(1);
+        see.setOpacity(0);
+        toSee_developmentGrid.setOpacity(0);
+        toSee_market.setOpacity(0);
+        toSee_nothing.setOpacity(0);
         toSee_developmentGrid.setDisable(true);
+        toSee_nothing.setDisable(true);
         toSee_market.setDisable(true);
-
-        RadioButton selectedRadioButton = (RadioButton) TurnType_group.getSelectedToggle();
+        AtomicReference<TurnType> turnType = new AtomicReference<>();
 
         ok_turnType.setOnAction(actionEvent -> {
-            if (selectedRadioButton == null) {
-                noActionSelectedLabel.setOpacity(1);
-            } else if (turn_market.isSelected()) {
+            if (turn_market.isSelected()) {
                 turnType.set(TurnType.MARKET);
             } else if (turn_buyDevelopment.isSelected()) {
                 turnType.set(TurnType.BUY_DEVELOPMENT);
@@ -112,10 +139,15 @@ public class GameSceneController {
                 turnType.set(TurnType.DISCARD_LEADER);
             }
 
-            if (selectedRadioButton != null)
+            RadioButton selectedRadioButton = (RadioButton) TurnType_group.getSelectedToggle();
+
+            if (selectedRadioButton != null) {
                 gui.getHandler().send(new SendInt(TurnType.toInteger(turnType.get())));
-            else
+                noActionSelectedLabel.setOpacity(0);
+            } else {
+                noActionSelectedLabel.setOpacity(1);
                 askTurn();
+            }
         });
     }
 
@@ -167,5 +199,37 @@ public class GameSceneController {
             secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             thirdResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
         }
+    }
+
+    public void endTurn() {
+        end_turn.setOpacity(1);
+        turn_buyDevelopment.setOpacity(0);
+        turn_activeProduction.setOpacity(0);
+        turn_market.setOpacity(0);
+        AtomicReference<EndTurnType> turnType = new AtomicReference<>();
+
+        ok_turnType.setOnAction(actionEvent -> {
+            if (turn_activeLeader.isSelected()) {
+                turnType.set(EndTurnType.ACTIVE_LEADER);
+            } else if (turn_discardLeader.isSelected()) {
+                turnType.set(EndTurnType.DISCARD_LEADER);
+            } else if (end_turn.isSelected()) {
+                turnType.set(EndTurnType.END_TURN);
+            }
+
+            RadioButton selectedRadioButton = (RadioButton) TurnType_group.getSelectedToggle();
+
+            if (selectedRadioButton != null) {
+                gui.getHandler().send(new SendInt(EndTurnType.toInteger(turnType.get())));
+                noActionSelectedLabel.setOpacity(0);
+            } else {
+                noActionSelectedLabel.setOpacity(1);
+                askTurn();
+            }
+        });
+    }
+
+    public void invalidChoice() {
+        invalid.setOpacity(1);
     }
 }

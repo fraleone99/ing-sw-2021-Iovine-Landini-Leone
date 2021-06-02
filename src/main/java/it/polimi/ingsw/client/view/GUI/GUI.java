@@ -311,6 +311,13 @@ public class GUI extends Application implements View {
             Platform.runLater(()->changeStage(LOCAL_GAME));
         }
 
+        if(message.equals("INVALID")) {
+            Platform.runLater(() -> {
+                gameSceneController.invalidChoice();
+                gameSceneController.askTurn();
+                changeStage(GAME);
+            });
+        }
     }
 
     @Override
@@ -479,18 +486,18 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void askColor(String message) {
-
-    }
-
-    @Override
-    public void askLevel(String message) {
-
+    public void askCardToBuy(ArrayList<Integer> cards, ArrayList<Integer> spaces) {
+        Platform.runLater( () -> {
+            developmentCardsGridController.updateGrid(cards);
+            developmentCardsGridController.updateSpaces(spaces);
+            changeStage(GRID);
+            developmentCardsGridController.buyCard();
+        });
     }
 
     @Override
     public void askSpace(String message) {
-
+        developmentCardsGridController.chooseSpace();
     }
 
     @Override
@@ -520,7 +527,10 @@ public class GUI extends Application implements View {
 
     @Override
     public void endTurn(String message) {
-
+        Platform.runLater( () -> {
+            changeStage(GAME);
+            gameSceneController.endTurn();
+        });
     }
 
     @Override

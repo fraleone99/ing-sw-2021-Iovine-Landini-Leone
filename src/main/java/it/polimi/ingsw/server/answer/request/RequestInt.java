@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.answer.request;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+
 public class RequestInt implements Answer {
     private final String type;
     private final String message;

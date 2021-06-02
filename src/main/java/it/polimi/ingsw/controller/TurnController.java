@@ -25,6 +25,7 @@ public class TurnController {
     private final Game game;
     private final VirtualView view;
     private final ArrayList<String> players = new ArrayList<>();
+    private boolean Catch=false;
 
 
     /**
@@ -156,6 +157,7 @@ public class TurnController {
         int type;
 
         do {
+            if(Catch=true) Catch=false;
             answer=view.chooseTurn(players.get(player));
             TurnType turnType = TurnType.fromInteger(answer);
             switch (turnType) {
@@ -191,10 +193,9 @@ public class TurnController {
                     break;
 
                 case BUY_DEVELOPMENT:
-                    int color = view.askColor(players.get(player));
-                    int level = view.askLevel(players.get(player));
+                    ArrayList<Integer> card = new ArrayList<>(view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI()));
                     int space = view.askSpace(players.get(player));
-                    buyCard(player, color, level, space);
+                    buyCard(player, card.get(0), card.get(1), space);
                     break;
 
                 case ACTIVE_PRODUCTION:
@@ -205,7 +206,9 @@ public class TurnController {
                     break;
 
             }
-        } while(answer==1 || answer==2);
+        } while(answer==1 || answer==2 || Catch);
+
+        Catch=false;
 
         answer=view.endTurn(players.get(player));
 
@@ -281,8 +284,8 @@ public class TurnController {
                 try {
                     if(game.getPlayer(players.get(player)).getActivatedProduction().isEmpty()) {
                         view.sendErrorMessage(players.get(player));
-                        chooseTurn(player);
-                } else {
+                        Catch=true;
+                    } else {
                     game.getPlayer(players.get(player)).doProduction();
                     ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                     if(!nick.isEmpty()) {
@@ -291,7 +294,7 @@ public class TurnController {
                 }
             } catch (NotEnoughResourceException e) {
                 view.sendErrorMessage(players.get(player));
-                chooseTurn(player);
+                Catch=true;
             }
                 break;
         }
@@ -329,8 +332,8 @@ public class TurnController {
             game.getPlayer(players.get(player)).buyCard(card, space);
             game.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
         } catch(InvalidSpaceCardException e) {
-            view.sendErrorMessage(players.get(player));
-            chooseTurn(player);
+            view.sendInvalidInput(players.get(player));
+            Catch=true;
         }
     }
 

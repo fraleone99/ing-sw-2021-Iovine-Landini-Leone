@@ -118,10 +118,6 @@ public class NetworkHandler implements Runnable, Handler {
                                 break;
                 case "WHITE" : view.chooseWhiteBallLeader(((RequestInt) inputObj).getMessage());
                                break;
-                case "COLOR" : view.askColor(((RequestInt) inputObj).getMessage());
-                               break;
-                case "LEVEL" : view.askLevel(((RequestInt) inputObj).getMessage());
-                               break;
                 case "SPACE" : view.askSpace(((RequestInt) inputObj).getMessage());
                                break;
                 case "TYPE" : view.askType(((RequestInt) inputObj).getMessage());
@@ -171,7 +167,11 @@ public class NetworkHandler implements Runnable, Handler {
             view.resetCard(((ResetCard) inputObj).getPos());
         }
         else if (inputObj instanceof RequestDoubleInt) {
-            view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
+            if(((RequestDoubleInt) inputObj).getType().equals("DEVCARD")) {
+                view.askCardToBuy(((RequestDoubleInt) inputObj).getCards(), ((RequestDoubleInt) inputObj).getSpaces());
+            } else {
+                view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
+            }
         }
         else if (inputObj instanceof SeeBall) {
             view.seeBall((SeeBall) inputObj);

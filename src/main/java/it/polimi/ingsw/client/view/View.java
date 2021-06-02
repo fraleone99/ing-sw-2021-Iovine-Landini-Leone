@@ -80,9 +80,7 @@ public interface View {
 
     void chooseShelf();
 
-    void askColor(String message);
-
-    void askLevel(String message);
+    void askCardToBuy(ArrayList<Integer> cards, ArrayList<Integer> spaces);
 
     void askSpace(String message);
 

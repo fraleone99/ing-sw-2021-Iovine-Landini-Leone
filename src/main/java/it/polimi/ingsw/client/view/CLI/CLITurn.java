@@ -7,6 +7,8 @@ import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 
+import java.util.ArrayList;
+
 public class CLITurn {
     private final CLIInitialize initialize;
     private Handler handler = null;
@@ -144,6 +146,18 @@ public class CLITurn {
                     "(Press 4 if you want to use the Storage leaders)");
             handler.send(new SendInt(shelf));
 
+        });
+        t.start();
+    }
+
+    public void askCardToBuy() {
+        Thread t = new Thread( () -> {
+            ArrayList<Integer> card = new ArrayList<>();
+
+            int color = (initialize.askInt(1,4,"Choose the color of the card you want to buy.\n1) Purple\n2) Yellow\n3) Blue\n4) Green"));
+            int level = (initialize.askInt(1,3,"Choose the level of the card you want to buy"));
+
+            handler.send(new SendDoubleInt(color, level));
         });
         t.start();
     }
