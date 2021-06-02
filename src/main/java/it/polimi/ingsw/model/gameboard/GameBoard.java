@@ -3,12 +3,15 @@ package it.polimi.ingsw.model.gameboard;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.model.Production;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.leadercard.*;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
@@ -78,10 +81,10 @@ public class GameBoard {
      */
     public void initializeLeaderCards() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReaderEcon = new JsonReader(new FileReader("src/main/resources/JSON/EconomyLeaders.json"));
-        JsonReader jsonReaderProd = new JsonReader(new FileReader("src/main/resources/JSON/ProductionLeaders.json"));
-        JsonReader jsonReaderStorage = new JsonReader(new FileReader("src/main/resources/JSON/StorageLeaders.json"));
-        JsonReader jsonReaderWhite = new JsonReader(new FileReader("src/main/resources/JSON/WhiteBallLeaders.json"));
+        JsonReader jsonReaderEcon = new JsonReader(new InputStreamReader(EconomyLeader.class.getResourceAsStream("/JSON/EconomyLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderProd = new JsonReader(new InputStreamReader(ProductionLeader.class.getResourceAsStream("/JSON/ProductionLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderStorage = new JsonReader(new InputStreamReader(StorageLeader.class.getResourceAsStream("/JSON/StorageLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderWhite = new JsonReader(new InputStreamReader(WhiteBallLeader.class.getResourceAsStream("/JSON/WhiteBallLeaders.json"), StandardCharsets.UTF_8));
 
         ArrayList<EconomyLeader> leadersEcon ;
         ArrayList<ProductionLeader> leadersProd;
