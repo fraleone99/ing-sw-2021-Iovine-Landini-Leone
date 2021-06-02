@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -40,16 +39,11 @@ public class FaithPath {
      * This method initializes faith path cells
      */
     public void initializeCells(){
-        try{
-            Gson gson = new Gson();
-            JsonReader jsonReader = new JsonReader(new FileReader("src/main/resources/JSON/Cells.json"));
-            ArrayList<Cell> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<Cell>>(){}.getType());
+        Gson gson = new Gson();
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(Cell.class.getResourceAsStream("/JSON/Cells.json")));
+        ArrayList<Cell> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<Cell>>(){}.getType());
+        space.addAll(data);
 
-            space.addAll(data);
-
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean isPapalPawn1() {

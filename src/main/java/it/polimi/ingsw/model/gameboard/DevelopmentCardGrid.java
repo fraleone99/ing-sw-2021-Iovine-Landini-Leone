@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
+import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.Production;
@@ -15,6 +16,8 @@ import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -193,8 +196,10 @@ public class DevelopmentCardGrid {
      * @throws FileNotFoundException if the file can't be found
      */
     public void initializeDevCards() throws FileNotFoundException {
+
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader(new FileReader("src/main/resources/JSON/DevelopmentCards.json"));
+        JsonReader jsonReader= new JsonReader(new InputStreamReader(DevelopmentCard.class.getResourceAsStream("/JSON/DevelopmentCards.json"), StandardCharsets.UTF_8));
+
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
 
         DevelopmentCardDeck PurpleOne = new DevelopmentCardDeck();

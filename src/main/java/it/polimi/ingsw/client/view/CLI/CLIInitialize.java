@@ -15,6 +15,8 @@ import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -43,7 +45,7 @@ public class CLIInitialize {
 
     private void initializeDevelopmentCard() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader(new FileReader("src/main/resources/JSON/DevelopmentCards.json"));
+        JsonReader jsonReader= new JsonReader(new InputStreamReader(DevelopmentCard.class.getResourceAsStream("/JSON/DevelopmentCards.json"), StandardCharsets.UTF_8));
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
 
         developmentCardDeck.setDeck(data);
@@ -51,10 +53,10 @@ public class CLIInitialize {
 
     private void initializeLeaderCard() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReaderEcon = new JsonReader(new FileReader("src/main/resources/JSON/EconomyLeaders.json"));
-        JsonReader jsonReaderProd = new JsonReader(new FileReader("src/main/resources/JSON/ProductionLeaders.json"));
-        JsonReader jsonReaderStorage = new JsonReader(new FileReader("src/main/resources/JSON/StorageLeaders.json"));
-        JsonReader jsonReaderWhite = new JsonReader(new FileReader("src/main/resources/JSON/WhiteBallLeaders.json"));
+        JsonReader jsonReaderEcon = new JsonReader(new InputStreamReader(EconomyLeader.class.getResourceAsStream("/JSON/EconomyLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderProd = new JsonReader(new InputStreamReader(ProductionLeader.class.getResourceAsStream("/JSON/ProductionLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderStorage = new JsonReader(new InputStreamReader(StorageLeader.class.getResourceAsStream("/JSON/StorageLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderWhite = new JsonReader(new InputStreamReader(WhiteBallLeader.class.getResourceAsStream("/JSON/WhiteBallLeaders.json"), StandardCharsets.UTF_8));
 
         ArrayList<EconomyLeader> leadersEcon ;
         ArrayList<ProductionLeader> leadersProd;
