@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
    <children>
-      <ImageView fitHeight="1080.0" fitWidth="1600.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1080.0" fitWidth="1600.0" layoutX="26.0" layoutY="23.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
          </image>
@@ -48,13 +48,13 @@
       <Pane fx:id="currentPlayerSecondShelf" layoutX="534.0" layoutY="614.0" prefHeight="18.0" prefWidth="47.0">
          <children>
             <ImageView fx:id="firstResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="SecondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="secondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Pane fx:id="currentPlayerThirdShelf" layoutX="523.0" layoutY="652.0" prefHeight="18.0" prefWidth="69.0">
          <children>
             <ImageView fx:id="firstResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="SecondResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="secondResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="thirdResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="44.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>

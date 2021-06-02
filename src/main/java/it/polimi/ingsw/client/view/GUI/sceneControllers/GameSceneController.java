@@ -4,10 +4,18 @@ import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
+import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GameSceneController {
@@ -21,15 +29,32 @@ public class GameSceneController {
     @FXML public RadioButton turn_activeLeader;
     @FXML public ToggleGroup TurnType_group;
     @FXML public RadioButton turn_discardLeader;
+    @FXML public Pane currentPlayerFirstShelf;
+    @FXML public ImageView firstResourcesFirstShelf;
+    public Pane currentPlayerSecondShelf;
+    @FXML public ImageView firstResourcesSecondShelf;
+    @FXML public ImageView secondResourcesSecondShelf;
+    @FXML public ImageView firstResourcesThirdShelf;
+    @FXML public ImageView secondResourcesThirdShelf;
+    @FXML public ImageView thirdResourcesThirdShelf;
     @FXML Button ok_turnType;
     @FXML Label noActionSelectedLabel;
     @FXML private Label usernameLabel;
 
     private GUI gui;
 
+    private Map<Resource, String> resourceToPathMap = new HashMap<>();
+
 
     public void setGui(GUI gui) {
+
         this.gui = gui;
+
+        resourceToPathMap.put(Resource.COIN, "/graphics/COIN.PNG");
+        resourceToPathMap.put(Resource.SERVANT, "/graphics/SERVANT.PNG");
+        resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.PNG");
+        resourceToPathMap.put(Resource.STONE, "/graphics/STONE.PNG");
+
     }
 
 
@@ -92,5 +117,55 @@ public class GameSceneController {
             else
                 askTurn();
         });
+    }
+
+    public void updateStorage(StorageInfo storageInfo){
+
+        //first shelf
+        if(storageInfo.getShelf1Amount() == 0){
+            firstResourcesFirstShelf.setImage(null);
+        }
+        else{
+            firstResourcesFirstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf1Type())));
+        }
+
+
+        //second shelf
+        if(storageInfo.getShelf2Amount() == 0){
+            firstResourcesSecondShelf.setImage(null);
+            secondResourcesSecondShelf.setImage(null);
+        }
+        else{
+            if(storageInfo.getShelf2Amount() > 1){
+                firstResourcesFirstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+                secondResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+            }
+            else{
+                firstResourcesFirstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+                secondResourcesSecondShelf.setImage(null);
+            }
+        }
+
+        //third shelf
+        if(storageInfo.getShelf3Amount() == 0){
+            firstResourcesThirdShelf.setImage(null);
+            secondResourcesThirdShelf.setImage(null);
+            thirdResourcesThirdShelf.setImage(null);
+        }
+        else if(storageInfo.getShelf3Amount() == 1){
+            firstResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            secondResourcesThirdShelf.setImage(null);
+            thirdResourcesThirdShelf.setImage(null);
+        }
+        else if(storageInfo.getShelf3Amount() == 2){
+            firstResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            thirdResourcesThirdShelf.setImage(null);
+        }
+        else if(storageInfo.getShelf3Amount() == 3){
+            firstResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            thirdResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+        }
     }
 }
