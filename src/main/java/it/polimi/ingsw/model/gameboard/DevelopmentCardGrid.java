@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
+import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.Production;
@@ -53,6 +54,18 @@ public class DevelopmentCardGrid {
         for(DevelopmentCardDeck d: devCardsDecks){
             d.shuffle();
         }
+    }
+
+    public DevelopmentCardDeck getGrid() {
+        DevelopmentCardDeck deck = new DevelopmentCardDeck();
+        try {
+            for(int i=1; i<4; i++) {
+                deck.addAll(addFromLevel(i));
+            }
+        } catch (InvalidChoiceException e) {
+            e.printStackTrace();
+        }
+        return deck;
     }
 
     /**
@@ -196,7 +209,6 @@ public class DevelopmentCardGrid {
      * @throws FileNotFoundException if the file can't be found
      */
     public void initializeDevCards() throws FileNotFoundException {
-
         Gson gson = new Gson();
         JsonReader jsonReader= new JsonReader(new InputStreamReader(DevelopmentCard.class.getResourceAsStream("/JSON/DevelopmentCards.json"), StandardCharsets.UTF_8));
 

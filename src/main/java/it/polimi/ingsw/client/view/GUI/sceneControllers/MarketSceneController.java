@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.gameboard.Ball;
+import it.polimi.ingsw.model.gameboard.Market;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -74,7 +75,7 @@ public class MarketSceneController {
 
     }
 
-    public void updateMarket(it.polimi.ingsw.model.gameboard.Market market){
+    public void updateMarket(Market market){
 
         Ball[][] matrix = market.getMatrix();
 

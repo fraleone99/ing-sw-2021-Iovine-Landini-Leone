@@ -12,19 +12,27 @@ import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
 import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.GameBoard;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.server.VirtualView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * TurnController class manages the actions of player's turn
+ * @author Lorenzo Iovine
+ */
 public class TurnController {
     private final Game game;
     private final VirtualView view;
     private final ArrayList<String> players = new ArrayList<>();
 
 
+    /**
+     * TurnController constructor: creates a new instance of TurnController
+     * @param game is an instance of class Game
+     * @param players are the players of the match
+     * @param view is an instance of class VirtualView
+     */
     public TurnController(Game game, ArrayList<String> players, VirtualView view) {
         this.game = game;
         this.players.addAll(players);
@@ -32,6 +40,9 @@ public class TurnController {
     }
 
 
+    /**
+     * This method handles the call of player dashboard print in the CLI
+     */
     public void seePlayerDashboards(int player) throws NotExistingPlayerException {
         for (String s : players) {
             view.seeFaithPath(players.get(player), s, game.getPlayer(s).getPlayerDashboard().getFaithPath(), players.size() == 1);
@@ -42,6 +53,14 @@ public class TurnController {
     }
 
 
+    /**
+     * This method handles the call of game board print in the CLI
+     * @param first is a boolean that is true only in the first call of the method,
+     *              and is false in the recursive calls
+     * @param player is the player index in array list players
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     */
     public void seeGameBoard(boolean first, int player) throws  NotExistingPlayerException, InterruptedException {
         int answer=view.seeGameBoard(first, players.get(player));
         //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Active Leader Cards of the other players
@@ -61,7 +80,11 @@ public class TurnController {
                 break;
             case DEVELOPMENT_CARD_GRID:
                 int choice=view.chooseLine(players.get(player));
-                finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                if(choice==8) {
+                    finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+                } else {
+                    finish = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                }
                 if(finish==1) seeGameBoard(false, player);
                 break;
             case POSSIBLE_PRODUCTION:
@@ -82,6 +105,13 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the selected player to see the leader cards belonging to other player
+     * @param player is the player index in array list players
+     * @return player's choice (1 if he wants to see more from the game board, 2 otherwise)
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     */
     public int leaderCard(int player) throws NotExistingPlayerException, InterruptedException {
         for(String s : players) {
             if(!s.equals(players.get(player))) {
@@ -93,6 +123,13 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the selected player to see the development cards belonging to other player
+     * @param player is the player index in array list players
+     * @return player's choice (1 if he wants to see more from the game board, 2 otherwise)
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     */
     public int devCard(int player) throws NotExistingPlayerException, InterruptedException {
         for(String s : players) {
             if(!s.equals(players.get(player))) {
@@ -104,6 +141,13 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the selected player to choose what he wants to do in his turn
+     * @param player is the player index in array list players
+     * @throws InterruptedException is due to multithreading message send
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InvalidChoiceException if the choice is invalid
+     */
     public void chooseTurn(int player) throws InterruptedException, NotExistingPlayerException, InvalidChoiceException {
         int answer;
         //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
@@ -188,6 +232,14 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the selected player to activate every type of production
+     * @param player is the player index in array list players
+     * @param type is the number corresponding to the the type of the production that the player decided to activate
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     * @throws InvalidChoiceException if the choice is invalid
+     */
     public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException, InvalidChoiceException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
@@ -246,6 +298,16 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the player to buy a development card from the grid
+     * @param player is the player index in array list players
+     * @param color is the selected card color
+     * @param level is the selected card level
+     * @param space is the development card space where the player want to place the selected card
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     */
     public void buyCard(int player, int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
         CardColor cardColor;
 
@@ -273,6 +335,15 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the player to buy a market matrix row or column, and places the resources
+     * corresponding to the balls of the chosen line
+     * @param player is the player index in array list players
+     * @param line is the int corresponding to the line chosen by the player
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     * @throws InterruptedException is due to multithreading message send
+     */
     public void useMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
         ArrayList<Integer> choice=new ArrayList<>();
         Resource resource = null;
@@ -346,6 +417,12 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the player to move his shelves
+     * @param player is the player index in array list players
+     * @throws InterruptedException is due to multithreading message send
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void manageStorage(int player) throws InterruptedException, NotExistingPlayerException {
         int action;
         do{
@@ -364,16 +441,38 @@ public class TurnController {
     }
 
 
+    /**
+     * This method allows the player to activate a leader during the match
+     * @param player is the player index in array list players
+     * @param pos is the position of the chosen leader card in leaders card in leader cards deck
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void activeLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
         game.getPlayer(players.get(player)).ActiveLeader(pos);
     }
 
 
+    /**
+     * This method allows the player to discard a leader during the match
+     * @param player is the player index in array list players
+     * @param pos is the position of the chosen leader card in leader cards deck
+     * @throws InvalidChoiceException if the choice is invalid
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public void discardLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
         game.getPlayer(players.get(player)).DiscardLeader(pos);
     }
 
 
+    /**
+     * This method checks the spaces for balls that need to be placed and returns and returns the
+     * only ones that can be add (to the storage or to the storage leader if present)
+     * @param player is the player index in array list players
+     * @param balls balls that need to be placed
+     * @return balls that can be placed
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
     public ArrayList<Ball> checkEmptyShelves(int player, ArrayList<Ball> balls) throws NotExistingPlayerException {
         ArrayList<Ball> toPlace = new ArrayList<>();
 
@@ -419,6 +518,12 @@ public class TurnController {
     }
 
 
+    /**
+     * This method is called every time the faith path indicator (red or black cross) moves forward
+     * and it checks firstly if a papal favor has been triggered, if so it returns the nicknames of the
+     * players that have the rights of activating the corresponding papal pawn
+     * @return the array list of nicknames of the players that have the rights of activating the papal pawn
+     */
     public ArrayList<String> checkPapalPawn() {
         ArrayList<String> players=new ArrayList<>();
         switch (game.getPapalPawn()) {

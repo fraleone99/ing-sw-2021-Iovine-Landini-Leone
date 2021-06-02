@@ -41,7 +41,7 @@ public class LocalSPController {
     private final EndGameController endgame;
     private final ArrayList<String> players=new ArrayList<>();
     private boolean isEnd=false;
-    private HandlerSP handler;
+    private final HandlerSP handler;
 
     /**
      * LocalSPController constructor: creates a new instance of LocalSPController
@@ -229,7 +229,11 @@ public class LocalSPController {
                 break;
             case 3: handler.handleClient(new RequestInt("LINE","Please choose what you want to see from the Development Cards Grid"));
                 int choice=getAnswer();
-                handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck()));
+                if(choice==8) {
+                    handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
+                } else {
+                    handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck()));
+                }
                 finish=getAnswer();
                 if(finish==1) localSeeGameBoard();
                 break;
@@ -237,7 +241,11 @@ public class LocalSPController {
                 finish=getAnswer();
                 if(finish==1) localSeeGameBoard();
                 break;
-            case 5: break;
+            case 5:
+            case 6:
+                handler.handleClient(new SendMessage("This functionality is not available in single player matches."));
+                break;
+            case 7: break;
         }
     }
 

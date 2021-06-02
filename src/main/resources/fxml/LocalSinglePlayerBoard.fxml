@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
+    <children>
+        <ImageView fitHeight="1080.0" fitWidth="1600.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="currentPlayerBoard" fitHeight="408.0" fitWidth="611.0" layoutX="481.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="toSee_developmentGrid" layoutX="663.0" layoutY="348.0" mnemonicParsing="false" text="Development Card Grid" />
+        <Button fx:id="toSee_market" layoutX="846.0" layoutY="348.0" mnemonicParsing="false" text="Market" />
+        <Pane fx:id="currentPlayerFirstShelf" layoutX="547.0" layoutY="579.0" prefHeight="18.0" prefWidth="21.0">
+            <children>
+                <ImageView fx:id="firstResourcesFirstShelf" fitHeight="26.0" fitWidth="22.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </Pane>
+        <Pane fx:id="currentPlayerSecondShelf" layoutX="534.0" layoutY="614.0" prefHeight="18.0" prefWidth="47.0">
+            <children>
+                <ImageView fx:id="firstResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="SecondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </Pane>
+        <Pane fx:id="currentPlayerThirdShelf" layoutX="523.0" layoutY="652.0" prefHeight="18.0" prefWidth="69.0">
+            <children>
+                <ImageView fx:id="firstResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="SecondResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="thirdResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="44.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </Pane>
+        <Pane layoutX="91.0" layoutY="285.0" prefHeight="18.0" prefWidth="13.0" />
+        <Pane layoutX="82.0" layoutY="303.0" prefHeight="18.0" prefWidth="30.0" />
+        <Group layoutX="500.0" layoutY="428.0">
+            <children>
+                <Pane fx:id="faithPath_0" layoutY="54.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_2" layoutX="53.0" layoutY="54.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_3" layoutX="53.0" layoutY="27.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_4" layoutX="53.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_5" layoutX="83.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_6" layoutX="113.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_7" layoutX="138.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_8" layoutX="165.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_9" layoutX="195.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_10" layoutX="195.0" layoutY="27.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_11" layoutX="195.0" layoutY="54.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_12" layoutX="225.0" layoutY="54.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_13" layoutX="251.0" layoutY="54.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_14" layoutX="281.0" layoutY="53.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_15" layoutX="311.0" layoutY="53.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_17" layoutX="336.0" layoutY="27.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="papalPawnPos_2" layoutX="266.0" layoutY="14.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_16" layoutX="351.0" layoutY="63.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_18" layoutX="336.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_19" layoutX="366.0" layoutY="1.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_20" layoutX="396.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_21" layoutX="426.0" layoutY="1.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_22" layoutX="445.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_23" layoutX="475.0" layoutY="1.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="faithPath_24" layoutX="505.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="papalPawnPos_3" layoutX="430.0" layoutY="40.0" prefHeight="26.0" prefWidth="30.0" />
+                <Pane fx:id="papalPawnPos_1" prefHeight="26.0" prefWidth="30.0" />
+            </children>
+        </Group>
+        <Pane fx:id="faithPath_1" layoutX="532.0" layoutY="482.0" prefHeight="26.0" prefWidth="30.0" />
+        <Label fx:id="usernameLabel" layoutX="907.0" layoutY="383.0" prefHeight="34.0" prefWidth="130.0" text="USERNAME" />
+        <Label layoutX="558.0" layoutY="292.0" text="WHAT DO YOU WANT TO SEE?">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Label>
+        <Label layoutX="1076.0" layoutY="473.0" prefHeight="50.0" prefWidth="345.0" text="What do you want to do in this turn?">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Group layoutX="1086.0" layoutY="552.0">
+            <children>
+                <RadioButton fx:id="turn_discardLeader" layoutY="18.0" mnemonicParsing="false" text="Discard Leader">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="TurnType_group" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="turn_market" layoutY="36.0" mnemonicParsing="false" text="Use Market" toggleGroup="$TurnType_group" />
+                <RadioButton fx:id="turn_buyDevelopment" layoutY="53.0" mnemonicParsing="false" text="Buy Development Card" toggleGroup="$TurnType_group" />
+                <RadioButton fx:id="turn_activeProduction" layoutY="71.0" mnemonicParsing="false" text="Production" toggleGroup="$TurnType_group" />
+                <RadioButton fx:id="turn_activeLeader" mnemonicParsing="false" text="Active Leader" toggleGroup="$TurnType_group" />
+            </children>
+        </Group>
+        <Button fx:id="ok_turnType" layoutX="1120.0" layoutY="639.0" mnemonicParsing="false" text="OK" />
+        <Button fx:id="toSee_nothing" layoutX="927.0" layoutY="348.0" mnemonicParsing="false" text="NOTHING" />
+        <Label fx:id="noActionSelectedLabel" layoutX="1122.0" layoutY="691.0" opacity="0.0" text="Select an action" />
+      <ImageView fitHeight="247.0" fitWidth="592.0" layoutX="486.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/mainScene/faithpath.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

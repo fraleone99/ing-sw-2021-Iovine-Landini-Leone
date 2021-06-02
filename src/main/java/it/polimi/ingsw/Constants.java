@@ -59,9 +59,9 @@ public class Constants {
     public final static String TwelvePOINTS = ANSI_YELLOW + "⓬" + ANSI_RESET;
     public final static String SixteenPOINTS= ANSI_YELLOW + "⓰" + ANSI_RESET;
     public final static String TwentyPOINTS = ANSI_YELLOW + "⓴" + ANSI_RESET;
-    public final static String PapalPOINT1  = ANSI_GREEN + "➊" + ANSI_RESET;
-    public final static String PapalPOINT2  = ANSI_GREEN + "➋" + ANSI_RESET;
-    public final static String PapalPOINT3  = ANSI_GREEN + "➌" + ANSI_RESET;
+    public final static String PapalPOINT1  = ANSI_GREEN + "➋" + ANSI_RESET;
+    public final static String PapalPOINT2  = ANSI_GREEN + "➌" + ANSI_RESET;
+    public final static String PapalPOINT3  = ANSI_GREEN + "❹" + ANSI_RESET;
     public final static String PapalCELL    = ANSI_RED + "⳩" + ANSI_RESET;
     public final static String ColorFAITH   = ANSI_PURPLE + FAITH + ANSI_RESET;
     public final static String FAITH_LEGEND = ANSI_WHITE +"   FAITH PATH:\n"+ ANSI_RESET +"      ->"+ ANSI_CYAN +" Cyan "+ ANSI_RESET +"numbers represent the position of the FaithPath\n"+"      ->"+ ANSI_RED +" Red "+ ANSI_RESET+"numbers represent the position of papal regions\n"+"      -> "+ PapalCELL +" represents papal spaces\n\n";
