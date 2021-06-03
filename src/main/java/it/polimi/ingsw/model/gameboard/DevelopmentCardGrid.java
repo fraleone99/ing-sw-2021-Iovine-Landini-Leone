@@ -42,6 +42,7 @@ public class DevelopmentCardGrid {
     public DevelopmentCardGrid() {
         try {
             initializeDevCards();
+            shufflesAllDecks();
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -50,7 +51,7 @@ public class DevelopmentCardGrid {
     /**
      * This method shuffles all decks of the development card grid
      */
-    public void ShufflesAllDecks(){
+    public void shufflesAllDecks(){
         for(DevelopmentCardDeck d: devCardsDecks){
             d.shuffle();
         }

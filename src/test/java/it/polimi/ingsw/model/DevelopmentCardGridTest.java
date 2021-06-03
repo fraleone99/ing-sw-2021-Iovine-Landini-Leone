@@ -15,7 +15,7 @@ public class DevelopmentCardGridTest {
     }
 
     public void testShufflesAllDecks() {
-        devCardGrid.ShufflesAllDecks();
+        devCardGrid.shufflesAllDecks();
     }
 
     @Test

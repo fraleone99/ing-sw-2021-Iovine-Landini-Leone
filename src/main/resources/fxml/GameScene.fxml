@@ -38,7 +38,7 @@
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <Button fx:id="toSee_developmentGrid" layoutX="663.0" layoutY="348.0" mnemonicParsing="false" text="Development Card Grid" />
+      <Button fx:id="toSee_developmentGrid" layoutX="663.0" layoutY="348.0" mnemonicParsing="false" text="Development Cards Grid" />
       <Button fx:id="toSee_market" layoutX="846.0" layoutY="348.0" mnemonicParsing="false" text="Market" />
       <Pane fx:id="currentPlayerFirstShelf" layoutX="547.0" layoutY="579.0" prefHeight="18.0" prefWidth="21.0">
          <children>
@@ -117,13 +117,13 @@
          </children>
       </Group>
       <Button fx:id="ok_turnType" layoutX="1122.0" layoutY="657.0" mnemonicParsing="false" text="OK" />
-      <Button fx:id="toSee_nothing" layoutX="927.0" layoutY="348.0" mnemonicParsing="false" text="NOTHING" />
+      <Button fx:id="toSee_nothing" layoutX="927.0" layoutY="348.0" mnemonicParsing="false" text="Play Turn" />
       <Label fx:id="noActionSelectedLabel" layoutX="1122.0" layoutY="691.0" opacity="0.0" text="Select an action" />
       <Label fx:id="invalid" layoutX="1249.0" layoutY="564.0" prefHeight="66.0" prefWidth="124.0" text="INVALID CHOICE" textFill="#e41717" wrapText="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <RadioButton fx:id="end_turn" layoutX="1087.0" layoutY="531.0" mnemonicParsing="false" text="End Turn" />
+      <RadioButton fx:id="end_turn" layoutX="1087.0" layoutY="531.0" mnemonicParsing="false" text="End Turn" toggleGroup="$TurnType_group" />
    </children>
 </AnchorPane>

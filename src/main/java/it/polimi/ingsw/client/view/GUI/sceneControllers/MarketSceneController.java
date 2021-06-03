@@ -126,6 +126,4 @@ public class MarketSceneController {
 
         button_7.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(7)));
     }
-
-
 }
