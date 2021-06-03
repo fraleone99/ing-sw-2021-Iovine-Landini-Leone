@@ -141,6 +141,9 @@ public class NetworkHandler implements Runnable, Handler {
         else if(inputObj instanceof SendMessage) {
             view.readMessage(((SendMessage) inputObj).getMessage());
         }
+        else if (inputObj instanceof InitializeGameBoard) {
+            view.initializeGameBoard(((InitializeGameBoard) inputObj).getMarket(), ((InitializeGameBoard) inputObj).getIdDevCards(), ((InitializeGameBoard) inputObj).getLeaderCards());
+        }
         else if(inputObj instanceof Win) {
             view.win(((Win) inputObj).getMessage());
         }

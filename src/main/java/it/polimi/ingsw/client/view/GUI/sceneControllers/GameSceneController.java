@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
 import it.polimi.ingsw.client.message.SendInt;
-import it.polimi.ingsw.client.view.GUI.EndTurnType;
+import it.polimi.ingsw.client.view.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -29,6 +30,8 @@ public class GameSceneController {
     @FXML public RadioButton turn_activeLeader;
     @FXML public ToggleGroup TurnType_group;
     @FXML public RadioButton turn_discardLeader;
+    @FXML ImageView leader1;
+    @FXML ImageView leader2;
     @FXML public Pane currentPlayerFirstShelf;
     @FXML public ImageView firstResourcesFirstShelf;
     public Pane currentPlayerSecondShelf;
@@ -78,9 +81,9 @@ public class GameSceneController {
         ok_turnType.setDisable(true);
         ok_turnType.setOpacity(0);
 
-        toSee_market.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.MARKET))));
+        toSee_market.setOnAction(actionEvent -> gui.seeMarket(null));
 
-        toSee_developmentGrid.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.DEVELOPMENT_CARD_GRID))));
+        toSee_developmentGrid.setOnAction(actionEvent -> gui.seeGrid(null));
 
         toSee_nothing.setOnAction(actionEvent -> {
             gui.getHandler().send(new SendInt(ToSeeFromGameBoard.toInteger(ToSeeFromGameBoard.NOTHING)));
@@ -94,15 +97,41 @@ public class GameSceneController {
 
 
     public void notMyTurn() {
-        toSee_market.setDisable(true);
+        toSee_market.setDisable(false);
         toSee_nothing.setDisable(true);
-        toSee_developmentGrid.setDisable(true);
+        toSee_nothing.setOpacity(0);
+        toSee_developmentGrid.setDisable(false);
         ok_turnType.setDisable(true);
+        ok_turnType.setOpacity(0);
+        turn_market.setOpacity(0);
+        turn_activeProduction.setOpacity(0);
+        end_turn.setOpacity(0);
+        turn_buyDevelopment.setOpacity(0);
+        turn_discardLeader.setOpacity(0);
+        turn_activeLeader.setOpacity(0);
+        turn.setOpacity(0);
+        see.setOpacity(1);
+        toSee_market.setOpacity(1);
+        toSee_developmentGrid.setOpacity(1);
+        invalid.setOpacity(0);
         usernameLabel.setTextFill(Color.color(0,0,0));
+        toSee_market.setOnAction(actionEvent -> gui.seeMarket(null));
+        toSee_developmentGrid.setOnAction(actionEvent -> gui.seeGrid(null));
     }
 
     public void isMyTurn() {
-        //gui.changeStage(GUI.GAME);
+        toSee_nothing.setOpacity(1);
+        ok_turnType.setDisable(true);
+        ok_turnType.setOpacity(1);
+        turn_market.setOpacity(1);
+        turn_activeProduction.setOpacity(1);
+        end_turn.setOpacity(1);
+        turn_buyDevelopment.setOpacity(1);
+        turn_discardLeader.setOpacity(1);
+        turn_activeLeader.setOpacity(1);
+        turn.setOpacity(1);
+        see.setOpacity(1);
+        invalid.setOpacity(1);
         toSee_market.setDisable(false);
         toSee_developmentGrid.setDisable(false);
         toSee_nothing.setDisable(false);
@@ -199,6 +228,11 @@ public class GameSceneController {
             secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             thirdResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
         }
+    }
+
+    public void updateLeaderCards(ArrayList<Integer> cards) {
+        leader1.setImage(new Image("/graphics/" + cards.get(0) + ".png"));
+        leader2.setImage(new Image("/graphics/" + cards.get(1) + ".png"));
     }
 
     public void endTurn() {

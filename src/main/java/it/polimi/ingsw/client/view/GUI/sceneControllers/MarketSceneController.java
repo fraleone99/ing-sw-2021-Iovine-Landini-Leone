@@ -92,7 +92,7 @@ public class MarketSceneController {
 
     public void seePhase() {
         back_button.setOnAction(actionEvent -> {
-            gui.getHandler().send(new SendInt(1)); // voglio vedere qualcos'altro
+            gui.changeGameBoard();
         });
 
         /*Use_button.setOnAction(actionEvent -> {

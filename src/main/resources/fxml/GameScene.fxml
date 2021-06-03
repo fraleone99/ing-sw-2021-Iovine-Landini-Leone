@@ -18,28 +18,28 @@
             <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="currentPlayerBoard" fitHeight="408.0" fitWidth="611.0" layoutX="481.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="currentPlayerBoard" fitHeight="408.0" fitWidth="611.0" layoutX="469.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player2Board" fitHeight="258.0" fitWidth="367.0" layoutX="611.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player2Board" fitHeight="258.0" fitWidth="367.0" layoutX="578.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player1Board" fitHeight="258.0" fitWidth="367.0" layoutX="146.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player1Board" fitHeight="258.0" fitWidth="367.0" layoutX="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player3Board" fitHeight="258.0" fitWidth="367.0" layoutX="1021.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player3Board" fitHeight="258.0" fitWidth="367.0" layoutX="1076.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
          </image>
       </ImageView>
-      <Button fx:id="toSee_developmentGrid" layoutX="663.0" layoutY="348.0" mnemonicParsing="false" text="Development Cards Grid" />
-      <Button fx:id="toSee_market" layoutX="846.0" layoutY="348.0" mnemonicParsing="false" text="Market" />
+      <Button fx:id="toSee_developmentGrid" layoutX="47.0" layoutY="447.0" mnemonicParsing="false" text="Development Cards Grid" />
+      <Button fx:id="toSee_market" layoutX="218.0" layoutY="447.0" mnemonicParsing="false" text="Market" />
       <Pane fx:id="currentPlayerFirstShelf" layoutX="547.0" layoutY="579.0" prefHeight="18.0" prefWidth="21.0">
          <children>
             <ImageView fx:id="firstResourcesFirstShelf" fitHeight="26.0" fitWidth="22.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true" />
@@ -93,7 +93,7 @@
       </Group>
       <Pane fx:id="faithPath_1" layoutX="532.0" layoutY="482.0" prefHeight="26.0" prefWidth="30.0" />
       <Label fx:id="usernameLabel" layoutX="907.0" layoutY="383.0" prefHeight="34.0" prefWidth="130.0" text="USERNAME" />
-      <Label fx:id="see" layoutX="558.0" layoutY="292.0" text="WHAT DO YOU WANT TO SEE?">
+      <Label fx:id="see" layoutX="52.0" layoutY="402.0" text="WHAT DO YOU WANT TO SEE?">
          <font>
             <Font size="28.0" />
          </font>
@@ -117,7 +117,7 @@
          </children>
       </Group>
       <Button fx:id="ok_turnType" layoutX="1122.0" layoutY="657.0" mnemonicParsing="false" text="OK" />
-      <Button fx:id="toSee_nothing" layoutX="927.0" layoutY="348.0" mnemonicParsing="false" text="Play Turn" />
+      <Button fx:id="toSee_nothing" layoutX="300.0" layoutY="447.0" mnemonicParsing="false" text="Play Turn" />
       <Label fx:id="noActionSelectedLabel" layoutX="1122.0" layoutY="691.0" opacity="0.0" text="Select an action" />
       <Label fx:id="invalid" layoutX="1249.0" layoutY="564.0" prefHeight="66.0" prefWidth="124.0" text="INVALID CHOICE" textFill="#e41717" wrapText="true">
          <font>
@@ -125,5 +125,7 @@
          </font>
       </Label>
       <RadioButton fx:id="end_turn" layoutX="1087.0" layoutY="531.0" mnemonicParsing="false" text="End Turn" toggleGroup="$TurnType_group" />
+      <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="40.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

@@ -572,6 +572,13 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    public void initializeGameBoard(String nickname, Market market, ArrayList<Integer> idCards, ArrayList<Integer> leader) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new InitializeGameBoard(market, idCards, leader));
+    }
+
+
     public int askLeaderCard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 

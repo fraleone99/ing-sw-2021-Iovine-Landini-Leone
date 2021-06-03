@@ -107,4 +107,6 @@ public interface View {
     void setIsMyTurn(boolean isMyTurn);
 
     void waitForYourTurn();
+
+    void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards);
 }

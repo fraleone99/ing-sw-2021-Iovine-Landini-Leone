@@ -54,6 +54,7 @@ public class Controller {
             }
             for(int i=0; i<players.size(); i++){
                 startGame(i);
+                view.initializeGameBoard(players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck());
             }
             while(!isEnd){
                 for(int i=0; i<players.size();i++){

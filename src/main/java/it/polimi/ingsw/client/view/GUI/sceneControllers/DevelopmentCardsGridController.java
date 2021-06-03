@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.GUI.sceneControllers;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -74,8 +75,16 @@ public class DevelopmentCardsGridController {
     }
 
     public void seePhase() {
+        space.setOpacity(0);
+        card.setOpacity(0);
+        cardsSpace.setOpacity(0);
+        space1.setOpacity(0);
+        space2.setOpacity(0);
+        space3.setOpacity(0);
+        back_button.setOpacity(1);
+        back_button.setDisable(false);
         back_button.setOnAction(actionEvent -> {
-            gui.getHandler().send(new SendInt(1)); // voglio vedere qualcos'altro
+            gui.changeGameBoard();
         });
     }
 

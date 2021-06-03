@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.GUI;
+package it.polimi.ingsw.client.view;
 
 public enum EndTurnType {
     ACTIVE_LEADER,

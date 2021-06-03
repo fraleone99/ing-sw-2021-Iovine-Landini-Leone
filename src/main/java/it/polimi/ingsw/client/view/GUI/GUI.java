@@ -383,6 +383,11 @@ public class GUI extends Application implements View {
 
     }
 
+    public void changeGameBoard() {
+        Platform.runLater(()->
+                changeStage(GAME));
+    }
+
     @Override
     public void seeGameBoard(String message) {
         Platform.runLater(()-> {
@@ -400,7 +405,6 @@ public class GUI extends Application implements View {
     @Override
     public void seeMarket(Market market) {
         Platform.runLater(()->{
-            marketSceneController.updateMarket(market);
             changeStage(MARKET);
             marketSceneController.seePhase();
         });
@@ -414,7 +418,6 @@ public class GUI extends Application implements View {
     @Override
     public void seeGrid(ArrayList<Integer> devCards) {
         Platform.runLater( () -> {
-            developmentCardsGridController.updateGrid(devCards);
             changeStage(GRID);
             developmentCardsGridController.seePhase();
         });
@@ -564,6 +567,12 @@ public class GUI extends Application implements View {
     @Override
     public void waitForYourTurn() {
         //gameSceneController.notMyTurn();
+    }
+
+    public void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards) {
+        marketSceneController.updateMarket(market);
+        developmentCardsGridController.updateGrid(idCards);
+        gameSceneController.updateLeaderCards(leaderCards);
     }
 
 

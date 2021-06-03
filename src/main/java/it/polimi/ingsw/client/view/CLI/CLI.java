@@ -63,6 +63,11 @@ public class CLI implements View {
     }
 
     @Override
+    public void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards) {
+
+    }
+
+    @Override
     public void setIsMyTurn(boolean isMyTurn) {
         this.isMyTurn.set(isMyTurn);
     }
