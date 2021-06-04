@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,48 @@ public class GameSceneController {
     @FXML public RadioButton turn_activeLeader;
     @FXML public ToggleGroup TurnType_group;
     @FXML public RadioButton turn_discardLeader;
+    @FXML public ImageView player2Board;
+    @FXML public ImageView player1Board;
+    @FXML public ImageView player3Board;
+    @FXML public Label username_1;
+    @FXML public Label username_2;
+    @FXML public Label username_3;
+    @FXML public ImageView player1_1_1;
+    @FXML public ImageView player1_2_1;
+    @FXML public ImageView player1_2_2;
+    @FXML public ImageView player1_3_1;
+    @FXML public ImageView player1_3_2;
+    @FXML public ImageView player1_3_3;
+    @FXML public ImageView player2_1_1;
+    @FXML public ImageView player2_2_1;
+    @FXML public ImageView player2_2_2;
+    @FXML public ImageView player2_3_1;
+    @FXML public ImageView player2_3_2;
+    @FXML public ImageView player2_3_3;
+    @FXML public ImageView player3_1_1;
+    @FXML public ImageView player3_2_1;
+    @FXML public ImageView player3_2_2;
+    @FXML public ImageView player3_3_1;
+    @FXML public ImageView player3_3_2;
+    @FXML public ImageView player3_3_3;
+    @FXML public Label vault_coinAmount;
+    @FXML public Label vault_shieldAmount;
+    @FXML public Label vault_servantAmount;
+    @FXML public Label vault_stoneAmount;
+    @FXML public Label player1_coinAmount;
+    @FXML public Label player1_shieldAmount;
+    @FXML public Label player1_stoneAmount;
+    @FXML public Label player1_servantAmount;
+    @FXML public Pane player2_vault;
+    @FXML public Pane player3_vault;
+    public Label player3_coinAmount;
+    public Label player3_shieldAmount;
+    public Label player3_stoneAmount;
+    public Label player3_servantAmount;
+    public Label player2_coinAmount;
+    public Label player2_shieldAmount;
+    public Label player2_stoneAmount;
+    public Label player2_servantAmount;
     @FXML ImageView leader1;
     @FXML ImageView leader2;
     @FXML public Pane currentPlayerFirstShelf;
@@ -51,6 +95,11 @@ public class GameSceneController {
     private GUI gui;
 
     private Map<Resource, String> resourceToPathMap = new HashMap<>();
+
+    private int playersNumber;
+    private ArrayList<String> othersPlayersNick = new ArrayList<>();
+    private HashMap<String, Integer> nicknameToPosition = new HashMap<>();
+    private HashMap<Integer, String> positionToNickname = new HashMap<>();
 
 
     public void setGui(GUI gui) {
@@ -180,8 +229,9 @@ public class GameSceneController {
         });
     }
 
-    public void updateStorage(StorageInfo storageInfo){
-
+    public void storage(ImageView firstResourcesFirstShelf, ImageView firstResourcesSecondShelf, ImageView secondResourcesSecondShelf,
+    ImageView firstResourcesThirdShelf, ImageView secondResourcesThirdShelf, ImageView thirdResourcesThirdShelf, Label vault_coin,
+                        Label vault_stone, Label vault_servant, Label vault_shield, StorageInfo storageInfo){
         //first shelf
         if(storageInfo.getShelf1Amount() == 0){
             firstResourcesFirstShelf.setImage(null);
@@ -198,11 +248,11 @@ public class GameSceneController {
         }
         else{
             if(storageInfo.getShelf2Amount() > 1){
-                firstResourcesFirstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+                firstResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
                 secondResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
             }
             else{
-                firstResourcesFirstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+                firstResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
                 secondResourcesSecondShelf.setImage(null);
             }
         }
@@ -228,7 +278,47 @@ public class GameSceneController {
             secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             thirdResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
         }
+
+        if(storageInfo.isVaultUpdate()) {
+            vault_coin.setText(String.valueOf(storageInfo.getCoinsAmount()));
+            vault_stone.setText(String.valueOf(storageInfo.getStoneAmount()));
+            vault_servant.setText(String.valueOf(storageInfo.getServantsAmount()));
+            vault_shield.setText(String.valueOf(storageInfo.getShieldsAmount()));
+        }
     }
+
+    public void updateStorage(StorageInfo storageInfo){
+
+        if(storageInfo.getNickname().equals(gui.getNickname())){
+            //System.out.println("Updating my player dashboard...");
+            storage(firstResourcesFirstShelf, firstResourcesSecondShelf, secondResourcesSecondShelf,firstResourcesThirdShelf,
+                    secondResourcesThirdShelf,thirdResourcesThirdShelf,vault_coinAmount,vault_stoneAmount, vault_servantAmount,
+                    vault_shieldAmount, storageInfo);
+        }
+
+        else{
+            int player = nicknameToPosition.get(storageInfo.getNickname());
+            //System.out.println("I have received storage of player " + player);
+            if(player == 1){
+                //System.out.println("Updating player Dashboard 1...");
+                storage(player1_1_1, player1_2_1,player1_2_2, player1_3_1, player1_3_2, player1_3_3, player1_coinAmount, player1_stoneAmount,
+                        player1_servantAmount, player1_shieldAmount, storageInfo);
+            }
+            else if(player == 2){
+                //System.out.println("Updating player Dashboard 2...");
+                storage(player2_1_1, player2_2_1,player2_2_2, player2_3_1, player2_3_2, player2_3_3, player2_coinAmount, player2_stoneAmount,
+                        player2_servantAmount, player2_shieldAmount, storageInfo);
+            }
+            else if(player == 3){
+                //System.out.println("Updating player Dashboard 3...");
+                storage(player3_1_1, player3_2_1,player3_2_2, player3_3_1, player3_3_2, player3_3_3, player3_coinAmount, player3_stoneAmount,
+                        player3_servantAmount, player3_shieldAmount, storageInfo);
+            }
+        }
+
+
+    }
+
 
     public void updateLeaderCards(ArrayList<Integer> cards) {
         leader1.setImage(new Image("/graphics/" + cards.get(0) + ".png"));
@@ -265,5 +355,54 @@ public class GameSceneController {
 
     public void invalidChoice() {
         invalid.setOpacity(1);
+    }
+
+
+    public void setupGameBoard(PlayersInfo playersInfo) {
+        this.playersNumber = playersInfo.getPlayersNumber();
+
+        for(String nick: playersInfo.getNicknames()){
+            if(!nick.equals(gui.getNickname())){
+                othersPlayersNick.add(nick);
+            }
+        }
+
+        if(playersNumber == 2){
+            player2Board.setOpacity(0.4);
+            player2_vault.setOpacity(0.4);
+            player3Board.setOpacity(0.4);
+            player3_vault.setOpacity(0.4);
+            username_1.setText(othersPlayersNick.get(0));
+            username_2.setText("");
+            username_3.setText("");
+
+            nicknameToPosition.put(othersPlayersNick.get(0) , 1);
+            positionToNickname.put(1, othersPlayersNick.get(0));
+        }
+        else if(playersNumber == 3){
+            player3Board.setOpacity(0.4);
+            player3_vault.setOpacity(0.4);
+            username_1.setText(othersPlayersNick.get(0));
+            username_2.setText(othersPlayersNick.get(1));
+            username_3.setText("");
+
+            nicknameToPosition.put(othersPlayersNick.get(0) , 1);
+            nicknameToPosition.put(othersPlayersNick.get(1) , 2);
+            positionToNickname.put(1, othersPlayersNick.get(0));
+            positionToNickname.put(2, othersPlayersNick.get(1));
+        }
+        else{
+            username_1.setText(othersPlayersNick.get(0));
+            username_2.setText(othersPlayersNick.get(1));
+            username_3.setText(othersPlayersNick.get(2));
+
+            nicknameToPosition.put(othersPlayersNick.get(0) , 1);
+            nicknameToPosition.put(othersPlayersNick.get(1) , 2);
+            nicknameToPosition.put(othersPlayersNick.get(2) , 3);
+
+            positionToNickname.put(1, othersPlayersNick.get(0));
+            positionToNickname.put(2, othersPlayersNick.get(1));
+            positionToNickname.put(3, othersPlayersNick.get(2));
+        }
     }
 }

@@ -55,6 +55,12 @@ public class Controller {
             for(int i=0; i<players.size(); i++){
                 startGame(i);
                 view.initializeGameBoard(players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck());
+                view.initialInfo(players.get(i), players.size(), players);
+
+                for(String player: players){
+                    if(!player.equals(players.get(i)))
+                        view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard().getStorage(), null, player);
+                }
             }
             while(!isEnd){
                 for(int i=0; i<players.size();i++){
@@ -149,19 +155,19 @@ public class Controller {
             switch (resource) {
                 case 1:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
                 case 2:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
                 case 3:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
                 case 4:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
             }
         } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {

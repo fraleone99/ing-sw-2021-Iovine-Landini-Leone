@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
@@ -78,6 +79,7 @@ public class GUI extends Application implements View {
 
     private String IP;
     private int portNumber;
+    private String nickname;
 
     private boolean isMyTurn = false;
 
@@ -435,11 +437,13 @@ public class GUI extends Application implements View {
 
     @Override
     public void printStorage(StorageInfo storageInfo) {
+        //System.out.println("storge  of" + storageInfo.getNickname() + " I am" + nickname);
         Platform.runLater(()-> gameSceneController.updateStorage(storageInfo));
     }
 
     @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
+        //System.out.println("storge  of" + storageInfo.getNickname() + " I am" + nickname);
         Platform.runLater(()-> gameSceneController.updateStorage(storageInfo));
     }
 
@@ -575,8 +579,18 @@ public class GUI extends Application implements View {
         gameSceneController.updateLeaderCards(leaderCards);
     }
 
+    @Override
+    public void playersInfo(PlayersInfo playersInfo) {
+       Platform.runLater(()->gameSceneController.setupGameBoard(playersInfo));
+    }
+
 
     public void setNickname(String s) {
+        this.nickname = s;
         gameSceneController.setNicknameLabel(s);
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

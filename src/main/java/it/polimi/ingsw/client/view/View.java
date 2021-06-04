@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
+import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
@@ -109,4 +110,6 @@ public interface View {
     void waitForYourTurn();
 
     void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards);
+
+    void playersInfo(PlayersInfo playersInfo);
 }

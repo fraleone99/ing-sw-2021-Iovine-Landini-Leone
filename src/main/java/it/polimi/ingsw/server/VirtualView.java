@@ -153,10 +153,10 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void seeStorage(String nickname, Storage storage, Vault vault) {
+    public void seeStorage(String nickname, Storage storage, Vault vault, String storageOwner) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new StorageInfo(storage, vault, nickname));
+        client.send(new StorageInfo(storage, vault, storageOwner));
     }
 
 
@@ -574,8 +574,17 @@ public class VirtualView extends VirtualViewObservable {
 
     public void initializeGameBoard(String nickname, Market market, ArrayList<Integer> idCards, ArrayList<Integer> leader) {
         ClientHandler client=namesToClient.get(nickname);
-
         client.send(new InitializeGameBoard(market, idCards, leader));
+
+    }
+
+    public void initialInfo(String nickname, int playerNumber, ArrayList<String> nicknames){
+        PlayersInfo playersInfo = new PlayersInfo(playerNumber);
+        for(String nick: nicknames){
+            playersInfo.addNick(nick);
+        }
+        ClientHandler client = namesToClient.get(nickname);
+        client.send(playersInfo);
     }
 
 

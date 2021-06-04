@@ -6,10 +6,7 @@ import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.Pong;
 import it.polimi.ingsw.server.answer.finalanswer.Lose;
 import it.polimi.ingsw.server.answer.finalanswer.Win;
-import it.polimi.ingsw.server.answer.infoanswer.ActionTokenInfo;
-import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.initialanswer.Connection;
 import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
 import it.polimi.ingsw.server.answer.request.RequestDoubleInt;
@@ -192,6 +189,9 @@ public class NetworkHandler implements Runnable, Handler {
         }
         else if (inputObj instanceof InitialSetup) {
             view.waitForYourTurn();
+        }
+        else if (inputObj instanceof PlayersInfo){
+            view.playersInfo((PlayersInfo) inputObj);
         }
         else {
             if (inputObj instanceof PassLeaderCard) {

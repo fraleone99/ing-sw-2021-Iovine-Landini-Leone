@@ -48,7 +48,7 @@ public class TurnController {
         for (String s : players) {
             view.seeFaithPath(players.get(player), s, game.getPlayer(s).getPlayerDashboard().getFaithPath(), players.size() == 1);
             view.seeStorage(players.get(player), game.getPlayer(s).getPlayerDashboard().getStorage(),
-                    game.getPlayer(s).getPlayerDashboard().getVault());
+                    game.getPlayer(s).getPlayerDashboard().getVault(), s);
             view.seeDevCardsSpace(players.get(player), game.getPlayer(s).getPlayerDashboard().getDevCardsSpace());
         }
     }
@@ -241,9 +241,8 @@ public class TurnController {
      * @param type is the number corresponding to the the type of the production that the player decided to activate
      * @throws NotExistingPlayerException if the selected player doesn't exists
      * @throws InterruptedException is due to multithreading message send
-     * @throws InvalidChoiceException if the choice is invalid
      */
-    public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException, InvalidChoiceException {
+    public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
 
@@ -309,9 +308,8 @@ public class TurnController {
      * @param space is the development card space where the player want to place the selected card
      * @throws InvalidChoiceException if the choice is invalid
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public void buyCard(int player, int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+    public void buyCard(int player, int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException {
         CardColor cardColor;
 
         switch (color) {
@@ -403,7 +401,7 @@ public class TurnController {
                         ((StorageLeader) game.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     } else {
                         game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
-                        view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+                        view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
 
                     }
                     toPlace.remove(choice.get(0) - 1);
@@ -433,7 +431,7 @@ public class TurnController {
 
             try {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
-                view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null);
+                view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
             } catch (NotEnoughSpaceException e) {
                 view.sendErrorMessage(players.get(player));
             }

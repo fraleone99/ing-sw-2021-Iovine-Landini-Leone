@@ -51,7 +51,7 @@
             <ImageView fx:id="secondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-      <Pane fx:id="currentPlayerThirdShelf" layoutX="523.0" layoutY="652.0" prefHeight="18.0" prefWidth="69.0">
+      <Pane fx:id="currentPlayerThirdShelf" layoutX="512.0" layoutY="657.0" prefHeight="18.0" prefWidth="69.0">
          <children>
             <ImageView fx:id="firstResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="secondResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
@@ -127,5 +127,242 @@
       <RadioButton fx:id="end_turn" layoutX="1087.0" layoutY="531.0" mnemonicParsing="false" text="End Turn" toggleGroup="$TurnType_group" />
       <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="40.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
+      <Group layoutX="105.0" layoutY="111.0">
+         <children>
+            <ImageView fx:id="player1_1_1" fitHeight="18.0" fitWidth="14.0" layoutX="15.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player1_2_1" fitHeight="18.0" fitWidth="14.0" layoutX="8.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player1_2_2" fitHeight="18.0" fitWidth="14.0" layoutX="22.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player1_3_1" fitHeight="18.0" fitWidth="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player1_3_2" fitHeight="18.0" fitWidth="14.0" layoutX="15.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player1_3_3" fitHeight="18.0" fitWidth="14.0" layoutX="29.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group layoutX="605.0" layoutY="111.0">
+         <children>
+            <ImageView fx:id="player2_1_1" fitHeight="18.0" fitWidth="14.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player2_2_1" fitHeight="18.0" fitWidth="14.0" layoutX="7.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player2_2_2" fitHeight="18.0" fitWidth="14.0" layoutX="21.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player2_3_1" fitHeight="18.0" fitWidth="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player2_3_2" fitHeight="18.0" fitWidth="14.0" layoutX="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player2_3_3" fitHeight="18.0" fitWidth="14.0" layoutX="28.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group layoutX="1101.0" layoutY="111.0">
+         <children>
+            <ImageView fx:id="player3_1_1" fitHeight="18.0" fitWidth="14.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player3_2_1" fitHeight="18.0" fitWidth="14.0" layoutX="7.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player3_2_2" fitHeight="18.0" fitWidth="14.0" layoutX="21.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player3_3_1" fitHeight="18.0" fitWidth="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player3_3_2" fitHeight="18.0" fitWidth="14.0" layoutX="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="player3_3_3" fitHeight="18.0" fitWidth="14.0" layoutX="28.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Label fx:id="username_1" layoutX="84.0" layoutY="266.0" prefHeight="18.0" prefWidth="164.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="username_2" layoutX="578.0" layoutY="266.0" prefHeight="18.0" prefWidth="183.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="username_3" layoutX="1080.0" layoutY="266.0" prefHeight="18.0" prefWidth="146.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="489.0" layoutY="709.0">
+         <children>
+            <ImageView fitHeight="18.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/COIN.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="22.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SHIELD.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="22.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/STONE.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="22.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SERVANT.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="30.0" layoutX="18.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="30.0" layoutX="18.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="30.0" layoutX="18.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="30.0" layoutX="18.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="vault_coinAmount" layoutX="44.0" text="0" textFill="WHITE" />
+            <Label fx:id="vault_shieldAmount" layoutX="44.0" layoutY="18.0" text="0" textFill="WHITE" />
+            <Label fx:id="vault_stoneAmount" layoutX="44.0" layoutY="36.0" text="0" textFill="WHITE" />
+            <Label fx:id="vault_servantAmount" layoutX="44.0" layoutY="54.0" text="0" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="player1_vault" layoutX="84.0" layoutY="186.0" prefHeight="72.0" prefWidth="72.0">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/COIN.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SHIELD.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/STONE.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SERVANT.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="18.0" layoutX="18.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="9.0" fitWidth="18.0" layoutX="18.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="9.0" fitWidth="17.0" layoutX="18.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="18.0" layoutX="18.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="player1_coinAmount" layoutX="36.0" layoutY="-1.0" prefHeight="16.0" prefWidth="28.0" text="0" textFill="WHITE" />
+            <Label fx:id="player1_shieldAmount" layoutX="36.0" layoutY="15.0" text="0" textFill="WHITE" />
+            <Label fx:id="player1_stoneAmount" layoutX="36.0" layoutY="33.0" text="0" textFill="WHITE" />
+            <Label fx:id="player1_servantAmount" layoutX="36.0" layoutY="49.0" text="0" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="player3_vault" layoutX="1080.0" layoutY="186.0" prefHeight="72.0" prefWidth="72.0">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/COIN.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SHIELD.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/STONE.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SERVANT.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="18.0" layoutX="17.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="9.0" fitWidth="18.0" layoutX="18.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="9.0" fitWidth="17.0" layoutX="18.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="18.0" layoutX="18.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="player3_coinAmount" layoutX="36.0" layoutY="-1.0" prefHeight="16.0" prefWidth="28.0" text="0" textFill="WHITE" />
+            <Label fx:id="player3_shieldAmount" layoutX="36.0" layoutY="15.0" text="0" textFill="WHITE" />
+            <Label fx:id="player3_stoneAmount" layoutX="36.0" layoutY="33.0" text="0" textFill="WHITE" />
+            <Label fx:id="player3_servantAmount" layoutX="36.0" layoutY="49.0" text="0" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="player2_vault" layoutX="582.0" layoutY="186.0" prefHeight="72.0" prefWidth="72.0">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/COIN.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SHIELD.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/STONE.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/SERVANT.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="18.0" layoutX="18.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="9.0" fitWidth="18.0" layoutX="18.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="9.0" fitWidth="17.0" layoutX="18.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="14.0" fitWidth="18.0" layoutX="18.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/multiplication_symbol.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="player2_coinAmount" layoutX="36.0" layoutY="-1.0" prefHeight="16.0" prefWidth="28.0" text="0" textFill="WHITE" />
+            <Label fx:id="player2_shieldAmount" layoutX="36.0" layoutY="15.0" text="0" textFill="WHITE" />
+            <Label fx:id="player2_stoneAmount" layoutX="36.0" layoutY="33.0" text="0" textFill="WHITE" />
+            <Label fx:id="player2_servantAmount" layoutX="36.0" layoutY="49.0" text="0" textFill="WHITE" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

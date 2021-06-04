@@ -23,6 +23,8 @@ public class StorageInfo implements Answer {
     private final int stoneAmount;
     private final int shieldsAmount;
 
+    private boolean vaultUpdate;
+
 
     @Override
     public Object getMessage() {
@@ -46,7 +48,10 @@ public class StorageInfo implements Answer {
             servantsAmount=-1;
             stoneAmount=-1;
             shieldsAmount=-1;
+            vaultUpdate = false;
         }
+
+        this.nickname = nickname;
     }
 
     public Resource getShelf1Type() {
@@ -91,5 +96,9 @@ public class StorageInfo implements Answer {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public boolean isVaultUpdate() {
+        return vaultUpdate;
     }
 }
