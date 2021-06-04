@@ -313,7 +313,7 @@ public class GUI extends Application implements View {
             Platform.runLater(()->changeStage(LOCAL_GAME));
         }
 
-        if(message.equals("INVALID")) {
+        if(message.equals("INVALID") || message.equals("Invalid choice.")) {
             Platform.runLater(() -> {
                 gameSceneController.invalidChoice();
                 gameSceneController.askTurn();
@@ -377,12 +377,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void activeLeader(ActiveLeader message) {
-
+        Platform.runLater(() -> gameSceneController.activeLeader());
     }
 
     @Override
     public void discardLeader(DiscardLeader message) {
-
+        Platform.runLater( () -> gameSceneController.discardLeader());
     }
 
     public void changeGameBoard() {
@@ -469,7 +469,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void resetCard(int pos) {
-
+        gameSceneController.resetCard(pos);
     }
 
     @Override
@@ -562,10 +562,16 @@ public class GUI extends Application implements View {
 
     @Override
     public void setIsMyTurn(boolean isMyTurn) {
-       if(isMyTurn)
-           gameSceneController.isMyTurn();
-       else
-           gameSceneController.notMyTurn();
+       if(isMyTurn) {
+           Platform.runLater(() ->
+                   gameSceneController.isMyTurn()
+           );
+       }
+       else {
+           Platform.runLater(() ->
+                   gameSceneController.notMyTurn()
+           );
+       }
     }
 
     @Override

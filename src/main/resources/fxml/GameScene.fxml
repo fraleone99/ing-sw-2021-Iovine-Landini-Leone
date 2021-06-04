@@ -125,8 +125,23 @@
          </font>
       </Label>
       <RadioButton fx:id="end_turn" layoutX="1087.0" layoutY="531.0" mnemonicParsing="false" text="End Turn" toggleGroup="$TurnType_group" />
-      <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="40.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="40.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="message" alignment="CENTER" layoutX="377.0" layoutY="312.0" opacity="0.0" prefHeight="47.0" prefWidth="838.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="active2" alignment="CENTER" layoutX="240.0" layoutY="770.0" opacity="0.0" prefHeight="26.0" prefWidth="180.0" text="ACTIVE" textFill="#096b3e" underline="true">
+         <font>
+            <Font name="Century" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="active1" alignment="CENTER" layoutX="40.0" layoutY="770.0" opacity="0.0" prefHeight="26.0" prefWidth="180.0" text="ACTIVE" textFill="#077b45" underline="true" AnchorPane.topAnchor="770.0">
+         <font>
+            <Font name="Century" size="17.0" />
+         </font>
+      </Label>
       <Group layoutX="105.0" layoutY="111.0">
          <children>
             <ImageView fx:id="player1_1_1" fitHeight="18.0" fitWidth="14.0" layoutX="15.0" pickOnBounds="true" preserveRatio="true" />

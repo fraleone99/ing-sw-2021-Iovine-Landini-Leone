@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
+import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -91,6 +93,11 @@ public class GameSceneController {
     @FXML Label see;
     @FXML Label invalid;
     @FXML public RadioButton end_turn;
+    @FXML Label message;
+    @FXML Label active1;
+    @FXML Label active2;
+
+    ArrayList<Integer> leaderCards = new ArrayList<>();
 
     private GUI gui;
 
@@ -103,7 +110,6 @@ public class GameSceneController {
 
 
     public void setGui(GUI gui) {
-
         this.gui = gui;
 
         resourceToPathMap.put(Resource.COIN, "/graphics/COIN.PNG");
@@ -146,6 +152,8 @@ public class GameSceneController {
 
 
     public void notMyTurn() {
+        message.setText("IT'S NOT YOUR TURN!");
+        message.setOpacity(1);
         toSee_market.setDisable(false);
         toSee_nothing.setDisable(true);
         toSee_nothing.setOpacity(0);
@@ -169,6 +177,8 @@ public class GameSceneController {
     }
 
     public void isMyTurn() {
+        message.setText("IT'S YOUR TURN!");
+        message.setOpacity(1);
         toSee_nothing.setOpacity(1);
         ok_turnType.setDisable(true);
         ok_turnType.setOpacity(1);
@@ -222,6 +232,7 @@ public class GameSceneController {
             if (selectedRadioButton != null) {
                 gui.getHandler().send(new SendInt(TurnType.toInteger(turnType.get())));
                 noActionSelectedLabel.setOpacity(0);
+                invalid.setOpacity(0);
             } else {
                 noActionSelectedLabel.setOpacity(1);
                 askTurn();
@@ -287,6 +298,81 @@ public class GameSceneController {
         }
     }
 
+    public void discardLeader() {
+        message.setText("Press on the leader card that you want to discard.");
+        message.setOpacity(1);
+        leader1.setDisable(false);
+        leader2.setDisable(false);
+        leader1.setOnMouseClicked(event -> {
+            if(leader1.getOpacity()==1) {
+                gui.readMessage("INVALID");
+                gui.getHandler().send(new SendInt(3));
+            } else {
+                gui.getHandler().send(new SendInt(1));
+                leader1.setOpacity(0);
+            }
+            message.setOpacity(0);
+            leader1.setDisable(true);
+            leader2.setDisable(true);
+        });
+        leader2.setOnMouseClicked(event -> {
+            if(leader2.getOpacity()==1) {
+                gui.readMessage("INVALID");
+                gui.getHandler().send(new SendInt(3));
+            } else {
+                gui.getHandler().send(new SendInt(2));
+                leader2.setOpacity(0);
+            }
+            message.setOpacity(0);
+            leader1.setDisable(true);
+            leader2.setDisable(true);
+        });
+    }
+
+    public void activeLeader() {
+        message.setText("Press on the leader card that you want to activate.");
+        message.setOpacity(1);
+        leader1.setDisable(false);
+        leader2.setDisable(false);
+        leader1.setOnMouseClicked(event -> {
+            if(leader1.getOpacity()==0) {
+                gui.readMessage("INVALID");
+                gui.getHandler().send(new SendInt(3));
+            } else {
+                gui.getHandler().send(new SendInt(1));
+                active1.setOpacity(1);
+                leader1.setOpacity(1);
+            }
+            message.setOpacity(0);
+            leader1.setDisable(true);
+            leader2.setDisable(true);
+        });
+        leader2.setOnMouseClicked(event -> {
+            if(leader2.getOpacity()==0) {
+                gui.readMessage("INVALID");
+                gui.getHandler().send(new SendInt(3));
+            } else {
+                gui.getHandler().send(new SendInt(2));
+                active2.setOpacity(1);
+                leader2.setOpacity(1);
+            }
+            message.setOpacity(0);
+            leader1.setDisable(true);
+            leader2.setDisable(true);
+        });
+    }
+
+    public void resetCard(int pos) {
+        if(leaderCards.get(0)==pos) {
+            leader1.setOpacity(0.5);
+            active1.setOpacity(0);
+        }
+        if(leaderCards.get(1)==pos) {
+            leader2.setOpacity(0.5);
+            active2.setOpacity(0);
+        }
+    }
+
     public void updateStorage(StorageInfo storageInfo){
 
         if(storageInfo.getNickname().equals(gui.getNickname())){
@@ -321,6 +407,7 @@ public class GameSceneController {
 
 
     public void updateLeaderCards(ArrayList<Integer> cards) {
+        leaderCards.addAll(cards);
         leader1.setImage(new Image("/graphics/" + cards.get(0) + ".png"));
         leader2.setImage(new Image("/graphics/" + cards.get(1) + ".png"));
     }

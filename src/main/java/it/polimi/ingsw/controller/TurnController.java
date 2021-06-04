@@ -163,6 +163,7 @@ public class TurnController {
             switch (turnType) {
                 case ACTIVE_LEADER:
                     pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    if(pos==3) break;
                     try {
                         activeLeader(player, pos);
                     } catch (InvalidChoiceException e) {
@@ -173,6 +174,7 @@ public class TurnController {
 
                 case DISCARD_LEADER:
                     pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    if(pos==3) break;
                     try {
                         discardLeader(player, pos);
                         ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
