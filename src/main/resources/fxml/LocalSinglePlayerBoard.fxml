@@ -33,13 +33,13 @@
         <Pane fx:id="currentPlayerSecondShelf" layoutX="534.0" layoutY="614.0" prefHeight="18.0" prefWidth="47.0">
             <children>
                 <ImageView fx:id="firstResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="SecondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="secondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </Pane>
         <Pane fx:id="currentPlayerThirdShelf" layoutX="523.0" layoutY="652.0" prefHeight="18.0" prefWidth="69.0">
             <children>
                 <ImageView fx:id="firstResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="SecondResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="secondResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="thirdResourcesThirdShelf" fitHeight="18.0" fitWidth="22.0" layoutX="44.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </Pane>
@@ -78,12 +78,12 @@
         </Group>
         <Pane fx:id="faithPath_1" layoutX="532.0" layoutY="482.0" prefHeight="26.0" prefWidth="30.0" />
         <Label fx:id="usernameLabel" layoutX="907.0" layoutY="383.0" prefHeight="34.0" prefWidth="130.0" text="USERNAME" />
-        <Label layoutX="558.0" layoutY="292.0" text="WHAT DO YOU WANT TO SEE?">
+        <Label fx:id="see" layoutX="558.0" layoutY="292.0" text="WHAT DO YOU WANT TO SEE?">
             <font>
                 <Font size="28.0" />
             </font>
         </Label>
-        <Label layoutX="1076.0" layoutY="473.0" prefHeight="50.0" prefWidth="345.0" text="What do you want to do in this turn?">
+        <Label fx:id="turn" layoutX="1076.0" layoutY="473.0" prefHeight="50.0" prefWidth="345.0" text="What do you want to do in this turn?">
             <font>
                 <Font size="19.0" />
             </font>
@@ -104,10 +104,23 @@
         <Button fx:id="ok_turnType" layoutX="1120.0" layoutY="639.0" mnemonicParsing="false" text="OK" />
         <Button fx:id="toSee_nothing" layoutX="927.0" layoutY="348.0" mnemonicParsing="false" text="NOTHING" />
         <Label fx:id="noActionSelectedLabel" layoutX="1122.0" layoutY="691.0" opacity="0.0" text="Select an action" />
-      <ImageView fitHeight="247.0" fitWidth="592.0" layoutX="486.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+        <Label fx:id="invalid" layoutX="1249.0" layoutY="564.0" prefHeight="66.0" prefWidth="124.0" text="INVALID CHOICE" textFill="#e41717" wrapText="true">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <RadioButton fx:id="end_turn" layoutX="1087.0" layoutY="531.0" mnemonicParsing="false" text="End Turn" toggleGroup="$TurnType_group" />
+        <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="40.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fitHeight="247.0" fitWidth="592.0" layoutX="486.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/faithpath.png" />
          </image>
       </ImageView>
+      <Pane fx:id="actionToken" layoutX="136.0" layoutY="185.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="actionTokenPrint" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

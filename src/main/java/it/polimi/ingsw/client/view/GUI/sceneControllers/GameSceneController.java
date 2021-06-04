@@ -1,12 +1,18 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
+import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.singleplayer.ActionToken;
+import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
+import it.polimi.ingsw.model.singleplayer.DeleteCard;
+import it.polimi.ingsw.server.answer.infoanswer.ActionTokenInfo;
 import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import javafx.application.Platform;
@@ -93,6 +99,7 @@ public class GameSceneController {
     @FXML Label see;
     @FXML Label invalid;
     @FXML public RadioButton end_turn;
+    @FXML private ImageView actionTokenPrint;
     @FXML Label message;
     @FXML Label active1;
     @FXML Label active2;
@@ -102,6 +109,7 @@ public class GameSceneController {
     private GUI gui;
 
     private Map<Resource, String> resourceToPathMap = new HashMap<>();
+    private Map<CardColor, String> actionTokenDeleteCardToPathMap = new HashMap<>();
 
     private int playersNumber;
     private ArrayList<String> othersPlayersNick = new ArrayList<>();
@@ -117,6 +125,10 @@ public class GameSceneController {
         resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.PNG");
         resourceToPathMap.put(Resource.STONE, "/graphics/STONE.PNG");
 
+        actionTokenDeleteCardToPathMap.put(CardColor.YELLOW, "/graphics/mainScene/ActionToken/DeleteCardYellow.png");
+        actionTokenDeleteCardToPathMap.put(CardColor.GREEN, "/graphics/mainScene/ActionToken/DeleteCardGreen.png");
+        actionTokenDeleteCardToPathMap.put(CardColor.BLUE, "/graphics/mainScene/ActionToken/DeleteCardBlue.png");
+        actionTokenDeleteCardToPathMap.put(CardColor.PURPLE, "/graphics/mainScene/ActionToken/DeleteCardPurple.png");
     }
 
 
@@ -444,6 +456,19 @@ public class GameSceneController {
         invalid.setOpacity(1);
     }
 
+    public void updateActionToken(ActionToken actionToken){
+        if(actionToken instanceof BlackCrossMover) {
+            if(((BlackCrossMover) actionToken).haveToBeShuffled()){
+                actionTokenPrint.setImage(new Image("/graphics/mainScene/ActionToken/BlackCrossMover1.png"));
+            } else {
+                actionTokenPrint.setImage(new Image("/graphics/mainScene/ActionToken/BlackCrossMover2.png"));
+            }
+        } else {
+            actionTokenPrint.setImage(new Image(actionTokenDeleteCardToPathMap.get(((DeleteCard) actionToken).getColorType())));
+        }
+    }
+
+
 
     public void setupGameBoard(PlayersInfo playersInfo) {
         this.playersNumber = playersInfo.getPlayersNumber();
@@ -454,7 +479,10 @@ public class GameSceneController {
             }
         }
 
-        if(playersNumber == 2){
+        if(playersNumber == 1) {
+            return;
+        }
+        else if(playersNumber == 2){
             player2Board.setOpacity(0.4);
             player2_vault.setOpacity(0.4);
             player3Board.setOpacity(0.4);

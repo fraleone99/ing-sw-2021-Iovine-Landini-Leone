@@ -82,6 +82,7 @@ public class GUI extends Application implements View {
     private String nickname;
 
     private boolean isMyTurn = false;
+    private boolean isSinglePlayer=false;
 
     public static void main(String[] args) {
         launch(args);
@@ -306,7 +307,21 @@ public class GUI extends Application implements View {
         }
 
         if(message.equals("The game start!")){
-            Platform.runLater(()-> changeStage(GAME));
+            if(isSinglePlayer){
+                FXMLLoader localGame = new FXMLLoader(getClass().getResource("/fxml/LocalSinglePlayerBoard.fxml"));
+                try {
+                    LocalGameScene = new Scene(localGame.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                gameSceneController = localGame.getController();
+                gameSceneController.setGui(this);
+                sceneMap.put(GAME, LocalGameScene);
+
+                Platform.runLater(()->changeStage(LOCAL_GAME));
+            } else {
+                Platform.runLater(()-> changeStage(GAME));
+            }
         }
 
         if(message.equals("The game start!\n")){
@@ -454,7 +469,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void printActionToken(ActionToken actionToken) {
-
+        Platform.runLater(()-> gameSceneController.updateActionToken(actionToken));
     }
 
     @Override
@@ -562,16 +577,19 @@ public class GUI extends Application implements View {
 
     @Override
     public void setIsMyTurn(boolean isMyTurn) {
-       if(isMyTurn) {
-           Platform.runLater(() ->
-                   gameSceneController.isMyTurn()
-           );
-       }
-       else {
-           Platform.runLater(() ->
-                   gameSceneController.notMyTurn()
-           );
-       }
+        if(isSinglePlayer){
+            return;
+        }
+        else if(isMyTurn) {
+            Platform.runLater(() ->
+                    gameSceneController.isMyTurn()
+            );
+        }
+        else {
+            Platform.runLater(() ->
+                    gameSceneController.notMyTurn()
+            );
+        }
     }
 
     @Override
@@ -587,7 +605,10 @@ public class GUI extends Application implements View {
 
     @Override
     public void playersInfo(PlayersInfo playersInfo) {
-       Platform.runLater(()->gameSceneController.setupGameBoard(playersInfo));
+        if(playersInfo.getPlayersNumber()==1){
+            isSinglePlayer=true;
+        }
+        Platform.runLater(()->gameSceneController.setupGameBoard(playersInfo));
     }
 
 

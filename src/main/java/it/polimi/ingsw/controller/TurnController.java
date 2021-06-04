@@ -227,6 +227,10 @@ public class TurnController {
                 pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
                 try {
                     discardLeader(player, pos);
+                    ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                    if(!nick.isEmpty()) {
+                        view.papalPawn(nick);
+                    }
                 } catch (InvalidChoiceException e) {
                     view.sendErrorMessage(players.get(player));
                     view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());

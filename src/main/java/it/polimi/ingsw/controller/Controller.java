@@ -53,9 +53,10 @@ public class Controller {
                 view.sendTurnStatus("END", players.get(i));
             }
             for(int i=0; i<players.size(); i++){
+                view.initialInfo(players.get(i), players.size(), players);
                 startGame(i);
                 view.initializeGameBoard(players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck());
-                view.initialInfo(players.get(i), players.size(), players);
+                //view.initialInfo(players.get(i), players.size(), players);
 
                 for(String player: players){
                     if(!player.equals(players.get(i)))

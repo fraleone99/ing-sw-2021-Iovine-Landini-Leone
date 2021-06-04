@@ -44,6 +44,7 @@ public class LocalSPController {
     private final ArrayList<String> players=new ArrayList<>();
     private boolean isEnd=false;
     private final HandlerSP handler;
+    private boolean Catch=false;
 
     /**
      * LocalSPController constructor: creates a new instance of LocalSPController
@@ -75,6 +76,7 @@ public class LocalSPController {
             localDiscardFirstLeader();
 
             handler.handleClient(new SendMessage("The game start!\n"));
+            handler.handleClient(new InitializeGameBoard(gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
 
             while(!isEnd) {
                 localSeePlayerDashboard();
@@ -133,10 +135,12 @@ public class LocalSPController {
     public void localDiscardFirstLeader() throws NotExistingPlayerException {
         int card;
 
+        handler.handleClient(new SendMessage("Please choose the first leader card to discard."));
         handler.handleClient(new PassLeaderCard(gameModel.getPlayers().get(0).getLeaders().IdDeck()));
         card=getAnswer();
         gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().remove(card-1);
 
+        handler.handleClient(new SendMessage("Please choose the second leader card to discard."));
         handler.handleClient(new PassLeaderCard(gameModel.getPlayers().get(0).getLeaders().IdDeck()));
         card=getAnswer();
         gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().remove(card-1);
@@ -265,6 +269,7 @@ public class LocalSPController {
         int type;
 
         do{
+            if(Catch=true) Catch=false;
             handler.handleClient(new RequestInt("TURN","Choose what you want to do in this turn:"));
             answer=getAnswer();
             TurnType turnType = TurnType.fromInteger(answer);
@@ -305,13 +310,11 @@ public class LocalSPController {
                     break;
 
                 case BUY_DEVELOPMENT:
-                    handler.handleClient(new RequestInt("COLOR","Choose the color of the card you want to buy.\n1) Purple\n2) Yellow\n3) Blue\n4) Green"));
-                    int color = getAnswer();
-                    handler.handleClient(new RequestInt("LEVEL", "Choose the level of the card you want to buy"));
-                    int level = getAnswer();
+                    handler.handleClient(new RequestDoubleInt("DEVCARD", null, gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getDevCardsForGUI()));
+                    ArrayList<Integer> card=getDoubleInt();
                     handler.handleClient(new RequestInt("SPACE", "Choose the space where to insert the card"));
                     int space = getAnswer();
-                    localBuyCard(color, level, space);
+                    localBuyCard(card.get(0), card.get(1), space);
                     break;
 
                 case ACTIVE_PRODUCTION:
@@ -323,7 +326,9 @@ public class LocalSPController {
                     break;
 
             }
-        } while (answer==1 || answer==2);
+        } while (answer==1 || answer==2 || Catch);
+
+        Catch=false;
 
         handler.handleClient(new RequestInt("END","What do you want to do?\n1) Active Leader\n2) Discard Leader\n3) End turn"));
         answer=getAnswer();
@@ -529,8 +534,8 @@ public class LocalSPController {
             gameModel.getPlayer(players.get(0)).buyCard(card, space);
             gameModel.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
         } catch(InvalidSpaceCardException e) {
-            handler.handleClient(new SendMessage("Invalid choice."));
-            localChooseTurn();
+            handler.handleClient(new SendMessage("INVALID"));
+            Catch=true;
         }
     }
 
@@ -584,7 +589,7 @@ public class LocalSPController {
                 try {
                     if (gameModel.getPlayer(players.get(0)).getActivatedProduction().isEmpty()) {
                         handler.handleClient(new SendMessage("Invalid choice."));
-                        localChooseTurn();
+                        Catch=true;
                     } else {
                         gameModel.getPlayer(players.get(0)).doProduction();
                         ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
@@ -594,7 +599,7 @@ public class LocalSPController {
                     }
                 } catch (NotEnoughResourceException e) {
                     handler.handleClient(new SendMessage("Invalid choice."));
-                    localChooseTurn();
+                    Catch=true;
                 }
                 break;
         }
