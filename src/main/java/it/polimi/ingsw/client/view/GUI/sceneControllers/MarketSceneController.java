@@ -1,16 +1,30 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
+import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.model.enumeration.BallColor;
+import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
+import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +40,28 @@ public class MarketSceneController {
     @FXML public Button button_7;
     @FXML public Button back_button;
     @FXML public Button Use_button;
+    public ImageView resource_firstShelf;
+    public ImageView first_resource_secondShelf;
+    public ImageView second_resource_secondShelf;
+    public ImageView first_resource_thirdShelf;
+    public ImageView second_resource_thirdShelf;
+    public ImageView third_resource_thirdShelf;
+    public Button yes_reorganizeStorage;
+    public Button no_reorganizeStorage;
+    public CheckBox manage_firstShelf;
+    public CheckBox manage_secondShelf;
+    public CheckBox manage_thirdShelf;
+    public Label invertShelfError_label;
+    public Button ok_manageStorage;
+    public Label invertShelf_label;
+    public Group manageStorage_group;
+    public Group reorganizeQuestion_group;
+    @FXML public Group chosenBall_group;
+    public Pane firstShelf_pane;
+    public Pane secondShelf_pane;
+    public Pane thirdShelf_pane;
+    public Group shelves_group;
+    public Label selectShelf_label;
     @FXML ImageView im00;
     @FXML ImageView im01;
     @FXML ImageView im02;
@@ -39,11 +75,14 @@ public class MarketSceneController {
     @FXML ImageView im31;
     @FXML ImageView im32;
 
+    @FXML Group choiceShelf_group;
+
     ImageView[][] imageViewMatrix = new ImageView[3][4];
 
 
     private GUI gui;
     private Map<BallColor, String> ballColorPathMap = new HashMap<>();
+    private Map<Resource, String> resourceToPathMap = new HashMap<>();
 
 
     public void setGui(GUI gui) {
@@ -71,8 +110,10 @@ public class MarketSceneController {
         imageViewMatrix[2][2] = im22;
         imageViewMatrix[2][3] = im32;
 
-
-
+        resourceToPathMap.put(Resource.COIN, "/graphics/COIN.PNG");
+        resourceToPathMap.put(Resource.SERVANT, "/graphics/SERVANT.PNG");
+        resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.PNG");
+        resourceToPathMap.put(Resource.STONE, "/graphics/STONE.PNG");
     }
 
     public void updateMarket(Market market){
@@ -91,6 +132,10 @@ public class MarketSceneController {
     }
 
     public void seePhase() {
+        manageStorage_group.setOpacity(0);
+        reorganizeQuestion_group.setOpacity(0);
+        selectShelf_label.setOpacity(0);
+
         back_button.setOnAction(actionEvent -> {
             gui.changeGameBoard();
         });
@@ -103,6 +148,7 @@ public class MarketSceneController {
     }
 
     public void usePhase() {
+        reorganizeQuestion_group.setOpacity(0);
 
         button_1.setDisable(false);
         button_2.setDisable(false);
@@ -125,5 +171,174 @@ public class MarketSceneController {
         button_6.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(6)));
 
         button_7.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(7)));
+    }
+
+    public void storage( StorageInfo storageInfo){
+        //first shelf
+        if(storageInfo.getShelf1Amount() == 0){
+            resource_firstShelf.setImage(null);
+        }
+        else{
+            resource_firstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf1Type())));
+        }
+
+
+        //second shelf
+        if(storageInfo.getShelf2Amount() == 0){
+            first_resource_secondShelf.setImage(null);
+            second_resource_secondShelf.setImage(null);
+        }
+        else{
+            if(storageInfo.getShelf2Amount() > 1){
+                first_resource_secondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+                second_resource_secondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+            }
+            else{
+                first_resource_secondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
+                second_resource_secondShelf.setImage(null);
+            }
+        }
+
+        //third shelf
+        if(storageInfo.getShelf3Amount() == 0){
+            first_resource_thirdShelf.setImage(null);
+            second_resource_thirdShelf.setImage(null);
+            third_resource_thirdShelf.setImage(null);
+        }
+        else if(storageInfo.getShelf3Amount() == 1){
+            first_resource_thirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            second_resource_thirdShelf.setImage(null);
+            third_resource_thirdShelf.setImage(null);
+        }
+        else if(storageInfo.getShelf3Amount() == 2){
+            first_resource_thirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            second_resource_thirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            third_resource_thirdShelf.setImage(null);
+        }
+        else if(storageInfo.getShelf3Amount() == 3){
+            first_resource_thirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            second_resource_thirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+            third_resource_thirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
+        }
+
+    }
+
+    public void manageStorage() {
+        reorganizeQuestion_group.setOpacity(1);
+        manageStorage_group.setOpacity(0);
+        back_button.setDisable(true);
+        selectShelf_label.setOpacity(0);
+
+        yes_reorganizeStorage.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(1)));
+
+        no_reorganizeStorage.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(2)));
+    }
+
+    public void moveShelves() {
+        reorganizeQuestion_group.setOpacity(0);
+        manageStorage_group.setOpacity(1);
+        invertShelfError_label.setOpacity(0);
+        for(Node node : choiceShelf_group.getChildren()){
+            ((CheckBox) node).setSelected(false);
+        }
+
+        ok_manageStorage.setOnAction(actionEvent -> {
+            System.out.println("ok pressed");
+            int selected = 0;
+            for(Node node : choiceShelf_group.getChildren()){
+                CheckBox checkBox = (CheckBox) node;
+                if(checkBox.isSelected())
+                    selected++;
+            }
+            if(selected!=2) {
+                System.out.println("error after ok");
+                invertShelfError_label.setOpacity(1);
+            }
+            else {
+                System.out.println("[DEBUG] valid choice for invert shelf");
+                if(manage_firstShelf.isSelected() && manage_secondShelf.isSelected()) {
+                    System.out.println("1,2");
+                    gui.getHandler().send(new SendDoubleInt(1, 2));
+                }
+                else if(manage_firstShelf.isSelected() && manage_thirdShelf.isSelected()) {
+                    System.out.println("1,3");
+                    gui.getHandler().send((new SendDoubleInt(1, 3)));
+                }
+                else if(manage_secondShelf.isSelected() && manage_thirdShelf.isSelected()) {
+                    System.out.println("2,3");
+                    gui.getHandler().send(new SendDoubleInt(2, 3));
+                }
+            }
+        });
+    }
+
+    public void seeBall(SeeBall ball) {
+        reorganizeQuestion_group.setOpacity(0);
+        selectShelf_label.setOpacity(0);
+        chosenBall_group.setDisable(false);
+
+        ImageView ballToSet;
+
+        int depth = 70;
+
+        DropShadow borderGlow= new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.RED);
+        borderGlow.setWidth(depth);
+        borderGlow.setHeight(depth);
+
+        DropShadow selectedGlow = new DropShadow();
+        selectedGlow.setOffsetY(0f);
+        selectedGlow.setOffsetX(0f);
+        selectedGlow.setColor(Color.GREEN);
+        selectedGlow.setWidth(depth);
+        selectedGlow.setHeight(depth);
+
+        for(int i = 0; i < chosenBall_group.getChildren().size(); i++) {
+            ballToSet = (ImageView) chosenBall_group.getChildren().get(i);
+            ballToSet.setImage(null);
+            ballToSet.setEffect(null);
+        }
+
+
+        for(int i = 0; i < ball.getBalls().size(); i++) {
+            ballToSet = (ImageView) chosenBall_group.getChildren().get(i);
+            ballToSet.setImage(new Image(ballColorPathMap.get(ball.getBalls().get(i).getType())));
+            ImageView finalBallToSet = ballToSet;
+
+            ballToSet.setOnMouseEntered(mouseEvent -> {
+                gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.HAND);
+                finalBallToSet.setEffect(borderGlow);
+            });
+
+            ballToSet.setOnMouseExited(mouseEvent -> {
+                gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.DEFAULT);
+                if(finalBallToSet.getEffect().equals(borderGlow))
+                    finalBallToSet.setEffect(null);
+            });
+
+
+            int finalI = i;
+            finalBallToSet.setOnMouseClicked(mouseEvent -> {
+                finalBallToSet.setEffect(selectedGlow);
+                gui.getHandler().send(new SendInt(finalI + 1 ));
+                chosenBall_group.setDisable(true);
+            });
+        }
+    }
+
+    public void chooseShelf() {
+        selectShelf_label.setOpacity(1);
+
+        for(int i = 0; i<3; i++){
+            Node n = shelves_group.getChildren().get(i);
+            n.setOnMouseEntered(mouseEvent -> gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.HAND));
+            n.setOnMouseExited(mouseEvent -> gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.DEFAULT));
+
+            int finalI = i;
+            n.setOnMouseClicked(mouseEvent -> gui.getHandler().send(new SendInt(finalI +1)));
+        }
+
     }
 }

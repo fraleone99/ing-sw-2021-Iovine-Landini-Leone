@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,10 +11,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.MarketSceneController">
    <children>
-      <ImageView fitHeight="850.0" fitWidth="1440.0" layoutY="-8.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" layoutY="-8.0" opacity="0.49" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
          </image>
@@ -53,7 +57,7 @@
             <ImageView fx:id="im32" fitHeight="92.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <ImageView fx:id="ramp" fitHeight="46.0" fitWidth="36.0" layoutX="887.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ramp" fitHeight="46.0" fitWidth="36.0" layoutX="684.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="button_1" disable="true" layoutX="314.0" layoutY="391.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
       <Button fx:id="button_2" disable="true" layoutX="395.0" layoutY="392.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="61.0" text="this" />
       <Button fx:id="button_3" disable="true" layoutX="479.0" layoutY="392.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
@@ -62,32 +66,70 @@
       <Button fx:id="button_6" disable="true" layoutX="627.0" layoutY="207.0" mnemonicParsing="false" text="this" />
       <Button fx:id="button_7" disable="true" layoutX="627.0" layoutY="288.0" mnemonicParsing="false" text="this" />
       <Button fx:id="back_button" layoutX="79.0" layoutY="55.0" mnemonicParsing="false" text="Back" />
-      <ImageView fx:id="choosenBall_1" fitHeight="76.0" fitWidth="82.0" layoutX="870.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="choosenBall_2" fitHeight="76.0" fitWidth="82.0" layoutX="952.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="choosenBall_3" fitHeight="76.0" fitWidth="82.0" layoutX="1034.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="choosenBall_4" fitHeight="76.0" fitWidth="82.0" layoutX="1116.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
+      <Group fx:id="chosenBall_group" layoutX="870.0" layoutY="184.0">
+         <children>
+            <ImageView fx:id="chosenBall_1" fitHeight="76.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="chosenBall_2" fitHeight="76.0" fitWidth="82.0" layoutX="82.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="chosenBall_3" fitHeight="76.0" fitWidth="82.0" layoutX="164.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="chosenBall_4" fitHeight="76.0" fitWidth="82.0" layoutX="246.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
       <ImageView fx:id="storage" fitHeight="320.0" fitWidth="304.0" layoutX="882.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/STORAGE.png" />
          </image>
       </ImageView>
-      <Pane fx:id="first_shelf" layoutX="1018.0" layoutY="406.0" prefHeight="39.0" prefWidth="72.0">
+      <Group fx:id="shelves_group" layoutX="984.0" layoutY="406.0">
          <children>
-            <ImageView fx:id="resource_firstShelf" fitHeight="39.0" fitWidth="41.0" layoutX="16.0" pickOnBounds="true" preserveRatio="true" />
+            <Pane fx:id="firstShelf_pane" layoutX="50.0">
+               <children>
+                  <ImageView fx:id="resource_firstShelf" fitHeight="39.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane fx:id="secondShelf_pane" layoutX="18.0" layoutY="71.0">
+               <children>
+                  <ImageView fx:id="first_resource_secondShelf" fitHeight="46.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="second_resource_secondShelf" fitHeight="46.0" fitWidth="41.0" layoutX="46.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane fx:id="thirdShelf_pane" layoutY="151.0">
+               <children>
+                  <ImageView fx:id="first_resource_thirdShelf" fitHeight="46.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="second_resource_thirdShelf" fitHeight="46.0" fitWidth="41.0" layoutX="43.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="third_resource_thirdShelf" fitHeight="46.0" fitWidth="41.0" layoutX="90.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
          </children>
-      </Pane>
-      <Pane fx:id="second" layoutX="980.0" layoutY="478.0" prefHeight="46.0" prefWidth="135.0">
+      </Group>
+      <Group fx:id="reorganizeQuestion_group" layoutX="857.0" layoutY="69.0">
          <children>
-            <ImageView fx:id="first_resource_secondShelf" fitHeight="46.0" fitWidth="41.0" layoutX="22.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="second_resource_secondShelf" fitHeight="46.0" fitWidth="41.0" layoutX="68.0" pickOnBounds="true" preserveRatio="true" />
+            <Label prefHeight="46.0" prefWidth="548.0" text="Do you want to reorganize the storage before using the market?">
+               <font>
+                  <Font name="Arial Black" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="yes_reorganizeStorage" layoutX="201.0" layoutY="54.0" mnemonicParsing="false" text="Yes" />
+            <Button fx:id="no_reorganizeStorage" layoutX="241.0" layoutY="54.0" mnemonicParsing="false" text="No" />
          </children>
-      </Pane>
-      <Pane fx:id="third_shelf" layoutX="980.0" layoutY="558.0" prefHeight="46.0" prefWidth="135.0">
+      </Group>
+      <Group fx:id="manageStorage_group" layoutX="1161.0" layoutY="271.0">
          <children>
-            <ImageView fx:id="first_resource_thirdShelf" fitHeight="46.0" fitWidth="41.0" layoutX="4.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="second_resource_thirdShelf" fitHeight="46.0" fitWidth="41.0" layoutX="47.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="third_resource_thirdShelf" fitHeight="46.0" fitWidth="41.0" layoutX="94.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
+            <Group fx:id="choiceShelf_group" layoutY="138.0">
+               <children>
+                  <CheckBox fx:id="manage_firstShelf" layoutX="1.0" mnemonicParsing="false" text="FIRST SHELF" />
+                  <CheckBox fx:id="manage_secondShelf" layoutY="87.0" mnemonicParsing="false" text="SECOND SHELF" />
+                  <CheckBox fx:id="manage_thirdShelf" layoutY="165.0" mnemonicParsing="false" text="THIRD SHELF" />
+               </children>
+            </Group>
+            <Label fx:id="invertShelf_label" layoutX="37.0" prefHeight="58.0" prefWidth="226.0" text="Please select the shelf that you want to invert" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="ok_manageStorage" layoutX="143.0" layoutY="221.0" mnemonicParsing="false" text="OK" />
+            <Label fx:id="invertShelfError_label" layoutX="9.0" layoutY="372.0" text="YOU CANNOT INVERT THE SELECTED SHELF" textFill="RED" />
          </children>
-      </Pane>
+      </Group>
+      <Label fx:id="selectShelf_label" layoutX="857.0" layoutY="292.0" text="Plese select the shelf on which you want to place the resource" />
    </children>
 </AnchorPane>

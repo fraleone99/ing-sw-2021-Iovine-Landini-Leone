@@ -229,6 +229,7 @@ public class GameSceneController {
         ok_turnType.setOnAction(actionEvent -> {
             if (turn_market.isSelected()) {
                 turnType.set(TurnType.MARKET);
+                gui.changeStage(GUI.MARKET);
             } else if (turn_buyDevelopment.isSelected()) {
                 turnType.set(TurnType.BUY_DEVELOPMENT);
             } else if (turn_activeProduction.isSelected()) {

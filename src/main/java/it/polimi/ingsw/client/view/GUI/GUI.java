@@ -82,6 +82,7 @@ public class GUI extends Application implements View {
     private String nickname;
 
     private boolean isMyTurn = false;
+    StorageInfo lastStorage;
     private boolean isSinglePlayer=false;
 
     public static void main(String[] args) {
@@ -401,8 +402,7 @@ public class GUI extends Application implements View {
     }
 
     public void changeGameBoard() {
-        Platform.runLater(()->
-                changeStage(GAME));
+        Platform.runLater(()-> changeStage(GAME));
     }
 
     @Override
@@ -424,6 +424,7 @@ public class GUI extends Application implements View {
         Platform.runLater(()->{
             changeStage(MARKET);
             marketSceneController.seePhase();
+            marketSceneController.storage(lastStorage);
         });
     }
 
@@ -453,13 +454,26 @@ public class GUI extends Application implements View {
     @Override
     public void printStorage(StorageInfo storageInfo) {
         //System.out.println("storge  of" + storageInfo.getNickname() + " I am" + nickname);
-        Platform.runLater(()-> gameSceneController.updateStorage(storageInfo));
+        Platform.runLater(()-> {
+            gameSceneController.updateStorage(storageInfo);
+        if(storageInfo.getNickname().equals(nickname)) {
+            lastStorage = storageInfo;
+            marketSceneController.storage(storageInfo);
+        }
+    });
     }
 
     @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
         //System.out.println("storge  of" + storageInfo.getNickname() + " I am" + nickname);
-        Platform.runLater(()-> gameSceneController.updateStorage(storageInfo));
+
+        Platform.runLater(()-> {
+            gameSceneController.updateStorage(storageInfo);
+            if(storageInfo.getNickname().equals(nickname)) {
+                lastStorage = storageInfo;
+                marketSceneController.storage(storageInfo);
+            }
+        });
     }
 
     @Override
@@ -474,12 +488,18 @@ public class GUI extends Application implements View {
 
     @Override
     public void ManageStorage(String message) {
-
+        Platform.runLater(()-> {
+            marketSceneController.storage(lastStorage);
+            marketSceneController.manageStorage();
+        });
     }
 
     @Override
     public void MoveShelves(String message) {
-
+        Platform.runLater(()->{
+            marketSceneController.storage(lastStorage);
+            marketSceneController.moveShelves();
+        });
     }
 
     @Override
@@ -489,7 +509,10 @@ public class GUI extends Application implements View {
 
     @Override
     public void useMarket(String message) {
-        marketSceneController.usePhase();
+        Platform.runLater(()-> {
+            marketSceneController.storage(lastStorage);
+            marketSceneController.usePhase();
+        });
     }
 
     @Override
@@ -499,12 +522,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void seeBall(SeeBall ball) {
-
+        Platform.runLater(()-> marketSceneController.seeBall(ball));
     }
 
     @Override
     public void chooseShelf() {
-
+        Platform.runLater(()-> marketSceneController.chooseShelf());
     }
 
     @Override
@@ -619,5 +642,9 @@ public class GUI extends Application implements View {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public Map<String, Scene> getSceneMap() {
+        return sceneMap;
     }
 }

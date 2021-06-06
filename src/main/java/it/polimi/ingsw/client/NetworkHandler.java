@@ -73,10 +73,10 @@ public class NetworkHandler implements Runnable, Handler {
     }
 
     public void send(Object message) {
-        /*System.out.println("[DEBUG] sending message to server." + message.toString());
-        if(message instanceof SendInt){
-            System.out.println("[DEBUG] Int: " + ((SendInt) message).getChoice());
-        }*/
+        //System.out.println("[DEBUG] sending message to server." + message.toString());
+        //if(message instanceof SendInt){
+            //System.out.println("[DEBUG] Int: " + ((SendInt) message).getChoice());
+        //}
         try {
             output.writeObject(message);
             output.flush();
@@ -170,6 +170,7 @@ public class NetworkHandler implements Runnable, Handler {
             if(((RequestDoubleInt) inputObj).getType().equals("DEVCARD")) {
                 view.askCardToBuy(((RequestDoubleInt) inputObj).getCards(), ((RequestDoubleInt) inputObj).getSpaces());
             } else {
+                //System.out.println("[DEBUG] Reading from server: Move shelves double int request");
                 view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
             }
         }
