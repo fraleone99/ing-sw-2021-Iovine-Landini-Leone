@@ -167,7 +167,7 @@ public class TurnController {
                     try {
                         activeLeader(player, pos);
                     } catch (InvalidChoiceException e) {
-                        view.sendErrorMessage(players.get(player));
+                        view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
                         view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                     }
                     break;
@@ -182,7 +182,7 @@ public class TurnController {
                             view.papalPawn(nick);
                         }
                     } catch (InvalidChoiceException e) {
-                        view.sendErrorMessage(players.get(player));
+                        view.sendErrorMessage(players.get(player), "DISCARD_LEADER");
                         view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                     }
                     break;
@@ -220,7 +220,7 @@ public class TurnController {
                 try {
                     activeLeader(player, pos);
                 } catch (InvalidChoiceException e) {
-                    view.sendErrorMessage(players.get(player));
+                    view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
                     view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                 }
             } else {
@@ -232,7 +232,7 @@ public class TurnController {
                         view.papalPawn(nick);
                     }
                 } catch (InvalidChoiceException e) {
-                    view.sendErrorMessage(players.get(player));
+                    view.sendErrorMessage(players.get(player), "DISCARD_LEADER");
                     view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                 }
             }
@@ -263,7 +263,7 @@ public class TurnController {
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionBase();
                 } catch (NotEnoughResourceException e) {
-                    view.sendErrorMessage(players.get(player));
+                    view.sendErrorMessage(players.get(player), "ACTIVE_BASE_PRODUCTION");
                 }
                 break;
 
@@ -272,7 +272,7 @@ public class TurnController {
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
-                    view.sendErrorMessage(players.get(player));
+                    view.sendErrorMessage(players.get(player), "ACTIVE_DEV_CARD");
                 }
                 break;
 
@@ -281,14 +281,14 @@ public class TurnController {
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionLeader(index);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
-                    view.sendErrorMessage(players.get(player));
+                    view.sendErrorMessage(players.get(player), "ACTIVE_PROD_LEADER");
                 }
                 break;
 
             case DO_PRODUCTION:
                 try {
                     if(game.getPlayer(players.get(player)).getActivatedProduction().isEmpty()) {
-                        view.sendErrorMessage(players.get(player));
+                        view.sendErrorMessage(players.get(player), "DO_PRODUCTION_INVALID");
                         Catch=true;
                     } else {
                     game.getPlayer(players.get(player)).doProduction();
@@ -298,7 +298,7 @@ public class TurnController {
                     }
                 }
             } catch (NotEnoughResourceException e) {
-                view.sendErrorMessage(players.get(player));
+                view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
                 Catch=true;
             }
                 break;
@@ -415,7 +415,7 @@ public class TurnController {
                     toPlace.clear();
                     toPlace.addAll(temp);
                 } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
-                    view.sendErrorMessage(players.get(player));
+                    view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
                 }
 
                 choice.clear();
@@ -439,7 +439,7 @@ public class TurnController {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
                 view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
             } catch (NotEnoughSpaceException e) {
-                view.sendErrorMessage(players.get(player));
+                view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
             }
 
 

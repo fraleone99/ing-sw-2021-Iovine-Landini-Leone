@@ -112,4 +112,6 @@ public interface View {
     void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards);
 
     void playersInfo(PlayersInfo playersInfo);
+
+    void errorHandling(String errorType);
 }

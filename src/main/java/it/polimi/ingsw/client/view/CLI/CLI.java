@@ -74,6 +74,11 @@ public class CLI implements View {
     }
 
     @Override
+    public void errorHandling(String errorType) {
+        System.out.println("Invalid input! Please try again");
+    }
+
+    @Override
     public void setIsMyTurn(boolean isMyTurn) {
         this.isMyTurn.set(isMyTurn);
     }

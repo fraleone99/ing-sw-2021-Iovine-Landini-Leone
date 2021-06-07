@@ -646,10 +646,9 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void sendErrorMessage(String nickname){
+    public void sendErrorMessage(String nickname, String errorType){
         ClientHandler client=namesToClient.get(nickname);
-
-        client.send(new SendMessage("Invalid choice."));
+        client.send(new ErrorMessage(errorType));
     }
 
     public void sendInvalidInput(String nickname) {

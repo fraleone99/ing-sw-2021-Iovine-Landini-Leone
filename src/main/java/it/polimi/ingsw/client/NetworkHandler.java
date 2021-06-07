@@ -194,6 +194,9 @@ public class NetworkHandler implements Runnable, Handler {
         else if (inputObj instanceof PlayersInfo){
             view.playersInfo((PlayersInfo) inputObj);
         }
+        else if(inputObj instanceof ErrorMessage){
+            view.errorHandling((String) ((ErrorMessage) inputObj).getMessage());
+        }
         else {
             if (inputObj instanceof PassLeaderCard) {
                 view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());
