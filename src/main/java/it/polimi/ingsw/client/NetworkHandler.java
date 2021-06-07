@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.Pong;
 import it.polimi.ingsw.server.answer.finalanswer.Lose;
@@ -196,6 +197,9 @@ public class NetworkHandler implements Runnable, Handler {
         }
         else if(inputObj instanceof ErrorMessage){
             view.errorHandling((String) ((ErrorMessage) inputObj).getMessage());
+        }
+        else if(inputObj instanceof MarketInfo){
+            view.UpdateMarket((Market) ((MarketInfo) inputObj).getMessage());
         }
         else {
             if (inputObj instanceof PassLeaderCard) {

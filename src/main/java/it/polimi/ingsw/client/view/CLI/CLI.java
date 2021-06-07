@@ -79,6 +79,11 @@ public class CLI implements View {
     }
 
     @Override
+    public void UpdateMarket(Market market) {
+
+    }
+
+    @Override
     public void setIsMyTurn(boolean isMyTurn) {
         this.isMyTurn.set(isMyTurn);
     }

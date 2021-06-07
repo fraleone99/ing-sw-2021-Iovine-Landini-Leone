@@ -58,14 +58,18 @@
          </children>
       </GridPane>
       <ImageView fx:id="ramp" fitHeight="46.0" fitWidth="36.0" layoutX="684.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="button_1" disable="true" layoutX="314.0" layoutY="391.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
-      <Button fx:id="button_2" disable="true" layoutX="395.0" layoutY="392.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="61.0" text="this" />
-      <Button fx:id="button_3" disable="true" layoutX="479.0" layoutY="392.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
-      <Button fx:id="button_4" disable="true" layoutX="550.0" layoutY="393.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
-      <Button fx:id="button_5" disable="true" layoutX="627.0" layoutY="123.0" mnemonicParsing="false" text="this" />
-      <Button fx:id="button_6" disable="true" layoutX="627.0" layoutY="207.0" mnemonicParsing="false" text="this" />
-      <Button fx:id="button_7" disable="true" layoutX="627.0" layoutY="288.0" mnemonicParsing="false" text="this" />
-      <Button fx:id="back_button" layoutX="79.0" layoutY="55.0" mnemonicParsing="false" text="Back" />
+      <Group fx:id="buttonMarket_group" layoutX="314.0" layoutY="123.0">
+         <children>
+            <Button fx:id="button_1" layoutY="268.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
+            <Button fx:id="button_2" layoutX="81.0" layoutY="269.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="61.0" text="this" />
+            <Button fx:id="button_3" layoutX="165.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
+            <Button fx:id="button_4" layoutX="236.0" layoutY="270.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="52.0" text="this" />
+            <Button fx:id="button_5" layoutX="313.0" mnemonicParsing="false" text="this" />
+            <Button fx:id="button_6" layoutX="313.0" layoutY="84.0" mnemonicParsing="false" text="this" />
+            <Button fx:id="button_7" layoutX="313.0" layoutY="165.0" mnemonicParsing="false" text="this" />
+         </children>
+      </Group>
+      <Button fx:id="back_button" layoutX="85.0" layoutY="56.0" mnemonicParsing="false" text="Back" />
       <Group fx:id="chosenBall_group" layoutX="870.0" layoutY="184.0">
          <children>
             <ImageView fx:id="chosenBall_1" fitHeight="76.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
@@ -127,9 +131,9 @@
                </font>
             </Label>
             <Button fx:id="ok_manageStorage" layoutX="143.0" layoutY="221.0" mnemonicParsing="false" text="OK" />
-            <Label fx:id="invertShelfError_label" layoutX="9.0" layoutY="372.0" text="YOU CANNOT INVERT THE SELECTED SHELF" textFill="RED" />
          </children>
       </Group>
       <Label fx:id="selectShelf_label" layoutX="857.0" layoutY="292.0" text="Plese select the shelf on which you want to place the resource" />
+      <Label fx:id="invertShelfError_label" layoutX="1009.0" layoutY="640.0" opacity="0.0" text="INVALID SHELF" textFill="RED" />
    </children>
 </AnchorPane>

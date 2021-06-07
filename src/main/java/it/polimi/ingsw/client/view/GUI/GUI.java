@@ -230,9 +230,16 @@ public class GUI extends Application implements View {
                 errorDialog("Wrong Setup configuration!");
                 setupConnection();
             });
+
+            case "MARKET_INVALID_SHELF": Platform.runLater(() -> marketSceneController.error(error));
                 break;
             default : Platform.runLater(() -> errorDialog("Generic Error!"));
         }
+    }
+
+    @Override
+    public void UpdateMarket(Market market) {
+        Platform.runLater(()->  marketSceneController.updateMarket(market));
     }
 
 

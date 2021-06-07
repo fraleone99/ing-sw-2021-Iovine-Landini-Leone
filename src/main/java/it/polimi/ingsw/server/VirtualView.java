@@ -691,4 +691,9 @@ public class VirtualView extends VirtualViewObservable {
 
         client.send(new TurnStatus(message));
     }
+
+    public void sendUpdateMarket(String nickname, Market market){
+        ClientHandler client = namesToClient.get(nickname);
+        client.send(new MarketInfo(market));
+    }
 }

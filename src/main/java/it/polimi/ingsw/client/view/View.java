@@ -114,4 +114,6 @@ public interface View {
     void playersInfo(PlayersInfo playersInfo);
 
     void errorHandling(String errorType);
+
+    void UpdateMarket(Market market);
 }

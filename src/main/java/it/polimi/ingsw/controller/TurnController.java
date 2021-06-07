@@ -420,6 +420,10 @@ public class TurnController {
 
                 choice.clear();
             } while (toPlace.size() > 0);
+
+            for(String nickname: players){
+                view.sendUpdateMarket(nickname, game.getGameBoard().getMarket());
+            }
         }
     }
 
