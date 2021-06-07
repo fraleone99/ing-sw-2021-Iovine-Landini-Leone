@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
-import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
@@ -9,21 +7,22 @@ import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
-import it.polimi.ingsw.server.answer.infoanswer.ActionTokenInfo;
 import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
-import javafx.application.Platform;
+import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,8 +102,18 @@ public class GameSceneController {
     @FXML Label message;
     @FXML Label active1;
     @FXML Label active2;
+    @FXML Group current_faithPathGroup;
+    @FXML Group player1_faithPathGroup;
+    @FXML Group player2_faithPathGroup;
+    @FXML Group player3_faithPathGroup;
+    @FXML Group lorenzoFaithPathGroup;
+
 
     ArrayList<Integer> leaderCards = new ArrayList<>();
+    int oldCurrFPPos=0;
+    int oldPlayer1FPPos=0;
+    int oldPlayer2FPPos=0;
+    int oldPlayer3FPPos=0;
 
     private GUI gui;
 
@@ -116,6 +125,10 @@ public class GameSceneController {
     private HashMap<String, Integer> nicknameToPosition = new HashMap<>();
     private HashMap<Integer, String> positionToNickname = new HashMap<>();
 
+    private final HashMap<Integer, ImageView> currentFaithPathPosToImageView = new HashMap<>();
+    private HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
+    private HashMap<Integer, ImageView> player2FaithPathPosToImageView = new HashMap<>();
+    private HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
 
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -129,6 +142,9 @@ public class GameSceneController {
         actionTokenDeleteCardToPathMap.put(CardColor.GREEN, "/graphics/mainScene/ActionToken/DeleteCardGreen.png");
         actionTokenDeleteCardToPathMap.put(CardColor.BLUE, "/graphics/mainScene/ActionToken/DeleteCardBlue.png");
         actionTokenDeleteCardToPathMap.put(CardColor.PURPLE, "/graphics/mainScene/ActionToken/DeleteCardPurple.png");
+
+        setFaithPathMaps();
+
     }
 
 
@@ -521,4 +537,42 @@ public class GameSceneController {
             positionToNickname.put(3, othersPlayersNick.get(2));
         }
     }
+
+    public void setFaithPathMaps(){
+
+        for(int i=0; i<25; i++) {
+            currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
+            player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
+            player2FaithPathPosToImageView.put(i, (ImageView) player2_faithPathGroup.getChildren().get(i));
+            player3FaithPathPosToImageView.put(i, (ImageView) player3_faithPathGroup.getChildren().get(i));
+        }
+
+    }
+
+    public void updateFaithPath(UpdateFaithPath updateFaithPath) {
+        int player;
+
+        if(updateFaithPath.getNickname().equals(gui.getNickname())){
+            currentFaithPathPosToImageView.get(oldCurrFPPos).setImage(null);
+            oldCurrFPPos=updateFaithPath.getPosition();
+            currentFaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+        } else {
+            player = nicknameToPosition.get(updateFaithPath.getNickname());
+
+            if(player==1){
+                player1FaithPathPosToImageView.get(oldPlayer1FPPos).setImage(null);
+                oldPlayer1FPPos=updateFaithPath.getPosition();
+                player1FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+            } else if (player==2) {
+                player2FaithPathPosToImageView.get(oldPlayer2FPPos).setImage(null);
+                oldPlayer2FPPos=updateFaithPath.getPosition();
+                player2FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+            } else if(player==3) {
+                player3FaithPathPosToImageView.get(oldPlayer3FPPos).setImage(null);
+                oldPlayer3FPPos=updateFaithPath.getPosition();
+                player3FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+            }
+        }
+    }
+
 }

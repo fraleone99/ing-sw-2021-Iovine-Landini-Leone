@@ -292,6 +292,9 @@ public class TurnController {
                         Catch=true;
                     } else {
                     game.getPlayer(players.get(player)).doProduction();
+                    for(String s: players){
+                        view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                    }
                     ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                     if(!nick.isEmpty()) {
                         view.papalPawn(nick);
@@ -371,6 +374,9 @@ public class TurnController {
         for(Ball b : market) {
             if (b.getType().equals(BallColor.RED)) {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
+                for(String s: players){
+                    view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                }
                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                 if(!nick.isEmpty()) {
                     view.papalPawn(nick);
@@ -473,6 +479,9 @@ public class TurnController {
      */
     public void discardLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
         game.getPlayer(players.get(player)).DiscardLeader(pos);
+        for(String s: players){
+            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+        }
     }
 
 
@@ -498,6 +507,9 @@ public class TurnController {
                         for (int j = 0; j < players.size(); j++) {
                             if (j != player) {
                                 game.getPlayer(players.get(j)).move(1);
+                                for(String s: players){
+                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                                }
                                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                                 if(!nick.isEmpty()) {
                                     view.papalPawn(nick);
@@ -512,6 +524,9 @@ public class TurnController {
                         for (int j = 0; j < players.size(); j++) {
                             if (j != player) {
                                 game.getPlayer(players.get(j)).move(1);
+                                for(String s: players){
+                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                                }
                                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                                 if(!nick.isEmpty()) {
                                     view.papalPawn(nick);

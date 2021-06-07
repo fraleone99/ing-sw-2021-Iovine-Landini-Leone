@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
 import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
@@ -112,6 +113,8 @@ public interface View {
     void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards);
 
     void playersInfo(PlayersInfo playersInfo);
+
+    void updateFaithPath(UpdateFaithPath updateFaithPath);
 
     void errorHandling(String errorType);
 

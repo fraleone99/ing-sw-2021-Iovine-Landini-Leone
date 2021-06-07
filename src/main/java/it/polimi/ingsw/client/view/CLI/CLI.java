@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
+import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
@@ -80,6 +81,11 @@ public class CLI implements View {
 
     @Override
     public void UpdateMarket(Market market) {
+
+    }
+
+    @Override
+    public void updateFaithPath(UpdateFaithPath updateFaithPath){
 
     }
 
