@@ -309,10 +309,10 @@ public class MarketSceneController {
             });
 
 
-            int finalI = i;
+            int finalI = i + 1;
             finalBallToSet.setOnMouseClicked(mouseEvent -> {
                 finalBallToSet.setEffect(selectedGlow);
-                gui.getHandler().send(new SendInt(finalI + 1 ));
+                gui.getHandler().send(new SendInt(finalI));
                 chosenBall_group.setDisable(true);
                 selectShelf_label.setOpacity(0);
             });
@@ -327,9 +327,9 @@ public class MarketSceneController {
             n.setOnMouseEntered(mouseEvent -> gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.HAND));
             n.setOnMouseExited(mouseEvent -> gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.DEFAULT));
 
-            int finalI = i;
+            int finalI = i +1;
             n.setOnMouseClicked(mouseEvent -> {
-                gui.getHandler().send(new SendInt(finalI + 1));
+                gui.getHandler().send(new SendInt(finalI));
                 selectShelf_label.setOpacity(0);
                 shelves_group.setDisable(true);
             });
