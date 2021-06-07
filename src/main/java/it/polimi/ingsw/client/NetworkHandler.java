@@ -201,6 +201,9 @@ public class NetworkHandler implements Runnable, Handler {
         else if(inputObj instanceof MarketInfo){
             view.UpdateMarket((Market) ((MarketInfo) inputObj).getMessage());
         }
+        else if (inputObj instanceof UpdateFaithPath){
+            view.updateFaithPath((UpdateFaithPath) inputObj);
+        }
         else {
             if (inputObj instanceof PassLeaderCard) {
                 view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());

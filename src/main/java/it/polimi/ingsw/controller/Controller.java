@@ -63,6 +63,13 @@ public class Controller {
                         view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard().getStorage(), null, player);
                 }
             }
+
+            for(String s: players){
+                for(String n: players){
+                    view.updateFaithPath(s, n, 0);
+                }
+            }
+
             while(!isEnd){
                 for(int i=0; i<players.size();i++){
                     //send start turn
@@ -127,6 +134,9 @@ public class Controller {
             case 2: resource1 =view.chooseResource(players.get(i), "third",1);
                     addInitialResource(i, resource1,1);
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
+                    for(String s: players){
+                        view.updateFaithPath(s, players.get(i), gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                    }
                     break;
             case 3: resource1 =view.chooseResource(players.get(i), "fourth",1);
                     addInitialResource(i, resource1,2);
@@ -137,6 +147,9 @@ public class Controller {
                         addInitialResource(i, resource2,1);
                     }
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
+                    for(String s: players){
+                        view.updateFaithPath(s, players.get(i), gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                    }
         }
     }
 

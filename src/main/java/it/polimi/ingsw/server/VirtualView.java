@@ -578,6 +578,11 @@ public class VirtualView extends VirtualViewObservable {
 
     }
 
+    public void updateFaithPath(String nickname, String nickToUpdate, int nickPos){
+        ClientHandler client=namesToClient.get(nickname);
+        client.send(new UpdateFaithPath(nickToUpdate, nickPos));
+    }
+
     public void initialInfo(String nickname, int playerNumber, ArrayList<String> nicknames){
         PlayersInfo playersInfo = new PlayersInfo(playerNumber);
         for(String nick: nicknames){

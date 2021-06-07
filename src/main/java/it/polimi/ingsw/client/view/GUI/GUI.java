@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
 import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
 import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
+import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import javafx.application.Application;
@@ -641,6 +642,12 @@ public class GUI extends Application implements View {
         Platform.runLater(()->gameSceneController.setupGameBoard(playersInfo));
     }
 
+    @Override
+    public void updateFaithPath(UpdateFaithPath updateFaithPath){
+        Platform.runLater( () -> {
+            gameSceneController.updateFaithPath(updateFaithPath);
+        });
+    }
 
     public void setNickname(String s) {
         this.nickname = s;

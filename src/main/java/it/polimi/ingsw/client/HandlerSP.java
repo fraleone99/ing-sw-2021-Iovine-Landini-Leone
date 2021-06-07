@@ -158,7 +158,9 @@ public class HandlerSP implements Runnable, Handler {
             view.readMessage(((SendMessage) inputObj).getMessage());
         } else if (inputObj instanceof InitializeGameBoard) {
             view.initializeGameBoard(((InitializeGameBoard) inputObj).getMarket(), ((InitializeGameBoard) inputObj).getIdDevCards(), ((InitializeGameBoard) inputObj).getLeaderCards());
-        } else if (inputObj instanceof Win) {
+        } else if (inputObj instanceof UpdateFaithPath){
+            view.updateFaithPath((UpdateFaithPath) inputObj);
+        }else if (inputObj instanceof Win) {
             view.win(((Win) inputObj).getMessage());
         } else if (inputObj instanceof Lose) {
             view.lose(((Lose) inputObj).getMessage());
