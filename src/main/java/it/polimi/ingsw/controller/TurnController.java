@@ -338,6 +338,10 @@ public class TurnController {
         try {
             game.getPlayer(players.get(player)).buyCard(card, space);
             game.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
+            for(String s : players){
+                view.updateDevCardSpace(s,players.get(player),level,space,card.getCardID());
+                view.updateGrid(s, game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+            }
         } catch(InvalidSpaceCardException e) {
             view.sendInvalidInput(players.get(player));
             Catch=true;

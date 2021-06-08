@@ -4,10 +4,7 @@ import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.NetworkHandler;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
-import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
@@ -116,7 +113,11 @@ public interface View {
 
     void updateFaithPath(UpdateFaithPath updateFaithPath);
 
+    void updateDevCardsSpace(CardsSpaceInfo info);
+
     void errorHandling(String errorType);
+
+    void updateGrid(ArrayList<Integer> idCards);
 
     void UpdateMarket(Market market);
 }

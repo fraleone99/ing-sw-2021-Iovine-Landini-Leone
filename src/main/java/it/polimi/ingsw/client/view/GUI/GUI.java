@@ -8,10 +8,7 @@ import it.polimi.ingsw.client.view.GUI.sceneControllers.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
-import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
@@ -239,6 +236,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void updateGrid(ArrayList<Integer> idCards) {
+        Platform.runLater(() -> developmentCardsGridController.updateGrid(idCards));
+    }
+
+    @Override
     public void UpdateMarket(Market market) {
         Platform.runLater(()->  marketSceneController.updateMarket(market));
     }
@@ -250,6 +252,16 @@ public class GUI extends Application implements View {
         errorDialog.setHeaderText("Error!");
         errorDialog.setContentText(error);
         errorDialog.showAndWait();
+    }
+
+    @Override
+    public void updateDevCardsSpace(CardsSpaceInfo info) {
+        Platform.runLater( () -> gameSceneController.updateCardsSpace(info));
+        Platform.runLater( () -> {
+            if(info.getNickname().equals(nickname)) {
+                developmentCardsGridController.updateSpace(info);
+            }
+        });
     }
 
 
@@ -541,8 +553,6 @@ public class GUI extends Application implements View {
     @Override
     public void askCardToBuy(ArrayList<Integer> cards, ArrayList<Integer> spaces) {
         Platform.runLater( () -> {
-            developmentCardsGridController.updateGrid(cards);
-            developmentCardsGridController.updateSpaces(spaces);
             changeStage(GRID);
             developmentCardsGridController.buyCard();
         });

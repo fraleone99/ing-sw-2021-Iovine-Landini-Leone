@@ -651,6 +651,16 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    public void updateDevCardSpace(String player, String nickname, int level, int space, int idCard) {
+        ClientHandler client=namesToClient.get(player);
+        client.send(new CardsSpaceInfo(nickname, level, space, idCard));
+    }
+
+    public void updateGrid(String player, ArrayList<Integer> idCards) {
+        ClientHandler client=namesToClient.get(player);
+        client.send(new GridInfo(idCards));
+    }
+
     public void sendErrorMessage(String nickname, String errorType){
         ClientHandler client=namesToClient.get(nickname);
         client.send(new ErrorMessage(errorType));

@@ -466,5 +466,105 @@
             <ImageView fx:id="player3_faithPath24" fitHeight="18.0" fitWidth="19.0" layoutX="319.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Group>
+      <Group fx:id="currentGroup" layoutX="691.0" layoutY="628.0">
+         <children>
+            <Group fx:id="current_levelOneGroup">
+               <children>
+                  <ImageView fitHeight="148.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="98.0" layoutX="109.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="98.0" layoutX="222.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="current_levelTwoGroup" layoutY="-25.0">
+               <children>
+                  <ImageView fitHeight="148.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="98.0" layoutX="109.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="98.0" layoutX="222.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="current_levelThreeGroup" layoutY="-50.0">
+               <children>
+                  <ImageView fitHeight="148.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="98.0" layoutX="109.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="148.0" fitWidth="98.0" layoutX="222.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group fx:id="player1Group" layoutX="221.0" layoutY="145.0">
+         <children>
+            <Group fx:id="player1_levelOneGroup">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="player1_levelTwoGroup" layoutY="-20.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="player1_levelThreeGroup" layoutY="-40.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group fx:id="player2Group" layoutX="718.0" layoutY="146.0">
+         <children>
+            <Group fx:id="player2_levelOneGroup">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="140.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="player2_levelTwoGroup" layoutY="-20.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="140.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="player2_levelThreeGroup" layoutY="-40.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="140.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group fx:id="player3Group" layoutX="1217.0" layoutY="145.0">
+         <children>
+            <Group fx:id="player3_levelOneGroup">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="70.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="player3_levelTwoGroup" layoutY="-20.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="70.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="player3_levelThreeGroup" layoutY="-40.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="70.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="90.0" fitWidth="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+         </children>
+      </Group>
    </children>
 </AnchorPane>

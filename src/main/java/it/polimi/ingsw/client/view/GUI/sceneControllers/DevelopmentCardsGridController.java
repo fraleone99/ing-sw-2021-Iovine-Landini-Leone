@@ -3,8 +3,10 @@ package it.polimi.ingsw.client.view.GUI.sceneControllers;
 import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
+import it.polimi.ingsw.server.answer.infoanswer.CardsSpaceInfo;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -25,13 +27,14 @@ public class DevelopmentCardsGridController {
     @FXML ImageView green1;
     @FXML ImageView green2;
     @FXML ImageView green3;
-    @FXML ImageView space1;
-    @FXML ImageView space2;
-    @FXML ImageView space3;
     @FXML ImageView cardsSpace;
     @FXML public Button back_button;
     @FXML Label space;
     @FXML Label card;
+    @FXML Group spaceGroup;
+    @FXML Button buttonOne;
+    @FXML Button buttonTwo;
+    @FXML Button buttonThree;
 
     private GUI gui;
 
@@ -41,11 +44,12 @@ public class DevelopmentCardsGridController {
 
     public void updateGrid(ArrayList<Integer> idCards) {
         space.setOpacity(0);
+        spaceGroup.setOpacity(0);
         card.setOpacity(0);
         cardsSpace.setOpacity(0);
-        space1.setOpacity(0);
-        space2.setOpacity(0);
-        space3.setOpacity(0);
+        buttonOne.setOpacity(0);
+        buttonTwo.setOpacity(0);
+        buttonThree.setOpacity(0);
         back_button.setOpacity(1);
         back_button.setDisable(false);
         purple1.setImage(new Image("/graphics/" + idCards.get(0) + ".png"));
@@ -62,15 +66,18 @@ public class DevelopmentCardsGridController {
         green3.setImage(new Image("/graphics/" + idCards.get(11) + ".png"));
     }
 
-    public void updateSpaces(ArrayList<Integer> spaces) {
-        if(!(spaces.get(0) == -1)) {
-            space1.setImage(new Image("/graphics/" + spaces.get(0) + ".png"));
-        }
-        if(!(spaces.get(1) == -1)) {
-            space2.setImage(new Image("/graphics/" + spaces.get(1) + ".png"));
-        }
-        if(!(spaces.get(2) == -1)) {
-            space3.setImage(new Image("/graphics/" + spaces.get(2) + ".png"));
+    public void updateSpace(CardsSpaceInfo info) {
+        Group group1 = (Group) spaceGroup.getChildren().get(info.getLevel()-1);
+        switch(info.getSpace()) {
+            case 1 : ImageView image1 = (ImageView) group1.getChildren().get(0);
+                     image1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+                     break;
+            case 2 : ImageView image2 = (ImageView) group1.getChildren().get(1);
+                     image2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+                     break;
+            case 3 : ImageView image3 = (ImageView) group1.getChildren().get(2);
+                     image3.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+                     break;
         }
     }
 
@@ -78,9 +85,10 @@ public class DevelopmentCardsGridController {
         space.setOpacity(0);
         card.setOpacity(0);
         cardsSpace.setOpacity(0);
-        space1.setOpacity(0);
-        space2.setOpacity(0);
-        space3.setOpacity(0);
+        spaceGroup.setOpacity(0);
+        buttonOne.setOpacity(0);
+        buttonTwo.setOpacity(0);
+        buttonThree.setOpacity(0);
         back_button.setOpacity(1);
         back_button.setDisable(false);
         back_button.setOnAction(actionEvent -> {
@@ -89,9 +97,9 @@ public class DevelopmentCardsGridController {
     }
 
     public void buyCard() {
-        space1.setDisable(true);
-        space2.setDisable(true);
-        space3.setDisable(true);
+        buttonOne.setDisable(true);
+        buttonTwo.setDisable(true);
+        buttonThree.setDisable(true);
         purple1.setDisable(false);
         purple2.setDisable(false);
         purple3.setDisable(false);
@@ -107,9 +115,10 @@ public class DevelopmentCardsGridController {
         back_button.setOpacity(0);
         back_button.setDisable(true);
         cardsSpace.setOpacity(1);
-        space1.setOpacity(1);
-        space2.setOpacity(1);
-        space3.setOpacity(1);
+        spaceGroup.setOpacity(1);
+        buttonOne.setOpacity(1);
+        buttonTwo.setOpacity(1);
+        buttonThree.setOpacity(1);
         card.setOpacity(1);
 
         purple1.setOnMouseClicked(event -> gui.getHandler().send(new SendDoubleInt(1,1)));
@@ -127,9 +136,9 @@ public class DevelopmentCardsGridController {
     }
 
     public void chooseSpace() {
-        space1.setDisable(false);
-        space2.setDisable(false);
-        space3.setDisable(false);
+        buttonOne.setDisable(false);
+        buttonTwo.setDisable(false);
+        buttonThree.setDisable(false);
         purple1.setDisable(true);
         purple2.setDisable(true);
         purple3.setDisable(true);
@@ -145,8 +154,8 @@ public class DevelopmentCardsGridController {
         card.setOpacity(0);
         space.setOpacity(1);
 
-        space1.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(1)));
-        space2.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
-        space3.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(3)));
+        buttonOne.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(1)));
+        buttonTwo.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
+        buttonThree.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(3)));
     }
 }

@@ -154,6 +154,12 @@ public class NetworkHandler implements Runnable, Handler {
         else if (inputObj instanceof SeeOtherCards) {
             view.seeOtherCards(((SeeOtherCards) inputObj).getMessage());
         }
+        else if (inputObj instanceof CardsSpaceInfo) {
+            view.updateDevCardsSpace((CardsSpaceInfo) inputObj);
+        }
+        else if (inputObj instanceof GridInfo) {
+            view.updateGrid(((GridInfo) inputObj).getMessage());
+        }
         else if (inputObj instanceof StorageInfo) {
             if(((StorageInfo) inputObj).getCoinsAmount()==-1) {
                 view.printStorage((StorageInfo) inputObj);

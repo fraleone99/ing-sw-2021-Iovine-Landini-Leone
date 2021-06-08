@@ -3,10 +3,7 @@ import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
-import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
@@ -75,8 +72,18 @@ public class CLI implements View {
     }
 
     @Override
+    public void updateDevCardsSpace(CardsSpaceInfo info) {
+
+    }
+
+    @Override
     public void errorHandling(String errorType) {
         System.out.println("Invalid input! Please try again");
+    }
+
+    @Override
+    public void updateGrid(ArrayList<Integer> idCards) {
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -31,10 +32,35 @@
             <Image url="@../graphics/mainScene/CardsSpace.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="space1" fitHeight="240.0" fitWidth="207.0" layoutX="953.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="space2" fitHeight="240.0" fitWidth="207.0" layoutX="1127.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="space3" fitHeight="240.0" fitWidth="207.0" layoutX="1304.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
+      <Group fx:id="spaceGroup" layoutX="960.0" layoutY="250.0">
+         <children>
+            <Group fx:id="levelOne" layoutY="70.0">
+               <children>
+                  <ImageView fitHeight="230.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="230.0" fitWidth="151.0" layoutX="172.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="230.0" fitWidth="151.0" layoutX="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="levelTwo" layoutY="35.0">
+               <children>
+                  <ImageView fitHeight="230.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="230.0" fitWidth="151.0" layoutX="172.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="230.0" fitWidth="151.0" layoutX="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+            <Group fx:id="levelThree">
+               <children>
+                  <ImageView fitHeight="230.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="230.0" fitWidth="151.0" layoutX="172.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="230.0" fitWidth="151.0" layoutX="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
+         </children>
+      </Group>
       <Label fx:id="card" layoutX="1107.0" layoutY="94.0" prefHeight="26.0" prefWidth="227.0" text="Click on the card that you want to buy!" />
-      <Label fx:id="space" layoutX="1081.0" layoutY="140.0" text="Click on the space where you want to place the card!" />
+      <Label fx:id="space" layoutX="1053.0" layoutY="140.0" text="Click the button of the space where you want to place the card!" />
+      <Button fx:id="buttonOne" layoutX="1003.0" layoutY="552.0" mnemonicParsing="false" text="SpaceOne" />
+      <Button fx:id="buttonTwo" layoutX="1176.0" layoutY="552.0" mnemonicParsing="false" text="SpaceTwo" />
+      <Button fx:id="buttonThree" layoutX="1353.0" layoutY="552.0" mnemonicParsing="false" text="SpaceThree" />
    </children>
 </AnchorPane>
