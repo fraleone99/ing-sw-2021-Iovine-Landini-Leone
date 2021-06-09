@@ -241,6 +241,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void updateBasicProduction(BasicProductionInfo info) {
+        Platform.runLater(() -> gameSceneController.updateBasicProduction(info));
+    }
+
+    @Override
     public void UpdateMarket(Market market) {
         Platform.runLater(()->  marketSceneController.updateMarket(market));
     }
@@ -565,27 +570,60 @@ public class GUI extends Application implements View {
 
     @Override
     public void askType(String message) {
-
+        Platform.runLater(() -> gameSceneController.chooseProduction());
     }
 
     @Override
     public void askInput(String message) {
+        Platform.runLater(() -> {
+            FXMLLoader res = new FXMLLoader(getClass().getResource("/fxml/InitialResource.fxml"));
+            Scene InitialResource = null;
+            try {
+                InitialResource = new Scene(res.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            initialResourcesController = res.getController();
+            initialResourcesController.setGui(this);
 
+            initialResourcesController.setLabel("Choose the input of the production");
+            secondaryStage.setScene(InitialResource);
+            secondaryStage.centerOnScreen();
+            initialResourcesController.askResource();
+            secondaryStage.showAndWait();
+        });
     }
 
     @Override
     public void askOutput(String message) {
+        Platform.runLater(() -> {
+            FXMLLoader res = new FXMLLoader(getClass().getResource("/fxml/InitialResource.fxml"));
+            Scene InitialResource = null;
+            try {
+                InitialResource = new Scene(res.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            initialResourcesController = res.getController();
+            initialResourcesController.setGui(this);
 
+            initialResourcesController.setLabel("Choose the output of the production");
+            secondaryStage.setScene(InitialResource);
+            secondaryStage.centerOnScreen();
+            initialResourcesController.askResource();
+            secondaryStage.showAndWait();
+
+        });
     }
 
     @Override
     public void askDevelopmentCard(String message) {
-
+        Platform.runLater(() -> gameSceneController.developmentCardProduction());
     }
 
     @Override
     public void askLeaderCard(String message) {
-
+        Platform.runLater(() -> gameSceneController.leaderCardProduction());
     }
 
     @Override

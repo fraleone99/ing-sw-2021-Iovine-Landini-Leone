@@ -162,24 +162,6 @@ public class CLITurn {
         t.start();
     }
 
-    public void askColor(String message) {
-        Thread t = new Thread(()->{
-            int color = initialize.askInt(1,4,message);
-            handler.send(new SendInt(color));
-
-        });
-        t.start();
-    }
-
-    public void askLevel(String message) {
-        Thread t = new Thread(()->{
-            int level = initialize.askInt(1,3,message);
-            handler.send(new SendInt(level));
-
-        });
-        t.start();
-    }
-
     public void askSpace(String message) {
         Thread t = new Thread(()->{
             int space = initialize.askInt(1,3,message);

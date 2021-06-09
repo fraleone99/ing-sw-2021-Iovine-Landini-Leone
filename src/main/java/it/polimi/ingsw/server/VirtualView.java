@@ -556,6 +556,13 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    public void sendBasicProduction(String nickname, Resource input1, Resource input2, Resource output) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new BasicProductionInfo(input1, input2, output));
+    }
+
+
     public int askDevCard(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
 

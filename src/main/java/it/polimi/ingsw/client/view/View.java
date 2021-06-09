@@ -119,5 +119,7 @@ public interface View {
 
     void updateGrid(ArrayList<Integer> idCards);
 
+    void updateBasicProduction(BasicProductionInfo info);
+
     void UpdateMarket(Market market);
 }

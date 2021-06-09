@@ -218,10 +218,12 @@ public class Player {
      * @throws InvalidChoiceException if the choice is not valid
      * @throws NotEnoughResourceException if we can't do the production
      */
-    public void ActiveProductionLeader(int pos) throws InvalidChoiceException, NotEnoughResourceException {
-        if(playerDashboard.getLeaders().get(pos- 1) instanceof ProductionLeader){
-            if(playerDashboard.CheckResource(((ProductionLeader) playerDashboard.getLeaders().get(pos- 1)).getInputProduction()))
-                activatedProduction.add(((ProductionLeader) playerDashboard.getLeaders().get(pos-1)).getProduction());
+    public void ActiveProductionLeader(int pos, Resource output) throws InvalidChoiceException, NotEnoughResourceException {
+        if(playerDashboard.getLeaders().get(pos- 1) instanceof ProductionLeader && playerDashboard.getLeaders().get(pos-1).getIsActive()){
+            if(playerDashboard.CheckResource(((ProductionLeader) playerDashboard.getLeaders().get(pos- 1)).getInputProduction())) {
+                ((ProductionLeader) playerDashboard.getLeaders().get(pos-1)).setOutputProduction(output);
+                activatedProduction.add(((ProductionLeader) playerDashboard.getLeaders().get(pos - 1)).getProduction());
+            }
             else throw new NotEnoughResourceException();
         }
         else

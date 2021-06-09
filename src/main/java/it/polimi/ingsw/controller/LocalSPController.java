@@ -578,8 +578,10 @@ public class LocalSPController {
             case 3:
                 handler.handleClient(new RequestInt("LEADCARD","Insert the number of the production leader that you want to use"));
                 int index = getAnswer();
+                handler.handleClient(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+                Resource outputProduction = parser(getAnswer());
                 try {
-                    gameModel.getPlayer(players.get(0)).ActiveProductionLeader(index);
+                    gameModel.getPlayer(players.get(0)).ActiveProductionLeader(index, outputProduction);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
                     handler.handleClient(new SendMessage("Invalid choice."));
                 }

@@ -87,6 +87,11 @@ public class CLI implements View {
     }
 
     @Override
+    public void updateBasicProduction(BasicProductionInfo info) {
+
+    }
+
+    @Override
     public void UpdateMarket(Market market) {
 
     }

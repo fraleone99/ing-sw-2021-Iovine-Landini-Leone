@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.GUI.sceneControllers;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -11,10 +12,15 @@ public class InitialResourcesController {
     @FXML private ImageView stone;
     @FXML private ImageView servant;
     @FXML private ImageView shield;
+    @FXML private Label message;
     GUI gui;
 
     public void setGui(GUI gui) {
         this.gui = gui;
+    }
+
+    public void setLabel(String label) {
+        message.setText(label);
     }
 
     public void askResource() {

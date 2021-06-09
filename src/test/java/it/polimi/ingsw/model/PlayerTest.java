@@ -81,7 +81,7 @@ public class PlayerTest {
 
         ((ProductionLeader) player.getPlayerDashboard().getLeaders().get(0)).setOutputProduction(Resource.COIN);
 
-        player.ActiveProductionLeader(1);
+        player.ActiveProductionLeader(1, Resource.COIN);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class PlayerTest {
         else
             fail();
 
-        player.ActiveProductionLeader(1);
+        player.ActiveProductionLeader(1, Resource.COIN);
         player.doProduction();
 
         assertEquals(player.getPlayerDashboard().getStorage().getAmountShelf(1),0);

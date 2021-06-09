@@ -13,10 +13,7 @@ import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
-import it.polimi.ingsw.server.answer.infoanswer.ActionTokenInfo;
-import it.polimi.ingsw.server.answer.infoanswer.CardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.PlayersInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -116,6 +113,13 @@ public class GameSceneController {
     @FXML Group player1Group;
     @FXML Group player2Group;
     @FXML Group player3Group;
+    @FXML Button developmentCardProduction;
+    @FXML Button leaderCardProduction;
+    @FXML Button basicProduction;
+    @FXML Button endProduction;
+    @FXML Group spaceGroup;
+    @FXML Group chooseTurnGroup;
+    @FXML Group basicProductionGroup;
 
     ArrayList<Integer> leaderCards = new ArrayList<>();
     int oldCurrFPPos=0;
@@ -125,18 +129,18 @@ public class GameSceneController {
 
     private GUI gui;
 
-    private Map<Resource, String> resourceToPathMap = new HashMap<>();
-    private Map<CardColor, String> actionTokenDeleteCardToPathMap = new HashMap<>();
+    private final Map<Resource, String> resourceToPathMap = new HashMap<>();
+    private final Map<CardColor, String> actionTokenDeleteCardToPathMap = new HashMap<>();
 
     private int playersNumber;
-    private ArrayList<String> othersPlayersNick = new ArrayList<>();
-    private HashMap<String, Integer> nicknameToPosition = new HashMap<>();
-    private HashMap<Integer, String> positionToNickname = new HashMap<>();
+    private final ArrayList<String> othersPlayersNick = new ArrayList<>();
+    private final HashMap<String, Integer> nicknameToPosition = new HashMap<>();
+    private final HashMap<Integer, String> positionToNickname = new HashMap<>();
 
     private final HashMap<Integer, ImageView> currentFaithPathPosToImageView = new HashMap<>();
-    private HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
-    private HashMap<Integer, ImageView> player2FaithPathPosToImageView = new HashMap<>();
-    private HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
+    private final HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
+    private final HashMap<Integer, ImageView> player2FaithPathPosToImageView = new HashMap<>();
+    private final HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
 
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -400,13 +404,81 @@ public class GameSceneController {
     }
 
     public void resetCard(int pos) {
-        if(leaderCards.get(0)==pos) {
+        if(leaderCards.get(0)==pos && leader1.getOpacity()==1) {
             leader1.setOpacity(0.5);
             active1.setOpacity(0);
         }
-        if(leaderCards.get(1)==pos) {
+        if(leaderCards.get(1)==pos && leader2.getOpacity()==1) {
             leader2.setOpacity(0.5);
             active2.setOpacity(0);
+        }
+    }
+
+    public void chooseProduction() {
+        chooseTurnGroup.setOpacity(0);
+        turn.setOpacity(0);
+        leader1.setDisable(true);
+        leader2.setDisable(true);
+        ok_turnType.setOpacity(0);
+        spaceGroup.setOpacity(0);
+        basicProduction.setOpacity(1);
+        developmentCardProduction.setOpacity(1);
+        endProduction.setOpacity(1);
+        leaderCardProduction.setOpacity(1);
+        message.setText("Choose what type of production do you want to activate");
+
+        basicProduction.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(1)));
+        developmentCardProduction.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
+        leaderCardProduction.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(3)));
+        endProduction.setOnMouseClicked(event -> {
+            gui.getHandler().send(new SendInt(4));
+            basicProduction.setOpacity(0);
+            developmentCardProduction.setOpacity(0);
+            leaderCardProduction.setOpacity(0);
+            endProduction.setOpacity(0);
+            basicProductionGroup.setOpacity(0);
+        });
+    }
+
+    public void updateBasicProduction(BasicProductionInfo info) {
+        basicProductionGroup.setOpacity(1);
+
+        ImageView image1 = (ImageView) basicProductionGroup.getChildren().get(0);
+        ImageView image2 = (ImageView) basicProductionGroup.getChildren().get(1);
+        ImageView image3 = (ImageView) basicProductionGroup.getChildren().get(2);
+
+        image1.setImage(new Image(resourceToPathMap.get(info.getInput1())));
+        image2.setImage(new Image(resourceToPathMap.get(info.getInput2())));
+        image3.setImage(new Image(resourceToPathMap.get(info.getOutput())));
+    }
+
+    public void leaderCardProduction() {
+        basicProduction.setOpacity(0);
+        developmentCardProduction.setOpacity(0);
+        endProduction.setOpacity(0);
+        leaderCardProduction.setOpacity(0);
+        message.setText("Press on the leader that you want to use");
+        message.setOpacity(1);
+        leader1.setDisable(false);
+        leader2.setDisable(false);
+
+        leader1.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(1)));
+
+        leader2.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
+    }
+
+        public void developmentCardProduction() {
+        basicProduction.setOpacity(0);
+        developmentCardProduction.setOpacity(0);
+        endProduction.setOpacity(0);
+        leaderCardProduction.setOpacity(0);
+        spaceGroup.setOpacity(1);
+        message.setText("Choose which space you want to activate");
+
+        for(int i=0; i<3; i++) {
+            Button button = (Button) spaceGroup.getChildren().get(i);
+            final int finalI = i;
+            button.setOnMouseClicked(event -> gui.getHandler().send(new SendInt((finalI+1))));
         }
     }
 
@@ -450,10 +522,15 @@ public class GameSceneController {
     }
 
     public void endTurn() {
+        chooseTurnGroup.setOpacity(1);
         end_turn.setOpacity(1);
         turn_buyDevelopment.setOpacity(0);
         turn_activeProduction.setOpacity(0);
         turn_market.setOpacity(0);
+        turn_activeLeader.setOpacity(1);
+        turn_discardLeader.setOpacity(1);
+        ok_turnType.setOpacity(1);
+        message.setText("IT'S YOUR TURN!");
         AtomicReference<EndTurnType> turnType = new AtomicReference<>();
 
         ok_turnType.setOnAction(actionEvent -> {

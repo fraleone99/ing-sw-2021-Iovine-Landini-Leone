@@ -148,6 +148,9 @@ public class NetworkHandler implements Runnable, Handler {
         else if(inputObj instanceof Lose) {
             view.lose(((Lose) inputObj).getMessage());
         }
+        else if(inputObj instanceof BasicProductionInfo) {
+            view.updateBasicProduction((BasicProductionInfo)inputObj);
+        }
         else if (inputObj instanceof FaithPathInfo) {
             view.printFaithPath((FaithPathInfo) inputObj);
         }

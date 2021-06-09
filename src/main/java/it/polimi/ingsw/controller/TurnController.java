@@ -262,6 +262,7 @@ public class TurnController {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionBase();
+                    view.sendBasicProduction(players.get(player), input1, input2, output);
                 } catch (NotEnoughResourceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_BASE_PRODUCTION");
                 }
@@ -278,8 +279,9 @@ public class TurnController {
 
             case PRODUCTION_LEADER:
                 int index=view.askLeaderCard(players.get(player));
+                Resource outputProduction=view.askOutput(players.get(player));
                 try {
-                    game.getPlayer(players.get(player)).ActiveProductionLeader(index);
+                    game.getPlayer(players.get(player)).ActiveProductionLeader(index, outputProduction);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_PROD_LEADER");
                 }
@@ -291,21 +293,21 @@ public class TurnController {
                         view.sendErrorMessage(players.get(player), "DO_PRODUCTION_INVALID");
                         Catch=true;
                     } else {
-                    game.getPlayer(players.get(player)).doProduction();
-                    for(String s: players){
-                        view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                        game.getPlayer(players.get(player)).doProduction();
+                        for(String s: players){
+                            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                        }
+                        ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                        if(!nick.isEmpty()) {
+                            view.papalPawn(nick);
+                        }
                     }
-                    ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
-                    if(!nick.isEmpty()) {
-                        view.papalPawn(nick);
-                    }
+                } catch (NotEnoughResourceException e) {
+                    view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
+                    Catch=true;
                 }
-            } catch (NotEnoughResourceException e) {
-                view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
-                Catch=true;
+                    break;
             }
-                break;
-        }
     }
 
 
