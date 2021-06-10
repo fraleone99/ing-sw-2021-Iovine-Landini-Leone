@@ -9,10 +9,12 @@ public class UpdateFaithPath implements Answer {
 
     String nickname = new String();
     int position;
+    boolean isLorenzo;
 
-    public UpdateFaithPath(String nick, int pos) {
+    public UpdateFaithPath(String nick, int pos, boolean isLorenzo) {
         this.nickname = nick;
         this.position = pos;
+        this.isLorenzo = isLorenzo;
     }
 
     public String getNickname() {
@@ -21,6 +23,10 @@ public class UpdateFaithPath implements Answer {
 
     public int getPosition() {
         return position;
+    }
+
+    public boolean isLorenzo() {
+        return isLorenzo;
     }
 
     public String getMessage(){

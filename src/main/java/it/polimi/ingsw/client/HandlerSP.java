@@ -6,14 +6,13 @@ import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.View;
 //import it.polimi.ingsw.controller.LocalSPController;
 import it.polimi.ingsw.controller.LocalSPController;
+import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.Answer;
 import it.polimi.ingsw.server.answer.finalanswer.Lose;
 import it.polimi.ingsw.server.answer.finalanswer.Win;
-import it.polimi.ingsw.server.answer.infoanswer.ActionTokenInfo;
-import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.initialanswer.Connection;
+import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
 import it.polimi.ingsw.server.answer.request.RequestDoubleInt;
 import it.polimi.ingsw.server.answer.request.RequestInt;
 import it.polimi.ingsw.server.answer.request.RequestString;
@@ -94,100 +93,131 @@ public class HandlerSP implements Runnable, Handler {
     }
 
     public void handleClient(Answer inputObj) {
-        if (inputObj instanceof Connection) {
-            if (((Connection) inputObj).isConnection()) {
+        if(inputObj instanceof Connection){
+            if(((Connection) inputObj).isConnection()){
                 view.handShake(((Connection) inputObj).getMessage());
             }
-        } else if (inputObj instanceof RequestString) {
+        }
+        else if(inputObj instanceof RequestString) {
             view.askNickname(((RequestString) inputObj).getMessage());
-        } else if (inputObj instanceof RequestInt) {
-            switch (((RequestInt) inputObj).getType()) {
-                case "NUMBER":
-                    view.askPlayerNumber(((RequestInt) inputObj).getMessage());
+        }
+        else if(inputObj instanceof RequestInt) {
+            //System.out.println("[DEBUG] reading from server" + ((RequestInt) inputObj).getMessage());
+            switch(((RequestInt) inputObj).getType()) {
+                case "NUMBER" : view.askPlayerNumber(((RequestInt) inputObj).getMessage());
                     break;
-                case "RESOURCE":
-                    view.askResource(((RequestInt) inputObj).getMessage());
+                case "RESOURCE" : view.askResource(((RequestInt) inputObj).getMessage());
                     break;
-                case "GAMEBOARD":
-                    view.seeGameBoard(((RequestInt) inputObj).getMessage());
+                case "GAMEBOARD" : view.seeGameBoard(((RequestInt) inputObj).getMessage());
                     break;
-                case "LINE":
-                    view.chooseLine(((RequestInt) inputObj).getMessage());
+                case "LINE" : view.chooseLine(((RequestInt) inputObj).getMessage());
                     break;
-                case "TURN":
-                    view.askTurnType(((RequestInt) inputObj).getMessage());
+                case "TURN" : view.askTurnType(((RequestInt) inputObj).getMessage());
                     break;
-                case "STORAGE":
-                    view.ManageStorage(((RequestInt) inputObj).getMessage());
+                case "STORAGE" : view.ManageStorage(((RequestInt) inputObj).getMessage());
                     break;
-                case "MARKET":
-                    view.useMarket(((RequestInt) inputObj).getMessage());
+                case "MARKET" : view.useMarket(((RequestInt) inputObj).getMessage());
                     break;
-                case "WHITE":
-                    view.chooseWhiteBallLeader(((RequestInt) inputObj).getMessage());
+                case "WHITE" : view.chooseWhiteBallLeader(((RequestInt) inputObj).getMessage());
                     break;
-                case "SPACE":
-                    view.askSpace(((RequestInt) inputObj).getMessage());
+                case "SPACE" : view.askSpace(((RequestInt) inputObj).getMessage());
                     break;
-                case "TYPE":
-                    view.askType(((RequestInt) inputObj).getMessage());
+                case "TYPE" : view.askType(((RequestInt) inputObj).getMessage());
                     break;
-                case "INPUT":
-                    view.askInput(((RequestInt) inputObj).getMessage());
+                case "INPUT" : view.askInput(((RequestInt) inputObj).getMessage());
                     break;
-                case "OUTPUT":
-                    view.askOutput(((RequestInt) inputObj).getMessage());
+                case "OUTPUT" : view.askOutput(((RequestInt) inputObj).getMessage());
                     break;
-                case "DEVCARD":
-                    view.askDevelopmentCard(((RequestInt) inputObj).getMessage());
+                case "DEVCARD" : view.askDevelopmentCard(((RequestInt) inputObj).getMessage());
                     break;
-                case "LEADCARD":
-                    view.askLeaderCard(((RequestInt) inputObj).getMessage());
+                case "LEADCARD" : view.askLeaderCard(((RequestInt) inputObj).getMessage());
                     break;
-                case "CHOICE":
-                    view.seeMoreFromTheGameBoard();
+                case "CHOICE" : view.seeMoreFromTheGameBoard();
                     break;
-                case "SHELF":
-                    view.chooseShelf();
+                case "SHELF" : view.chooseShelf();
                     break;
-                case "END":
-                    view.endTurn(((RequestInt) inputObj).getMessage());
+                case "END" : view.endTurn(((RequestInt) inputObj).getMessage());
                     break;
             }
-        } else if (inputObj instanceof SendMessage) {
+        }
+        else if(inputObj instanceof SendMessage) {
             view.readMessage(((SendMessage) inputObj).getMessage());
-        } else if (inputObj instanceof InitializeGameBoard) {
+        }
+        else if (inputObj instanceof InitializeGameBoard) {
             view.initializeGameBoard(((InitializeGameBoard) inputObj).getMarket(), ((InitializeGameBoard) inputObj).getIdDevCards(), ((InitializeGameBoard) inputObj).getLeaderCards());
-        } else if (inputObj instanceof UpdateFaithPath){
-            view.updateFaithPath((UpdateFaithPath) inputObj);
-        }else if (inputObj instanceof Win) {
+        }
+        else if(inputObj instanceof Win) {
             view.win(((Win) inputObj).getMessage());
-        } else if (inputObj instanceof Lose) {
+        }
+        else if(inputObj instanceof Lose) {
             view.lose(((Lose) inputObj).getMessage());
-        } else if (inputObj instanceof FaithPathInfo) {
+        }
+        else if(inputObj instanceof BasicProductionInfo) {
+            view.updateBasicProduction((BasicProductionInfo)inputObj);
+        }
+        else if (inputObj instanceof FaithPathInfo) {
             view.printFaithPath((FaithPathInfo) inputObj);
-        } else if (inputObj instanceof SeeOtherCards) {
+        }
+        else if (inputObj instanceof SeeOtherCards) {
             view.seeOtherCards(((SeeOtherCards) inputObj).getMessage());
-        } else if (inputObj instanceof StorageInfo) {
+        }
+        else if (inputObj instanceof CardsSpaceInfo) {
+            view.updateDevCardsSpace((CardsSpaceInfo) inputObj);
+        }
+        else if (inputObj instanceof GridInfo) {
+            view.updateGrid(((GridInfo) inputObj).getMessage());
+        }
+        else if (inputObj instanceof StorageInfo) {
             if(((StorageInfo) inputObj).getCoinsAmount()==-1) {
-                view.printStorage((StorageInfo)inputObj);
+                view.printStorage((StorageInfo) inputObj);
             } else {
                 view.printStorageAndVault((StorageInfo) inputObj);
             }
-        } else if (inputObj instanceof DevCardsSpaceInfo) {
+        }
+        else if (inputObj instanceof DevCardsSpaceInfo) {
             view.printDevelopmentCardsSpace((DevCardsSpaceInfo) inputObj);
-        } else if (inputObj instanceof ResetCard) {
+        }
+        else if (inputObj instanceof ResetCard) {
             view.resetCard(((ResetCard) inputObj).getPos());
-        } else if (inputObj instanceof RequestDoubleInt) {
+        }
+        else if (inputObj instanceof RequestDoubleInt) {
             if(((RequestDoubleInt) inputObj).getType().equals("DEVCARD")) {
                 view.askCardToBuy(((RequestDoubleInt) inputObj).getCards(), ((RequestDoubleInt) inputObj).getSpaces());
             } else {
+                //System.out.println("[DEBUG] Reading from server: Move shelves double int request");
                 view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
-            }        } else if (inputObj instanceof SeeBall) {
+            }
+        }
+        else if (inputObj instanceof SeeBall) {
             view.seeBall((SeeBall) inputObj);
-        } else if (inputObj instanceof ActionTokenInfo) {
+        }
+        else if (inputObj instanceof ActionTokenInfo) {
             view.printActionToken(((ActionTokenInfo) inputObj).getMessage());
-        } else {
+        }
+        else if (inputObj instanceof TurnStatus) {
+            if (((TurnStatus) inputObj).getMessage().equals("END")) {
+                view.setIsMyTurn(false);
+                view.waitForYourTurn();
+            } else if (((TurnStatus) inputObj).getMessage().equals("START")) {
+                view.setIsMyTurn(true);
+            }
+        }
+        else if (inputObj instanceof InitialSetup) {
+            view.waitForYourTurn();
+        }
+        else if (inputObj instanceof PlayersInfo){
+            view.playersInfo((PlayersInfo) inputObj);
+        }
+        else if(inputObj instanceof ErrorMessage){
+            view.errorHandling((String) ((ErrorMessage) inputObj).getMessage());
+        }
+        else if(inputObj instanceof MarketInfo){
+            view.UpdateMarket((Market) ((MarketInfo) inputObj).getMessage());
+        }
+        else if (inputObj instanceof UpdateFaithPath){
+            view.updateFaithPath((UpdateFaithPath) inputObj);
+        }
+        else {
             if (inputObj instanceof PassLeaderCard) {
                 view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());
             } else if (inputObj instanceof SeeLeaderCards) {

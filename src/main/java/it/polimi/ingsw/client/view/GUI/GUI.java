@@ -206,6 +206,7 @@ public class GUI extends Application implements View {
                 gameSceneController = localGame.getController();
                 gameSceneController.setGui(this);
                 sceneMap.put(GAME, LocalGameScene);
+                gameSceneController.setLorenzoFaithPathMap();
             }
             return ris;
         }
@@ -343,6 +344,7 @@ public class GUI extends Application implements View {
                 gameSceneController = localGame.getController();
                 gameSceneController.setGui(this);
                 sceneMap.put(GAME, LocalGameScene);
+                gameSceneController.setLorenzoFaithPathMap();
 
                 Platform.runLater(()->changeStage(LOCAL_GAME));
             } else {
@@ -656,10 +658,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void setIsMyTurn(boolean isMyTurn) {
-        if(isSinglePlayer){
-            return;
-        }
-        else if(isMyTurn) {
+        if(isMyTurn) {
             Platform.runLater(() ->
                     gameSceneController.isMyTurn()
             );
@@ -692,9 +691,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateFaithPath(UpdateFaithPath updateFaithPath){
-        Platform.runLater( () -> {
-            gameSceneController.updateFaithPath(updateFaithPath);
-        });
+        Platform.runLater( () -> gameSceneController.updateFaithPath(updateFaithPath));
     }
 
     public void setNickname(String s) {

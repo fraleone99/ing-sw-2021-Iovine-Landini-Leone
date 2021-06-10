@@ -177,6 +177,9 @@ public class TurnController {
                     if(pos==3) break;
                     try {
                         discardLeader(player, pos);
+                        for(String s: players){
+                            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                        }
                         ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                         if(!nick.isEmpty()) {
                             view.papalPawn(nick);
@@ -217,6 +220,7 @@ public class TurnController {
         while(answer==1 || answer==2) {
             if (answer == 1) {
                 pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                if(pos==3) break;
                 try {
                     activeLeader(player, pos);
                 } catch (InvalidChoiceException e) {
@@ -225,8 +229,12 @@ public class TurnController {
                 }
             } else {
                 pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                if(pos==3) break;
                 try {
                     discardLeader(player, pos);
+                    for(String s: players){
+                        view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                    }
                     ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                     if(!nick.isEmpty()) {
                         view.papalPawn(nick);
@@ -293,21 +301,21 @@ public class TurnController {
                         view.sendErrorMessage(players.get(player), "DO_PRODUCTION_INVALID");
                         Catch=true;
                     } else {
-                        game.getPlayer(players.get(player)).doProduction();
-                        for(String s: players){
-                            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
-                        }
-                        ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
-                        if(!nick.isEmpty()) {
-                            view.papalPawn(nick);
-                        }
+                    game.getPlayer(players.get(player)).doProduction();
+                    for(String s: players){
+                        view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                     }
-                } catch (NotEnoughResourceException e) {
-                    view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
-                    Catch=true;
+                    ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                    if(!nick.isEmpty()) {
+                        view.papalPawn(nick);
+                    }
                 }
-                    break;
+            } catch (NotEnoughResourceException e) {
+                view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
+                Catch=true;
             }
+                break;
+        }
     }
 
 
@@ -381,7 +389,7 @@ public class TurnController {
             if (b.getType().equals(BallColor.RED)) {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
                 for(String s: players){
-                    view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                    view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                 }
                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                 if(!nick.isEmpty()) {
@@ -485,9 +493,6 @@ public class TurnController {
      */
     public void discardLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
         game.getPlayer(players.get(player)).DiscardLeader(pos);
-        for(String s: players){
-            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
-        }
     }
 
 
@@ -514,7 +519,7 @@ public class TurnController {
                             if (j != player) {
                                 game.getPlayer(players.get(j)).move(1);
                                 for(String s: players){
-                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                                 }
                                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                                 if(!nick.isEmpty()) {
@@ -531,7 +536,7 @@ public class TurnController {
                             if (j != player) {
                                 game.getPlayer(players.get(j)).move(1);
                                 for(String s: players){
-                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath());
+                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                                 }
                                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                                 if(!nick.isEmpty()) {

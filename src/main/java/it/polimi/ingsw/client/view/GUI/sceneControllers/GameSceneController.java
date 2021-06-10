@@ -126,6 +126,7 @@ public class GameSceneController {
     int oldPlayer1FPPos=0;
     int oldPlayer2FPPos=0;
     int oldPlayer3FPPos=0;
+    int oldLorenzoFPPos=0;
 
     private GUI gui;
 
@@ -141,6 +142,7 @@ public class GameSceneController {
     private final HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player2FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
+    private HashMap<Integer, ImageView> lorenzoFaithPathPosToImageView = new HashMap<>();
 
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -154,8 +156,6 @@ public class GameSceneController {
         actionTokenDeleteCardToPathMap.put(CardColor.GREEN, "/graphics/mainScene/ActionToken/DeleteCardGreen.png");
         actionTokenDeleteCardToPathMap.put(CardColor.BLUE, "/graphics/mainScene/ActionToken/DeleteCardBlue.png");
         actionTokenDeleteCardToPathMap.put(CardColor.PURPLE, "/graphics/mainScene/ActionToken/DeleteCardPurple.png");
-
-        setFaithPathMaps();
 
     }
 
@@ -582,7 +582,9 @@ public class GameSceneController {
         }
 
         if(playersNumber == 1) {
-            return;
+            for(int i=0; i<25; i++) {
+                currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
+            }
         }
         else if(playersNumber == 2){
             player2Board.setOpacity(0.4);
@@ -595,6 +597,11 @@ public class GameSceneController {
 
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
             positionToNickname.put(1, othersPlayersNick.get(0));
+
+            for(int i=0; i<25; i++) {
+                currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
+                player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
+            }
         }
         else if(playersNumber == 3){
             player3Board.setOpacity(0.4);
@@ -607,6 +614,13 @@ public class GameSceneController {
             nicknameToPosition.put(othersPlayersNick.get(1) , 2);
             positionToNickname.put(1, othersPlayersNick.get(0));
             positionToNickname.put(2, othersPlayersNick.get(1));
+
+            for(int i=0; i<25; i++) {
+                currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
+                player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
+                player2FaithPathPosToImageView.put(i, (ImageView) player2_faithPathGroup.getChildren().get(i));
+            }
+
         }
         else{
             username_1.setText(othersPlayersNick.get(0));
@@ -620,42 +634,51 @@ public class GameSceneController {
             positionToNickname.put(1, othersPlayersNick.get(0));
             positionToNickname.put(2, othersPlayersNick.get(1));
             positionToNickname.put(3, othersPlayersNick.get(2));
+
+            for(int i=0; i<25; i++) {
+                currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
+                player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
+                player2FaithPathPosToImageView.put(i, (ImageView) player2_faithPathGroup.getChildren().get(i));
+                player3FaithPathPosToImageView.put(i, (ImageView) player3_faithPathGroup.getChildren().get(i));
+            }
         }
     }
 
-    public void setFaithPathMaps(){
-
+    public void setLorenzoFaithPathMap(){
         for(int i=0; i<25; i++) {
             currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
-            player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
-            player2FaithPathPosToImageView.put(i, (ImageView) player2_faithPathGroup.getChildren().get(i));
-            player3FaithPathPosToImageView.put(i, (ImageView) player3_faithPathGroup.getChildren().get(i));
+            lorenzoFaithPathPosToImageView.put(i, (ImageView) lorenzoFaithPathGroup.getChildren().get(i));
         }
-
     }
 
     public void updateFaithPath(UpdateFaithPath updateFaithPath) {
         int player;
 
-        if(updateFaithPath.getNickname().equals(gui.getNickname())){
-            currentFaithPathPosToImageView.get(oldCurrFPPos).setImage(null);
-            oldCurrFPPos=updateFaithPath.getPosition();
-            currentFaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+        if(updateFaithPath.isLorenzo()){
+            lorenzoFaithPathPosToImageView.get(oldLorenzoFPPos).setImage(null);
+            oldLorenzoFPPos=updateFaithPath.getPosition();
+            lorenzoFaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/BLACK_CROSS.png"));
         } else {
-            player = nicknameToPosition.get(updateFaithPath.getNickname());
+            if(updateFaithPath.getNickname().equals(gui.getNickname())){
+                currentFaithPathPosToImageView.get(oldCurrFPPos).setImage(null);
+                oldCurrFPPos=updateFaithPath.getPosition();
+                currentFaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+            } else {
+                player = nicknameToPosition.get(updateFaithPath.getNickname());
 
-            if(player==1){
-                player1FaithPathPosToImageView.get(oldPlayer1FPPos).setImage(null);
-                oldPlayer1FPPos=updateFaithPath.getPosition();
-                player1FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
-            } else if (player==2) {
-                player2FaithPathPosToImageView.get(oldPlayer2FPPos).setImage(null);
-                oldPlayer2FPPos=updateFaithPath.getPosition();
-                player2FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
-            } else if(player==3) {
-                player3FaithPathPosToImageView.get(oldPlayer3FPPos).setImage(null);
-                oldPlayer3FPPos=updateFaithPath.getPosition();
-                player3FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+                if(player==1){
+                    player1FaithPathPosToImageView.get(oldPlayer1FPPos).setImage(null);
+                    oldPlayer1FPPos=updateFaithPath.getPosition();
+                    player1FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+                } else if (player==2) {
+                    player2FaithPathPosToImageView.get(oldPlayer2FPPos).setImage(null);
+                    oldPlayer2FPPos=updateFaithPath.getPosition();
+                    player2FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+                } else if(player==3) {
+                    player3FaithPathPosToImageView.get(oldPlayer3FPPos).setImage(null);
+                    oldPlayer3FPPos=updateFaithPath.getPosition();
+                    player3FaithPathPosToImageView.get(updateFaithPath.getPosition()).setImage(new Image("/graphics/RED_CROSS.png"));
+                }
             }
         }
     }

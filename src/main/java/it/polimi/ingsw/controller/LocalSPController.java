@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.HandlerSP;
+import it.polimi.ingsw.client.view.ProductionType;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.exceptions.*;
@@ -16,19 +17,13 @@ import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.finalanswer.Lose;
 import it.polimi.ingsw.server.answer.finalanswer.Win;
-import it.polimi.ingsw.server.answer.infoanswer.ActionTokenInfo;
-import it.polimi.ingsw.server.answer.infoanswer.DevCardsSpaceInfo;
-import it.polimi.ingsw.server.answer.infoanswer.FaithPathInfo;
-import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
+import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.initialanswer.Connection;
 import it.polimi.ingsw.server.answer.request.RequestDoubleInt;
 import it.polimi.ingsw.server.answer.request.RequestInt;
 import it.polimi.ingsw.server.answer.request.SendMessage;
 import it.polimi.ingsw.server.answer.seegameboard.*;
-import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
-import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
-import it.polimi.ingsw.server.answer.turnanswer.PassLeaderCard;
-import it.polimi.ingsw.server.answer.turnanswer.ResetCard;
+import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.util.ArrayList;
 
@@ -75,18 +70,27 @@ public class LocalSPController {
 
             localDiscardFirstLeader();
 
+            PlayersInfo playersInfo = new PlayersInfo(1);
+            playersInfo.addNick(players.get(0));
+            handler.handleClient(playersInfo);
             handler.handleClient(new SendMessage("The game start!\n"));
             handler.handleClient(new InitializeGameBoard(gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
 
+            handler.handleClient(new UpdateFaithPath(null, 0, true));
+            handler.handleClient(new UpdateFaithPath(players.get(0), 0, false));
+
             while(!isEnd) {
+                handler.handleClient(new TurnStatus("START"));
                 localSeePlayerDashboard();
                 localSeeGameBoard();
                 localChooseTurn();
+                handler.handleClient(new TurnStatus("END"));
 
                 try {
                     currentActionToken = gameModel.drawActionToken();
                     handler.handleClient(new SendMessage("Drawn action token: "));
                     handler.handleClient(new ActionTokenInfo(currentActionToken));
+                    handler.handleClient(new UpdateFaithPath(null, gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionLorenzo(), true));
                 } catch (EmptyDecksException e) {
                     break;
                 } catch (InvalidChoiceException e) {
@@ -277,10 +281,11 @@ public class LocalSPController {
                 case ACTIVE_LEADER:
                     handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     pos=getAnswer();
+                    if(pos==3) break;
                     try{
                         turncontroller.activeLeader(0, pos);
                     } catch (InvalidChoiceException e) {
-                        handler.handleClient(new SendMessage("Invalid choice."));
+                        handler.handleClient(new ErrorMessage("ACTIVE_LEADER"));
                         handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));
                     }
                     break;
@@ -288,14 +293,16 @@ public class LocalSPController {
                 case DISCARD_LEADER:
                     handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     pos=getAnswer();
+                    if(pos==3) break;
                     try{
                         turncontroller.discardLeader(0, pos);
+                        handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
                         ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
                         if(!nick.isEmpty()) {
                             handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                         }
                     } catch (InvalidChoiceException e) {
-                        handler.handleClient(new SendMessage("Invalid choice."));
+                        handler.handleClient(new ErrorMessage("DISCARD_LEADER"));
                         handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));
                     }
                     break;
@@ -337,22 +344,25 @@ public class LocalSPController {
             if (answer == 1) {
                 handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 pos=getAnswer();
+                if(pos==3) break;
                 try{
                     turncontroller.activeLeader(0, pos);
                 } catch (InvalidChoiceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("ACTIVE_LEADER"));
                     handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));                }
             } else {
                 handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 pos=getAnswer();
+                if(pos==3) break;
                 try{
                     turncontroller.discardLeader(0, pos);
+                    handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
                     ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
                     if(!nick.isEmpty()) {
                         handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                     }
                 } catch (InvalidChoiceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("DISCARD_LEADER"));
                     handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));
                     localChooseTurn();
                 }
@@ -377,7 +387,7 @@ public class LocalSPController {
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
                 handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null, gameModel.getPlayers().get(0).getNickname()));
             } catch (NotEnoughSpaceException e) {
-                handler.handleClient(new SendMessage("Invalid choice."));
+                handler.handleClient(new ErrorMessage("MARKET_INVALID_SHELF"));
             }
 
             handler.handleClient(new RequestInt("STORAGE","Do you want to make other changes to the storage?"));
@@ -399,7 +409,6 @@ public class LocalSPController {
 
         ArrayList<Ball> market = new ArrayList<>(gameModel.getGameBoard().getMarket().getChosenColor(line));
         ArrayList<Ball> balls = new ArrayList<>();
-        ArrayList<Ball> toPlace = new ArrayList<>();
 
         if (gameModel.getPlayer(players.get(player)).WhiteBallLeader() == 2) {
             handler.handleClient(new RequestInt("WHITE","You have 2 active WhiteBall leaders, which one do you want to use in this turn? (1 or 2)"));
@@ -415,6 +424,7 @@ public class LocalSPController {
         for(Ball b : market) {
             if (b.getType().equals(BallColor.RED)) {
                 gameModel.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
+                handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
                 ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
                 if(!nick.isEmpty()) {
                     handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
@@ -437,44 +447,7 @@ public class LocalSPController {
             }
         }
 
-        for(Ball b : balls) {
-            int i = gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
-
-            if (gameModel.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
-                toPlace.add(new Ball(b.getType()));
-            } else {
-                if (i != 0) {
-                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
-                        for (int j = 0; j < players.size(); j++) {
-                            if (j != player) {
-                                gameModel.getPlayer(players.get(j)).move(1);
-                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
-                                if(!nick.isEmpty()) {
-                                    handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
-                                }
-                            }
-                        }
-                    } else {
-                        toPlace.add(new Ball(b.getType()));
-                        //gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i-1).setResourceAmount(1);
-                    }
-                } else {
-                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
-                        for (int j = 0; j < players.size(); j++) {
-                            if (j != player) {
-                                gameModel.getPlayer(players.get(j)).move(1);
-                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
-                                if(!nick.isEmpty()) {
-                                    handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
-                                }
-                            }
-                        }
-                    } else {
-                        toPlace.add(new Ball(b.getType()));
-                    }
-                }
-            }
-        }
+        ArrayList<Ball> toPlace = new ArrayList<>(localCheckEmptyShelves(player, balls));
 
         if(!toPlace.isEmpty()) {
             do {
@@ -492,17 +465,74 @@ public class LocalSPController {
                         handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null, gameModel.getPlayers().get(0).getNickname()));
                     }
                     toPlace.remove(choice.get(0) - 1);
-                    ArrayList<Ball> temp=new ArrayList<>(turncontroller.checkEmptyShelves(0,toPlace));
+                    ArrayList<Ball> temp=new ArrayList<>(localCheckEmptyShelves(0,toPlace));
                     toPlace.clear();
                     toPlace.addAll(temp);
                 } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("MARKET_INVALID_SHELF"));
                 }
 
                 choice.clear();
             } while (toPlace.size() > 0);
+
+            handler.handleClient(new MarketInfo(gameModel.getGameBoard().getMarket()));
         }
     }
+
+    /**
+     * This method checks the spaces for balls that need to be placed and returns and returns the
+     * only ones that can be add (to the storage or to the storage leader if present)
+     * @param player is the player index in array list players
+     * @param balls balls that need to be placed
+     * @return balls that can be placed
+     * @throws NotExistingPlayerException if the selected player doesn't exists
+     */
+    public ArrayList<Ball> localCheckEmptyShelves(int player, ArrayList<Ball> balls) throws NotExistingPlayerException {
+        ArrayList<Ball> toPlace = new ArrayList<>();
+
+        for (Ball b : balls) {
+            int i = gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
+
+            if (gameModel.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
+                toPlace.add(new Ball(b.getType()));
+            } else {
+                if (i != 0) {
+                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().getShelves().get(i - 1).getAvailableSpace() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) {
+                                gameModel.getPlayer(players.get(j)).move(1);
+                                handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
+                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
+                                }
+                            }
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                    }
+                } else {
+                    if (gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().emptyShelves() == 0) {
+                        for (int j = 0; j < players.size(); j++) {
+                            if (j != player) {
+                                gameModel.getPlayer(players.get(j)).move(1);
+                                handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
+                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                if(!nick.isEmpty()) {
+                                    handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
+                                }
+                            }
+                        }
+                    } else {
+                        toPlace.add(new Ball(b.getType()));
+                    }
+                }
+            }
+        }
+
+        return toPlace;
+    }
+
 
 
     /**
@@ -533,6 +563,9 @@ public class LocalSPController {
         try {
             gameModel.getPlayer(players.get(0)).buyCard(card, space);
             gameModel.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
+
+            handler.handleClient(new CardsSpaceInfo(players.get(0), level, space, card.getCardID()));
+            handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
         } catch(InvalidSpaceCardException e) {
             handler.handleClient(new SendMessage("INVALID"));
             Catch=true;
@@ -542,14 +575,14 @@ public class LocalSPController {
     /**
      * This method handles the activation of a production
      * @param type production type
-     * @throws NotExistingPlayerException if the choice is invalid
-     * @throws InvalidChoiceException if the player doesn't exist
+     * @throws NotExistingPlayerException if the player doesn't exist
      */
-    public void localActiveProduction(int type) throws NotExistingPlayerException, InvalidChoiceException {
+    public void localActiveProduction(int type) throws NotExistingPlayerException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
-        switch (type) {
-            case 1:
+        ProductionType productionType = ProductionType.fromInteger(type);
+        switch (productionType) {
+            case BASIC:
                 handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
                 Resource input1 = parser(getAnswer());
                 handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
@@ -560,22 +593,23 @@ public class LocalSPController {
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
                 try {
                     gameModel.getPlayer(players.get(0)).ActiveProductionBase();
+                    handler.handleClient(new BasicProductionInfo(input1, input2, output));
                 } catch (NotEnoughResourceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("ACTIVE_BASE_PRODUCTION"));
                 }
                 break;
 
-            case 2:
+            case DEVELOPMENT_CARD:
                 handler.handleClient(new RequestInt("DEVCARD","Insert the number of the space containing the development card"));
                 int space = getAnswer();
                 try {
                     gameModel.getPlayer(players.get(0)).ActiveProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("ACTIVE_DEV_CARD"));
                 }
                 break;
 
-            case 3:
+            case PRODUCTION_LEADER:
                 handler.handleClient(new RequestInt("LEADCARD","Insert the number of the production leader that you want to use"));
                 int index = getAnswer();
                 handler.handleClient(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
@@ -583,24 +617,25 @@ public class LocalSPController {
                 try {
                     gameModel.getPlayer(players.get(0)).ActiveProductionLeader(index, outputProduction);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("ACTIVE_PROD_LEADER"));
                 }
                 break;
 
-            case 4:
+            case DO_PRODUCTION:
                 try {
                     if (gameModel.getPlayer(players.get(0)).getActivatedProduction().isEmpty()) {
-                        handler.handleClient(new SendMessage("Invalid choice."));
+                        handler.handleClient(new ErrorMessage("DO_PRODUCTION_INVALID"));
                         Catch=true;
                     } else {
                         gameModel.getPlayer(players.get(0)).doProduction();
+                        handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
                         ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
                         if(!nick.isEmpty()) {
                             handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                         }
                     }
                 } catch (NotEnoughResourceException e) {
-                    handler.handleClient(new SendMessage("Invalid choice."));
+                    handler.handleClient(new ErrorMessage("DO_PRODUCTION_NOT_ENOUGH_RES"));
                     Catch=true;
                 }
                 break;
