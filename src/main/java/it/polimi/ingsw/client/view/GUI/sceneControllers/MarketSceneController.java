@@ -56,6 +56,10 @@ public class MarketSceneController {
     public Group shelves_group;
     public Label selectShelf_label;
     public Group buttonMarket_group;
+    public ImageView chosenBall_1;
+    public ImageView chosenBall_2;
+    public ImageView chosenBall_3;
+    public ImageView chosenBall_4;
     @FXML ImageView im00;
     @FXML ImageView im01;
     @FXML ImageView im02;
@@ -139,12 +143,6 @@ public class MarketSceneController {
         }
 
         back_button.setOnAction(actionEvent -> gui.changeGameBoard());
-
-        /*Use_button.setOnAction(actionEvent -> {
-            gui.getHandler().send(new SendInt(2));//non voglio vedere più niente
-            gui.getHandler().send(new SendInt(3));//in questo turno uso il mercato
-            usePhase();
-        });*/
     }
 
     public void usePhase() {
@@ -308,14 +306,41 @@ public class MarketSceneController {
                     finalBallToSet.setEffect(null);
             });
 
-
-            int finalI = i + 1;
-            finalBallToSet.setOnMouseClicked(mouseEvent -> {
-                finalBallToSet.setEffect(selectedGlow);
-                gui.getHandler().send(new SendInt(finalI));
+            chosenBall_1.setOnMouseClicked(mouseEvent -> {
+                chosenBall_1.setEffect(selectedGlow);
+                gui.getHandler().send(new SendInt((1)));
                 chosenBall_group.setDisable(true);
                 selectShelf_label.setOpacity(0);
             });
+
+            chosenBall_2.setOnMouseClicked(mouseEvent -> {
+                chosenBall_2.setEffect(selectedGlow);
+                gui.getHandler().send(new SendInt((2)));
+                chosenBall_group.setDisable(true);
+                selectShelf_label.setOpacity(0);
+            });
+
+            chosenBall_2.setOnMouseClicked(mouseEvent -> {
+                chosenBall_2.setEffect(selectedGlow);
+                gui.getHandler().send(new SendInt((2)));
+                chosenBall_group.setDisable(true);
+                selectShelf_label.setOpacity(0);
+            });
+
+            chosenBall_3.setOnMouseClicked(mouseEvent -> {
+                chosenBall_3.setEffect(selectedGlow);
+                gui.getHandler().send(new SendInt((3)));
+                chosenBall_group.setDisable(true);
+                selectShelf_label.setOpacity(0);
+            });
+
+            chosenBall_4.setOnMouseClicked(mouseEvent -> {
+                chosenBall_4.setEffect(selectedGlow);
+                gui.getHandler().send(new SendInt((4)));
+                chosenBall_group.setDisable(true);
+                selectShelf_label.setOpacity(0);
+            });
+
         }
     }
 
@@ -326,14 +351,25 @@ public class MarketSceneController {
             Node n = shelves_group.getChildren().get(i);
             n.setOnMouseEntered(mouseEvent -> gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.HAND));
             n.setOnMouseExited(mouseEvent -> gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.DEFAULT));
+        }
 
-            int finalI = i +1;
-            n.setOnMouseClicked(mouseEvent -> {
-                gui.getHandler().send(new SendInt(finalI));
+        shelves_group.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
+                gui.getHandler().send(new SendInt(1));
                 selectShelf_label.setOpacity(0);
                 shelves_group.setDisable(true);
-            });
-        }
+        });
+
+        shelves_group.getChildren().get(1).setOnMouseClicked(mouseEvent -> {
+            gui.getHandler().send(new SendInt(2));
+            selectShelf_label.setOpacity(0);
+            shelves_group.setDisable(true);
+        });
+
+        shelves_group.getChildren().get(2).setOnMouseClicked(mouseEvent -> {
+            gui.getHandler().send(new SendInt(3));
+            selectShelf_label.setOpacity(0);
+            shelves_group.setDisable(true);
+        });
 
     }
 
