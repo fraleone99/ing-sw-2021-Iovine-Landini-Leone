@@ -336,9 +336,10 @@ public class MarketSceneController {
 
             ballToSet.setOnMouseExited(mouseEvent -> {
                 gui.getSceneMap().get(GUI.MARKET).setCursor(Cursor.DEFAULT);
-                if(finalBallToSet.getEffect().equals(borderGlow))
+                if (finalBallToSet.getEffect().equals(borderGlow))
                     finalBallToSet.setEffect(null);
             });
+        }
 
             chosenBall_1.setOnMouseClicked(mouseEvent -> {
                 chosenBall_1.setEffect(selectedGlow);
@@ -374,10 +375,6 @@ public class MarketSceneController {
                 chosenBall_group.setDisable(true);
                 selectShelf_label.setOpacity(0);
             });
-
-
-
-        }
     }
 
     public void chooseShelf() {
@@ -430,7 +427,7 @@ public class MarketSceneController {
                 break;
             default:
                 error_label.setText("ERROR");
-                error_label.setOpacity(0);
+                error_label.setOpacity(1);
         }
     }
 

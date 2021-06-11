@@ -419,12 +419,16 @@ public class TurnController {
                     switch (resource) {
                         case COIN:
                             balls.add(new Ball(BallColor.YELLOW));
+                            break;
                         case SERVANT:
                             balls.add(new Ball(BallColor.PURPLE));
+                            break;
                         case SHIELD:
                             balls.add(new Ball(BallColor.BLUE));
+                            break;
                         case STONE:
                             balls.add(new Ball(BallColor.GREY));
+                            break;
                     }
                 }
             } else {
