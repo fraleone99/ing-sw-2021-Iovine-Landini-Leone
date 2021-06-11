@@ -289,6 +289,20 @@ public class MarketSceneController {
             ballToSet.setEffect(null);
         }
 
+        if(ball.getBalls().size() < 4){
+            switch (ball.getBalls().size()){
+                case 1:
+                    chosenBall_2.setDisable(true);
+                    chosenBall_3.setDisable(true);
+                    chosenBall_4.setDisable(true);
+                case 2:
+                    chosenBall_3.setDisable(true);
+                    chosenBall_4.setDisable(true);
+                case 3:
+                    chosenBall_4.setDisable(true);
+            }
+        }
+
 
         for(int i = 0; i < ball.getBalls().size(); i++) {
             ballToSet = (ImageView) chosenBall_group.getChildren().get(i);
@@ -340,6 +354,8 @@ public class MarketSceneController {
                 chosenBall_group.setDisable(true);
                 selectShelf_label.setOpacity(0);
             });
+
+
 
         }
     }
