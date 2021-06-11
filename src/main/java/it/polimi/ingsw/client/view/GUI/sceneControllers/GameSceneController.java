@@ -475,7 +475,7 @@ public class GameSceneController {
         leader2.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
     }
 
-        public void developmentCardProduction() {
+    public void developmentCardProduction() {
         basicProduction.setOpacity(0);
         developmentCardProduction.setOpacity(0);
         endProduction.setOpacity(0);
