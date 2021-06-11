@@ -14,7 +14,8 @@
             "type": "UNKNOWN",
             "amount": 1
           }
-        ]
+        ],
+      "faithSteps": 1
     },
     "requirements": [
       {
@@ -45,7 +46,8 @@
           "type": "UNKNOWN",
           "amount": 1
         }
-      ]
+      ],
+      "faithSteps": 1
     },
     "requirements": [
       {
@@ -76,7 +78,8 @@
           "type": "UNKNOWN",
           "amount": 1
         }
-      ]
+      ],
+      "faithSteps": 1
     },
     "requirements": [
       {
@@ -107,7 +110,8 @@
           "type": "UNKNOWN",
           "amount": 1
         }
-      ]
+      ],
+      "faithSteps": 1
     },
     "requirements": [
       {
