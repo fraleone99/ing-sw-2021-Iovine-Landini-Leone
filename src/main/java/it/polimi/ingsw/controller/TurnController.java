@@ -167,7 +167,7 @@ public class TurnController {
                     try {
                         activeLeader(player, pos);
                         for(String nickname: players){
-                            view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                            view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                         }
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
@@ -199,7 +199,7 @@ public class TurnController {
                     int line = view.useMarket(players.get(player));
                     useMarket(player, line);
                     for(String nickname: players){
-                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                     }
                     break;
 
@@ -208,7 +208,7 @@ public class TurnController {
                     int space = view.askSpace(players.get(player));
                     buyCard(player, card.get(0), card.get(1), space);
                     for(String nickname: players){
-                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                     }
                     break;
 
@@ -218,7 +218,7 @@ public class TurnController {
                         activeProduction(player, type);
                     } while (type != 4);
                     for(String nickname: players){
-                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                     }
                     break;
 
@@ -236,7 +236,7 @@ public class TurnController {
                 try {
                     activeLeader(player, pos);
                     for(String nickname: players){
-                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                     }
                 } catch (InvalidChoiceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
