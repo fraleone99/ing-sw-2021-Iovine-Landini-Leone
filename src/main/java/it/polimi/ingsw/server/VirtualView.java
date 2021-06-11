@@ -376,6 +376,19 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    public void activeOtherLeaderCard(String player, int idCard, String nickname, int pos) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new OtherLeaderCard(idCard, "ACTIVE", player, pos));
+    }
+
+    public void discardOtherLeaderCard(String player, int idCard, String nickname, int pos) {
+        ClientHandler client=namesToClient.get(nickname);
+
+        client.send(new OtherLeaderCard(idCard, "DISCARD", player, pos));
+    }
+
+
     public ArrayList<Integer> moveShelves(String nickname) throws InterruptedException {
         ClientHandler client=namesToClient.get(nickname);
         ArrayList<Integer> moves=new ArrayList<>();

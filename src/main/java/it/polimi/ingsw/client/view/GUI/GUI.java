@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import javax.print.attribute.standard.MediaSize;
 import java.io.IOException;
 import java.util.*;
 
@@ -549,6 +550,14 @@ public class GUI extends Application implements View {
     @Override
     public void chooseWhiteBallLeader(String message) {
         Platform.runLater(()->{marketSceneController.whiteBallLeader();});
+    }
+
+    public void activeOtherLeaderCard(OtherLeaderCard info) {
+        Platform.runLater( () -> gameSceneController.activeOtherLeaderCard(info));
+    }
+
+    public void discardOtherLeaderCard(OtherLeaderCard info) {
+        Platform.runLater( () -> gameSceneController.discardOtherLeaderCard(info));
     }
 
     @Override

@@ -3,7 +3,7 @@
     "color":"PURPLE",
     "cardID": 17,
     "level":1,
-    "victoryPoints": 2,
+    "victoryPoints": 3,
     "cost": [
       {
         "type": "SERVANT",
@@ -421,7 +421,12 @@
           "amount": 1
         }
       ],
-      "outputProduction": [],
+      "outputProduction": [
+        {
+          "type": "COIN",
+          "amount": 1
+        }
+      ],
       "faithSteps":0
     }
   },
@@ -444,6 +449,10 @@
       "inputProduction": [
         {
           "type": "SERVANT",
+          "amount": 1
+        },
+        {
+          "type": "COIN",
           "amount": 1
         }
       ],
@@ -542,7 +551,7 @@
       "inputProduction": [
         {
           "type": "SHIELD",
-          "amount": 1
+          "amount": 2
         }
       ],
       "outputProduction": [
@@ -969,7 +978,7 @@
       "inputProduction": [
         {
           "type": "SERVANT",
-          "amount": 2
+          "amount": 1
         }
       ],
       "outputProduction": [
@@ -1198,7 +1207,7 @@
       "outputProduction": [
         {
           "type": "SERVANT",
-          "amount": 2
+          "amount": 1
         }
       ],
       "faithSteps": 0
@@ -1371,7 +1380,7 @@
       "inputProduction": [
         {
           "type": "COIN",
-          "amount": 1
+          "amount": 2
         }
       ],
       "outputProduction": [
@@ -1443,7 +1452,7 @@
       "outputProduction": [
         {
           "type": "COIN",
-          "amount": 2
+          "amount": 1
         }
       ],
       "faithSteps": 3
