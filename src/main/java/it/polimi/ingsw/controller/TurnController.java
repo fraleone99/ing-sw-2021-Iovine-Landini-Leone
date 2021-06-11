@@ -166,6 +166,9 @@ public class TurnController {
                     if(pos==3) break;
                     try {
                         activeLeader(player, pos);
+                        for(String nickname: players){
+                            view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                        }
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
                         view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
@@ -195,12 +198,18 @@ public class TurnController {
                     if (choice == 1) manageStorage(player);
                     int line = view.useMarket(players.get(player));
                     useMarket(player, line);
+                    for(String nickname: players){
+                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                    }
                     break;
 
                 case BUY_DEVELOPMENT:
                     ArrayList<Integer> card = new ArrayList<>(view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI()));
                     int space = view.askSpace(players.get(player));
                     buyCard(player, card.get(0), card.get(1), space);
+                    for(String nickname: players){
+                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                    }
                     break;
 
                 case ACTIVE_PRODUCTION:
@@ -208,6 +217,9 @@ public class TurnController {
                         type = view.askType(players.get(player));
                         activeProduction(player, type);
                     } while (type != 4);
+                    for(String nickname: players){
+                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                    }
                     break;
 
             }
@@ -223,6 +235,9 @@ public class TurnController {
                 if(pos==3) break;
                 try {
                     activeLeader(player, pos);
+                    for(String nickname: players){
+                        view.seeStorage(players.get(player), game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), nickname);
+                    }
                 } catch (InvalidChoiceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
                     view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());

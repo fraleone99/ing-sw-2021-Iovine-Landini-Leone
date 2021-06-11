@@ -39,6 +39,7 @@ public class StorageInfo implements Answer {
         this.shelf2Amount = storage.getAmountShelf(2);
         this.shelf3Amount = storage.getAmountShelf(3);
         if(vault!=null) {
+            vaultUpdate = true;
             this.coinsAmount = vault.getResource(Resource.COIN);
             this.servantsAmount = vault.getResource(Resource.SERVANT);
             this.stoneAmount = vault.getResource(Resource.STONE);

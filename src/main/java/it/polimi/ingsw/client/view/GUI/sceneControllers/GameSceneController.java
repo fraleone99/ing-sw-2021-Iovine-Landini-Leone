@@ -120,6 +120,12 @@ public class GameSceneController {
     @FXML Group spaceGroup;
     @FXML Group chooseTurnGroup;
     @FXML Group basicProductionGroup;
+    @FXML ImageView player1_leader1;
+    @FXML ImageView player1_leader2;
+    @FXML ImageView player2_leader1;
+    @FXML ImageView player2_leader2;
+    @FXML ImageView player3_leader1;
+    @FXML ImageView player3_leader2;
 
     ArrayList<Integer> leaderCards = new ArrayList<>();
     int oldCurrFPPos=0;
@@ -238,6 +244,7 @@ public class GameSceneController {
     }
 
     public void askTurn() {
+        chooseTurnGroup.setOpacity(1);
         turn_market.setOpacity(1);
         turn_activeLeader.setOpacity(1);
         turn_activeProduction.setOpacity(1);
@@ -413,6 +420,8 @@ public class GameSceneController {
             active2.setOpacity(0);
         }
     }
+
+
 
     public void chooseProduction() {
         chooseTurnGroup.setOpacity(0);
@@ -594,6 +603,8 @@ public class GameSceneController {
             username_1.setText(othersPlayersNick.get(0));
             username_2.setText("");
             username_3.setText("");
+            player1_leader1.setImage(new Image("/graphics/65.png"));
+            player1_leader2.setImage(new Image("/graphics/65.png"));
 
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
             positionToNickname.put(1, othersPlayersNick.get(0));
@@ -609,6 +620,10 @@ public class GameSceneController {
             username_1.setText(othersPlayersNick.get(0));
             username_2.setText(othersPlayersNick.get(1));
             username_3.setText("");
+            player1_leader1.setImage(new Image("/graphics/65.png"));
+            player1_leader2.setImage(new Image("/graphics/65.png"));
+            player2_leader1.setImage(new Image("/graphics/65.png"));
+            player2_leader2.setImage(new Image("/graphics/65.png"));
 
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
             nicknameToPosition.put(othersPlayersNick.get(1) , 2);
@@ -626,6 +641,12 @@ public class GameSceneController {
             username_1.setText(othersPlayersNick.get(0));
             username_2.setText(othersPlayersNick.get(1));
             username_3.setText(othersPlayersNick.get(2));
+            player1_leader1.setImage(new Image("/graphics/65.png"));
+            player1_leader2.setImage(new Image("/graphics/65.png"));
+            player2_leader1.setImage(new Image("/graphics/65.png"));
+            player2_leader2.setImage(new Image("/graphics/65.png"));
+            player3_leader1.setImage(new Image("/graphics/65.png"));
+            player3_leader2.setImage(new Image("/graphics/65.png"));
 
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
             nicknameToPosition.put(othersPlayersNick.get(1) , 2);

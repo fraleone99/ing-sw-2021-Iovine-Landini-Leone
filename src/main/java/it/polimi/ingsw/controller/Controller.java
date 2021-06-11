@@ -135,14 +135,26 @@ public class Controller {
     public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
                     break;
             case 1:
                 int resource1 = view.chooseResource(players.get(i), "second", 1);
                     addInitialResource(i, resource1,1);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
                     break;
             case 2: resource1 =view.chooseResource(players.get(i), "third",1);
                     addInitialResource(i, resource1,1);
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
                     for(String s: players){
                         view.updateFaithPath(s, players.get(i), gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                     }
