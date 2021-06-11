@@ -148,7 +148,7 @@ public class GameSceneController {
     private final HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player2FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
-    private HashMap<Integer, ImageView> lorenzoFaithPathPosToImageView = new HashMap<>();
+    private final HashMap<Integer, ImageView> lorenzoFaithPathPosToImageView = new HashMap<>();
 
     public void setGui(GUI gui) {
         this.gui = gui;

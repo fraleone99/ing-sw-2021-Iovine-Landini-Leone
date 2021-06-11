@@ -70,7 +70,11 @@ public class Controller {
             }
             for(String s: players){
                 for(String n: players){
-                    view.updateFaithPath(s, n, 0, false);
+                    if(n.equals(players.get(0)) || n.equals(players.get(1))) {
+                        view.updateFaithPath(s, n, 0, false);
+                    } else {
+                        view.updateFaithPath(s, n, 1, false);
+                    }
                 }
             }
 
@@ -155,9 +159,6 @@ public class Controller {
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
-                    for(String s: players){
-                        view.updateFaithPath(s, players.get(i), gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
-                    }
                     break;
             case 3: resource1 =view.chooseResource(players.get(i), "fourth",1);
                     addInitialResource(i, resource1,2);
@@ -168,9 +169,6 @@ public class Controller {
                         addInitialResource(i, resource2,1);
                     }
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
-                    for(String s: players){
-                        view.updateFaithPath(s, players.get(i), gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
-                    }
         }
     }
 
