@@ -30,7 +30,7 @@ public class InitialResourcesController {
         });
 
         stone.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            gui.getHandler().send(new SendInt(2));
+            gui.getHandler().send(new SendInt(4));
             gui.getSecondaryStage().close();
         });
 
@@ -40,7 +40,7 @@ public class InitialResourcesController {
         });
 
         servant.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            gui.getHandler().send(new SendInt(4));
+            gui.getHandler().send(new SendInt(2));
             gui.getSecondaryStage().close();
         });
     }
