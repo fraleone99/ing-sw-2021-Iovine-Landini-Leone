@@ -139,26 +139,13 @@ public class Controller {
     public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
                     break;
             case 1:
                 int resource1 = view.chooseResource(players.get(i), "second", 1);
                     addInitialResource(i, resource1,1);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
                     break;
             case 2: resource1 =view.chooseResource(players.get(i), "third",1);
                     addInitialResource(i, resource1,1);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE,10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT,10);
                     break;
             case 3: resource1 =view.chooseResource(players.get(i), "fourth",1);
                     addInitialResource(i, resource1,2);
@@ -185,19 +172,15 @@ public class Controller {
             switch (resource) {
                 case 1:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
                 case 2:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
                 case 3:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
                 case 4:
                     gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
-                    view.seeStorage(players.get(player),gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
                     break;
             }
         } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
