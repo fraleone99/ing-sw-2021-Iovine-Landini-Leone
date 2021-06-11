@@ -167,6 +167,7 @@ public class TurnController {
                     try {
                         activeLeader(player, pos);
                         for(String nickname: players){
+                            view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
                             view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                         }
                     } catch (InvalidChoiceException e) {
@@ -181,6 +182,7 @@ public class TurnController {
                     try {
                         discardLeader(player, pos);
                         for(String s: players){
+                            view.discardOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), s, pos);
                             view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                         }
                         ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
@@ -236,6 +238,7 @@ public class TurnController {
                 try {
                     activeLeader(player, pos);
                     for(String nickname: players){
+                        view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
                         view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
                     }
                 } catch (InvalidChoiceException e) {
@@ -248,6 +251,7 @@ public class TurnController {
                 try {
                     discardLeader(player, pos);
                     for(String s: players){
+                        view.discardOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), s, pos);
                         view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
                     }
                     ArrayList<String> nick=new ArrayList<>(checkPapalPawn());

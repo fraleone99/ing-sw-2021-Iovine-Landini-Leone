@@ -523,6 +523,44 @@ public class GameSceneController {
 
     }
 
+    public void activeOtherLeaderCard(OtherLeaderCard info) {
+        int player = nicknameToPosition.get(info.getOwner());
+
+        if(player==1) {
+            if(info.getPos()==1) {
+                player1_leader1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+            } else {
+                player1_leader2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+            }
+        } else if (player==2) {
+            if(info.getPos()==1) {
+                player2_leader1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+            } else {
+                player2_leader2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+            }
+        } else if (player==3) {
+            if(info.getPos()==1) {
+                player3_leader1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+            } else {
+                player3_leader2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+            }
+        }
+    }
+
+    public void discardOtherLeaderCard(OtherLeaderCard info) {
+        int player = nicknameToPosition.get(info.getOwner());
+
+        if(player==1) {
+            if(info.getPos()==1) player1_leader1.setOpacity(0);
+            else player1_leader2.setOpacity(0);
+        } else if(player==2) {
+            if(info.getPos()==1) player2_leader1.setOpacity(0);
+            else player2_leader2.setOpacity(0);
+        } else if(player==3) {
+            if(info.getPos()==1) player3_leader1.setOpacity(0);
+            else player3_leader2.setOpacity(0);
+        }
+    }
 
     public void updateLeaderCards(ArrayList<Integer> cards) {
         leaderCards.addAll(cards);

@@ -77,6 +77,16 @@ public class CLI implements View {
     }
 
     @Override
+    public void activeOtherLeaderCard(OtherLeaderCard info) {
+
+    }
+
+    @Override
+    public void discardOtherLeaderCard(OtherLeaderCard info) {
+
+    }
+
+    @Override
     public void errorHandling(String errorType) {
         System.out.println("Invalid input! Please try again");
     }

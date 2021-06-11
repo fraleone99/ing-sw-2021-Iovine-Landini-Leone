@@ -115,6 +115,10 @@ public interface View {
 
     void updateDevCardsSpace(CardsSpaceInfo info);
 
+    void activeOtherLeaderCard(OtherLeaderCard info);
+
+    void discardOtherLeaderCard(OtherLeaderCard info);
+
     void errorHandling(String errorType);
 
     void updateGrid(ArrayList<Integer> idCards);
