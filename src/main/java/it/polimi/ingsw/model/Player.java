@@ -277,6 +277,8 @@ public class Player {
 
         playerDashboard.AddResources(TotOutput);
         playerDashboard.getFaithPath().moveForward(TotFaithSteps);
+
+        activatedProduction.clear();
     }
 
 
