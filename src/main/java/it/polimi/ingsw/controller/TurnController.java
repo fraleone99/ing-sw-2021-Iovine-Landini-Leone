@@ -450,7 +450,7 @@ public class TurnController {
                     toPlace.clear();
                     toPlace.addAll(temp);
                 } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
-                    view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
+                    view.sendErrorMessage(players.get(player), "MARKET_INVALID_STORAGE_LEADER");
                 }
 
                 choice.clear();

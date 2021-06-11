@@ -82,6 +82,8 @@ public class GUI extends Application implements View {
     private boolean isMyTurn = false;
     StorageInfo lastStorage;
     private boolean isSinglePlayer=false;
+    ArrayList<Integer> leaderCards = new ArrayList<>();
+
 
     public static void main(String[] args) {
         launch(args);
@@ -231,6 +233,8 @@ public class GUI extends Application implements View {
             });
 
             case "MARKET_INVALID_SHELF": Platform.runLater(() -> marketSceneController.error(error));
+                break;
+            case "MARKET_INVALID_STORAGE_LEADER": Platform.runLater(() -> marketSceneController.error(error));
                 break;
             default : Platform.runLater(() -> errorDialog("Generic Error!"));
         }
@@ -544,7 +548,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void chooseWhiteBallLeader(String message) {
-
+        Platform.runLater(()->{marketSceneController.whiteBallLeader();});
     }
 
     @Override
@@ -705,5 +709,9 @@ public class GUI extends Application implements View {
 
     public Map<String, Scene> getSceneMap() {
         return sceneMap;
+    }
+
+    public ArrayList<Integer> getLeaderCards() {
+        return leaderCards;
     }
 }

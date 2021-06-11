@@ -127,7 +127,6 @@ public class GameSceneController {
     @FXML ImageView player3_leader1;
     @FXML ImageView player3_leader2;
 
-    ArrayList<Integer> leaderCards = new ArrayList<>();
     int oldCurrFPPos=0;
     int oldPlayer1FPPos=0;
     int oldPlayer2FPPos=0;
@@ -411,11 +410,11 @@ public class GameSceneController {
     }
 
     public void resetCard(int pos) {
-        if(leaderCards.get(0)==pos && leader1.getOpacity()==1) {
+        if(gui.getLeaderCards().get(0)==pos && leader1.getOpacity()==1) {
             leader1.setOpacity(0.5);
             active1.setOpacity(0);
         }
-        if(leaderCards.get(1)==pos && leader2.getOpacity()==1) {
+        if(gui.getLeaderCards().get(1)==pos && leader2.getOpacity()==1) {
             leader2.setOpacity(0.5);
             active2.setOpacity(0);
         }
@@ -525,7 +524,7 @@ public class GameSceneController {
 
 
     public void updateLeaderCards(ArrayList<Integer> cards) {
-        leaderCards.addAll(cards);
+        gui.getLeaderCards().addAll(cards);
         leader1.setImage(new Image("/graphics/" + cards.get(0) + ".png"));
         leader2.setImage(new Image("/graphics/" + cards.get(1) + ".png"));
     }

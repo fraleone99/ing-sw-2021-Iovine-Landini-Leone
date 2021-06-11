@@ -15,7 +15,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -24,7 +23,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +42,7 @@ public class MarketSceneController {
     public CheckBox manage_firstShelf;
     public CheckBox manage_secondShelf;
     public CheckBox manage_thirdShelf;
-    public Label invertShelfError_label;
+    public Label error_label;
     public Button ok_manageStorage;
     public Label invertShelf_label;
     public Group manageStorage_group;
@@ -60,6 +58,11 @@ public class MarketSceneController {
     public ImageView chosenBall_2;
     public ImageView chosenBall_3;
     public ImageView chosenBall_4;
+    public Button storageLeader_button;
+    public ImageView storageLeader_1;
+    public ImageView storageLeader_2;
+    public Group leader_group;
+    public Label white_label;
     @FXML ImageView im00;
     @FXML ImageView im01;
     @FXML ImageView im02;
@@ -127,6 +130,8 @@ public class MarketSceneController {
         Image rampIm = new Image(ballColorPathMap.get(market.getRamp().getType()));
         ramp.setImage(rampIm);
 
+
+
     }
 
     public void seePhase() {
@@ -134,6 +139,9 @@ public class MarketSceneController {
         reorganizeQuestion_group.setOpacity(0);
         selectShelf_label.setOpacity(0);
         back_button.setDisable(false);
+        storageLeader_button.setOpacity(0);
+        storageLeader_1.setOpacity(0);
+        storageLeader_2.setOpacity(0);
 
         ImageView ballToSet;
         for(int i = 0; i < chosenBall_group.getChildren().size(); i++) {
@@ -148,6 +156,7 @@ public class MarketSceneController {
     public void usePhase() {
         reorganizeQuestion_group.setOpacity(0);
         buttonMarket_group.setDisable(false);
+        storageLeader_button.setOpacity(0);
 
         for(int i=0; i< buttonMarket_group.getChildren().size(); i++){
             int finalInti = i + 1;
@@ -212,6 +221,11 @@ public class MarketSceneController {
         back_button.setDisable(true);
         selectShelf_label.setOpacity(0);
         buttonMarket_group.setDisable(true);
+        storageLeader_button.setOpacity(0);
+
+        storageLeader_1.setImage(new Image("/graphics/" + gui.getLeaderCards().get(0) +".png"));
+        storageLeader_2.setImage(new Image("/graphics/" + gui.getLeaderCards().get(1) +".png"));
+
 
         ImageView ballToSet;
         for(int i = 0; i < chosenBall_group.getChildren().size(); i++) {
@@ -227,7 +241,9 @@ public class MarketSceneController {
     public void moveShelves() {
         reorganizeQuestion_group.setOpacity(0);
         manageStorage_group.setOpacity(1);
-        invertShelfError_label.setOpacity(0);
+        error_label.setOpacity(0);
+        storageLeader_button.setOpacity(0);
+
         for(Node node : choiceShelf_group.getChildren()){
             ((CheckBox) node).setSelected(false);
         }
@@ -240,7 +256,7 @@ public class MarketSceneController {
                     selected++;
             }
             if(selected!=2) {
-                invertShelfError_label.setOpacity(1);
+                error_label.setOpacity(1);
             }
             else {
                 if(manage_firstShelf.isSelected() && manage_secondShelf.isSelected()) {
@@ -264,6 +280,10 @@ public class MarketSceneController {
         selectShelf_label.setOpacity(0);
         chosenBall_group.setDisable(false);
         buttonMarket_group.setDisable(true);
+        storageLeader_button.setDisable(true);
+        leader_group.setDisable(true);
+        white_label.setOpacity(0);
+        error_label.setOpacity(0);
 
         ImageView ballToSet;
 
@@ -362,6 +382,9 @@ public class MarketSceneController {
 
     public void chooseShelf() {
         shelves_group.setDisable(false);
+        storageLeader_button.setOpacity(1);
+        storageLeader_button.setDisable(false);
+
 
         for(int i = 0; i<3; i++){
             Node n = shelves_group.getChildren().get(i);
@@ -387,9 +410,44 @@ public class MarketSceneController {
             shelves_group.setDisable(true);
         });
 
+        storageLeader_button.setOnAction(actionEvent -> {
+            gui.getHandler().send(new SendInt(4));
+            leader_group.setDisable(false);
+        });
+
+
     }
 
     public void error(String error) {
-        invertShelfError_label.setOpacity(1);
+        switch (error) {
+            case "MARKET_INVALID_SHELF" :
+                error_label.setText("INVALID CHOICE");
+                error_label.setOpacity(1);
+                break;
+            case "MARKET_INVALID_STORAGE_LEADER" :
+                error_label.setText("INVALID CHOICE");
+                error_label.setOpacity(1);
+                break;
+            default:
+                error_label.setText("ERROR");
+                error_label.setOpacity(0);
+        }
+    }
+
+    public void whiteBallLeader() {
+        leader_group.setDisable(false);
+        shelves_group.setDisable(true);
+        chosenBall_group.setDisable(true);
+        white_label.setOpacity(1);
+
+        storageLeader_1.setOnMouseClicked(mouseEvent -> {
+            gui.getHandler().send(new SendInt(1));
+            white_label.setOpacity(0);
+        });
+
+        storageLeader_2.setOnMouseClicked(mouseEvent -> {
+            gui.getHandler().send(new SendInt(2));
+            white_label.setOpacity(0);
+        });
     }
 }

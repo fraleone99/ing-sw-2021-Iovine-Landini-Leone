@@ -70,7 +70,7 @@
          </children>
       </Group>
       <Button fx:id="back_button" layoutX="85.0" layoutY="56.0" mnemonicParsing="false" text="Back" />
-      <Group fx:id="chosenBall_group" layoutX="870.0" layoutY="184.0">
+      <Group fx:id="chosenBall_group" layoutX="908.0" layoutY="123.0">
          <children>
             <ImageView fx:id="chosenBall_1" fitHeight="76.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="chosenBall_2" fitHeight="76.0" fitWidth="82.0" layoutX="82.0" pickOnBounds="true" preserveRatio="true" />
@@ -78,12 +78,12 @@
             <ImageView fx:id="chosenBall_4" fitHeight="76.0" fitWidth="82.0" layoutX="246.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Group>
-      <ImageView fx:id="storage" fitHeight="320.0" fitWidth="304.0" layoutX="882.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="storage" fitHeight="320.0" fitWidth="304.0" layoutX="882.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/mainScene/STORAGE.png" />
          </image>
       </ImageView>
-      <Group fx:id="shelves_group" layoutX="984.0" layoutY="406.0">
+      <Group fx:id="shelves_group" layoutX="984.0" layoutY="333.0">
          <children>
             <Pane fx:id="firstShelf_pane" layoutX="50.0">
                <children>
@@ -105,7 +105,7 @@
             </Pane>
          </children>
       </Group>
-      <Group fx:id="reorganizeQuestion_group" layoutX="857.0" layoutY="69.0">
+      <Group fx:id="reorganizeQuestion_group" layoutX="833.0" layoutY="42.0">
          <children>
             <Label prefHeight="46.0" prefWidth="548.0" text="Do you want to reorganize the storage before using the market?">
                <font>
@@ -116,7 +116,7 @@
             <Button fx:id="no_reorganizeStorage" layoutX="241.0" layoutY="54.0" mnemonicParsing="false" text="No" />
          </children>
       </Group>
-      <Group fx:id="manageStorage_group" layoutX="1161.0" layoutY="271.0">
+      <Group fx:id="manageStorage_group" layoutX="1149.0" layoutY="199.0">
          <children>
             <Group fx:id="choiceShelf_group" layoutY="138.0">
                <children>
@@ -133,7 +133,23 @@
             <Button fx:id="ok_manageStorage" layoutX="143.0" layoutY="221.0" mnemonicParsing="false" text="OK" />
          </children>
       </Group>
-      <Label fx:id="selectShelf_label" layoutX="857.0" layoutY="292.0" text="Plese select the shelf on which you want to place the resource" />
-      <Label fx:id="invertShelfError_label" layoutX="1009.0" layoutY="640.0" opacity="0.0" text="INVALID SHELF" textFill="RED" />
+      <Label fx:id="selectShelf_label" layoutX="870.0" layoutY="222.0" text="Plese select the shelf on which you want to place the resource" />
+      <Button fx:id="storageLeader_button" disable="true" layoutX="1001.0" layoutY="545.0" mnemonicParsing="false" text="Storage Leader" />
+      <Group fx:id="leader_group" layoutX="845.0" layoutY="578.0">
+         <children>
+            <ImageView fx:id="storageLeader_1" fitHeight="228.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="storageLeader_2" fitHeight="228.0" fitWidth="166.0" layoutX="212.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Label fx:id="error_label" layoutX="1097.0" layoutY="529.0" opacity="0.0" prefHeight="58.0" prefWidth="371.0" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="white_label" layoutX="701.0" layoutY="558.0" opacity="0.0" text="Click on the white ball leader that you want to use">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
