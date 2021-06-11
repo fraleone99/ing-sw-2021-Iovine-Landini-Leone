@@ -328,15 +328,15 @@ public class TurnController {
                         view.sendErrorMessage(players.get(player), "DO_PRODUCTION_INVALID");
                         Catch=true;
                     } else {
-                    game.getPlayer(players.get(player)).doProduction();
-                    for(String s: players){
-                        view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                        game.getPlayer(players.get(player)).doProduction();
+                        for(String s: players){
+                            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                        }
+                        ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
+                        if(!nick.isEmpty()) {
+                            view.papalPawn(nick);
+                        }
                     }
-                    ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
-                    if(!nick.isEmpty()) {
-                        view.papalPawn(nick);
-                    }
-                }
             } catch (NotEnoughResourceException e) {
                 view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
                 Catch=true;
