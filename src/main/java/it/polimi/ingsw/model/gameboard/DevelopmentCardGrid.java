@@ -61,7 +61,7 @@ public class DevelopmentCardGrid {
         DevelopmentCardDeck deck = new DevelopmentCardDeck();
         try {
             for(int i=1; i<4; i++) {
-                deck.addAll(addFromLevel(i));
+                    deck.addAll(addFromLevel(i));
             }
         } catch (InvalidChoiceException e) {
             e.printStackTrace();
@@ -117,6 +117,7 @@ public class DevelopmentCardGrid {
     public DevelopmentCardDeck addFromLevel(int level) throws InvalidChoiceException {
         DevelopmentCardDeck devCards = new DevelopmentCardDeck();
 
+
         devCards.add(getCard(CardColor.PURPLE,level));
         devCards.add(getCard(CardColor.YELLOW,level));
         devCards.add(getCard(CardColor.BLUE,level));
@@ -139,6 +140,24 @@ public class DevelopmentCardGrid {
         devCards.add(getCard(color,3));
 
         return devCards;
+    }
+
+    public CardColor parserColor(int color) {
+        CardColor cardColor;
+
+        switch (color) {
+            case 1 : cardColor=CardColor.PURPLE;
+                break;
+            case 2 : cardColor=CardColor.YELLOW;
+                break;
+            case 3 : cardColor=CardColor.BLUE;
+                break;
+            case 4 : cardColor=CardColor.GREEN;
+                break;
+            default: cardColor=null;
+        }
+
+        return cardColor;
     }
 
     /**
@@ -192,7 +211,8 @@ public class DevelopmentCardGrid {
      * @throws InvalidChoiceException if color or level are invalid
      */
     public DevelopmentCard getCard(CardColor color, int level) throws InvalidChoiceException{
-        return getDeck(color, level).get();
+        if(!getDeck(color,level).isEmpty()) return getDeck(color,level).get();
+        else return null;
     }
 
     /**

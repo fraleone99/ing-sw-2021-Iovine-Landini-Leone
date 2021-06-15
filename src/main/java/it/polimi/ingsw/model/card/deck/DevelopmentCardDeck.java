@@ -148,7 +148,8 @@ public class DevelopmentCardDeck implements Deck {
     public ArrayList<Integer> IdDeck(){
         ArrayList<Integer> IdDeck=new ArrayList<>();
         for (DevelopmentCard dev : deck) {
-            IdDeck.add(dev.getCardID());
+            if(dev==null) IdDeck.add(65);
+            else IdDeck.add(dev.getCardID());
         }
         return IdDeck;
     }
