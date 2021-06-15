@@ -88,6 +88,7 @@ public class LocalSPController {
 
                 try {
                     currentActionToken = gameModel.drawActionToken();
+                    handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
                     handler.handleClient(new SendMessage("Drawn action token: "));
                     handler.handleClient(new ActionTokenInfo(currentActionToken));
                     handler.handleClient(new UpdateFaithPath(null, gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionLorenzo(), true));
@@ -317,8 +318,11 @@ public class LocalSPController {
                     break;
 
                 case BUY_DEVELOPMENT:
-                    handler.handleClient(new RequestDoubleInt("DEVCARD", null, gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getDevCardsForGUI()));
-                    ArrayList<Integer> card=getDoubleInt();
+                    ArrayList<Integer> card;
+                    do {
+                        handler.handleClient(new RequestDoubleInt("DEVCARD", null, gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getDevCardsForGUI()));
+                        card = getDoubleInt();
+                    } while(gameModel.getGameBoard().getDevelopmentCardGrid().getCard(gameModel.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)),card.get(1))==null);
                     handler.handleClient(new RequestInt("SPACE", "Choose the space where to insert the card"));
                     int space = getAnswer();
                     localBuyCard(card.get(0), card.get(1), space);

@@ -210,7 +210,10 @@ public class TurnController {
                     break;
 
                 case BUY_DEVELOPMENT:
-                    ArrayList<Integer> card = new ArrayList<>(view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI()));
+                    ArrayList<Integer> card;
+                    do {
+                        card=view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI());
+                    } while(game.getGameBoard().getDevelopmentCardGrid().getCard(game.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)),card.get(1))==null);
                     int space = view.askSpace(players.get(player));
                     buyCard(player, card.get(0), card.get(1), space);
                     for(String nickname: players){
