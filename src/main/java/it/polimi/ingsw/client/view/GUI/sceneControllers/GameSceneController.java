@@ -501,19 +501,19 @@ public class GameSceneController {
 
         else{
             int player = nicknameToPosition.get(storageInfo.getNickname());
-            //System.out.println("I have received storage of player " + player);
+            System.out.println("I have received storage of player " + player);
             if(player == 1){
-                //System.out.println("Updating player Dashboard 1...");
+                System.out.println("Updating player Dashboard 1..." + positionToNickname.get(1));
                 storage(player1_1_1, player1_2_1,player1_2_2, player1_3_1, player1_3_2, player1_3_3, player1_coinAmount, player1_stoneAmount,
                         player1_servantAmount, player1_shieldAmount, storageInfo);
             }
             else if(player == 2){
-                //System.out.println("Updating player Dashboard 2...");
+                System.out.println("Updating player Dashboard 2..." + positionToNickname.get(2));
                 storage(player2_1_1, player2_2_1,player2_2_2, player2_3_1, player2_3_2, player2_3_3, player2_coinAmount, player2_stoneAmount,
                         player2_servantAmount, player2_shieldAmount, storageInfo);
             }
             else if(player == 3){
-                //System.out.println("Updating player Dashboard 3...");
+                System.out.println("Updating player Dashboard 3..." + positionToNickname.get(3));
                 storage(player3_1_1, player3_2_1,player3_2_2, player3_3_1, player3_3_2, player3_3_3, player3_coinAmount, player3_stoneAmount,
                         player3_servantAmount, player3_shieldAmount, storageInfo);
             }
@@ -700,6 +700,9 @@ public class GameSceneController {
                 player3FaithPathPosToImageView.put(i, (ImageView) player3_faithPathGroup.getChildren().get(i));
             }
         }
+
+        System.out.println("map: " + positionToNickname.toString());
+        System.out.println("map: " + nicknameToPosition.toString());
     }
 
     public void setLorenzoFaithPathMap(){
