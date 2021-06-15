@@ -16,16 +16,11 @@ import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import javax.print.attribute.standard.MediaSize;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -53,7 +48,6 @@ public class GUI extends Application implements View {
     private MarketSceneController marketSceneController;
     private DiscardLeaderController discardLeaderController;
     private InitialResourcesController initialResourcesController;
-    private GameSceneController localGameSceneController;
     private DevelopmentCardsGridController developmentCardsGridController;
 
     private final Map<String, Scene> sceneMap = new HashMap<>();
@@ -549,7 +543,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void chooseWhiteBallLeader(String message) {
-        Platform.runLater(()->{marketSceneController.whiteBallLeader();});
+        Platform.runLater(()-> marketSceneController.whiteBallLeader());
     }
 
     public void activeOtherLeaderCard(OtherLeaderCard info) {

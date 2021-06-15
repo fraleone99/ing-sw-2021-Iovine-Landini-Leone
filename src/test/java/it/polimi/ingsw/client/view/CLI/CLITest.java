@@ -85,7 +85,7 @@ public class CLITest {
         vault.AddResource(Resource.COIN, 5);
         vault.AddResource(Resource.SHIELD, 3);
 
-        StorageInfo  s = new StorageInfo(storage, vault, "nickname");
+        StorageInfo  s = new StorageInfo(storage, vault, "nickname", true);
 
         cli.printStorageAndVault(s);
 

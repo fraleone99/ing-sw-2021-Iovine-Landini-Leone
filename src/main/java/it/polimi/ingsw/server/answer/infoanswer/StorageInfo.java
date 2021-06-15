@@ -24,6 +24,7 @@ public class StorageInfo implements Answer {
     private final int shieldsAmount;
 
     private boolean vaultUpdate;
+    private boolean toPrint;
 
 
     @Override
@@ -31,7 +32,7 @@ public class StorageInfo implements Answer {
         return null;
     }
 
-    public StorageInfo(Storage storage, Vault vault, String nickname) {
+    public StorageInfo(Storage storage, Vault vault, String nickname, boolean toPrint) {
         this.shelf1Type = storage.getTypeShelf(1);
         this.shelf2Type = storage.getTypeShelf(2);
         this.shelf3Type = storage.getTypeShelf(3);
@@ -53,6 +54,7 @@ public class StorageInfo implements Answer {
         }
 
         this.nickname = nickname;
+        this.toPrint = toPrint;
     }
 
     public Resource getShelf1Type() {
@@ -101,5 +103,9 @@ public class StorageInfo implements Answer {
 
     public boolean isVaultUpdate() {
         return vaultUpdate;
+    }
+
+    public boolean isToPrint() {
+        return toPrint;
     }
 }

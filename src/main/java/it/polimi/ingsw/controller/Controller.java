@@ -61,7 +61,7 @@ public class Controller {
 
                 for(String player: players){
                     if(!player.equals(players.get(i)))
-                        view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard().getStorage(), null, player);
+                        view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard().getStorage(), null, player, false);
                 }
             }
 

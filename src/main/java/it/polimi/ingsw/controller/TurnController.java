@@ -48,7 +48,7 @@ public class TurnController {
         for (String s : players) {
             view.seeFaithPath(players.get(player), s, game.getPlayer(s).getPlayerDashboard().getFaithPath(), players.size() == 1);
             view.seeStorage(players.get(player), game.getPlayer(s).getPlayerDashboard().getStorage(),
-                    game.getPlayer(s).getPlayerDashboard().getVault(), s);
+                    game.getPlayer(s).getPlayerDashboard().getVault(), s, true);
             view.seeDevCardsSpace(players.get(player), game.getPlayer(s).getPlayerDashboard().getDevCardsSpace());
         }
     }
@@ -170,7 +170,7 @@ public class TurnController {
                             if(!nickname.equals(players.get(player))) {
                                 view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
                             }
-                            view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
+                            view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player), false);
                         }
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
@@ -205,7 +205,7 @@ public class TurnController {
                     int line = view.useMarket(players.get(player));
                     useMarket(player, line);
                     for(String nickname: players){
-                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player), false);
                     }
                     break;
 
@@ -214,7 +214,7 @@ public class TurnController {
                     int space = view.askSpace(players.get(player));
                     buyCard(player, card.get(0), card.get(1), space);
                     for(String nickname: players){
-                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player), false);
                     }
                     break;
 
@@ -224,7 +224,7 @@ public class TurnController {
                         activeProduction(player, type);
                     } while (type != 4);
                     for(String nickname: players){
-                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player), false);
                     }
                     break;
 
@@ -245,7 +245,7 @@ public class TurnController {
                         if(!nickname.equals(players.get(player))) {
                             view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
                         }
-                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player));
+                        view.seeStorage(nickname, game.getPlayer(nickname).getPlayerDashboard().getStorage(), game.getPlayer(nickname).getPlayerDashboard().getVault(), players.get(player), false);
                     }
                 } catch (InvalidChoiceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
@@ -458,7 +458,7 @@ public class TurnController {
                         ((StorageLeader) game.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     } else {
                         game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
-                        view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
+                        view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player), true);
 
                     }
                     toPlace.remove(choice.get(0) - 1);
@@ -492,7 +492,7 @@ public class TurnController {
 
             try {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
-                view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player));
+                view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard().getStorage(),null, players.get(player), true);
             } catch (NotEnoughSpaceException e) {
                 view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
             }

@@ -156,7 +156,7 @@ public class LocalSPController {
     public void localSeePlayerDashboard(){
         handler.handleClient(new FaithPathInfo(("This is the Dashboard of "+players.get(0)+" :"), gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath(), true));
         handler.handleClient((new StorageInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getStorage(),
-                gameModel.getPlayers().get(0).getPlayerDashboard().getVault(), gameModel.getPlayers().get(0).getNickname())));
+                gameModel.getPlayers().get(0).getPlayerDashboard().getVault(), gameModel.getPlayers().get(0).getNickname(), true)));
         handler.handleClient(new DevCardsSpaceInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getDevCardsSpace()));
     }
 
@@ -385,7 +385,7 @@ public class LocalSPController {
 
             try {
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
-                handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null, gameModel.getPlayers().get(0).getNickname()));
+                handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null, gameModel.getPlayers().get(0).getNickname(), true));
             } catch (NotEnoughSpaceException e) {
                 handler.handleClient(new ErrorMessage("MARKET_INVALID_SHELF"));
             }
@@ -466,7 +466,7 @@ public class LocalSPController {
                         ((StorageLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     } else {
                         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
-                        handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null, gameModel.getPlayers().get(0).getNickname()));
+                        handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null, gameModel.getPlayers().get(0).getNickname(), true));
                     }
                     toPlace.remove(choice.get(0) - 1);
                     ArrayList<Ball> temp=new ArrayList<>(localCheckEmptyShelves(0,toPlace));
