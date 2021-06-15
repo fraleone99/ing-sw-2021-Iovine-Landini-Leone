@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.model.gameboard.Market;
@@ -153,10 +154,20 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void seeStorage(String nickname, Storage storage, Vault vault, String storageOwner, boolean toPrint) {
+    public void seeStorage(String nickname, PlayerDashboard playerDashboard ,String dashboardOwner, boolean toPrint, boolean vaultUpdate) {
         ClientHandler client=namesToClient.get(nickname);
+        Storage storage = playerDashboard.getStorage();
+        Vault vault;
+        if(vaultUpdate) {
+            vault = playerDashboard.getVault();
+        }
+        else {
+            vault = null;
+        }
+        LeaderCard leader1 = playerDashboard.getLeaders().get(0);
+        LeaderCard leader2 = playerDashboard.getLeaders().get(1);
 
-        client.send(new StorageInfo(storage, vault, storageOwner, toPrint));
+        client.send(new StorageInfo(storage, vault, leader1, leader2, dashboardOwner, toPrint));
     }
 
 

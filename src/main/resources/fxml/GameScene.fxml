@@ -487,7 +487,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="40.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="41.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="message" alignment="CENTER" layoutX="377.0" layoutY="312.0" opacity="0.0" prefHeight="47.0" prefWidth="838.0">
          <font>
@@ -605,5 +605,53 @@
       <ImageView fx:id="player2_leader2" fitHeight="90.0" fitWidth="60.0" layoutX="875.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="player3_leader1" fitHeight="90.0" fitWidth="60.0" layoutX="1386.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="player3_leader2" fitHeight="90.0" fitWidth="60.0" layoutX="1386.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true" />
+      <Group fx:id="player_leader1Storage_group" layoutX="71.0" layoutY="709.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="40.0" fitWidth="43.0" layoutX="59.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player_leader2Storage_group" layoutX="272.0" layoutY="709.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="40.0" fitWidth="38.0" layoutX="61.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player1_leader1storage_group" layoutX="374.0" layoutY="146.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player1_leader2Storage_group" layoutX="374.0" layoutY="234.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player2_leader1storage_group" layoutX="885.0" layoutY="145.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player2_leader2storage_group" layoutX="886.0" layoutY="234.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player3_leader1storage_group" layoutX="1394.0" layoutY="144.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group fx:id="player3_leader2storage_group" layoutX="1395.0" layoutY="233.0">
+         <children>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
    </children>
 </AnchorPane>

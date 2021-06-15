@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.answer.infoanswer;
 
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
+import it.polimi.ingsw.model.card.leadercard.StorageLeader;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Storage;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Vault;
@@ -23,6 +25,12 @@ public class StorageInfo implements Answer {
     private final int stoneAmount;
     private final int shieldsAmount;
 
+    //STORAGE LEADER
+    private final int storageLeader1;
+    private  Resource leader1Type;
+    private final int storageLeader2;
+    private  Resource leader2Type;
+
     private boolean vaultUpdate;
     private boolean toPrint;
 
@@ -32,7 +40,7 @@ public class StorageInfo implements Answer {
         return null;
     }
 
-    public StorageInfo(Storage storage, Vault vault, String nickname, boolean toPrint) {
+    public StorageInfo(Storage storage, Vault vault, LeaderCard leader1, LeaderCard leader2, String nickname, boolean toPrint) {
         this.shelf1Type = storage.getTypeShelf(1);
         this.shelf2Type = storage.getTypeShelf(2);
         this.shelf3Type = storage.getTypeShelf(3);
@@ -52,6 +60,20 @@ public class StorageInfo implements Answer {
             shieldsAmount=-1;
             vaultUpdate = false;
         }
+
+        if(leader1 instanceof StorageLeader) {
+            storageLeader1 = ((StorageLeader) leader1).getAmount();
+            leader1Type = ((StorageLeader) leader1).getType();
+        }
+        else
+            storageLeader1 = -1;
+
+        if(leader2 instanceof StorageLeader) {
+            storageLeader2 = ((StorageLeader) leader2).getAmount();
+            leader2Type = ((StorageLeader) leader2).getType();
+        }
+        else
+            storageLeader2 = -1;
 
         this.nickname = nickname;
         this.toPrint = toPrint;
@@ -107,5 +129,21 @@ public class StorageInfo implements Answer {
 
     public boolean isToPrint() {
         return toPrint;
+    }
+
+    public int getStorageLeader1() {
+        return storageLeader1;
+    }
+
+    public int getStorageLeader2() {
+        return storageLeader2;
+    }
+
+    public Resource getLeader1Type() {
+        return leader1Type;
+    }
+
+    public Resource getLeader2Type() {
+        return leader2Type;
     }
 }
