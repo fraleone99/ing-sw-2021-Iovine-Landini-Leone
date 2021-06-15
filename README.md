@@ -8,7 +8,7 @@ at Politecnico di Milano. (2020/2021)
 
 ![Image of the game](src/main/resources/graphics/box_image.png)
 
-###Functionalities
+##Functionalities
 
 | Functionality | Status |
 |:-----------------------|:------------------------------------:|
@@ -26,7 +26,7 @@ at Politecnico di Milano. (2020/2021)
 #### Legend
 [![RED](http://placehold.it/15/f03c15/f03c15)]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;[![YELLOW](http://placehold.it/15/ffdd00/ffdd00)]() Implementing&nbsp;&nbsp;&nbsp;&nbsp;[![GREEN](http://placehold.it/15/44bb44/44bb44)]() Implemented
 
-###Authors
+##Authors
 * [Lorenzo Iovine](https://github.com/lorenzoiovine99)
 * [Nicola Landini](https://github.com/neekoo0)
 * [Francesco Leone](https://github.com/fraleone99)
