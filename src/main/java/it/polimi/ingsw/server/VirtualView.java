@@ -671,14 +671,14 @@ public class VirtualView extends VirtualViewObservable {
     public void win(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new Win("You had accumulated " + Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET + " victory points"));
+        client.send(new Win("You had accumulated "  + victoryPoints  + " victory points"));
     }
 
 
     public void lose(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new Lose("You had accumulated "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points"));
+        client.send(new Lose("You had accumulated " + victoryPoints + " victory points"));
     }
 
 
