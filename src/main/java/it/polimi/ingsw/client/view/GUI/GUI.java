@@ -318,7 +318,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askNickname(String message) {
-       Platform.runLater(() -> nicknameController.setupNickname());
+       Platform.runLater(() -> nicknameController.setupNickname(message));
 
     }
 

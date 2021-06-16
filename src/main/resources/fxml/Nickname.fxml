@@ -10,5 +10,6 @@
       <TextField fx:id="nicknameBox" layoutX="713.0" layoutY="385.0" />
       <Label layoutX="573.0" layoutY="389.0" text="Insert nickname:" />
       <Button fx:id="okButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="748.0" layoutY="560.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="40.0" text="Play" />
+      <Label fx:id="invalidNick_label" layoutX="624.0" layoutY="453.0" opacity="0.0" prefHeight="39.0" prefWidth="250.0" text="The chosen nickname is already taken or invalid. Please try again!" textFill="RED" wrapText="true" />
    </children>
 </AnchorPane>

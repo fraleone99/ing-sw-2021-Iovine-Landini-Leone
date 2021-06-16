@@ -642,7 +642,7 @@ public class GameSceneController {
                 turnType.set(EndTurnType.ACTIVE_LEADER);
             } else if (turn_discardLeader.isSelected()) {
                 turnType.set(EndTurnType.DISCARD_LEADER);
-            } else if (end_turn.isSelected()) {
+            } else {
                 turnType.set(EndTurnType.END_TURN);
             }
 
