@@ -580,6 +580,16 @@ public class GameSceneController {
 
     }
 
+    public void winLabel(String win) {
+        message.setText(win);
+        message.setOpacity(1);
+    }
+
+    public void loseLabel(String lose) {
+        message.setText(lose);
+        message.setOpacity(1);
+    }
+
     public void activeOtherLeaderCard(OtherLeaderCard info) {
         int player = nicknameToPosition.get(info.getOwner());
 

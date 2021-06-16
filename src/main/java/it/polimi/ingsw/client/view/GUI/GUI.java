@@ -645,12 +645,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void win(String message) {
-
+        Platform.runLater(() -> gameSceneController.winLabel(message));
     }
 
     @Override
     public void lose(String message) {
-
+        Platform.runLater(() -> gameSceneController.loseLabel(message));
     }
 
     @Override
