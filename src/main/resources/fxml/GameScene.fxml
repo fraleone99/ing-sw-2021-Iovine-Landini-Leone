@@ -653,5 +653,6 @@
             <ImageView fitHeight="21.0" fitWidth="21.0" layoutX="22.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Group>
+      <Button fx:id="quit_button" disable="true" layoutX="594.0" layoutY="347.0" mnemonicParsing="false" opacity="0.0" text="QUIT" />
    </children>
 </AnchorPane>

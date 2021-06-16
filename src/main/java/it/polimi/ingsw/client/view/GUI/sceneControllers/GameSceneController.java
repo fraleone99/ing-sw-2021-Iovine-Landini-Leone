@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
 import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -91,6 +92,7 @@ public class GameSceneController {
     public Group player2_leader2storage_group;
     public Group player3_leader1storage_group;
     public Group player3_leader2storage_group;
+    public Button quit_button;
     @FXML ImageView leader1;
     @FXML ImageView leader2;
     @FXML public Pane currentPlayerFirstShelf;
@@ -871,5 +873,14 @@ public class GameSceneController {
                 }
             }
         }
+    }
+
+    public void endGame() {
+        quit_button.setOpacity(1);
+        quit_button.setDisable(false);
+
+        quit_button.setOnAction(actionEvent -> {
+            Platform.exit();
+        });
     }
 }

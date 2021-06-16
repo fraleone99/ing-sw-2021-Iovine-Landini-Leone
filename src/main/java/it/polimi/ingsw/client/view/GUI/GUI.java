@@ -332,7 +332,7 @@ public class GUI extends Application implements View {
             });
         }
 
-        if(message.equals("The game start!")){
+        else if(message.equals("The game start!")){
             if(isSinglePlayer){
                 FXMLLoader localGame = new FXMLLoader(getClass().getResource("/fxml/LocalSinglePlayerBoard.fxml"));
                 try {
@@ -351,16 +351,19 @@ public class GUI extends Application implements View {
             }
         }
 
-        if(message.equals("The game start!\n")){
+        else if(message.equals("The game start!\n")){
             Platform.runLater(()->changeStage(LOCAL_GAME));
         }
 
-        if(message.equals("INVALID") || message.equals("Invalid choice.")) {
+        else if(message.equals("INVALID") || message.equals("Invalid choice.")) {
             Platform.runLater(() -> {
                 gameSceneController.invalidChoice();
                 gameSceneController.askTurn();
                 changeStage(GAME);
             });
+        }
+        else if (message.equals("END_GAME")){
+            Platform.runLater(()-> gameSceneController.endGame());
         }
     }
 

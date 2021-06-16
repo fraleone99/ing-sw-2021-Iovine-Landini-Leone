@@ -713,7 +713,7 @@ public class VirtualView extends VirtualViewObservable {
 
     public void closeConnection() {
         for(ClientHandler client : namesToClient.values()) {
-            client.closeConnection();
+            client.send(new SendMessage("END_GAME"));
         }
     }
 
