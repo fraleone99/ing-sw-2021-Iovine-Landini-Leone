@@ -222,7 +222,10 @@
             <Group fx:id="player1_faithPathGroup" layoutX="12.0" layoutY="15.0">
                <children>
                   <ImageView fx:id="player1_faithPath0" fitHeight="18.0" fitWidth="19.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="player1_faithPath1" fitHeight="18.0" fitWidth="19.0" layoutX="18.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="player1_faithPath1" fitHeight="18.0" fitWidth="18.0" layoutX="22.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphics/RED_CROSS.png" />
+                     </image></ImageView>
                   <ImageView fx:id="player1_faithPath2" fitHeight="18.0" fitWidth="19.0" layoutX="36.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="player1_faithPath3" fitHeight="18.0" fitWidth="19.0" layoutX="35.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="player1_faithPath4" fitHeight="18.0" fitWidth="19.0" layoutX="36.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
@@ -403,12 +406,12 @@
       </Group>
       <Button fx:id="toSee_developmentGrid" layoutX="47.0" layoutY="447.0" mnemonicParsing="false" text="Development Cards Grid" />
       <Button fx:id="toSee_market" layoutX="218.0" layoutY="447.0" mnemonicParsing="false" text="Market" />
-      <Pane fx:id="currentPlayerFirstShelf" layoutX="547.0" layoutY="579.0" prefHeight="18.0" prefWidth="21.0">
+      <Pane fx:id="currentPlayerFirstShelf" layoutX="536.0" layoutY="584.0" prefHeight="18.0" prefWidth="21.0">
          <children>
             <ImageView fx:id="firstResourcesFirstShelf" fitHeight="26.0" fitWidth="22.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-      <Pane fx:id="currentPlayerSecondShelf" layoutX="534.0" layoutY="614.0" prefHeight="18.0" prefWidth="47.0">
+      <Pane fx:id="currentPlayerSecondShelf" layoutX="518.0" layoutY="618.0" prefHeight="18.0" prefWidth="47.0">
          <children>
             <ImageView fx:id="firstResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="secondResourcesSecondShelf" fitHeight="26.0" fitWidth="22.0" layoutX="24.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />

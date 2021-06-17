@@ -315,11 +315,14 @@ public class MarketSceneController {
                     chosenBall_2.setDisable(true);
                     chosenBall_3.setDisable(true);
                     chosenBall_4.setDisable(true);
+                    break;
                 case 2:
                     chosenBall_3.setDisable(true);
                     chosenBall_4.setDisable(true);
+                    break;
                 case 3:
                     chosenBall_4.setDisable(true);
+                    break;
             }
         }
 
