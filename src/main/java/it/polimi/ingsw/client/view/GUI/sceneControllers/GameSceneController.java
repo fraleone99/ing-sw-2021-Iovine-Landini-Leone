@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.view.GUI.sceneControllers;
 
-import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.message.SendDoubleInt;
 import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
@@ -9,7 +7,6 @@ import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
@@ -18,14 +15,11 @@ import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
-import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -816,62 +810,33 @@ public class GameSceneController {
         int level = info.getLevel();
 
         if(info.getNickname().equals(gui.getNickname())) {
-            Group group1 = (Group) currentGroup.getChildren().get(level-1);
-            switch(info.getSpace()) {
-                case 1 : ImageView image1 = (ImageView) group1.getChildren().get(0);
-                         image1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                         break;
-                case 2 : ImageView image2 = (ImageView) group1.getChildren().get(1);
-                         image2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                         break;
-                case 3 : ImageView image3 = (ImageView) group1.getChildren().get(2);
-                         image3.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                         break;
-            }
+            getSpaceGroup(info, level, currentGroup);
         }
         else {
             int player=nicknameToPosition.get(info.getNickname());
 
             if(player==1) {
-                Group group2 = (Group) player1Group.getChildren().get(level-1);
-                switch(info.getSpace()) {
-                    case 1 : ImageView image1= (ImageView) group2.getChildren().get(0);
-                             image1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                             break;
-                    case 2 : ImageView image2= (ImageView) group2.getChildren().get(1);
-                             image2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                             break;
-                    case 3 : ImageView image3= (ImageView) group2.getChildren().get(2);
-                             image3.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                             break;
-                }
+                getSpaceGroup(info, level, player1Group);
             } else if (player==2) {
-                Group group3 = (Group) player2Group.getChildren().get(level-1);
-                switch(info.getSpace()) {
-                    case 1 : ImageView image1= (ImageView) group3.getChildren().get(0);
-                        image1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                        break;
-                    case 2 : ImageView image2= (ImageView) group3.getChildren().get(1);
-                        image2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                        break;
-                    case 3 : ImageView image3= (ImageView) group3.getChildren().get(2);
-                        image3.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                        break;
-                }
+                getSpaceGroup(info, level, player2Group);
             } else {
-                Group group4 = (Group) player3Group.getChildren().get(level-1);
-                switch(info.getSpace()) {
-                    case 1 : ImageView image1= (ImageView) group4.getChildren().get(0);
-                             image1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                             break;
-                    case 2 : ImageView image2= (ImageView) group4.getChildren().get(1);
-                             image2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                             break;
-                    case 3 : ImageView image3= (ImageView) group4.getChildren().get(2);
-                             image3.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
-                             break;
-                }
+                getSpaceGroup(info, level, player3Group);
             }
+        }
+    }
+
+    private void getSpaceGroup(CardsSpaceInfo info, int level, Group currentGroup) {
+        Group group1 = (Group) currentGroup.getChildren().get(level-1);
+        switch(info.getSpace()) {
+            case 1 : ImageView image1 = (ImageView) group1.getChildren().get(0);
+                     image1.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+                     break;
+            case 2 : ImageView image2 = (ImageView) group1.getChildren().get(1);
+                     image2.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+                     break;
+            case 3 : ImageView image3 = (ImageView) group1.getChildren().get(2);
+                     image3.setImage(new Image("/graphics/" + info.getIdCard() + ".png"));
+                     break;
         }
     }
 

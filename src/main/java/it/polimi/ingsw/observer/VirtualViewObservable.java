@@ -11,7 +11,7 @@ import java.util.List;
 
 public class VirtualViewObservable {
 
-    private List<VirtualViewObserver> observersList=new ArrayList<>();
+    private final List<VirtualViewObserver> observersList=new ArrayList<>();
 
     public void registerObserver(VirtualViewObserver observer){
         synchronized (observersList){

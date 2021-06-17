@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="440.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DiscardLeaderController">
+<AnchorPane prefHeight="440.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DiscardLeaderController">
    <children>
       <ImageView fx:id="leader1" fitHeight="349.0" fitWidth="231.0" layoutX="14.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="leader2" fitHeight="349.0" fitWidth="231.0" layoutX="245.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
