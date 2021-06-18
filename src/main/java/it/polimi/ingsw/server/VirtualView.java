@@ -21,6 +21,7 @@ import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.IOException;
+import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,22 +32,47 @@ public class VirtualView extends VirtualViewObservable {
     private int number2;
     private final Map<String, ClientHandler> namesToClient = new HashMap<>();
 
+    public int waitForInt(ClientHandler client) {
+        int number;
 
-    public String askHandShake(ClientHandler client) throws InterruptedException {
-        client.send(new Connection("Welcome to this fantastic server!", true));
         synchronized (client.getLock()) {
-            while (!client.isReady()) {
-                client.getLock().wait();
+            while(!client.isReady()) {
+                try {
+                    client.getLock().wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            answer = client.getAnswer();
+
+            number = client.getNumber();
         }
         client.setReady(false);
-        return answer;
+
+        return number;
     }
 
+    public ArrayList<Integer> waitForDoubleInt(ClientHandler client) {
+        ArrayList<Integer> numbers = new ArrayList<>();
 
-    public String requestNickname(ClientHandler client){
-        client.send(new RequestString("Please insert your nickname:"));
+        synchronized (client.getLock()) {
+            while (!client.isReady()) {
+                try {
+                    client.getLock().wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            numbers.add(client.getNumber());
+            numbers.add(client.getNumber2());
+        }
+        client.setReady(false);
+
+        return numbers;
+    }
+
+    public String waitForString(ClientHandler client) {
+        String answer;
+
         synchronized (client.getLock()) {
             while(!client.isReady()) {
                 try {
@@ -57,30 +83,37 @@ public class VirtualView extends VirtualViewObservable {
             }
             answer = client.getAnswer();
         }
+
         client.setReady(false);
+
         return answer;
     }
 
+    public String askHandShake(ClientHandler client) {
+        client.send(new Connection("Welcome to this fantastic server!", true));
 
-    public String InvalidNickname(ClientHandler client) throws InterruptedException{
+        return waitForString(client);
+    }
+
+
+    public String requestNickname(ClientHandler client){
+        client.send(new RequestString("Please insert your nickname:"));
+
+        return waitForString(client);
+    }
+
+
+    public String InvalidNickname(ClientHandler client){
         client.send(new RequestString("The chosen nickname is not valid. Try again:"));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            answer = client.getAnswer();
-        }
-        client.setReady(false);
-        return answer;
+
+        return waitForString(client);
     }
 
 
-    public int requestPlayersNumber(ClientHandler client) throws InterruptedException {
+    public int requestPlayersNumber(ClientHandler client){
         client.send(new RequestInt("NUMBER","Please insert the number of players:"));
-        synchronized (client.getLock()) {
-            while (!client.isReady()) client.getLock().wait();
-            number = client.getNumber();
-        }
-        client.setReady(false);
-        return number;
+
+        return waitForInt(client);
         //notify everyone the players number
     }
 
@@ -100,7 +133,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int chooseResource(String nickname, String player, int amount) throws  InterruptedException {
+    public int chooseResource(String nickname, String player, int amount) {
         ClientHandler client=namesToClient.get(nickname);
 
         if(player.equals("fourth") && amount==2){
@@ -109,18 +142,11 @@ public class VirtualView extends VirtualViewObservable {
             client.send(new RequestInt("RESOURCE","You are the " + player + " player. Please choose a resource."));
         }
 
-        synchronized (client.getLock()){
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int discardFirstLeaders(String nickname, int number, ArrayList<Integer> IdLeader) throws InterruptedException {
+    public int discardFirstLeaders(String nickname, int number, ArrayList<Integer> IdLeader) {
         ClientHandler client=namesToClient.get(nickname);
 
         if(number==1) {
@@ -129,14 +155,8 @@ public class VirtualView extends VirtualViewObservable {
             client.send(new SendMessage("Please choose the second leader card to discard."));
         }
         client.send(new PassLeaderCard(IdLeader));
-        synchronized (client.getLock()) {
-            while (!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
@@ -185,97 +205,59 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int seeGameBoard(boolean first, String nickname) throws InterruptedException {
+    public int seeGameBoard(boolean first, String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         if(first) notifyTurnChoice(nickname, " is watching the game board");
 
         client.send(new RequestInt("GAMEBOARD","What do you want to see about the Game Board?"));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int seeLeaderCards(String nickname, ArrayList<Integer> leaderCards) throws InterruptedException {
+    public int seeLeaderCards(String nickname, ArrayList<Integer> leaderCards){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeLeaderCards(leaderCards));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int seeMarket(String nickname, Market market) throws InterruptedException {
+    public int seeMarket(String nickname, Market market){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeMarket(market));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int chooseLine(String nickname) throws InterruptedException {
+    public int chooseLine(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("LINE","Please choose what you want to see from the Development Cards Grid"));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int seeGrid(String nickname, ArrayList<Integer> id) throws InterruptedException {
+    public int seeGrid(String nickname, ArrayList<Integer> id){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeGrid(id));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int seeProduction(String nickname, ArrayList<Integer> productions) throws InterruptedException {
+    public int seeProduction(String nickname, ArrayList<Integer> productions) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new SeeProductions(productions));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
@@ -303,70 +285,45 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int askChoice(String nickname) throws InterruptedException {
+    public int askChoice(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("CHOICE", null));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int chooseTurn(String nickname) throws InterruptedException {
+    public int chooseTurn(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("TURN","Choose what you want to do in this turn:"));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int activeLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
+    public int activeLeader(String nickname, ArrayList<Integer> leaders){
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is activating a leader");
 
         client.send(new ActiveLeader("Which leader do you want to activate?", leaders));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int discardLeader(String nickname, ArrayList<Integer> leaders) throws InterruptedException {
+    public int discardLeader(String nickname, ArrayList<Integer> leaders){
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is discarding a leader");
 
         client.send(new DiscardLeader("Which leader do you want to discard?", leaders));
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
 
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int manageStorage(int number, String nickname) throws InterruptedException {
+    public int manageStorage(int number, String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         if(number==1){
@@ -376,14 +333,7 @@ public class VirtualView extends VirtualViewObservable {
         else
             client.send(new RequestInt("STORAGE","Do you want to make other changes to the storage?"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
@@ -400,153 +350,86 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public ArrayList<Integer> moveShelves(String nickname) throws InterruptedException {
+    public ArrayList<Integer> moveShelves(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
-        ArrayList<Integer> moves=new ArrayList<>();
 
         client.send(new RequestDoubleInt("SHELVES","Which shelves do you want to reverse?"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-            number2=client.getNumber2();
-            moves.add(number);
-            moves.add(number2);
-        }
-
-        client.setReady(false);
-
-        return moves;
+        return waitForDoubleInt(client);
     }
 
 
-    public int useMarket(String nickname) throws InterruptedException {
+    public int useMarket(String nickname){
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is using the market");
 
         client.send(new RequestInt("MARKET","Which market line do you want?"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public ArrayList<Integer> seeBall(String nickname, ArrayList<Ball> balls) throws InterruptedException {
+    public ArrayList<Integer> seeBall(String nickname, ArrayList<Ball> balls) {
         ClientHandler client=namesToClient.get(nickname);
 
         ArrayList<Integer> moves=new ArrayList<>();
 
         client.send(new SeeBall(balls));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-            moves.add(number);
-        }
-
-        client.setReady(false);
+        moves.add(waitForInt(client));
 
         client.send(new RequestInt("SHELF",""));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number2=client.getNumber();
-            moves.add(number2);
-        }
-
-        client.setReady(false);
+        moves.add(waitForInt(client));
 
         return moves;
     }
 
 
-    public int askWhiteBallLeader(String nickname) throws InterruptedException {
+    public int askWhiteBallLeader(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("WHITE","You have 2 active WhiteBall leaders, which one do you want to use in this turn? (1 or 2)"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public ArrayList<Integer> askCardToBuy(String nickname, ArrayList<Integer> cards, ArrayList<Integer> spaces) throws InterruptedException {
+    public ArrayList<Integer> askCardToBuy(String nickname, ArrayList<Integer> cards, ArrayList<Integer> spaces) {
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is buying a card");
-        ArrayList<Integer> card=new ArrayList<>();
 
         client.send(new RequestDoubleInt("DEVCARD", null, cards, spaces));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-            number2=client.getNumber2();
-            card.add(number);
-            card.add(number2);
-        }
-
-        client.setReady(false);
-
-        return card;
+        return waitForDoubleInt(client);
     }
 
 
-    public int askSpace(String nickname) throws InterruptedException {
+    public int askSpace(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("SPACE","Choose the space where to insert the card"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public int askType(String nickname) throws InterruptedException {
+    public int askType(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is activating a production");
 
         client.send(new RequestInt("TYPE","What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
-    public Resource askInput(String nickname) throws InterruptedException {
+    public Resource askInput(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
+        number = waitForInt(client);
 
         switch(number) {
             case 1 : return Resource.COIN;
@@ -558,17 +441,12 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public Resource askOutput(String nickname) throws InterruptedException {
+    public Resource askOutput(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
+        number = waitForInt(client);
 
         switch(number) {
             case 1 : return Resource.COIN;
@@ -587,19 +465,12 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int askDevCard(String nickname) throws InterruptedException {
+    public int askDevCard(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("DEVCARD","Insert the number of the space containing the development card"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
@@ -624,19 +495,12 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int askLeaderCard(String nickname) throws InterruptedException {
+    public int askLeaderCard(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("LEADCARD","Insert the number of the production leader that you want to use"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 
@@ -652,19 +516,12 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public int endTurn(String nickname) throws InterruptedException {
+    public int endTurn(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new RequestInt("END","What do you want to do?\n1) Active Leader\n2) Discard Leader\n3) End turn"));
 
-        synchronized (client.getLock()) {
-            while(!client.isReady()) client.getLock().wait();
-            number=client.getNumber();
-        }
-
-        client.setReady(false);
-
-        return number;
+        return waitForInt(client);
     }
 
 

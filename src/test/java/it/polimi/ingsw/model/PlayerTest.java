@@ -81,6 +81,8 @@ public class PlayerTest {
 
         ((ProductionLeader) player.getPlayerDashboard().getLeaders().get(0)).setOutputProduction(Resource.COIN);
 
+        player.getPlayerDashboard().getLeaders().get(0).setIsActive();
+
         player.ActiveProductionLeader(1, Resource.COIN);
     }
 
@@ -111,6 +113,8 @@ public class PlayerTest {
             ((ProductionLeader) player.getPlayerDashboard().getLeaders().get(0)).setOutputProduction(Resource.COIN);
         else
             fail();
+
+        player.getPlayerDashboard().getLeaders().get(0).setIsActive();
 
         player.ActiveProductionLeader(1, Resource.COIN);
         player.doProduction();
