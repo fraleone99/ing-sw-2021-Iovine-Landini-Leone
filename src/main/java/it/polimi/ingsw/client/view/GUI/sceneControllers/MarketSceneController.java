@@ -111,10 +111,10 @@ public class MarketSceneController {
         imageViewMatrix[2][2] = im22;
         imageViewMatrix[2][3] = im32;
 
-        resourceToPathMap.put(Resource.COIN, "/graphics/COIN.PNG");
-        resourceToPathMap.put(Resource.SERVANT, "/graphics/SERVANT.PNG");
-        resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.PNG");
-        resourceToPathMap.put(Resource.STONE, "/graphics/STONE.PNG");
+        resourceToPathMap.put(Resource.COIN, "/graphics/COIN.png");
+        resourceToPathMap.put(Resource.SERVANT, "/graphics/SERVANT.png");
+        resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.png");
+        resourceToPathMap.put(Resource.STONE, "/graphics/STONE.png");
     }
 
     public void updateMarket(Market market){
@@ -140,8 +140,8 @@ public class MarketSceneController {
         selectShelf_label.setOpacity(0);
         back_button.setDisable(false);
         storageLeader_button.setOpacity(0);
-        storageLeader_1.setOpacity(0);
-        storageLeader_2.setOpacity(0);
+        buttonMarket_group.setDisable(true);
+
 
         ImageView ballToSet;
         for(int i = 0; i < chosenBall_group.getChildren().size(); i++) {

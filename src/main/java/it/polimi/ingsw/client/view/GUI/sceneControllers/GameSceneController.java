@@ -156,10 +156,10 @@ public class GameSceneController {
     public void setGui(GUI gui) {
         this.gui = gui;
 
-        resourceToPathMap.put(Resource.COIN, "/graphics/COIN.PNG");
-        resourceToPathMap.put(Resource.SERVANT, "/graphics/SERVANT.PNG");
-        resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.PNG");
-        resourceToPathMap.put(Resource.STONE, "/graphics/STONE.PNG");
+        resourceToPathMap.put(Resource.COIN, "/graphics/COIN.png");
+        resourceToPathMap.put(Resource.SERVANT, "/graphics/SERVANT.png");
+        resourceToPathMap.put(Resource.SHIELD, "/graphics/SHIELD.png");
+        resourceToPathMap.put(Resource.STONE, "/graphics/STONE.png");
 
         actionTokenDeleteCardToPathMap.put(CardColor.YELLOW, "/graphics/mainScene/ActionToken/DeleteCardYellow.png");
         actionTokenDeleteCardToPathMap.put(CardColor.GREEN, "/graphics/mainScene/ActionToken/DeleteCardGreen.png");

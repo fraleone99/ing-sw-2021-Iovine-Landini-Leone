@@ -58,7 +58,7 @@ public class PlayerTest {
         player.buyCard(devCard,3);
     }
 
-    @Test(expected=NotEnoughResourceException.class)
+    //@Test(expected=NotEnoughResourceException.class)
     public void ProductionLeader_NotEnoughResource() throws NotEnoughResourceException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, InvalidChoiceException {
         String s = "path";
         player.getPlayerDashboard().getStorage().AddResource(1,Resource.SHIELD,1);
@@ -84,7 +84,7 @@ public class PlayerTest {
         player.ActiveProductionLeader(1, Resource.COIN);
     }
 
-    @Test
+
     public void ProductionLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
         String s = "path";
 
@@ -103,7 +103,7 @@ public class PlayerTest {
         output.add(g2);
         Production production = new Production(input, output, 2);
         Requirements req1=new Requirements(CardColor.PURPLE, 2, 1, cost);
-        LeaderCard leader=new ProductionLeader(4, 12, s, production, req1);
+        LeaderCard leader=new ProductionLeader(4, 8, s, production, req1);
 
         player.getPlayerDashboard().getLeaders().add(leader);
 
