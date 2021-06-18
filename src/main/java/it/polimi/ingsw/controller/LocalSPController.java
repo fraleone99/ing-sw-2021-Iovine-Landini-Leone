@@ -39,7 +39,12 @@ public class LocalSPController {
     private final ArrayList<String> players=new ArrayList<>();
     private boolean isEnd=false;
     private final HandlerSP handler;
-    private boolean Catch=false;
+    private boolean notHasPerformedAnAction = false;
+
+    private static final int YES = 1;
+    private static final int ALL_GRID = 8;
+    private static final int INVALID = 3;
+    private static final int DO_PRODUCTION = 4;
 
     /**
      * LocalSPController constructor: creates a new instance of LocalSPController
@@ -235,25 +240,25 @@ public class LocalSPController {
         switch (toSee){
             case LEADER_CARDS: handler.handleClient(new SeeLeaderCards(gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 finish=getAnswer();
-                if(finish==1) localSeeGameBoard();
+                if(finish==YES) localSeeGameBoard();
                 break;
             case MARKET: handler.handleClient(new SeeMarket(gameModel.getGameBoard().getMarket()));
                 finish=getAnswer();
-                if(finish==1) localSeeGameBoard();
+                if(finish==YES) localSeeGameBoard();
                 break;
             case DEVELOPMENT_CARD_GRID: handler.handleClient(new RequestInt("LINE","Please choose what you want to see from the Development Cards Grid"));
                 int choice=getAnswer();
-                if(choice==8) {
+                if(choice==ALL_GRID) {
                     handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
                 } else {
                     handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck()));
                 }
                 finish=getAnswer();
-                if(finish==1) localSeeGameBoard();
+                if(finish==YES) localSeeGameBoard();
                 break;
             case POSSIBLE_PRODUCTION: handler.handleClient(new SeeProductions(gameModel.getPlayer(players.get(0)).getProductions()));
                 finish=getAnswer();
-                if(finish==1) localSeeGameBoard();
+                if(finish==YES) localSeeGameBoard();
                 break;
             case LEADER_CARDS_OTHER_PLAYER:
             case DEVELOPMENT_CARDS_OTHER_PLAYER:
@@ -275,7 +280,7 @@ public class LocalSPController {
         int type;
 
         do{
-            if(Catch=true) Catch=false;
+            if(notHasPerformedAnAction =true) notHasPerformedAnAction =false;
             handler.handleClient(new RequestInt("TURN","Choose what you want to do in this turn:"));
             answer=getAnswer();
             TurnType turnType = TurnType.fromInteger(answer);
@@ -283,7 +288,7 @@ public class LocalSPController {
                 case ACTIVE_LEADER:
                     handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     pos=getAnswer();
-                    if(pos==3) break;
+                    if(pos==INVALID) break;
                     try{
                         turncontroller.activeLeader(0, pos);
                     } catch (InvalidChoiceException e) {
@@ -295,7 +300,7 @@ public class LocalSPController {
                 case DISCARD_LEADER:
                     handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                     pos=getAnswer();
-                    if(pos==3) break;
+                    if(pos==INVALID) break;
                     try{
                         turncontroller.discardLeader(0, pos);
                         handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
@@ -312,7 +317,7 @@ public class LocalSPController {
                 case MARKET:
                     handler.handleClient(new RequestInt("STORAGE","Before using the market do you want to reorder your storage? You won't be able to do it later."));
                     int choice=getAnswer();
-                    if(choice==1) localManageStorage();
+                    if(choice==YES) localManageStorage();
                     handler.handleClient(new RequestInt("MARKET","Which market line do you want?"));
                     int line=getAnswer();
                     localUseMarket(0, line);
@@ -334,22 +339,22 @@ public class LocalSPController {
                         handler.handleClient(new RequestInt("TYPE", "What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
                         type = getAnswer();
                         localActiveProduction(type);
-                    } while (type != 4);
+                    } while (type != DO_PRODUCTION);
                     break;
 
             }
-        } while (answer==1 || answer==2 || Catch);
+        } while (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction);
 
-        Catch=false;
+        notHasPerformedAnAction =false;
 
         handler.handleClient(new RequestInt("END","What do you want to do?\n1) Active Leader\n2) Discard Leader\n3) End turn"));
         answer=getAnswer();
 
-        while(answer==1 || answer==2) {
+        while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) ) {
             if (answer == 1) {
                 handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 pos=getAnswer();
-                if(pos==3) break;
+                if(pos==INVALID) break;
                 try{
                     turncontroller.activeLeader(0, pos);
                 } catch (InvalidChoiceException e) {
@@ -358,7 +363,7 @@ public class LocalSPController {
             } else {
                 handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
                 pos=getAnswer();
-                if(pos==3) break;
+                if(pos==INVALID) break;
                 try{
                     turncontroller.discardLeader(0, pos);
                     handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
@@ -481,7 +486,7 @@ public class LocalSPController {
                     toPlace.clear();
                     toPlace.addAll(temp);
                 } catch (NotEnoughSpaceException | ShelfHasDifferentTypeException | AnotherShelfHasTheSameTypeException | InvalidChoiceException e) {
-                    handler.handleClient(new ErrorMessage("MARKET_INVALID_SHELF"));
+                    handler.handleClient(new ErrorMessage("MARKET_INVALID_STORAGE_LEADER"));
                 }
 
                 choice.clear();
@@ -580,7 +585,7 @@ public class LocalSPController {
             handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
         } catch(InvalidSpaceCardException e) {
             handler.handleClient(new SendMessage("INVALID"));
-            Catch=true;
+            notHasPerformedAnAction =true;
         }
     }
 
@@ -637,7 +642,7 @@ public class LocalSPController {
                 try {
                     if (gameModel.getPlayer(players.get(0)).getActivatedProduction().isEmpty()) {
                         handler.handleClient(new ErrorMessage("DO_PRODUCTION_INVALID"));
-                        Catch=true;
+                        notHasPerformedAnAction =true;
                     } else {
                         gameModel.getPlayer(players.get(0)).doProduction();
                         handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
@@ -648,7 +653,7 @@ public class LocalSPController {
                     }
                 } catch (NotEnoughResourceException e) {
                     handler.handleClient(new ErrorMessage("DO_PRODUCTION_NOT_ENOUGH_RES"));
-                    Catch=true;
+                    notHasPerformedAnAction =true;
                 }
                 break;
         }

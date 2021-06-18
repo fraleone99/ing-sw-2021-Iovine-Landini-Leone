@@ -27,10 +27,10 @@ public class TurnController {
     private final ArrayList<String> players = new ArrayList<>();
     private boolean notHasPerformedAnAction =false;
 
-    private static int YES = 1;
-    private static int ALL_GRID = 8;
-    private static int INVALID = 3;
-    private static int DO_PRODUCTION = 4;
+    private static final int YES = 1;
+    private static final int ALL_GRID = 8;
+    private static final int INVALID = 3;
+    private static final int DO_PRODUCTION = 4;
 
 
     /**
