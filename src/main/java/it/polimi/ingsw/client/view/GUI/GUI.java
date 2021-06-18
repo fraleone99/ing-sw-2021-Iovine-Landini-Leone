@@ -102,7 +102,7 @@ public class GUI extends Application implements View {
         nicknameController.setGui(this);
 
 
-        FXMLLoader number = new FXMLLoader(getClass().getResource("/fxml/PlaYerNumber.fxml"));
+        FXMLLoader number = new FXMLLoader(getClass().getResource("/fxml/PlayerNumber.fxml"));
         ChooseNumberScene = new Scene(number.load());
         playerNumberController = number.getController();
         playerNumberController.setGui(this);
