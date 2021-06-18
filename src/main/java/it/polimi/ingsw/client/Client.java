@@ -26,7 +26,7 @@ public class Client implements Runnable {
             client.run();
         }
         else if(arg.equals("gui")){
-            Application.launch(GUI.class);
+            GUI.main(args);
         }
     }
 

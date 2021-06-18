@@ -25,7 +25,12 @@ public class TurnController {
     private final Game game;
     private final VirtualView view;
     private final ArrayList<String> players = new ArrayList<>();
-    private boolean Catch=false;
+    private boolean notHasPerformedAnAction =false;
+
+    private static int YES = 1;
+    private static int ALL_GRID = 8;
+    private static int INVALID = 3;
+    private static int DO_PRODUCTION = 4;
 
 
     /**
@@ -65,39 +70,39 @@ public class TurnController {
         int answer=view.seeGameBoard(first, players.get(player));
         //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Active Leader Cards of the other players
         //6) Development Cards of the other players, 7) Nothing
-        int finish;
+        int seeMore;
 
         ToSeeFromGameBoard toSee = ToSeeFromGameBoard.fromInteger(answer);
 
         switch(toSee){
             case LEADER_CARDS:
-                finish=view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                if(finish==1) seeGameBoard(false, player);
+                seeMore =view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case MARKET:
-                finish=view.seeMarket(players.get(player), game.getGameBoard().getMarket());
-                if(finish==1) seeGameBoard(false, player);
+                seeMore =view.seeMarket(players.get(player), game.getGameBoard().getMarket());
+                if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case DEVELOPMENT_CARD_GRID:
                 int choice=view.chooseLine(players.get(player));
-                if(choice==8) {
-                    finish=view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+                if(choice == ALL_GRID) { //in the gui we always ask for all the grid while in the cli we ask for a line at the time
+                    seeMore =view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
                 } else {
-                    finish = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                    seeMore = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
                 }
-                if(finish==1) seeGameBoard(false, player);
+                if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case POSSIBLE_PRODUCTION:
-                finish=view.seeProduction(players.get(player), game.getPlayer(players.get(player)).getProductions());
-                if(finish==1) seeGameBoard(false, player);
+                seeMore =view.seeProduction(players.get(player), game.getPlayer(players.get(player)).getProductions());
+                if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case LEADER_CARDS_OTHER_PLAYER:
-                finish=leaderCard(player);
-                if(finish==1) seeGameBoard(false, player);
+                seeMore =leaderCard(player);
+                if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case DEVELOPMENT_CARDS_OTHER_PLAYER:
-                finish=devCard(player);
-                if(finish==1) seeGameBoard(false, player);
+                seeMore =devCard(player);
+                if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case NOTHING:
                 break;
@@ -156,13 +161,13 @@ public class TurnController {
         int type;
 
         do {
-            if(Catch=true) Catch=false;
+            if(notHasPerformedAnAction =true) notHasPerformedAnAction =false;
             answer=view.chooseTurn(players.get(player));
             TurnType turnType = TurnType.fromInteger(answer);
             switch (turnType) {
                 case ACTIVE_LEADER:
                     pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                    if(pos==3) break;
+                    if(pos == INVALID) break;
                     try {
                         activeLeader(player, pos);
                         for(String nickname: players){
@@ -178,7 +183,7 @@ public class TurnController {
 
                 case DISCARD_LEADER:
                     pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                    if(pos==3) break;
+                    if(pos == INVALID) break;
                     try {
                         discardLeader(player, pos);
                         for(String s: players){
@@ -198,8 +203,8 @@ public class TurnController {
                     break;
 
                 case MARKET:
-                    int choice = view.manageStorage(1, players.get(player));
-                    if (choice == 1) manageStorage(player);
+                    int manageStorage = view.manageStorage(1, players.get(player));
+                    if (manageStorage == YES) manageStorage(player);
                     int line = view.useMarket(players.get(player));
                     useMarket(player, line);
                     break;
@@ -217,7 +222,7 @@ public class TurnController {
                     do {
                         type = view.askType(players.get(player));
                         activeProduction(player, type);
-                    } while (type != 4);
+                    } while (type != DO_PRODUCTION);
                     break;
 
             }
@@ -225,16 +230,17 @@ public class TurnController {
             for(String nickname: players){
                 view.seeStorage(nickname, game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), false, true);
             }
-        } while(answer==1 || answer==2 || Catch);
 
-        Catch=false;
+        } while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction);
+
+        notHasPerformedAnAction = false;
 
         answer=view.endTurn(players.get(player));
 
-        while(answer==1 || answer==2) {
-            if (answer == 1) {
+        while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER)) {
+            if (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER)) {
                 pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                if(pos==3) break;
+                if(pos == INVALID) break;
                 try {
                     activeLeader(player, pos);
                     for(String nickname: players){
@@ -249,7 +255,7 @@ public class TurnController {
                 }
             } else {
                 pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                if(pos==3) break;
+                if(pos == INVALID) break;
                 try {
                     discardLeader(player, pos);
                     for(String s: players){
@@ -322,7 +328,7 @@ public class TurnController {
                 try {
                     if(game.getPlayer(players.get(player)).getActivatedProduction().isEmpty()) {
                         view.sendErrorMessage(players.get(player), "DO_PRODUCTION_INVALID");
-                        Catch=true;
+                        notHasPerformedAnAction =true;
                     } else {
                         game.getPlayer(players.get(player)).doProduction();
                         for(String s: players){
@@ -335,7 +341,7 @@ public class TurnController {
                     }
             } catch (NotEnoughResourceException e) {
                 view.sendErrorMessage(players.get(player), "DO_PRODUCTION_NOT_ENOUGH_RES");
-                Catch=true;
+                notHasPerformedAnAction =true;
             }
                 break;
         }
@@ -355,15 +361,20 @@ public class TurnController {
         CardColor cardColor;
 
         switch (color) {
-            case 1 : cardColor=CardColor.PURPLE;
+            case 1 :
+                cardColor=CardColor.PURPLE;
                 break;
-            case 2 : cardColor=CardColor.YELLOW;
+            case 2 :
+                cardColor=CardColor.YELLOW;
                 break;
-            case 3 : cardColor=CardColor.BLUE;
+            case 3 :
+                cardColor=CardColor.BLUE;
                 break;
-            case 4 : cardColor=CardColor.GREEN;
+            case 4 :
+                cardColor=CardColor.GREEN;
                 break;
-            default: cardColor=null;
+            default:
+                cardColor=null;
         }
 
         DevelopmentCard card=game.getGameBoard().getDevelopmentCardGrid().getCard(cardColor,level);
@@ -377,7 +388,7 @@ public class TurnController {
             }
         } catch(InvalidSpaceCardException e) {
             view.sendInvalidInput(players.get(player));
-            Catch=true;
+            notHasPerformedAnAction =true;
         }
     }
 

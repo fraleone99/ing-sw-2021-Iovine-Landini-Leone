@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Vault;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.server.VirtualView;
@@ -57,7 +58,6 @@ public class Controller {
                 view.initialInfo(players.get(i), players.size(), players);
                 startGame(i);
                 view.initializeGameBoard(players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck());
-                //view.initialInfo(players.get(i), players.size(), players);
 
                 for(String player: players){
                     view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard(), player, false, false);
@@ -138,25 +138,13 @@ public class Controller {
     public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD, 10);
                     break;
             case 1:
                 int resource1 = view.chooseResource(players.get(i), "second", 1);
                     addInitialResource(i, resource1,1);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD, 10);
                     break;
             case 2: resource1 =view.chooseResource(players.get(i), "third",1);
                     addInitialResource(i, resource1,1);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD, 10);
                     break;
             case 3: resource1 =view.chooseResource(players.get(i), "fourth",1);
                     addInitialResource(i, resource1,2);
@@ -167,10 +155,6 @@ public class Controller {
                         addInitialResource(i, resource2,1);
                     }
                     gameModel.getPlayer(players.get(i)).getPlayerDashboard().getFaithPath().moveForward(1);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.COIN, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.STONE, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SERVANT, 10);
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().AddResource(Resource.SHIELD, 10);
         }
     }
 
