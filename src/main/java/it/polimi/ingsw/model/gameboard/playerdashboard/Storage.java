@@ -142,7 +142,12 @@ public class Storage {
 
     }
 
-
+    /**
+     * Method checkInput return the difference between the amount in the storage and the amount needed
+     *
+     * @param needed is the good of which we check the input.
+     * @return the difference between the amount in the storage and the amount needed
+     */
     public int checkInput(Goods needed){
         Shelf shelf = isThisTypePresent(needed.getType());
 
