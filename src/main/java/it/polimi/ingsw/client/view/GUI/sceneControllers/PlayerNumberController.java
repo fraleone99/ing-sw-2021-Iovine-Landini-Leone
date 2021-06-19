@@ -8,6 +8,13 @@ import javafx.scene.control.ChoiceBox;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * PlayerNumberController class controls the scene from which the first player choose the numbers of player
+ *
+ *
+ * @author Francesco Leone
+ */
+
 public class PlayerNumberController {
     @FXML public ChoiceBox numberChoice;
     @FXML public Button okButton;
@@ -17,6 +24,9 @@ public class PlayerNumberController {
         this.gui = gui;
     }
 
+    /**
+     * Method setupPlayerNUmber get the input of the first player of the number of players of the game
+     */
     public void setupPlayersNumber(){
         AtomicInteger playersNumber = new AtomicInteger();
         gui.changeStage(GUI.NUMBER);

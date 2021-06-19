@@ -7,24 +7,30 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+/**
+ * Setup controller class manage the scene from which the player insert the connection detail
+ *
+ * @author Francesco Leone
+ */
+
 public class SetupController {
-    @FXML public TextField ipBox;
-    @FXML public TextField portBox;
-    @FXML public Button playButton;
-    @FXML public Label invalidLabel;
+    @FXML private TextField ipBox;
+    @FXML private TextField portBox;
+    @FXML private Button playButton;
+    @FXML private Label invalidLabel;
 
-    @FXML public TextField nicknameBox;
-    @FXML public Button okButton;
+    private String IP;
+    private int portNumber;
 
-    String IP;
-    int portNumber;
-
-    GUI gui;
+    private GUI gui;
 
     public void setGui(GUI gui) {
         this.gui = gui;
     }
 
+    /**
+     * Method setup connection get the input from the user of the ip and ort of the server
+     */
     public void setupConnection(){
         gui.changeStage(GUI.SETUP);
 
