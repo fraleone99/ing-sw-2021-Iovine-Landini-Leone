@@ -161,14 +161,14 @@ public class VirtualView extends VirtualViewObservable {
     public void startGame(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new SendMessage("The game start!"));
+        client.send(new SendMessage("\n\n"+Constants.ANSI_RED+">The game starts!\n"+Constants.ANSI_RESET));
     }
 
 
     public void seeFaithPath(String nickname, String player, FaithPath path, boolean SinglePlayer) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new FaithPathInfo(("This is the Dashboard of "+player+" :"), path, SinglePlayer));
+        client.send(new FaithPathInfo(("\n\n"+Constants.DIVIDING_LINE+"\nThis is the Dashboard of "+Constants.ANSI_GREEN+player+Constants.ANSI_RESET+" :\n"), path, SinglePlayer));
     }
 
 
@@ -526,14 +526,14 @@ public class VirtualView extends VirtualViewObservable {
     public void win(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new Win("You had accumulated "  + victoryPoints  + " victory points"));
+        client.send(new Win("You had accumulated "  + victoryPoints  + " victory points\n"));
     }
 
 
     public void lose(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new Lose("You had accumulated " + victoryPoints + " victory points"));
+        client.send(new Lose("You had accumulated " + victoryPoints + " victory points\n"));
     }
 
 

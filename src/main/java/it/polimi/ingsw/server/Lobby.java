@@ -126,7 +126,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     public void updatePlayingNick(String nickname){
         for(String nick: nicknames){
             if(!nick.equals(nickname)){
-                namesToClient.get(nick).send(new SendMessage("++++++++++++++++++++++++++++++++++++++++++++++\n"
+                namesToClient.get(nick).send(new SendMessage("\n\n\n++++++++++++++++++++++++++++++++++++++++++++++\n"
                         +Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
             }
         }

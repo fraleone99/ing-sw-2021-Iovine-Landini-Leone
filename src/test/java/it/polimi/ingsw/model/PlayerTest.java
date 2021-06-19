@@ -580,7 +580,7 @@ public class PlayerTest {
         leader.setIsActive();
         player.getLeaders().add(leader);
 
-        assertEquals(player.calculateVictoryPoints(), 43);
+        assertEquals(43, player.calculateVictoryPoints());
 
     }
 
