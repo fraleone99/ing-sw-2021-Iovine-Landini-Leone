@@ -312,15 +312,21 @@ public class MarketSceneController {
         if(ball.getBalls().size() < 4){
             switch (ball.getBalls().size()){
                 case 1:
+                    chosenBall_1.setDisable(false);
                     chosenBall_2.setDisable(true);
                     chosenBall_3.setDisable(true);
                     chosenBall_4.setDisable(true);
                     break;
                 case 2:
+                    chosenBall_1.setDisable(false);
+                    chosenBall_2.setDisable(false);
                     chosenBall_3.setDisable(true);
                     chosenBall_4.setDisable(true);
                     break;
                 case 3:
+                    chosenBall_1.setDisable(false);
+                    chosenBall_2.setDisable(false);
+                    chosenBall_3.setDisable(false);
                     chosenBall_4.setDisable(true);
                     break;
             }

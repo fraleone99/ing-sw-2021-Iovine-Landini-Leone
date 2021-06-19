@@ -142,12 +142,7 @@ public class Storage {
 
     }
 
-    /**
-     * This method checks if the given resource is present in the storage and calculates how many
-     * resources can be placed in the shelves. It returns the amount of resources that can't ve placed
-     * @param needed resources that have to be placed
-     * @return the amount of resources that can't be placed
-     */
+
     public int checkInput(Goods needed){
         Shelf shelf = isThisTypePresent(needed.getType());
 

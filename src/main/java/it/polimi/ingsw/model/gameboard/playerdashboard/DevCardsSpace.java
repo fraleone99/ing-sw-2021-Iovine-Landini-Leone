@@ -87,11 +87,22 @@ public class DevCardsSpace {
      * @param type2 second input resource
      */
     public void setInputBasicProduction(Resource type1, Resource type2){
-        Goods input1 = new Goods(type1, 1);
-        basicProduction.getInputProduction().set(0, input1);
 
-        Goods input2 = new Goods(type2, 1);
-        basicProduction.getInputProduction().set(1,input2);
+        if(type1.equals(type2)){
+            Goods input1 = new Goods(type1, 2);
+            basicProduction.getInputProduction().set(0, input1);
+
+            Goods input2 = new Goods(type2, 0);
+            basicProduction.getInputProduction().set(1, input2);
+        }
+        else {
+
+            Goods input1 = new Goods(type1, 1);
+            basicProduction.getInputProduction().set(0, input1);
+
+            Goods input2 = new Goods(type2, 1);
+            basicProduction.getInputProduction().set(1, input2);
+        }
     }
 
     /**

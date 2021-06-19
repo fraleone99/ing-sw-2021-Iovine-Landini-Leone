@@ -27,9 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VirtualView extends VirtualViewObservable {
-    private String answer;
     private int number;
-    private int number2;
     private final Map<String, ClientHandler> namesToClient = new HashMap<>();
 
     public int waitForInt(ClientHandler client) {
