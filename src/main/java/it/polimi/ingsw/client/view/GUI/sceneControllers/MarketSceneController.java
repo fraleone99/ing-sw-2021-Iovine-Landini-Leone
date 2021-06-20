@@ -26,11 +26,16 @@ import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * MarketSceneController class controls the scene of the market in which the player can see the market, choose the
+ * marble and where to put the selected resources.
+ *
+ * @author Francesco Leone
+ */
 public class MarketSceneController {
     @FXML public GridPane marketGrid;
     @FXML public ImageView ramp;
     @FXML public Button back_button;
-    @FXML public Button Use_button;
     public ImageView resource_firstShelf;
     public ImageView first_resource_secondShelf;
     public ImageView second_resource_secondShelf;
@@ -86,6 +91,11 @@ public class MarketSceneController {
     private Map<Resource, String> resourceToPathMap = new HashMap<>();
 
 
+    /**
+     * Method setGui set the GUI for this scene and initialize the map of the resources and the matrix for the market
+     *
+     * @param gui
+     */
     public void setGui(GUI gui) {
         this.gui = gui;
 
@@ -117,6 +127,11 @@ public class MarketSceneController {
         resourceToPathMap.put(Resource.STONE, "/graphics/STONE.png");
     }
 
+    /**
+     * updateMarket method updates the matrix of the market
+     *
+     * @param market contains the new configuration of the market
+     */
     public void updateMarket(Market market){
 
         Ball[][] matrix = market.getMatrix();
@@ -134,6 +149,9 @@ public class MarketSceneController {
 
     }
 
+    /**
+     * seePhase method allow the player only to see the configuration of the market and its storage. No action is permitted
+     */
     public void seePhase() {
         manageStorage_group.setOpacity(0);
         reorganizeQuestion_group.setOpacity(0);
@@ -153,6 +171,11 @@ public class MarketSceneController {
         back_button.setOnAction(actionEvent -> gui.changeGameBoard());
     }
 
+
+    /**
+     * Method usePhase enables the button for row and column of the market and sends a message to the server when one
+     * of this button is pressed.
+     */
     public void usePhase() {
         reorganizeQuestion_group.setOpacity(0);
         buttonMarket_group.setDisable(false);
@@ -165,6 +188,11 @@ public class MarketSceneController {
         }
     }
 
+    /**
+     * Method storage updates the storage of the player visible in the Market Scene.
+     *
+     * @param storageInfo contains the information of the market
+     */
     public void storage( StorageInfo storageInfo){
         //first shelf
         if(storageInfo.getShelf1Amount() == 0){
@@ -215,6 +243,11 @@ public class MarketSceneController {
 
     }
 
+
+    /**
+     * Method menageStorage ask the player if he wants to reorganize the storage before choosing the resources from the
+     * market.
+     */
     public void manageStorage() {
         reorganizeQuestion_group.setOpacity(1);
         manageStorage_group.setOpacity(0);
@@ -238,6 +271,9 @@ public class MarketSceneController {
         no_reorganizeStorage.setOnAction(actionEvent -> gui.getHandler().send(new SendInt(2)));
     }
 
+    /**
+     * Method moveShelves allows the player to select which shelves he wants to invert
+     */
     public void moveShelves() {
         reorganizeQuestion_group.setOpacity(0);
         manageStorage_group.setOpacity(1);
@@ -275,6 +311,11 @@ public class MarketSceneController {
         });
     }
 
+    /**
+     * Method seeBall sets the image of the selected marble and make the player choose which one he wants to place
+     *
+     * @param ball contains the selected balls
+     */
     public void seeBall(SeeBall ball) {
         reorganizeQuestion_group.setOpacity(0);
         selectShelf_label.setOpacity(0);
@@ -386,6 +427,9 @@ public class MarketSceneController {
             });
     }
 
+    /**
+     * Method chooseShelf make the player choose in which shelf he wants to place the selected ball
+     */
     public void chooseShelf() {
         shelves_group.setDisable(false);
         storageLeader_button.setOpacity(1);
@@ -424,12 +468,14 @@ public class MarketSceneController {
 
     }
 
+    /**
+     * method error manages the error message
+     *
+     * @param error is the type of error
+     */
     public void error(String error) {
         switch (error) {
             case "MARKET_INVALID_SHELF" :
-                error_label.setText("INVALID CHOICE");
-                error_label.setOpacity(1);
-                break;
             case "MARKET_INVALID_STORAGE_LEADER" :
                 error_label.setText("INVALID CHOICE");
                 error_label.setOpacity(1);
@@ -440,6 +486,10 @@ public class MarketSceneController {
         }
     }
 
+    /**
+     * method whiteBallLeader make the player choose which one of the white ball leader he wants to use if he has two
+     * white ball leader both active
+     */
     public void whiteBallLeader() {
         leader_group.setDisable(false);
         shelves_group.setDisable(true);

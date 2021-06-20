@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * MainMenuController class controls the scene in which the player select the type of game
+ */
 public class MainMenuController {
     @FXML private Button singlePlayerButton;
     @FXML private Button multiplayerButton;
@@ -23,6 +26,9 @@ public class MainMenuController {
     }
 
 
+    /**
+     * method starts allows the player to choose if he wants to play a game connected or in local
+     */
     public void start() {
 
         gui.changeStage(GUI.MENU);

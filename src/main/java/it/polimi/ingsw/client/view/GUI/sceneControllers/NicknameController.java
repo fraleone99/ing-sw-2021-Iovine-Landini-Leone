@@ -9,6 +9,11 @@ import javafx.scene.control.TextField;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * NicknameController class controls the scene in which the players choose the username
+ *
+ * @author Francesco Leone
+ */
 public class NicknameController {
     @FXML public TextField nicknameBox;
     @ FXML public Button okButton;
@@ -20,6 +25,11 @@ public class NicknameController {
         this.gui = gui;
     }
 
+    /**
+     * setupNickname method let the user insert his nickname
+     *
+     * @param message informs the user that the chosen nickname is already taken
+     */
     public void  setupNickname(String message){
         AtomicReference<String> nickname = new AtomicReference<>();
         gui.changeStage(GUI.NICKNAME);

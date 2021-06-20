@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * method InitialResourcesController controls the scene in which the player choose the initial benefits
+ */
 public class InitialResourcesController {
     @FXML private ImageView coin;
     @FXML private ImageView stone;
@@ -23,6 +26,9 @@ public class InitialResourcesController {
         message.setText(label);
     }
 
+    /**
+     * method askResources let the player choose which resource he wants and send the answer to the server
+     */
     public void askResource() {
         coin.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             gui.getHandler().send(new SendInt(1));
