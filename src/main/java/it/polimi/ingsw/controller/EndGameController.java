@@ -19,11 +19,12 @@ public class EndGameController {
      * @return the match winner
      */
     public Player getWinner(Game game){
-        int winningPoints=0;
+        int winningPoints=totalVictoryPoints(game.getPlayers().get(0));
         int pos=0;
 
         for(int i=0; i<game.getPlayers().size(); i++){
             if(totalVictoryPoints(game.getPlayers().get(i))>winningPoints){
+                winningPoints=totalVictoryPoints(game.getPlayers().get(i));
                 pos=i;
             }
         }
@@ -37,7 +38,7 @@ public class EndGameController {
      * @return player's total victory points
      */
     public int totalVictoryPoints(Player player) {
-        int totalPoints;
+        int totalPoints=0;
 
         //points in Player+total points from the faith path
         totalPoints = player.calculateVictoryPoints() + player.getPlayerDashboard().getFaithPath().getTotalPoint();

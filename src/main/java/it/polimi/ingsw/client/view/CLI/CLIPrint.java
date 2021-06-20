@@ -98,17 +98,17 @@ public class CLIPrint {
 
         HashMap<String, Integer> cards = devCardsSpaceInfo.getNumberOfCardByColor();
 
-        devCardsSpaceBuilder.append("Victory points by dev Cards: ").append(devCardsSpaceInfo.getVictoryPoints()).append("\n");
-        devCardsSpaceBuilder.append("Development Cards of the player: \n");
+        devCardsSpaceBuilder.append(Constants.ANSI_WHITE+"Victory points by dev Cards: "+Constants.ANSI_RESET).append(devCardsSpaceInfo.getVictoryPoints()).append("\n");
+        devCardsSpaceBuilder.append(Constants.ANSI_WHITE+"Development Cards of the player: \n"+Constants.ANSI_RESET);
 
 
         cards.forEach((k, v) -> {
             if (v > 0) {
-                devCardsSpaceBuilder.append(k).append(":").append(v).append("\n");
+                devCardsSpaceBuilder.append("   -").append(k).append(":").append(v).append("\n");
             }
         });
 
-        System.out.println(devCardsSpaceBuilder);
+        System.out.println(devCardsSpaceBuilder+"\n"+Constants.DIVIDING_LINE+"\n");
     }
 
 

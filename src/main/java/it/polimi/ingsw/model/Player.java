@@ -61,10 +61,10 @@ public class Player {
      * @return the player's victory points
      */
     public int calculateVictoryPoints() {
+        victoryPoints=0;
+
         //total points from cards in devCardsSpace
-        for(DevelopmentCardDeck deck: getPlayerDashboard().getDevCardsSpace().getSpace()){
-            victoryPoints += deck.victoryPointsAmount();
-        }
+        victoryPoints += getPlayerDashboard().getDevCardsSpace().pointsByDevCards();
 
         //total points from player's leader cards
         victoryPoints += getLeaders().victoryPointsAmount();
@@ -80,6 +80,7 @@ public class Player {
     public Player(String nickname) {
         this.nickname = nickname;
         this.playerDashboard = new PlayerDashboard();
+        victoryPoints=0;
     }
 
 

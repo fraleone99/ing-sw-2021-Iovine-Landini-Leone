@@ -35,6 +35,8 @@ public class Constants {
     public final static String LEADER_CARD_RIGHT_EDGE = "+\n";
     public final static String FIVE_WITHE_SPACE = "     ";
 
+    public final static String DIVIDING_LINE = ANSI_WHITE+"********************************************************************************************************************************************"+ANSI_RESET;
+
     //DEVELOPMENT CARD
     public final static String DEV_CARD_TOP = "+++++++++++++";
 
@@ -64,7 +66,7 @@ public class Constants {
     public final static String PapalPOINT3  = ANSI_GREEN + "❹" + ANSI_RESET;
     public final static String PapalCELL    = ANSI_RED + "⳩" + ANSI_RESET;
     public final static String ColorFAITH   = ANSI_PURPLE + FAITH + ANSI_RESET;
-    public final static String FAITH_LEGEND = ANSI_WHITE +"   FAITH PATH:\n"+ ANSI_RESET +"      ->"+ ANSI_CYAN +" Cyan "+ ANSI_RESET +"numbers represent the position of the FaithPath\n"+"      ->"+ ANSI_RED +" Red "+ ANSI_RESET+"numbers represent the position of papal regions\n"+"      -> "+ PapalCELL +" represents papal spaces\n\n";
+    public final static String FAITH_LEGEND = ANSI_WHITE +"   FAITH PATH:\n"+ ANSI_RESET +"      ->"+ ANSI_CYAN +" Cyan "+ ANSI_RESET +"numbers represent the position of the faith path\n"+"      ->"+ ANSI_RED +" Red "+ ANSI_RESET+"numbers represent the position of papal regions\n"+"      -> "+ PapalCELL +" represents papal spaces\n\n";
     public final static String FAITH_MIDDLE_EDGE = "   + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +";
     public final static String FAITH_TOP_EDGE    = "   + + + + + + + + + + + + + " + OnePOINT +" + + + + + + + + + + + "+ TwoPOINTS +" + + + + + + + + + + + "+ FourPOINTS +" + + + + + + + + + + + + "+ SixPOINTS +" +\n";
     public final static String FAITH_BOTTOM_EDGE = "   + "+ TwentyPOINTS +" + + + + + + + + + + + + "+ SixteenPOINTS +" + + + + + + + + + + + + "+ TwelvePOINTS +" + + + + + + + + + + + + "+ NinePOINTS +" + + + + + + + + + + +\n";

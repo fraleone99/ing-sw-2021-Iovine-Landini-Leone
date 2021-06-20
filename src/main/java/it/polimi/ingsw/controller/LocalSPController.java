@@ -160,7 +160,7 @@ public class LocalSPController {
      * This method handles the call of player dashboard print in the CLI
      */
     public void localSeePlayerDashboard(){
-        handler.handleClient(new FaithPathInfo(("This is the Dashboard of "+players.get(0)+" :"), gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath(), true));
+        handler.handleClient(new FaithPathInfo((Constants.DIVIDING_LINE+"\nThis is the Dashboard of "+players.get(0)+" :"), gameModel.getPlayers().get(0).getPlayerDashboard().getFaithPath(), true));
         handler.handleClient((new StorageInfo(gameModel.getPlayers().get(0).getPlayerDashboard().getStorage(),
                 gameModel.getPlayers().get(0).getPlayerDashboard().getVault(),gameModel.getPlayers().get(0).getPlayerDashboard().getLeaders().get(0),
                 gameModel.getPlayers().get(0).getPlayerDashboard().getLeaders().get(1),gameModel.getPlayers().get(0).getNickname(), true)));
