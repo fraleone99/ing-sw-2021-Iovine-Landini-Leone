@@ -206,6 +206,9 @@ public class TurnController {
                     int manageStorage = view.manageStorage(1, players.get(player));
                     if (manageStorage == YES) manageStorage(player);
                     int line = view.useMarket(players.get(player));
+                    for(String nickname: players){
+                        view.sendUpdateMarket(nickname, game.getGameBoard().getMarket());
+                    }
                     useMarket(player, line);
                     break;
 
@@ -478,10 +481,6 @@ public class TurnController {
 
                 choice.clear();
             } while (toPlace.size() > 0);
-
-            for(String nickname: players){
-                view.sendUpdateMarket(nickname, game.getGameBoard().getMarket());
-            }
         }
     }
 
