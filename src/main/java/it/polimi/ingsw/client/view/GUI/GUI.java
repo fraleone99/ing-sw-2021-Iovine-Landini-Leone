@@ -84,6 +84,7 @@ public class GUI extends Application implements View {
         launch(args);
     }
 
+
     @Override
     public void init() throws Exception {
         FXMLLoader menu = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
@@ -364,6 +365,16 @@ public class GUI extends Application implements View {
         }
         else if (message.equals("END_GAME")){
             Platform.runLater(()-> gameSceneController.endGame());
+        }
+        else if(message.equals("We are creating the lobby, please wait...")){
+            Platform.runLater(()->
+            {
+                changeStage(LOADING);
+                Label loading = (Label) LoadingScene.lookup("#loading_label");
+                loading.setText("Please wait, we are creating the lobby...");
+                ProgressBar progressBar = (ProgressBar) LoadingScene.lookup("#progressBar");
+                progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+            });
         }
     }
 
