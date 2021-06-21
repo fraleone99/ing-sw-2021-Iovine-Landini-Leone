@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.PlayerNumberController">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.PlayerNumberController">
    <children>
       <ChoiceBox fx:id="numberChoice" layoutX="720.0" layoutY="418.0" prefWidth="150.0" />
       <Button fx:id="okButton" layoutX="704.0" layoutY="564.0" mnemonicParsing="false" text="OK" />

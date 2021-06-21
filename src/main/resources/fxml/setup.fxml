@@ -5,11 +5,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="setup" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
+<AnchorPane fx:id="setup" prefHeight="810.0" prefWidth="1440.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
    <TextField fx:id="ipBox" layoutX="703.0" layoutY="340.0" prefHeight="26.0" prefWidth="150.0" />
    <TextField fx:id="portBox" layoutX="704.0" layoutY="392.0" />
    <Label layoutX="628.0" layoutY="344.0" prefHeight="18.0" prefWidth="58.0" text="Server IP:" />
    <Label layoutX="645.0" layoutY="396.0" text="Port:" />
-   <Button fx:id="playButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="738.0" layoutY="550.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="40.0" text="Play" />
+   <Button fx:id="playButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="738.0" layoutY="550.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="81.0" text="Play" />
    <Label fx:id="invalidLabel" layoutX="699.0" layoutY="441.0" opacity="0.0" text="Please enter valid ip and port!" />
 </AnchorPane>

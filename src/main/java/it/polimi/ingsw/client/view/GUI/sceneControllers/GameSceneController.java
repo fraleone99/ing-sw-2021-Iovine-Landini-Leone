@@ -101,7 +101,6 @@ public class GameSceneController {
     @FXML Label noActionSelectedLabel;
     @FXML private Label usernameLabel;
     @FXML Label turn;
-    @FXML Label see;
     @FXML Label invalid;
     @FXML public RadioButton end_turn;
     @FXML private ImageView actionTokenPrint;
@@ -180,7 +179,6 @@ public class GameSceneController {
         toSee_developmentGrid.setOpacity(1);
         toSee_market.setOpacity(1);
         toSee_nothing.setOpacity(1);
-        see.setOpacity(1);
         turn.setOpacity(0);
         ok_turnType.setDisable(true);
         ok_turnType.setOpacity(0);
@@ -216,7 +214,6 @@ public class GameSceneController {
         turn_discardLeader.setOpacity(0);
         turn_activeLeader.setOpacity(0);
         turn.setOpacity(0);
-        see.setOpacity(1);
         toSee_market.setOpacity(1);
         toSee_developmentGrid.setOpacity(1);
         invalid.setOpacity(0);
@@ -238,7 +235,6 @@ public class GameSceneController {
         turn_discardLeader.setOpacity(1);
         turn_activeLeader.setOpacity(1);
         turn.setOpacity(1);
-        see.setOpacity(1);
         invalid.setOpacity(1);
         toSee_market.setDisable(false);
         toSee_developmentGrid.setDisable(false);
@@ -255,7 +251,6 @@ public class GameSceneController {
         turn_discardLeader.setOpacity(1);
         ok_turnType.setOpacity(1);
         turn.setOpacity(1);
-        see.setOpacity(0);
         toSee_developmentGrid.setOpacity(0);
         toSee_market.setOpacity(0);
         toSee_nothing.setOpacity(0);

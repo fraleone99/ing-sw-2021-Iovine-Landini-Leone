@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.GUI;
 
+import com.sun.tools.javac.Main;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;
@@ -115,6 +116,8 @@ public class GUI extends Application implements View {
         GameScene = new Scene(game.load());
         gameSceneController = game.getController();
         gameSceneController.setGui(this);
+        GameScene.getStylesheets().add(GUI.class.getResource("/bootstrap3.css").toExternalForm());
+
 
         FXMLLoader market = new FXMLLoader(getClass().getResource("/fxml/Market.fxml"));
         MarketScene = new Scene(market.load());

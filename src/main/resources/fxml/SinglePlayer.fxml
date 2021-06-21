@@ -4,10 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="288.0" prefWidth="433.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
+<AnchorPane prefHeight="288.0" prefWidth="433.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
    <children>
-      <Button fx:id="local" layoutX="163.0" layoutY="117.0" mnemonicParsing="false"  prefHeight="26.0" prefWidth="108.0" text="Local game" />
+      <Button fx:id="local" layoutX="163.0" layoutY="117.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="128.0" text="Local game" />
       <Button fx:id="connected" layoutX="163.0" layoutY="154.0" mnemonicParsing="false" text="Connected Game" />
       <Label layoutX="175.0" layoutY="38.0" text="SINGLE PLAYER" />
    </children>

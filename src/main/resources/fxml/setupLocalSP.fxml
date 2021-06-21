@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="219.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
+<AnchorPane prefHeight="219.0" prefWidth="315.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
    <children>
       <TextField fx:id="username" layoutX="144.0" layoutY="97.0" />
       <Label layoutX="67.0" layoutY="101.0" text="username:" />

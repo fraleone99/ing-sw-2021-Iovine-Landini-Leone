@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.GUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../bootstrap3.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.GUI">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="547.0" layoutY="470.0" prefHeight="18.0" prefWidth="346.0" progress="0.0" />
       <Label fx:id="loading_label" layoutX="507.0" layoutY="235.0" text="Please wait! We are waiting for the other players">
