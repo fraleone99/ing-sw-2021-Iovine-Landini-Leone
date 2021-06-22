@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import com.sun.tools.javac.Main;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;

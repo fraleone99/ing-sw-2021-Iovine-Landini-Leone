@@ -25,6 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+
+/**
+ * GameSceneController class controls the main scene of the game form which the player see the dashboards and chooses what
+ * to do in his turn.
+ *
+ * @author Francesco Leone, Lorenzo Iovine, Nicola Landini
+ */
 public class GameSceneController {
 
     @FXML public Button toSee_nothing;
@@ -152,6 +159,10 @@ public class GameSceneController {
     private final HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> lorenzoFaithPathPosToImageView = new HashMap<>();
 
+    /**
+     * Method set gui sets the gui and initialize the maps
+     * @param gui
+     */
     public void setGui(GUI gui) {
         this.gui = gui;
 
@@ -167,7 +178,10 @@ public class GameSceneController {
 
     }
 
-
+    /**
+     * seePhase method handles the phase of the game in which the player wants to see the market or the development card
+     * grid in his turn or during the turn of the others players
+     */
     public void seePhase(){
         end_turn.setOpacity(0);
         invalid.setOpacity(0);
@@ -197,7 +211,10 @@ public class GameSceneController {
         usernameLabel.setText(nickname);
     }
 
-
+    /**
+     * notMyTurn method handles the gameScene when it is not the turn of the player. He can only see the market and the
+     * grid.
+     */
     public void notMyTurn() {
         message.setText("IT'S NOT YOUR TURN!");
         message.setOpacity(1);
@@ -222,6 +239,10 @@ public class GameSceneController {
         toSee_developmentGrid.setOnAction(actionEvent -> gui.seeGrid(null));
     }
 
+    /**
+     * isMyTurn method handles the start of the turn of the player he can see the grid or/and the market and then he
+     * starts the turn
+     */
     public void isMyTurn() {
         message.setText("IT'S YOUR TURN!");
         message.setOpacity(1);
@@ -242,6 +263,9 @@ public class GameSceneController {
         usernameLabel.setTextFill(Color.color(0, 0, 1));
     }
 
+    /**
+     * askTurn method let the player choose what he wants to do in that turn
+     */
     public void askTurn() {
         chooseTurnGroup.setOpacity(1);
         turn_market.setOpacity(1);
@@ -286,6 +310,23 @@ public class GameSceneController {
         });
     }
 
+    /**
+     * Storage method updates a storage when the server sends a StorageInfo message.
+     *
+     * @param firstResourcesFirstShelf is the first resources of the first shelf to update
+     * @param firstResourcesSecondShelf is the first resources of the second shelf to update
+     * @param secondResourcesSecondShelf is the second resources of the second shelf to update
+     * @param firstResourcesThirdShelf is the first resources of the third shelf to update
+     * @param secondResourcesThirdShelf is the second resources of the second shelf to update
+     * @param thirdResourcesThirdShelf is the third resources of the third shelf to update
+     * @param vault_coin is the amount of coin in the vault
+     * @param vault_stone is the amount of stone in the vault
+     * @param vault_servant is the amount of servant in the vault
+     * @param vault_shield is the amount of shield in the vault
+     * @param leader1 is the group containing the resources of the first leader in case he is a storage leader
+     * @param leader2 is the group containing the resources of the second leader in case he is a storage leader
+     * @param storageInfo is the message received from the server containing the information to update the scene
+     */
     public void storage(ImageView firstResourcesFirstShelf, ImageView firstResourcesSecondShelf, ImageView secondResourcesSecondShelf,
     ImageView firstResourcesThirdShelf, ImageView secondResourcesThirdShelf, ImageView thirdResourcesThirdShelf, Label vault_coin,
                         Label vault_stone, Label vault_servant, Label vault_shield, Group leader1, Group leader2, StorageInfo storageInfo){
@@ -394,6 +435,9 @@ public class GameSceneController {
 
     }
 
+    /**
+     * discardLeader method let the player discard a leader at the beginning or at the end of the turn
+     */
     public void discardLeader() {
         message.setText("Press on the leader card that you want to discard.");
         message.setOpacity(1);
@@ -425,6 +469,9 @@ public class GameSceneController {
         });
     }
 
+    /**
+     * activeLeader method let the player active a leader at the beginning or at the end of the turn
+     */
     public void activeLeader() {
         message.setText("Press on the leader card that you want to activate.");
         message.setOpacity(1);
@@ -458,6 +505,10 @@ public class GameSceneController {
         });
     }
 
+    /**
+     * resetCard reset the selected card
+     * @param pos is the leader card to reset
+     */
     public void resetCard(int pos) {
         if(gui.getLeaderCards().get(0)==pos && leader1.getOpacity()==1) {
             leader1.setOpacity(0.5);
@@ -470,7 +521,9 @@ public class GameSceneController {
     }
 
 
-
+    /**
+     *method chooseProduction make the player choose which production he wants to activate
+     */
     public void chooseProduction() {
         chooseTurnGroup.setOpacity(0);
         turn.setOpacity(0);
@@ -497,6 +550,10 @@ public class GameSceneController {
         });
     }
 
+    /**
+     * method updateBasicProduction updates the image of the basicProduction
+     * @param info is the message received from the server containing the info of the basic production
+     */
     public void updateBasicProduction(BasicProductionInfo info) {
         basicProductionGroup.setOpacity(1);
 
@@ -509,6 +566,9 @@ public class GameSceneController {
         image3.setImage(new Image(resourceToPathMap.get(info.getOutput())));
     }
 
+    /**
+     * leaderCardProduction let the player use a production Leader
+     */
     public void leaderCardProduction() {
         basicProduction.setOpacity(0);
         developmentCardProduction.setOpacity(0);
@@ -524,6 +584,9 @@ public class GameSceneController {
         leader2.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
     }
 
+    /**
+     * leaderCardProduction let the player use a DevelopmentCard for the production
+     */
     public void developmentCardProduction() {
         basicProduction.setOpacity(0);
         developmentCardProduction.setOpacity(0);
@@ -539,10 +602,14 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * method updateStorage manages the message of Storage Info received from the server reading whose is the storage to
+     * update and selecting the right node to modify
+     * @param storageInfo is the message received from the server that contains the info of the storage to update
+     */
     public void updateStorage(StorageInfo storageInfo){
 
         if(storageInfo.getNickname().equals(gui.getNickname())){
-            //System.out.println("Updating my player dashboard...");
             storage(firstResourcesFirstShelf, firstResourcesSecondShelf, secondResourcesSecondShelf,firstResourcesThirdShelf,
                     secondResourcesThirdShelf,thirdResourcesThirdShelf,vault_coinAmount,vault_stoneAmount, vault_servantAmount,
                     vault_shieldAmount,player_leader1Storage_group, player_leader2Storage_group,  storageInfo);
@@ -571,16 +638,29 @@ public class GameSceneController {
 
     }
 
+    /**
+     * winLabel method set a label with the winning message
+     * @param win is the winning message that contains the points accumulated by the player
+     */
     public void winLabel(String win) {
         message.setText(win);
         message.setOpacity(1);
     }
 
+    /**
+     * lose label method set a label with a lose message
+     * @param lose is the losing message that contains the points accumulated by the player
+     */
     public void loseLabel(String lose) {
         message.setText(lose);
         message.setOpacity(1);
     }
 
+    /**
+     * method activeOtherLeaderCard updates the scene when a player actives a Leader card that card becomes visible on
+     * all the players Dashboard
+     * @param info contains the leader card activated, the player who has activated the card and the position
+     */
     public void activeOtherLeaderCard(OtherLeaderCard info) {
         int player = nicknameToPosition.get(info.getOwner());
 
@@ -605,6 +685,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * method discardOtherLeaderCard updates the scene when a player discard a Leader card that card is deleted from all
+     * the players Dashboard
+     * @param info contains the leader card discarded, the player who has discarded the card and the position
+     */
     public void discardOtherLeaderCard(OtherLeaderCard info) {
         int player = nicknameToPosition.get(info.getOwner());
 
@@ -620,12 +705,21 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * updateLeaderCards updates the leader card of the player
+     * @param cards is the arrayList that contains the IDs of the cards
+     */
     public void updateLeaderCards(ArrayList<Integer> cards) {
         gui.getLeaderCards().addAll(cards);
         leader1.setImage(new Image("/graphics/" + cards.get(0) + ".png"));
         leader2.setImage(new Image("/graphics/" + cards.get(1) + ".png"));
     }
 
+
+    /**
+     * endTurn method handles the end of the turn of the player. After the end of the turn until it is his turn again the
+     * player can only view the market and the grid
+     */
     public void endTurn() {
         chooseTurnGroup.setOpacity(1);
         end_turn.setOpacity(1);
