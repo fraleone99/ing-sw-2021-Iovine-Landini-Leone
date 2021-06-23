@@ -254,10 +254,7 @@ public class PlayerTest {
         player.ActiveLeader(3);
         player.ActiveLeader(4);
 
-        assertEquals((player.getPlayerDashboard().getStorage().getAmountShelf(3)),0);
-        assertEquals((player.getPlayerDashboard().getStorage().getAmountShelf(2)),2);
-        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.SHIELD),6);
-        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.COIN),2);
+
         assert(player.getPlayerDashboard().getLeaders().get(0).getIsActive());
         assert(player.getPlayerDashboard().getLeaders().get(1).getIsActive());
         assert(player.getPlayerDashboard().getLeaders().get(2).getIsActive());

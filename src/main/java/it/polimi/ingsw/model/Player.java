@@ -110,7 +110,6 @@ public class Player {
             if (playerDashboard.getLeaders().get(pos-1) instanceof StorageLeader) {
                 if (playerDashboard.getLeaders().get(pos-1).checkRequirements(playerDashboard)) {
                     playerDashboard.getLeaders().get(pos-1).setIsActive();
-                    playerDashboard.RemoveResource(playerDashboard.getLeaders().get(pos-1).getRequirements().get(0).getCost());
                 }
                 else throw new InvalidChoiceException();
             } else {
