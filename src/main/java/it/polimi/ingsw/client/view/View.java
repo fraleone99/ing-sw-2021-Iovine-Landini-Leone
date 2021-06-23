@@ -2,9 +2,11 @@ package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.NetworkHandler;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.infoanswer.*;
+import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
@@ -107,7 +109,7 @@ public interface View {
 
     void waitForYourTurn();
 
-    void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards);
+    void initializeGameBoard(InitializeGameBoard message);
 
     void playersInfo(PlayersInfo playersInfo);
 
@@ -125,5 +127,7 @@ public interface View {
 
     void updateBasicProduction(BasicProductionInfo info);
 
-    void UpdateMarket(Market market);
+    void updateMarket(Market market);
+
+    void setDevCardsSpace(ArrayList<DevelopmentCardDeck> spaces, String owner);
 }

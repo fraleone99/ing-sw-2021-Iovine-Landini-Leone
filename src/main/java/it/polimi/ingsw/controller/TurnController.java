@@ -16,6 +16,8 @@ import it.polimi.ingsw.model.gameboard.Ball;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TurnController class manages the actions of player's turn
@@ -25,12 +27,14 @@ public class TurnController {
     private final Game game;
     private final VirtualView view;
     private final ArrayList<String> players = new ArrayList<>();
+    private final Map<String, Boolean> clientConnected = new HashMap<>();
     private boolean notHasPerformedAnAction =false;
 
     private static final int YES = 1;
     private static final int ALL_GRID = 8;
     private static final int INVALID = 3;
     private static final int DO_PRODUCTION = 4;
+    private static final int CRASHED = -1;
 
 
     /**
@@ -43,6 +47,19 @@ public class TurnController {
         this.game = game;
         this.players.addAll(players);
         this.view=view;
+    }
+
+    public void setClientConnection(String nickname, boolean connection, boolean crashed) {
+        if(crashed) {
+            if(connection) {
+                clientConnected.replace(nickname, true);
+            } else {
+                clientConnected.replace(nickname, false);
+                //System.out.println(clientConnected.get(nickname));
+            }
+        } else {
+            clientConnected.put(nickname, true);
+        }
     }
 
 
@@ -64,9 +81,8 @@ public class TurnController {
      *              and is false in the recursive calls
      * @param player is the player index in array list players
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public void seeGameBoard(boolean first, int player) throws  NotExistingPlayerException, InterruptedException {
+    public void seeGameBoard(boolean first, int player) throws  NotExistingPlayerException {
         int answer=view.seeGameBoard(first, players.get(player));
         //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Active Leader Cards of the other players
         //6) Development Cards of the other players, 7) Nothing
@@ -106,6 +122,13 @@ public class TurnController {
                 break;
             case NOTHING:
                 break;
+            case CRASHED:
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
@@ -115,9 +138,8 @@ public class TurnController {
      * @param player is the player index in array list players
      * @return player's choice (1 if he wants to see more from the game board, 2 otherwise)
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public int leaderCard(int player) throws NotExistingPlayerException, InterruptedException {
+    public int leaderCard(int player) throws NotExistingPlayerException{
         for(String s : players) {
             if(!s.equals(players.get(player))) {
                 view.seeOtherLeader(players.get(player), s, game.getPlayer(s).getLeaders().idDeckActive());
@@ -133,9 +155,8 @@ public class TurnController {
      * @param player is the player index in array list players
      * @return player's choice (1 if he wants to see more from the game board, 2 otherwise)
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public int devCard(int player) throws NotExistingPlayerException, InterruptedException {
+    public int devCard(int player) throws NotExistingPlayerException{
         for(String s : players) {
             if(!s.equals(players.get(player))) {
                 view.seeOtherDev(players.get(player), s, game.getPlayer(s).getDevCards());
@@ -160,123 +181,146 @@ public class TurnController {
         int pos;
         int type;
 
-        do {
-            if(notHasPerformedAnAction =true) notHasPerformedAnAction =false;
-            answer=view.chooseTurn(players.get(player));
-            TurnType turnType = TurnType.fromInteger(answer);
-            switch (turnType) {
-                case ACTIVE_LEADER:
+        if(clientConnected.get(players.get(player))) {
+            do {
+                if (notHasPerformedAnAction = true) notHasPerformedAnAction = false;
+                answer = view.chooseTurn(players.get(player));
+                TurnType turnType = TurnType.fromInteger(answer);
+                switch (turnType) {
+                    case ACTIVE_LEADER:
+                        pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                        if (pos == INVALID || pos == CRASHED) break;
+                        try {
+                            activeLeader(player, pos);
+                            for (String nickname : players) {
+                                if (!nickname.equals(players.get(player)) && clientConnected.get(nickname)) {
+                                    view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
+                                }
+                                if (clientConnected.get(nickname)) {
+                                    view.seeStorage(nickname, game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), false, true);
+                                }
+                            }
+                        } catch (InvalidChoiceException e) {
+                            view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
+                            view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
+                        }
+                        break;
+
+                    case DISCARD_LEADER:
+                        pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                        if (pos == INVALID || pos == CRASHED) break;
+                        try {
+                            discardLeader(player, pos);
+                            for (String nickname : players) {
+                                if (!nickname.equals(players.get(player)) && clientConnected.get(nickname)) {
+                                    view.discardOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
+                                }
+                                if (clientConnected.get(nickname)) {
+                                    view.updateFaithPath(nickname, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                                }
+                            }
+                            ArrayList<String> nick = new ArrayList<>(checkPapalPawn());
+                            if (!nick.isEmpty()) {
+                                view.papalPawn(nick);
+                            }
+                        } catch (InvalidChoiceException e) {
+                            view.sendErrorMessage(players.get(player), "DISCARD_LEADER");
+                            view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
+                        }
+                        break;
+
+                    case MARKET:
+                        int manageStorage = view.manageStorage(1, players.get(player));
+                        if (manageStorage == YES) manageStorage(player);
+                        else if(manageStorage== CRASHED) break;
+                        int line = view.useMarket(players.get(player));
+                        if(line == CRASHED) break;
+                        useMarket(player, line);
+                        break;
+
+                    case BUY_DEVELOPMENT:
+                        ArrayList<Integer> card;
+                        do {
+                            card = view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI());
+                        } while (game.getGameBoard().getDevelopmentCardGrid().getCard(game.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)), card.get(1)) == null);
+                        if(card.get(0) == CRASHED) break;
+                        int space = view.askSpace(players.get(player));
+                        if(space == CRASHED) break;
+                        buyCard(player, card.get(0), card.get(1), space);
+                        break;
+
+                    case ACTIVE_PRODUCTION:
+                        do {
+                            type = view.askType(players.get(player));
+                            if(type == CRASHED) break;
+                            activeProduction(player, type);
+                        } while (type != DO_PRODUCTION);
+                        break;
+
+                    case CRASHED:
+                        break;
+                }
+
+                for (String nickname : players) {
+                    if (clientConnected.get(nickname)) {
+                        view.seeStorage(nickname, game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), false, true);
+                    }
+                }
+
+            } while (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction);
+        }
+
+        notHasPerformedAnAction = false;
+
+        if(clientConnected.get(players.get(player))) {
+            answer = view.endTurn(players.get(player));
+
+            while (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER)) {
+                if (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER)) {
                     pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                    if(pos == INVALID) break;
+                    if (pos == INVALID || pos == CRASHED) break;
                     try {
                         activeLeader(player, pos);
-                        for(String nickname: players){
-                            if(!nickname.equals(players.get(player))) {
+                        for (String nickname : players) {
+                            if (!nickname.equals(players.get(player)) && clientConnected.get(nickname)) {
                                 view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
+                            }
+                            if (clientConnected.get(nickname)) {
+                                view.seeStorage(nickname, game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), false, true);
                             }
                         }
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
                         view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                     }
-                    break;
-
-                case DISCARD_LEADER:
+                } else  if (answer == TurnType.toInteger(TurnType.DISCARD_LEADER)){
                     pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                    if(pos == INVALID) break;
+                    if (pos == INVALID || pos == CRASHED) break;
                     try {
                         discardLeader(player, pos);
-                        for(String s: players){
-                            if(!s.equals(players.get(player))) {
-                                view.discardOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), s, pos);
+                        for (String nickname : players) {
+                            if (!nickname.equals(players.get(player)) && clientConnected.get(nickname)) {
+                                view.discardOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
                             }
-                            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                            if (clientConnected.get(nickname)) {
+                                view.updateFaithPath(nickname, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                            }
                         }
-                        ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
-                        if(!nick.isEmpty()) {
+                        ArrayList<String> nick = new ArrayList<>(checkPapalPawn());
+                        if (!nick.isEmpty()) {
                             view.papalPawn(nick);
                         }
                     } catch (InvalidChoiceException e) {
                         view.sendErrorMessage(players.get(player), "DISCARD_LEADER");
                         view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                     }
-                    break;
-
-                case MARKET:
-                    int manageStorage = view.manageStorage(1, players.get(player));
-                    if (manageStorage == YES) manageStorage(player);
-                    int line = view.useMarket(players.get(player));
-                    for(String nickname: players){
-                        view.sendUpdateMarket(nickname, game.getGameBoard().getMarket());
-                    }
-                    useMarket(player, line);
-                    break;
-
-                case BUY_DEVELOPMENT:
-                    ArrayList<Integer> card;
-                    do {
-                        card=view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI());
-                    } while(game.getGameBoard().getDevelopmentCardGrid().getCard(game.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)),card.get(1))==null);
-                    int space = view.askSpace(players.get(player));
-                    buyCard(player, card.get(0), card.get(1), space);
-                    break;
-
-                case ACTIVE_PRODUCTION:
-                    do {
-                        type = view.askType(players.get(player));
-                        activeProduction(player, type);
-                    } while (type != DO_PRODUCTION);
-                    break;
-
-            }
-
-            for(String nickname: players){
-                view.seeStorage(nickname, game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), false, true);
-            }
-
-        } while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction);
-
-        notHasPerformedAnAction = false;
-
-        answer=view.endTurn(players.get(player));
-
-        while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER)) {
-            if (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER)) {
-                pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                if(pos == INVALID) break;
-                try {
-                    activeLeader(player, pos);
-                    for(String nickname: players){
-                        if(!nickname.equals(players.get(player))) {
-                            view.activeOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), nickname, pos);
-                        }
-                        view.seeStorage(nickname, game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), false, true);
-                    }
-                } catch (InvalidChoiceException e) {
-                    view.sendErrorMessage(players.get(player), "ACTIVE_LEADER");
-                    view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                 }
-            } else {
-                pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
-                if(pos == INVALID) break;
-                try {
-                    discardLeader(player, pos);
-                    for(String s: players){
-                        if(!s.equals(players.get(player))) {
-                            view.discardOtherLeaderCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID(), s, pos);
-                        }
-                        view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
-                    }
-                    ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
-                    if(!nick.isEmpty()) {
-                        view.papalPawn(nick);
-                    }
-                } catch (InvalidChoiceException e) {
-                    view.sendErrorMessage(players.get(player), "DISCARD_LEADER");
-                    view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
+                if(clientConnected.get(players.get(player))) {
+                    answer = view.endTurn(players.get(player));
                 }
+                else
+                    answer = CRASHED;
             }
-            answer=view.endTurn(players.get(player));
         }
     }
 
@@ -296,8 +340,11 @@ public class TurnController {
         switch(productionType) {
             case BASIC:
                 Resource input1=view.askInput(players.get(player));
+                if(input1 == null) break;
                 Resource input2=view.askInput(players.get(player));
+                if(input2 == null) break;
                 Resource output=view.askOutput(players.get(player));
+                if(output == null) break;
                 game.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
                 game.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
                 try {
@@ -310,6 +357,7 @@ public class TurnController {
 
             case DEVELOPMENT_CARD:
                 int space=view.askDevCard(players.get(player));
+                if(space == CRASHED) break;
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
@@ -319,7 +367,9 @@ public class TurnController {
 
             case PRODUCTION_LEADER:
                 int index=view.askLeaderCard(players.get(player));
+                if(index == CRASHED) break;
                 Resource outputProduction=view.askOutput(players.get(player));
+                if(outputProduction == null) break;
                 try {
                     game.getPlayer(players.get(player)).ActiveProductionLeader(index, outputProduction);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
@@ -334,8 +384,10 @@ public class TurnController {
                         notHasPerformedAnAction =true;
                     } else {
                         game.getPlayer(players.get(player)).doProduction();
-                        for(String s: players){
-                            view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                        for(String nickname: players){
+                            if(clientConnected.get(nickname)) {
+                                view.updateFaithPath(nickname, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                            }
                         }
                         ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                         if(!nick.isEmpty()) {
@@ -385,9 +437,11 @@ public class TurnController {
         try {
             game.getPlayer(players.get(player)).buyCard(card, space);
             game.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
-            for(String s : players){
-                view.updateDevCardSpace(s,players.get(player),level,space,card.getCardID());
-                view.updateGrid(s, game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+            for(String nickname : players){
+                if(clientConnected.get(nickname)) {
+                    view.updateDevCardSpace(nickname, players.get(player), level, space, card.getCardID());
+                    view.updateGrid(nickname, game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+                }
             }
         } catch(InvalidSpaceCardException e) {
             view.sendInvalidInput(players.get(player));
@@ -403,13 +457,17 @@ public class TurnController {
      * @param line is the int corresponding to the line chosen by the player
      * @throws InvalidChoiceException if the choice is invalid
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public void useMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException, InterruptedException {
+    public void useMarket(int player, int line) throws InvalidChoiceException, NotExistingPlayerException {
         ArrayList<Integer> choice=new ArrayList<>();
         Resource resource = null;
 
         ArrayList<Ball> market = new ArrayList<>(game.getGameBoard().getMarket().getChosenColor(line));
+        for(String nickname: players){
+            if(clientConnected.get(nickname)) {
+                view.sendUpdateMarket(nickname, game.getGameBoard().getMarket());
+            }
+        }
         ArrayList<Ball> balls = new ArrayList<>();
 
         if (game.getPlayer(players.get(player)).WhiteBallLeader() == 2) {
@@ -425,8 +483,10 @@ public class TurnController {
         for(Ball b : market) {
             if (b.getType().equals(BallColor.RED)) {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
-                for(String s: players){
-                    view.updateFaithPath(s, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                for(String nickname: players){
+                    if(clientConnected.get(nickname)) {
+                        view.updateFaithPath(nickname, players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                    }
                 }
                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                 if(!nick.isEmpty()) {
@@ -462,6 +522,9 @@ public class TurnController {
             do {
                 choice.addAll(view.seeBall(players.get(player), toPlace));
 
+                if(choice.get(0) == CRASHED) break;
+                if(choice.get(1) == CRASHED) break;
+
                 try {
                     if(choice.get(1)==4) {
                         int card=game.getPlayer(players.get(player)).indexOfStorageLeader(toPlace.get((choice.get(0)) - 1).getCorrespondingResource());
@@ -480,7 +543,8 @@ public class TurnController {
                 }
 
                 choice.clear();
-            } while (toPlace.size() > 0);
+            } while (toPlace.size() > 0 && clientConnected.get(players.get(player)));
+
         }
     }
 
@@ -488,23 +552,27 @@ public class TurnController {
     /**
      * This method allows the player to move his shelves
      * @param player is the player index in array list players
-     * @throws InterruptedException is due to multithreading message send
      * @throws NotExistingPlayerException if the selected player doesn't exists
      */
-    public void manageStorage(int player) throws InterruptedException, NotExistingPlayerException {
+    public void manageStorage(int player) throws NotExistingPlayerException {
         int action;
         do{
             ArrayList<Integer> choice = view.moveShelves(players.get(player));
 
-            try {
-                game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
-                view.seeStorage(players.get(player),game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), true, false);
-            } catch (NotEnoughSpaceException e) {
-                view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
+            if(choice.get(0) != CRASHED && choice.get(1) != CRASHED) {
+                try {
+                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0), choice.get(1));
+                    view.seeStorage(players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), true, false);
+                } catch (NotEnoughSpaceException e) {
+                    view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
+                }
             }
 
-
-            action=view.manageStorage(2, players.get(player));
+            if(choice.get(0) != CRASHED && choice.get(1) != CRASHED) {
+                action = view.manageStorage(2, players.get(player));
+            } else {
+                action = CRASHED;
+            }
         } while(action==1);
     }
 
@@ -555,8 +623,10 @@ public class TurnController {
                         for (int j = 0; j < players.size(); j++) {
                             if (j != player) {
                                 game.getPlayer(players.get(j)).move(1);
-                                for(String s: players){
-                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                                for(String nickname: players){
+                                    if(clientConnected.get(nickname)) {
+                                        view.updateFaithPath(nickname, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                                    }
                                 }
                                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                                 if(!nick.isEmpty()) {
@@ -572,8 +642,10 @@ public class TurnController {
                         for (int j = 0; j < players.size(); j++) {
                             if (j != player) {
                                 game.getPlayer(players.get(j)).move(1);
-                                for(String s: players){
-                                    view.updateFaithPath(s, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                                for(String nickname: players){
+                                    if(clientConnected.get(nickname)) {
+                                        view.updateFaithPath(nickname, players.get(j), game.getPlayer(players.get(j)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                                    }
                                 }
                                 ArrayList<String> nick=new ArrayList<>(checkPapalPawn());
                                 if(!nick.isEmpty()) {
@@ -653,6 +725,9 @@ public class TurnController {
                     }
                 }
         }
+
+        players.removeIf(player -> !clientConnected.get(player));
+
         return players;
     }
 }

@@ -14,10 +14,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientHandler extends ConnectionObservable implements Runnable {
     private final Socket socketClient;
+    private boolean isEnd = false;
 
     private  ObjectOutputStream output;
     private  ObjectInputStream input;
-    private Server server;
+    private final Server server;
 
     private boolean isReady;
     private String answer;
@@ -42,6 +43,14 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         this.server=server;
         this.socketClient = socketClient;
         this.isReady=false;
+    }
+
+    public void isEnd(boolean isEnd) {
+        this.isEnd = isEnd;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     public void send(Object message) {
@@ -147,8 +156,8 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return active.get();
     }
 
-    public synchronized void closeConnection(){
-        if(!active.get()) return;
+    public void closeConnection(){
+        if (!active.get()) return;
 
         active.set(false);
 
@@ -157,20 +166,27 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
             server.getLock().notifyAll();
         }
 
-        server.getClients().remove(this);
+        if(!isEnd) {
+            synchronized (lock) {
+                server.removeClient(this, nickname);
+                number = -1;
+                number2 = -1;
+                isReady = true;
+                lock.notifyAll();
+            }
+        } else {
+            server.clientDisconnected(nickname);
+        }
 
-        System.out.println(Constants.ANSI_RED +  "[SERVER] client disconnected." + Constants.ANSI_RESET);
+        System.out.println(Constants.ANSI_RED + "[SERVER] client disconnected." + Constants.ANSI_RESET);
         notifyDisconnection(this);
 
         isConnected = false;
 
         try {
-
             input.close();
             output.close();
             socketClient.close();
-
-
         } catch (IOException ignored) {
         }
     }

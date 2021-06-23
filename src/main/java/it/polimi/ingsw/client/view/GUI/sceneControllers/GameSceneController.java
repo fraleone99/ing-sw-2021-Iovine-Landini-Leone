@@ -5,12 +5,14 @@ import it.polimi.ingsw.client.view.EndTurnType;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
 import it.polimi.ingsw.server.answer.infoanswer.*;
+import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -707,12 +709,67 @@ public class GameSceneController {
 
     /**
      * updateLeaderCards updates the leader card of the player
-     * @param cards is the arrayList that contains the IDs of the cards
      */
-    public void updateLeaderCards(ArrayList<Integer> cards) {
-        gui.getLeaderCards().addAll(cards);
-        leader1.setImage(new Image("/graphics/" + cards.get(0) + ".png"));
-        leader2.setImage(new Image("/graphics/" + cards.get(1) + ".png"));
+    public void updateLeaderCards(InitializeGameBoard message) {
+        gui.getLeaderCards().addAll(message.getLeaderCards());
+        leader1.setImage(new Image("/graphics/" + message.getLeaderCards().get(0) + ".png"));
+        leader2.setImage(new Image("/graphics/" + message.getLeaderCards().get(1) + ".png"));
+
+        if(message.isCrashed()){
+            if(message.isActive1()) {
+                active1.setOpacity(1);
+                leader1.setOpacity(1);
+            } else if(message.isDiscarded1()) {
+                leader1.setOpacity(0);
+            }
+
+            if(message.isActive2()) {
+                active2.setOpacity(1);
+                leader2.setOpacity(1);
+            } else if(message.isDiscarded2()) {
+                leader2.setOpacity(0);
+            }
+        }
+    }
+
+    public void setDevCardsSpaceForReconnection(ArrayList<DevelopmentCardDeck> spaces, String owner) {
+        if(owner.equals(gui.getNickname())) {
+            for(int i=0; i<3; i++) {
+                Group group = (Group) currentGroup.getChildren().get(i);
+                for(int j=0; j<spaces.get(i).size() ; j++) {
+                    ImageView image = (ImageView) group.getChildren().get(j);
+                    image.setImage(new Image("/graphics/"+ spaces.get(i).getDeck().get(j).getCardID() +".png"));
+                }
+            }
+        } else {
+            int player = nicknameToPosition.get(owner);
+
+            if(player == 1) {
+                for(int i=0; i<3; i++) {
+                    Group group = (Group) player1Group.getChildren().get(i);
+                    for(int j=0; j<spaces.get(i).size() ; j++) {
+                        ImageView image = (ImageView) group.getChildren().get(j);
+                        image.setImage(new Image("/graphics/"+ spaces.get(i).getDeck().get(j).getCardID() +".png"));
+                    }
+                }
+            } else if(player == 2) {
+                for(int i=0; i<3; i++) {
+                    Group group = (Group) player2Group.getChildren().get(i);
+                    for(int j=0; j<spaces.get(i).size() ; j++) {
+                        ImageView image = (ImageView) group.getChildren().get(j);
+                        image.setImage(new Image("/graphics/"+ spaces.get(i).getDeck().get(j).getCardID() +".png"));
+                    }
+                }
+            } else if(player == 3) {
+                for(int i=0; i<3; i++) {
+                    Group group = (Group) player3Group.getChildren().get(i);
+                    for(int j=0; j<spaces.get(i).size() ; j++) {
+                        ImageView image = (ImageView) group.getChildren().get(j);
+                        image.setImage(new Image("/graphics/"+ spaces.get(i).getDeck().get(j).getCardID() +".png"));
+                    }
+                }
+            }
+        }
     }
 
 

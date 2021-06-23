@@ -3,13 +3,16 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
+import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Vault;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.server.VirtualView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller class handles single and multi player matches
@@ -19,9 +22,10 @@ public class Controller {
     private final Game gameModel;
     private final TurnController turncontroller;
     private final EndGameController endgame;
-    private final ArrayList<String> players=new ArrayList<>();
+    private final ArrayList <String> players = new ArrayList<>();
+    private final Map <String, Boolean> clientConnected = new HashMap<>();
     private final VirtualView view;
-    private boolean isEnd=false;
+    private boolean isEnd = false;
     ActionToken actionToken;
 
 
@@ -57,7 +61,7 @@ public class Controller {
             for(int i=0; i<players.size(); i++){
                 view.initialInfo(players.get(i), players.size(), players);
                 startGame(i);
-                view.initializeGameBoard(players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck());
+                view.initializeGameBoard(false, players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck(), false, false, false, false);
 
                 for(String player: players){
                     view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard(), player, false, false);
@@ -79,13 +83,14 @@ public class Controller {
 
             while(!isEnd){
                 for(int i=0; i<players.size();i++){
-                    //send start turn
-                    view.sendTurnStatus("START", players.get(i));
-                    turncontroller.seePlayerDashboards(i);
-                    turncontroller.seeGameBoard(true, i);
-                    turncontroller.chooseTurn(i);
-                    view.sendTurnStatus("END", players.get(i));
-                    //send end turn
+                    if(clientConnected.get(players.get(i))) {
+                        view.sendTurnStatus("START", players.get(i));
+                        turncontroller.seePlayerDashboards(i);
+                        turncontroller.seeGameBoard(true, i);
+                        turncontroller.chooseTurn(i);
+                        if(clientConnected.get(players.get(i)))
+                            view.sendTurnStatus("END", players.get(i));
+                    }
                 }
 
                 if(players.size()==1){
@@ -124,6 +129,54 @@ public class Controller {
         gameModel.createPlayer(players.get(player));
     }
 
+    public void setClientConnection(String nickname, boolean connection, boolean crashed) {
+        if(crashed) {
+            if(connection) {
+                clientConnected.replace(nickname, true);
+                setGameBoardForReconnection(nickname);
+            } else {
+                clientConnected.replace(nickname, false);
+            }
+        } else {
+            clientConnected.put(nickname, true);
+        }
+
+        turncontroller.setClientConnection(nickname, connection, crashed);
+    }
+
+    public void setGameBoardForReconnection(String nickname) {
+        try {
+            view.initialInfo(nickname, players.size(), players);
+            LeaderCardDeck deck = gameModel.getPlayer(nickname).getPlayerDashboard().getLeaders();
+            boolean active1 = deck.get(0).getIsActive();
+            boolean discarded1 = deck.get(0).getIsDiscarded();
+            boolean active2 = deck.get(1).getIsActive();
+            boolean discarded2 = deck.get(1).getIsDiscarded();
+            view.initializeGameBoard(true, nickname, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(nickname).getLeaders().IdDeck(), active1, discarded1, active2, discarded2);
+            for(String player : players) {
+                view.seeStorage(nickname, gameModel.getPlayer(player).getPlayerDashboard(), player, false, true);
+                view.updateFaithPath(nickname, player, gameModel.getPlayer(player).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
+                view.setDevCardsSpaceForReconnection(nickname, gameModel.getPlayer(player).getPlayerDashboard().getDevCardsSpace().getSpace(), player);
+
+                LeaderCard leader1 = gameModel.getPlayer(player).getLeaders().get(0);
+                if(leader1.getIsActive()) {
+                    view.activeOtherLeaderCard(nickname, leader1.getCardID(), player, 1);
+                } else if(leader1.getIsDiscarded()) {
+                    view.discardOtherLeaderCard(nickname, leader1.getCardID(), player,1);
+                }
+
+                LeaderCard leader2 = gameModel.getPlayer(player).getLeaders().get(1);
+                if(leader2.getIsActive()) {
+                    view.activeOtherLeaderCard(nickname, leader2.getCardID(), player,2);
+                } else if(leader2.getIsDiscarded()) {
+                    view.discardOtherLeaderCard(nickname, leader2.getCardID(), player,2);
+                }
+            }
+        } catch (NotExistingPlayerException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This method set the initial benefits based on corresponding player position:
@@ -133,9 +186,8 @@ public class Controller {
      * 4th player-2 resource of his choice and 1 faith point
      * @param i is the player index in array list players
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public void setInitialBenefits(int i) throws NotExistingPlayerException, InterruptedException {
+    public void setInitialBenefits(int i) throws NotExistingPlayerException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
                     break;
@@ -211,10 +263,9 @@ public class Controller {
      * This method is used to ask to the player, two leader cards of the initial four, that he
      * wants to discard
      * @param player is the player index in array list players
-     * @throws InterruptedException is due to multithreading message send
      * @throws NotExistingPlayerException if the selected player doesn't exists
      */
-    public void discardFirstLeaders(int player) throws  InterruptedException, NotExistingPlayerException {
+    public void discardFirstLeaders(int player) throws NotExistingPlayerException {
         int card;
         card=view.discardFirstLeaders(players.get(player), 1, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
@@ -250,10 +301,13 @@ public class Controller {
         }
         else {
             Player winner = endgame.getWinner(gameModel);
-            view.win(winner.getNickname(),endgame.totalVictoryPoints(winner));
+
+            if(clientConnected.get(winner.getNickname())) {
+                view.win(winner.getNickname(), endgame.totalVictoryPoints(winner));
+            }
 
             for(int i=0; i<players.size(); i++) {
-                if(i!=players.indexOf(winner.getNickname())) {
+                if(i!=players.indexOf(winner.getNickname()) && clientConnected.get(players.get(i))) {
                     view.lose(players.get(i),endgame.totalVictoryPoints(gameModel.getPlayer(players.get(i))));
                 }
             }

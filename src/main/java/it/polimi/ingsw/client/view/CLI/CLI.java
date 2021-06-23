@@ -2,9 +2,11 @@ package it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
+import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
@@ -62,7 +64,7 @@ public class CLI implements View {
     }
 
     @Override
-    public void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards) {
+    public void initializeGameBoard(InitializeGameBoard message) {
 
     }
 
@@ -102,7 +104,12 @@ public class CLI implements View {
     }
 
     @Override
-    public void UpdateMarket(Market market) {
+    public void updateMarket(Market market) {
+
+    }
+
+    @Override
+    public void setDevCardsSpace(ArrayList<DevelopmentCardDeck> spaces, String owner) {
 
     }
 
@@ -158,7 +165,11 @@ public class CLI implements View {
 
     @Override
     public void readMessage(String message) {
-        System.out.println(message);
+        if(message.equals("END_GAME")) {
+            System.exit(0);
+        } else {
+            System.out.println(message);
+        }
     }
 
     @Override

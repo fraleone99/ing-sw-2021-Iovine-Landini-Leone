@@ -7,7 +7,8 @@ public enum ToSeeFromGameBoard {
     POSSIBLE_PRODUCTION,
     LEADER_CARDS_OTHER_PLAYER,
     DEVELOPMENT_CARDS_OTHER_PLAYER,
-    NOTHING;
+    NOTHING,
+    CRASHED;
 
     public static ToSeeFromGameBoard fromInteger(int x) {
         switch (x) {
@@ -25,6 +26,8 @@ public enum ToSeeFromGameBoard {
                  return DEVELOPMENT_CARDS_OTHER_PLAYER;
             case 7:
                 return NOTHING;
+            case -1:
+                return CRASHED;
         }
         return null;
     }
@@ -45,6 +48,8 @@ public enum ToSeeFromGameBoard {
                 return 6;
             case NOTHING:
                 return 7;
+            case CRASHED:
+                return -1;
         }
         return 0;
     }

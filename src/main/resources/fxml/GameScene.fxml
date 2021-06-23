@@ -122,7 +122,7 @@
                   <ImageView fx:id="player2_faithPath24" fitHeight="18.0" fitWidth="19.0" layoutX="319.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Group>
-            <Group fx:id="player2Group" layoutX="140.0" layoutY="106.0">
+            <Group fx:id="player2Group" layoutX="140.0" layoutY="145.0">
                <children>
                   <Group fx:id="player2_levelOneGroup">
                      <children>
@@ -248,7 +248,7 @@
                   <ImageView fx:id="player1_faithPath24" fitHeight="18.0" fitWidth="19.0" layoutX="319.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Group>
-            <Group fx:id="player1Group" layoutX="141.0" layoutY="105.0">
+            <Group fx:id="player1Group" layoutX="141.0" layoutY="145.0">
                <children>
                   <Group fx:id="player1_levelOneGroup">
                      <children>
@@ -374,7 +374,7 @@
                   <ImageView fx:id="player3_faithPath24" fitHeight="18.0" fitWidth="19.0" layoutX="319.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Group>
-            <Group fx:id="player3Group" layoutX="141.0" layoutY="105.0">
+            <Group fx:id="player3Group" layoutX="141.0" layoutY="145.0">
                <children>
                   <Group fx:id="player3_levelOneGroup">
                      <children>

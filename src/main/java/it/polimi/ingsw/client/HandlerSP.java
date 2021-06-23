@@ -144,7 +144,7 @@ public class HandlerSP implements Runnable, Handler {
             view.readMessage(((SendMessage) inputObj).getMessage());
         }
         else if (inputObj instanceof InitializeGameBoard) {
-            view.initializeGameBoard(((InitializeGameBoard) inputObj).getMarket(), ((InitializeGameBoard) inputObj).getIdDevCards(), ((InitializeGameBoard) inputObj).getLeaderCards());
+            view.initializeGameBoard((InitializeGameBoard) inputObj);
         }
         else if(inputObj instanceof Win) {
             view.win(((Win) inputObj).getMessage());
@@ -212,7 +212,7 @@ public class HandlerSP implements Runnable, Handler {
             view.errorHandling((String) ((ErrorMessage) inputObj).getMessage());
         }
         else if(inputObj instanceof MarketInfo){
-            view.UpdateMarket((Market) ((MarketInfo) inputObj).getMessage());
+            view.updateMarket((Market) ((MarketInfo) inputObj).getMessage());
         }
         else if (inputObj instanceof UpdateFaithPath){
             view.updateFaithPath((UpdateFaithPath) inputObj);

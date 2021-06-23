@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.Answer;
@@ -19,7 +18,6 @@ import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NetworkHandler implements Runnable, Handler {
     private final Socket server;
@@ -144,7 +142,7 @@ public class NetworkHandler implements Runnable, Handler {
             else view.discardOtherLeaderCard((OtherLeaderCard)inputObj);
         }
         else if (inputObj instanceof InitializeGameBoard) {
-            view.initializeGameBoard(((InitializeGameBoard) inputObj).getMarket(), ((InitializeGameBoard) inputObj).getIdDevCards(), ((InitializeGameBoard) inputObj).getLeaderCards());
+            view.initializeGameBoard((InitializeGameBoard)inputObj);
         }
         else if(inputObj instanceof Win) {
             view.win(((Win) inputObj).getMessage());
@@ -212,7 +210,7 @@ public class NetworkHandler implements Runnable, Handler {
             view.errorHandling((String) ((ErrorMessage) inputObj).getMessage());
         }
         else if(inputObj instanceof MarketInfo){
-            view.UpdateMarket((Market) ((MarketInfo) inputObj).getMessage());
+            view.updateMarket((Market) ((MarketInfo) inputObj).getMessage());
         }
         else if (inputObj instanceof UpdateFaithPath){
             view.updateFaithPath((UpdateFaithPath) inputObj);

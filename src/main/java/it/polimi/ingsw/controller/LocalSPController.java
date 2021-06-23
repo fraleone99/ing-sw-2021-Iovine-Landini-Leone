@@ -79,7 +79,7 @@ public class LocalSPController {
             playersInfo.addNick(players.get(0));
             handler.handleClient(playersInfo);
             handler.handleClient(new SendMessage("The game start!\n"));
-            handler.handleClient(new InitializeGameBoard(gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+            handler.handleClient(new InitializeGameBoard(false, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getLeaders().IdDeck(), false, false, false, false));
 
             handler.handleClient(new UpdateFaithPath(null, 0, true));
             handler.handleClient(new UpdateFaithPath(players.get(0), 0, false));

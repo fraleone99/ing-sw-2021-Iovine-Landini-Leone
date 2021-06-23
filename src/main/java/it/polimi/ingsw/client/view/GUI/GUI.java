@@ -6,9 +6,11 @@ import it.polimi.ingsw.client.message.SendInt;
 import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.GUI.sceneControllers.*;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.infoanswer.*;
+import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
@@ -249,8 +251,13 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void UpdateMarket(Market market) {
+    public void updateMarket(Market market) {
         Platform.runLater(()->  marketSceneController.updateMarket(market));
+    }
+
+    @Override
+    public void setDevCardsSpace(ArrayList<DevelopmentCardDeck> spaces, String owner) {
+        Platform.runLater( () -> gameSceneController.setDevCardsSpaceForReconnection(spaces, owner));
     }
 
 
@@ -495,7 +502,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void printStorage(StorageInfo storageInfo) {
-        //System.out.println("storge  of" + storageInfo.getNickname() + " I am" + nickname);
+        //System.out.println("storage  of" + storageInfo.getNickname() + " I am" + nickname);
         Platform.runLater(()-> {
             gameSceneController.updateStorage(storageInfo);
         if(storageInfo.getNickname().equals(nickname)) {
@@ -507,7 +514,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
-        //System.out.println("storge  of" + storageInfo.getNickname() + " I am" + nickname);
+        //System.out.println("storage  of" + storageInfo.getNickname() + " I am" + nickname);
 
         Platform.runLater(()-> {
             gameSceneController.updateStorage(storageInfo);
@@ -698,10 +705,10 @@ public class GUI extends Application implements View {
         //gameSceneController.notMyTurn();
     }
 
-    public void initializeGameBoard(Market market, ArrayList<Integer> idCards, ArrayList<Integer> leaderCards) {
-        marketSceneController.updateMarket(market);
-        developmentCardsGridController.updateGrid(idCards);
-        gameSceneController.updateLeaderCards(leaderCards);
+    public void initializeGameBoard(InitializeGameBoard message) {
+        marketSceneController.updateMarket(message.getMarket());
+        developmentCardsGridController.updateGrid(message.getIdDevCards());
+        gameSceneController.updateLeaderCards(message);
     }
 
     @Override
@@ -709,7 +716,11 @@ public class GUI extends Application implements View {
         if(playersInfo.getPlayersNumber()==1){
             isSinglePlayer=true;
         }
-        Platform.runLater(()->gameSceneController.setupGameBoard(playersInfo));
+        Platform.runLater(()-> {
+            changeStage(GAME);
+            gameSceneController.setupGameBoard(playersInfo);
+        }
+        );
     }
 
     @Override

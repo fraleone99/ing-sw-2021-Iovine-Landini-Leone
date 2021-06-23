@@ -1,7 +1,8 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
@@ -21,18 +22,43 @@ import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.io.IOException;
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VirtualView extends VirtualViewObservable {
     private int number;
-    private final Map<String, ClientHandler> namesToClient = new HashMap<>();
+    private final Map <String, ClientHandler> namesToClient = new HashMap<>();
+    private final Map <String, Boolean> clientConnected = new HashMap<>();
+    private Controller controller;
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public void setNamesToClient(String nickname, ClientHandler client, boolean crashed) {
+        if(crashed) {
+            clientConnected.replace(nickname, true);
+            namesToClient.replace(nickname, client);
+            controller.setClientConnection(nickname, true, true);
+        } else {
+            namesToClient.put(nickname, client);
+            clientConnected.put(nickname, true);
+        }
+    }
+
+    public void setClientConnectionToController() {
+        for(String nickname : clientConnected.keySet()) {
+            controller.setClientConnection(nickname, true, false);
+        }
+    }
+
+    public void clientCrashed(String nickname) {
+        clientConnected.replace(nickname, false);
+        controller.setClientConnection(nickname, false, true);
+    }
 
     public int waitForInt(ClientHandler client) {
-        int number;
-
         synchronized (client.getLock()) {
             while(!client.isReady()) {
                 try {
@@ -101,7 +127,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public String InvalidNickname(ClientHandler client){
+    public String invalidNickname(ClientHandler client){
         client.send(new RequestString("The chosen nickname is not valid. Try again:"));
 
         return waitForString(client);
@@ -472,9 +498,9 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void initializeGameBoard(String nickname, Market market, ArrayList<Integer> idCards, ArrayList<Integer> leader) {
+    public void initializeGameBoard(boolean crashed, String nickname, Market market, ArrayList<Integer> idCards, ArrayList<Integer> leader, boolean active1, boolean discarded1, boolean active2, boolean discarded2) {
         ClientHandler client=namesToClient.get(nickname);
-        client.send(new InitializeGameBoard(market, idCards, leader));
+        client.send(new InitializeGameBoard(crashed, market, idCards, leader, active1, discarded1, active2, discarded2));
 
     }
 
@@ -504,13 +530,13 @@ public class VirtualView extends VirtualViewObservable {
 
     public void papalPawn(ArrayList<String> nicknames) {
         for(ClientHandler client : namesToClient.values()) {
-            client.send(new SendMessage("A Vatican report was activated. The following players will get the points of the Pope's Favor tile:"));
-            for(String s : nicknames) {
-                client.send(new SendMessage(Constants.ANSI_BLUE + s + Constants.ANSI_RESET));
+            if(clientConnected.get(client.getNickname())) {
+                client.send(new SendMessage("A Vatican report was activated. The following players will get the points of the Pope's Favor tile:"));
+                for (String s : nicknames) {
+                    client.send(new SendMessage(Constants.ANSI_BLUE + s + Constants.ANSI_RESET));
+                }
             }
         }
-        //namesToClient.get(nickname).send(new SendMessage("You have activated a Vatican report!"));
-        //notify everyone
     }
 
 
@@ -568,18 +594,9 @@ public class VirtualView extends VirtualViewObservable {
 
     public void closeConnection() {
         for(ClientHandler client : namesToClient.values()) {
+            client.isEnd(true);
             client.send(new SendMessage("END_GAME"));
         }
-    }
-
-
-    public void setNamesToClient(String nickname, ClientHandler client) {
-        namesToClient.put(nickname,client);
-    }
-
-
-    public void removeNamesToClient(String nickname, ClientHandler client){
-        namesToClient.remove(nickname, client);
     }
 
 
@@ -596,5 +613,14 @@ public class VirtualView extends VirtualViewObservable {
     public void sendUpdateMarket(String nickname, Market market){
         ClientHandler client = namesToClient.get(nickname);
         client.send(new MarketInfo(market));
+    }
+
+    public void setDevCardsSpaceForReconnection(String nickname, ArrayList<DevelopmentCardDeck> space, String owner) {
+        ClientHandler client = namesToClient.get(nickname);
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < space.get(i).size(); j++){
+                client.send(new CardsSpaceInfo(owner,j+1,i+1,space.get(i).getDeck().get(j).getCardID()));
+            }
+        }
     }
 }
