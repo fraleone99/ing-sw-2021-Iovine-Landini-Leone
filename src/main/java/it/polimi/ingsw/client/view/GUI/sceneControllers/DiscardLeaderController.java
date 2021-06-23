@@ -9,6 +9,12 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
+/**
+ * DiscardLeaderController controls the scene in which at the beginning of the game the player has to choose between
+ * 4 leaders
+ *
+ * @author Francesco Leone
+ */
 public class DiscardLeaderController {
     @FXML private ImageView leader1;
     @FXML private ImageView leader2;
@@ -21,7 +27,10 @@ public class DiscardLeaderController {
         this.gui = gui;
     }
 
-
+    /**
+     * discardLeader let the player choose the leader to discard between 4 leader
+     * @param idLeaders contains the 4 IDs of the leader among which the player has to choose
+     */
     public void discardLeader(ArrayList<Integer> idLeaders) {
         leader1.setImage(new Image("/graphics/" + idLeaders.get(0) + ".png"));
         leader2.setImage(new Image("/graphics/" + idLeaders.get(1) + ".png"));
