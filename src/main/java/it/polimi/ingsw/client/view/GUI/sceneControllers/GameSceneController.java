@@ -732,6 +732,12 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * setDevCardsSpaceForReconnection sets the development cards when a player reconnects to the game after a disconnection
+     *
+     * @param spaces contains the development Cards of the owner
+     * @param owner is the nickname of the owner of the cards
+     */
     public void setDevCardsSpaceForReconnection(ArrayList<DevelopmentCardDeck> spaces, String owner) {
         if(owner.equals(gui.getNickname())) {
             for(int i=0; i<3; i++) {
@@ -810,6 +816,9 @@ public class GameSceneController {
         });
     }
 
+    /**
+     * Sets an invalid choice label
+     */
     public void invalidChoice() {
         invalid.setOpacity(1);
     }
@@ -827,7 +836,11 @@ public class GameSceneController {
     }
 
 
-
+    /**
+     * setupGameBoard method sets the Game scene at the beginning of the game. The player dashboards are set based
+     * on the number of the player and the nickname are associated to the player dashboard
+     * @param playersInfo
+     */
     public void setupGameBoard(PlayersInfo playersInfo) {
         this.playersNumber = playersInfo.getPlayersNumber();
 
@@ -912,6 +925,9 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * sets the FaithPath of Lorenzo in the single player game
+     */
     public void setLorenzoFaithPathMap(){
         for(int i=0; i<25; i++) {
             currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
@@ -919,6 +935,10 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Updates the faithPath of a player
+     * @param updateFaithPath contains the information of the faith path to update
+     */
     public void updateFaithPath(UpdateFaithPath updateFaithPath) {
         int player;
 
@@ -951,7 +971,10 @@ public class GameSceneController {
         }
     }
 
-
+    /**
+     * updateCardsSpace method updates the devCardsSpace of a player
+     * @param info contains the information  of the devCardsSpace to update
+     */
     public void updateCardsSpace(CardsSpaceInfo info) {
         int level = info.getLevel();
 
@@ -971,6 +994,12 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * getSpaceGroup modifies a specific devCardsSPace
+     * @param info contains the information  of the devCardsSpace to update
+     * @param level is the level of the card to update
+     * @param currentGroup is the group that contains the cards to modify
+     */
     private void getSpaceGroup(CardsSpaceInfo info, int level, Group currentGroup) {
         Group group1 = (Group) currentGroup.getChildren().get(level-1);
         switch(info.getSpace()) {
@@ -986,6 +1015,9 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Enables a button to quit the game after the game is ended
+     */
     public void endGame() {
         quit_button.setOpacity(1);
         quit_button.setDisable(false);
