@@ -23,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -179,7 +178,7 @@ public class GameSceneController {
 
     /**
      * Method set gui sets the gui and initialize the maps
-     * @param gui
+     *
      */
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -864,7 +863,7 @@ public class GameSceneController {
     /**
      * setupGameBoard method sets the Game scene at the beginning of the game. The player dashboards are set based
      * on the number of the player and the nickname are associated to the player dashboard
-     * @param playersInfo
+     * @param playersInfo contains the info on the number of player and their nicknames
      */
     public void setupGameBoard(PlayersInfo playersInfo) {
         this.playersNumber = playersInfo.getPlayersNumber();
@@ -1089,9 +1088,7 @@ public class GameSceneController {
         quit_button.setOpacity(1);
         quit_button.setDisable(false);
 
-        quit_button.setOnAction(actionEvent -> {
-            Platform.exit();
-        });
+        quit_button.setOnAction(actionEvent -> Platform.exit());
     }
 
     public void updateMessage(String notification, String command){
