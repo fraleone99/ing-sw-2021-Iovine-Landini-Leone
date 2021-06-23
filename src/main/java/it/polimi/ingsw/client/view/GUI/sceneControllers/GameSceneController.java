@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.singleplayer.DeleteCard;
 import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
+import it.polimi.ingsw.server.answer.seegameboard.UpdatePapalPawn;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -22,6 +23,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -138,12 +141,23 @@ public class GameSceneController {
     @FXML ImageView player2_leader2;
     @FXML ImageView player3_leader1;
     @FXML ImageView player3_leader2;
+    @FXML Group currentPlayerPapalPawn;
+    @FXML Group player1_PapalPawn;
+    @FXML Group player2_PapalPawn;
+    @FXML Group player3_PapalPawn;
+    @FXML ImageView currentPlayer_inkwell;
+    @FXML ImageView player1_inkwell;
+    @FXML ImageView player2_inkwell;
+    @FXML ImageView player3_inkwell;
+
 
     int oldCurrFPPos=0;
     int oldPlayer1FPPos=0;
     int oldPlayer2FPPos=0;
     int oldPlayer3FPPos=0;
     int oldLorenzoFPPos=0;
+
+    String firstPlayer;
 
     private GUI gui;
 
@@ -161,6 +175,8 @@ public class GameSceneController {
     private final HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> lorenzoFaithPathPosToImageView = new HashMap<>();
 
+    private final HashMap<Integer, String> papalPawnToImageView = new HashMap<>();
+
     /**
      * Method set gui sets the gui and initialize the maps
      * @param gui
@@ -177,6 +193,10 @@ public class GameSceneController {
         actionTokenDeleteCardToPathMap.put(CardColor.GREEN, "/graphics/mainScene/ActionToken/DeleteCardGreen.png");
         actionTokenDeleteCardToPathMap.put(CardColor.BLUE, "/graphics/mainScene/ActionToken/DeleteCardBlue.png");
         actionTokenDeleteCardToPathMap.put(CardColor.PURPLE, "/graphics/mainScene/ActionToken/DeleteCardPurple.png");
+
+        papalPawnToImageView.put(1, "/graphics/PAPAL_PAWN_2.png");
+        papalPawnToImageView.put(2, "/graphics/PAPAL_PAWN_3.png");
+        papalPawnToImageView.put(3, "/graphics/PAPAL_PAWN_4.png");
 
     }
 
@@ -219,6 +239,7 @@ public class GameSceneController {
      */
     public void notMyTurn() {
         message.setText("IT'S NOT YOUR TURN!");
+        message.setTextFill(Color.BLACK);
         message.setOpacity(1);
         toSee_market.setDisable(false);
         toSee_nothing.setDisable(true);
@@ -247,6 +268,7 @@ public class GameSceneController {
      */
     public void isMyTurn() {
         message.setText("IT'S YOUR TURN!");
+        message.setTextFill(Color.BLACK);
         message.setOpacity(1);
         toSee_nothing.setOpacity(1);
         ok_turnType.setDisable(true);
@@ -646,6 +668,7 @@ public class GameSceneController {
      */
     public void winLabel(String win) {
         message.setText(win);
+        message.setTextFill(Color.LIMEGREEN);
         message.setOpacity(1);
     }
 
@@ -655,6 +678,7 @@ public class GameSceneController {
      */
     public void loseLabel(String lose) {
         message.setText(lose);
+        message.setTextFill(Color.RED);
         message.setOpacity(1);
     }
 
@@ -787,6 +811,7 @@ public class GameSceneController {
         turn_discardLeader.setOpacity(1);
         ok_turnType.setOpacity(1);
         message.setText("IT'S YOUR TURN!");
+        message.setTextFill(Color.BLACK);
         AtomicReference<EndTurnType> turnType = new AtomicReference<>();
 
         ok_turnType.setOnAction(actionEvent -> {
@@ -830,6 +855,7 @@ public class GameSceneController {
 
     public void setupGameBoard(PlayersInfo playersInfo) {
         this.playersNumber = playersInfo.getPlayersNumber();
+        this.firstPlayer = playersInfo.getNicknames().get(0);
 
         for(String nick: playersInfo.getNicknames()){
             if(!nick.equals(gui.getNickname())){
@@ -951,6 +977,46 @@ public class GameSceneController {
         }
     }
 
+    public void updatePapalPawn(UpdatePapalPawn updatePapalPawn) {
+        int player;
+        ImageView image;
+
+        if(updatePapalPawn.getNickname().equals(gui.getNickname())) {
+            image=(ImageView) currentPlayerPapalPawn.getChildren().get(updatePapalPawn.getPawn()-1);
+            image.setImage(new Image(papalPawnToImageView.get(updatePapalPawn.getPawn())));
+        } else {
+            player = nicknameToPosition.get(updatePapalPawn.getNickname());
+
+            if(player==1){
+                image=(ImageView) player1_PapalPawn.getChildren().get(updatePapalPawn.getPawn()-1);
+                image.setImage(new Image(papalPawnToImageView.get(updatePapalPawn.getPawn())));
+            } else if (player==2) {
+                image=(ImageView) player2_PapalPawn.getChildren().get(updatePapalPawn.getPawn()-1);
+                image.setImage(new Image(papalPawnToImageView.get(updatePapalPawn.getPawn())));
+            } else if (player==3) {
+                image=(ImageView) player3_PapalPawn.getChildren().get(updatePapalPawn.getPawn()-1);
+                image.setImage(new Image(papalPawnToImageView.get(updatePapalPawn.getPawn())));
+            }
+        }
+    }
+
+    public void setInkwell() {
+        int player;
+
+        if(firstPlayer.equals(gui.getNickname())){
+            currentPlayer_inkwell.setImage(new Image("/graphics/calamaio.png"));
+        } else {
+            player = nicknameToPosition.get(firstPlayer);
+
+            if(player==1){
+                player1_inkwell.setImage(new Image("/graphics/calamaio.png"));
+            } else if (player==2) {
+                player2_inkwell.setImage(new Image("/graphics/calamaio.png"));
+            } else if (player==3) {
+                player3_inkwell.setImage(new Image("/graphics/calamaio.png"));
+            }
+        }
+    }
 
     public void updateCardsSpace(CardsSpaceInfo info) {
         int level = info.getLevel();
@@ -993,5 +1059,18 @@ public class GameSceneController {
         quit_button.setOnAction(actionEvent -> {
             Platform.exit();
         });
+    }
+
+    public void updateMessage(String notification, String command){
+
+        if(command.equals("PLAYING_NICK") || command.equals("PAPAL_PAWN")){
+            message.setText(notification);
+            message.setTextFill(Color.DARKRED);
+        } else if(command.equals("TURN_CHOICE")) {
+            if(!notification.endsWith(" is watching the game board")){
+                message.setText(notification);
+                message.setTextFill(Color.BEIGE);
+            }
+        }
     }
 }

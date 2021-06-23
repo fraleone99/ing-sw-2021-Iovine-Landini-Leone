@@ -36,6 +36,7 @@ public class Constants {
     public final static String FIVE_WITHE_SPACE = "     ";
 
     public final static String DIVIDING_LINE = ANSI_WHITE+"********************************************************************************************************************************************"+ANSI_RESET;
+    public final static String PLAYING_EDGE = ANSI_WHITE+"\n\n\n++++++++++++++++++++++++++++++++++++++++++++++\n"+ANSI_RESET;
 
     //DEVELOPMENT CARD
     public final static String DEV_CARD_TOP = "+++++++++++++";

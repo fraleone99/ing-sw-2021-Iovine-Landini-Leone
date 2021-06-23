@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
+import it.polimi.ingsw.server.answer.seegameboard.UpdatePapalPawn;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
@@ -119,6 +120,11 @@ public class CLI implements View {
     }
 
     @Override
+    public void updatePapalPawn(UpdatePapalPawn updatePapalPawn){
+
+    }
+
+    @Override
     public void setIsMyTurn(boolean isMyTurn) {
         this.isMyTurn.set(isMyTurn);
     }
@@ -165,6 +171,12 @@ public class CLI implements View {
 
     @Override
     public void readMessage(String message) {
+        if(message.endsWith(" is playing")){
+            System.out.println(Constants.PLAYING_EDGE+Constants.ANSI_GREEN+message+Constants.ANSI_RESET);
+        }
+        else {
+            System.out.println(message);
+        }
         if(message.equals("END_GAME")) {
             System.exit(0);
         } else {

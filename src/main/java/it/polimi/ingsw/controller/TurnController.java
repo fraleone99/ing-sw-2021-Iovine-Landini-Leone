@@ -682,12 +682,18 @@ public class TurnController {
                                 if(p2.getPlayerDashboard().getFaithPath().activatePapalPawn(1)) {
                                     if(!players.contains(p2.getNickname()))
                                         players.add(p2.getNickname());
+                                        for(Player nick: game.getPlayers()){
+                                            view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 1);
+                                        }
                                 }
                             }
-                            game.updatePapalPawn();
-                            players.add(p.getNickname());
-                            break;
                         }
+                        game.updatePapalPawn();
+                        players.add(p.getNickname());
+                        for(Player nick: game.getPlayers()){
+                            view.updatePapalPawn(nick.getNickname(), p.getNickname(), 1);
+                        }
+                        break;
                     }
                 }
             case 1:
@@ -699,11 +705,17 @@ public class TurnController {
                                 if(p2.getPlayerDashboard().getFaithPath().activatePapalPawn(2)) {
                                     if(!players.contains(p2.getNickname()))
                                         players.add(p2.getNickname());
+                                        for(Player nick: game.getPlayers()){
+                                            view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 2);
+                                        }
                                 }
                             }
                         }
                         game.updatePapalPawn();
                         players.add(p.getNickname());
+                        for(Player nick: game.getPlayers()){
+                            view.updatePapalPawn(nick.getNickname(), p.getNickname(), 2);
+                        }
                         break;
                     }
                 }
@@ -716,11 +728,17 @@ public class TurnController {
                                 if(p2.getPlayerDashboard().getFaithPath().activatePapalPawn(3)) {
                                     if(!players.contains(p2.getNickname()))
                                         players.add(p2.getNickname());
+                                        for(Player nick: game.getPlayers()){
+                                            view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 3);
+                                        }
                                 }
                             }
                         }
                         game.updatePapalPawn();
                         players.add(p.getNickname());
+                        for(Player nick: game.getPlayers()){
+                            view.updatePapalPawn(nick.getNickname(), p.getNickname(), 3);
+                        }
                         break;
                     }
                 }
