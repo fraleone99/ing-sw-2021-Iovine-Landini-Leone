@@ -19,7 +19,7 @@ at Politecnico di Milano. (2020/2021)
 | CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/client/view/CLI) |
 | Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server)|
 | Local single player | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/blob/main/src/main/java/it/polimi/ingsw/controller/LocalSPController.java) |
-| Resilience | [![YELLOW](http://placehold.it/15/ffdd00/ffdd00)]()
+| Resilience | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server)
 | Persistence | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
 | Editor | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
 
