@@ -2,12 +2,9 @@ package it.polimi.ingsw.server.answer.seegameboard;
 
 import it.polimi.ingsw.server.answer.Answer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class UpdateFaithPath implements Answer {
 
-    String nickname = new String();
+    String nickname;
     int position;
     boolean isLorenzo;
 

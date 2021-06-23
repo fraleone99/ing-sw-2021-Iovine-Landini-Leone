@@ -215,6 +215,9 @@ public class NetworkHandler implements Runnable, Handler {
         else if (inputObj instanceof UpdateFaithPath){
             view.updateFaithPath((UpdateFaithPath) inputObj);
         }
+        else if (inputObj instanceof UpdatePapalPawn){
+            view.updatePapalPawn((UpdatePapalPawn) inputObj);
+        }
         else {
             if (inputObj instanceof PassLeaderCard) {
                 view.askLeaderToDiscard(((PassLeaderCard) inputObj).getMessage());

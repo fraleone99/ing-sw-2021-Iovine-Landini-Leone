@@ -187,7 +187,7 @@ public class VirtualView extends VirtualViewObservable {
     public void startGame(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new SendMessage("\n\n"+Constants.ANSI_RED+">The game starts!\n"+Constants.ANSI_RESET));
+        client.send(new SendMessage("The game starts!"));
     }
 
 
@@ -507,6 +507,11 @@ public class VirtualView extends VirtualViewObservable {
     public void updateFaithPath(String nickname, String nickToUpdate, int nickPos, boolean isLorenzo){
         ClientHandler client=namesToClient.get(nickname);
         client.send(new UpdateFaithPath(nickToUpdate, nickPos, isLorenzo));
+    }
+
+    public void updatePapalPawn(String nickname, String nickToUpdate, int pawn){
+        ClientHandler client=namesToClient.get(nickname);
+        client.send(new UpdatePapalPawn(nickToUpdate, pawn));
     }
 
     public void initialInfo(String nickname, int playerNumber, ArrayList<String> nicknames){

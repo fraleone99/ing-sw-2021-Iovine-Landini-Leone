@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.GUI;
 
+import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;
@@ -13,6 +14,7 @@ import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
+import it.polimi.ingsw.server.answer.seegameboard.UpdatePapalPawn;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import javafx.application.Application;
@@ -85,7 +87,6 @@ public class GUI extends Application implements View {
     public static void main(String[] args) {
         launch(args);
     }
-
 
     @Override
     public void init() throws Exception {
@@ -342,7 +343,7 @@ public class GUI extends Application implements View {
             });
         }
 
-        else if(message.equals("The game start!")){
+        else if(message.equals("The game starts!")){
             if(isSinglePlayer){
                 FXMLLoader localGame = new FXMLLoader(getClass().getResource("/fxml/LocalSinglePlayerBoard.fxml"));
                 try {
@@ -361,8 +362,16 @@ public class GUI extends Application implements View {
             }
         }
 
-        else if(message.equals("The game start!\n")){
+        else if(message.equals("The game starts!\n")){
             Platform.runLater(()->changeStage(LOCAL_GAME));
+        }
+
+        else if(message.endsWith(" is playing")){
+            Platform.runLater(()->gameSceneController.updateMessage(message,"PLAYING_NICK"));
+        }
+
+        else if(message.startsWith("->")){
+            Platform.runLater(()->gameSceneController.updateMessage(message, "TURN_CHOICE"));
         }
 
         else if(message.equals("INVALID") || message.equals("Invalid choice.")) {
@@ -709,6 +718,9 @@ public class GUI extends Application implements View {
         marketSceneController.updateMarket(message.getMarket());
         developmentCardsGridController.updateGrid(message.getIdDevCards());
         gameSceneController.updateLeaderCards(message);
+        if(!isSinglePlayer){
+            gameSceneController.setInkwell();
+        }
     }
 
     @Override
@@ -725,7 +737,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateFaithPath(UpdateFaithPath updateFaithPath){
-        Platform.runLater( () -> gameSceneController.updateFaithPath(updateFaithPath));
+        Platform.runLater(() -> gameSceneController.updateFaithPath(updateFaithPath));
+    }
+
+    @Override
+    public void updatePapalPawn(UpdatePapalPawn updatePapalPawn){
+        Platform.runLater(() -> gameSceneController.updatePapalPawn(updatePapalPawn));
     }
 
     public void setNickname(String s) {

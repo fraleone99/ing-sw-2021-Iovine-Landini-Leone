@@ -124,8 +124,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     public void updatePlayingNick(String nickname){
         for(String nick: nicknames){
             if(!nick.equals(nickname)){
-                namesToClient.get(nick).send(new SendMessage("\n\n\n++++++++++++++++++++++++++++++++++++++++++++++\n"
-                        +Constants.ANSI_GREEN+nickname+Constants.ANSI_RESET+" is playing"));
+                namesToClient.get(nick).send(new SendMessage(nickname+" is playing"));
             }
         }
     }
@@ -134,7 +133,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     public void updateTurnChoice(String nickname, String message){
         for(String nick: nicknames){
             if(!nick.equals(nickname)){
-                namesToClient.get(nick).send(new SendMessage(">"+nickname+message));
+                namesToClient.get(nick).send(new SendMessage("->"+nickname+message));
             }
         }
     }
@@ -149,7 +148,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
 
     public void prepareTheGame(){
         Thread t=new Thread( () -> {
-            System.out.println("Prepare game of the lobby number " + lobbyID);
+            System.out.println("Preparing the game of lobby number " + lobbyID);
             Collections.shuffle(nicknames);
 
             Controller controller = new Controller(nicknames, view);

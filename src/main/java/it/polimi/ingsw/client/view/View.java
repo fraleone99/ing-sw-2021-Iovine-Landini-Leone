@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.infoanswer.*;
 import it.polimi.ingsw.server.answer.seegameboard.InitializeGameBoard;
 import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
+import it.polimi.ingsw.server.answer.seegameboard.UpdatePapalPawn;
 import it.polimi.ingsw.server.answer.turnanswer.ActiveLeader;
 import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 import it.polimi.ingsw.server.answer.seegameboard.SeeBall;
@@ -130,4 +131,6 @@ public interface View {
     void updateMarket(Market market);
 
     void setDevCardsSpace(ArrayList<DevelopmentCardDeck> spaces, String owner);
+
+    void updatePapalPawn(UpdatePapalPawn updatePapalPawn);
 }
