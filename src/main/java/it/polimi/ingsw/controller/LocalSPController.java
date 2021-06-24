@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.view.ToSeeFromGameBoard;
 import it.polimi.ingsw.client.view.TurnType;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.StorageLeader;
 import it.polimi.ingsw.model.card.leadercard.WhiteBallLeader;
@@ -93,6 +94,10 @@ public class LocalSPController {
 
                 try {
                     currentActionToken = gameModel.drawActionToken();
+                    ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
+                    if(!nick.isEmpty()) {
+                        handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
+                    }
                     handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
                     handler.handleClient(new SendMessage("Drawn action token: "));
                     handler.handleClient(new ActionTokenInfo(currentActionToken));
@@ -304,7 +309,7 @@ public class LocalSPController {
                     try{
                         turncontroller.discardLeader(0, pos);
                         handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
-                        ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                        ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
                         if(!nick.isEmpty()) {
                             handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                         }
@@ -367,7 +372,7 @@ public class LocalSPController {
                 try{
                     turncontroller.discardLeader(0, pos);
                     handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
-                    ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                    ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
                     if(!nick.isEmpty()) {
                         handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                     }
@@ -436,7 +441,7 @@ public class LocalSPController {
             if (b.getType().equals(BallColor.RED)) {
                 gameModel.getPlayer(players.get(player)).getPlayerDashboard().getFaithPath().moveForward(1);
                 handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
-                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
                 if(!nick.isEmpty()) {
                     handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                 }
@@ -519,7 +524,7 @@ public class LocalSPController {
                             if (j != player) {
                                 gameModel.getPlayer(players.get(j)).move(1);
                                 handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
-                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
                                 if(!nick.isEmpty()) {
                                     handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                                 }
@@ -534,7 +539,7 @@ public class LocalSPController {
                             if (j != player) {
                                 gameModel.getPlayer(players.get(j)).move(1);
                                 handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
-                                ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                                ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
                                 if(!nick.isEmpty()) {
                                     handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                                 }
@@ -646,7 +651,7 @@ public class LocalSPController {
                     } else {
                         gameModel.getPlayer(players.get(0)).doProduction();
                         handler.handleClient(new UpdateFaithPath(players.get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false));
-                        ArrayList<String> nick=new ArrayList<>(turncontroller.checkPapalPawn());
+                        ArrayList<String> nick=new ArrayList<>(localCheckPapalPawn());
                         if(!nick.isEmpty()) {
                             handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                         }
@@ -672,6 +677,44 @@ public class LocalSPController {
             case 4 : return Resource.STONE;
             default : return null;
         }
+    }
+
+    public ArrayList<String> localCheckPapalPawn() {
+        ArrayList<String> players=new ArrayList<>();
+        switch (gameModel.getPapalPawn()) {
+            case 0:
+                for (Player p : gameModel.getPlayers()) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 7 || p.getPlayerDashboard().getFaithPath().getPositionLorenzo()>7) {
+                        p.getPlayerDashboard().getFaithPath().setPapalPawn1();
+                        gameModel.updatePapalPawn();
+                        players.add(p.getNickname());
+                        handler.handleClient(new UpdatePapalPawn(p.getNickname(), 1));
+                        break;
+                    }
+                }
+            case 1:
+                for (Player p : gameModel.getPlayers()) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 15 || p.getPlayerDashboard().getFaithPath().getPositionLorenzo()>15) {
+                        p.getPlayerDashboard().getFaithPath().setPapalPawn2();
+                        gameModel.updatePapalPawn();
+                        players.add(p.getNickname());
+                        handler.handleClient(new UpdatePapalPawn(p.getNickname(), 2));
+                        break;
+                    }
+                }
+            case 2:
+                for (Player p : gameModel.getPlayers()) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 23 || p.getPlayerDashboard().getFaithPath().getPositionLorenzo()>23) {
+                        p.getPlayerDashboard().getFaithPath().setPapalPawn3();
+                        gameModel.updatePapalPawn();
+                        players.add(p.getNickname());
+                        handler.handleClient(new UpdatePapalPawn(p.getNickname(), 3));
+                        break;
+                    }
+                }
+        }
+
+        return players;
     }
 
     /**
