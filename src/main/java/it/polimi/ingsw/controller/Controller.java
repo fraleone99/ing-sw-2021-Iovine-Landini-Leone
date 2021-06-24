@@ -79,6 +79,7 @@ public class Controller {
                         view.updateFaithPath(s, n, 1, false);
                     }
                 }
+
             }
 
             while(!isEnd){
@@ -96,6 +97,10 @@ public class Controller {
                 if(players.size()==1){
                     try{
                         actionToken = gameModel.drawActionToken();
+                        ArrayList<String> nick = new ArrayList<>(turncontroller.checkPapalPawn());
+                        if (!nick.isEmpty()) {
+                            view.papalPawn(nick);
+                        }
                         view.seeActionToken(players.get(0), actionToken);
                         if(actionToken instanceof BlackCrossMover) {
                             for(String n: players){

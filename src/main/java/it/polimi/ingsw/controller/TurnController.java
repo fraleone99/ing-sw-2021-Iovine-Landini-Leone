@@ -675,7 +675,7 @@ public class TurnController {
         switch (game.getPapalPawn()) {
             case 0:
                 for (Player p : game.getPlayers()) {
-                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 7) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 7 || p.getPlayerDashboard().getFaithPath().getPositionLorenzo()>7) {
                         p.getPlayerDashboard().getFaithPath().setPapalPawn1();
                         for (Player p2 : game.getPlayers()) {
                             if (!(p.getNickname()).equals(p2.getNickname())) {
@@ -698,7 +698,7 @@ public class TurnController {
                 }
             case 1:
                 for (Player p : game.getPlayers()) {
-                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 15) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 15 || p.getPlayerDashboard().getFaithPath().getPositionLorenzo()>15) {
                         p.getPlayerDashboard().getFaithPath().setPapalPawn2();
                         for (Player p2 : game.getPlayers()) {
                             if (!(p.getNickname()).equals(p2.getNickname())) {
@@ -721,7 +721,7 @@ public class TurnController {
                 }
             case 2:
                 for (Player p : game.getPlayers()) {
-                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 23) {
+                    if (p.getPlayerDashboard().getFaithPath().getPositionFaithPath() > 23 || p.getPlayerDashboard().getFaithPath().getPositionLorenzo()>23) {
                         p.getPlayerDashboard().getFaithPath().setPapalPawn3();
                         for (Player p2 : game.getPlayers()) {
                             if (!(p.getNickname()).equals(p2.getNickname())) {

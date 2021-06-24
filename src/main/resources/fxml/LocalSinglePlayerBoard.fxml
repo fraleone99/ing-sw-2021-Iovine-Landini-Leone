@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
     <children>
         <ImageView fitHeight="1080.0" fitWidth="1600.0" layoutX="-8.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -51,7 +51,7 @@
         <Pane layoutX="-103.0" layoutY="279.0" prefHeight="18.0" prefWidth="30.0" />
         <Group fx:id="current_faithPathGroup" layoutX="492.0" layoutY="427.0">
             <children>
-                <ImageView fx:id="faithPath_0" fitHeight="27.0" fitWidth="26.0" layoutX="2.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="faithPath_0" fitHeight="27.0" fitWidth="26.0" layoutX="-1.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="faithPath_1" fitHeight="27.0" fitWidth="26.0" layoutX="25.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="faithPath_2" fitHeight="27.0" fitWidth="26.0" layoutX="53.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="faithPath_3" fitHeight="27.0" fitWidth="26.0" layoutX="53.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
@@ -76,9 +76,13 @@
                 <ImageView fx:id="faithPath_22" fitHeight="27.0" fitWidth="26.0" layoutX="446.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="faithPath_23" fitHeight="27.0" fitWidth="26.0" layoutX="474.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="faithPath_24" fitHeight="27.0" fitWidth="29.0" layoutX="502.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="papalPawnPos_1" fitHeight="39.0" fitWidth="38.0" layoutX="118.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="papalPawnPos_2" fitHeight="37.0" fitWidth="37.0" layoutX="260.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="papalPawnPos_3" fitHeight="36.0" fitWidth="38.0" layoutX="427.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+            <Group fx:id="currentPlayerPapalPawn" layoutX="118.0" layoutY="8.0">
+               <children>
+                      <ImageView fx:id="papalPawnPos_1" fitHeight="39.0" fitWidth="38.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+                      <ImageView fx:id="papalPawnPos_2" fitHeight="37.0" fitWidth="37.0" layoutX="142.0" pickOnBounds="true" preserveRatio="true" />
+                      <ImageView fx:id="papalPawnPos_3" fitHeight="36.0" fitWidth="38.0" layoutX="309.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Group>
             </children>
         </Group>
         <Label fx:id="usernameLabel" layoutX="907.0" layoutY="383.0" prefHeight="34.0" prefWidth="130.0" text="" />
