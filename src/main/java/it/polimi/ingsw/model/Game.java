@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class Game {
     private final ArrayList<Player> players;
     private ArrayList<String> nicknames=new ArrayList<>();
-    private Player currentPlayer;
     private GameBoard gameBoard;
     private int papalPawn=0;
 
@@ -90,24 +89,6 @@ public class Game {
                 return  p;
         }
         throw  new NotExistingPlayerException();
-    }
-
-
-    /**
-     * Gets the player who is playing
-     * @return currentPlayer variable
-     */
-    public Player getCurrentPlayer(){
-        return currentPlayer;
-    }
-
-
-    /**
-     * Sets the player who is playing
-     * @param player is the player who is playing
-     */
-    public void setCurrentPlayer(Player player){
-        this.currentPlayer = player;
     }
 
 

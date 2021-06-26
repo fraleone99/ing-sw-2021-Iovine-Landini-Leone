@@ -451,15 +451,15 @@ public class VirtualView extends VirtualViewObservable {
     public Resource askInput(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+        client.send(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT"));
 
         number = waitForInt(client);
 
         switch(number) {
             case 1 : return Resource.COIN;
-            case 2 : return Resource.SERVANT;
+            case 2 : return Resource.STONE;
             case 3 : return Resource.SHIELD;
-            case 4 : return Resource.STONE;
+            case 4 : return Resource.SERVANT;
             default : return null;
         }
     }
@@ -468,15 +468,15 @@ public class VirtualView extends VirtualViewObservable {
     public Resource askOutput(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+        client.send(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT"));
 
         number = waitForInt(client);
 
         switch(number) {
             case 1 : return Resource.COIN;
-            case 2 : return Resource.SERVANT;
+            case 2 : return Resource.STONE;
             case 3 : return Resource.SHIELD;
-            case 4 : return Resource.STONE;
+            case 4 : return Resource.SERVANT;
             default : return null;
         }
     }

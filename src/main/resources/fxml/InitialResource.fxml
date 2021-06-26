@@ -6,24 +6,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.InitialResourcesController" styleClass="bgimage">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.InitialResourcesController">
    <children>
-      <ImageView fx:id="coin" fitHeight="72.0" fitWidth="86.0" layoutX="43.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="coin" fitHeight="72.0" fitWidth="86.0" layoutX="125.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/COIN.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="stone" fitHeight="72.0" fitWidth="86.0" layoutX="129.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="stone" fitHeight="72.0" fitWidth="86.0" layoutX="211.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/STONE.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="servant" fitHeight="72.0" fitWidth="86.0" layoutX="215.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="servant" fitHeight="72.0" fitWidth="86.0" layoutX="297.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/SERVANT.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="shield" fitHeight="72.0" fitWidth="86.0" layoutX="301.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shield" fitHeight="72.0" fitWidth="86.0" layoutX="383.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/SHIELD.png" />
          </image>
