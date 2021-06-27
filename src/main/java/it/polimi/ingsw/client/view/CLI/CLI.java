@@ -179,10 +179,9 @@ public class CLI implements View {
         else {
             System.out.println(message);
         }
+
         if(message.equals("END_GAME")) {
             System.exit(0);
-        } else {
-            System.out.println(message);
         }
     }
 

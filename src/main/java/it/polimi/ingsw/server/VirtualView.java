@@ -442,7 +442,7 @@ public class VirtualView extends VirtualViewObservable {
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is activating a production");
 
-        client.send(new RequestInt("TYPE","What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
+        client.send(new RequestInt("TYPE","Choose productions\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
 
         return waitForInt(client);
     }
@@ -557,14 +557,14 @@ public class VirtualView extends VirtualViewObservable {
     public void win(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new Win("You had accumulated "  + victoryPoints  + " victory points\n"));
+        client.send(new Win("You won! You have "  + victoryPoints  + " victory points\n"));
     }
 
 
     public void lose(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
-        client.send(new Lose("You had accumulated " + victoryPoints + " victory points\n"));
+        client.send(new Lose("Sorry, you lose. You have " + victoryPoints + " victory points\n"));
     }
 
 

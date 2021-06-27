@@ -107,17 +107,17 @@ public class FaithPath {
         switch(spaceIndicator){
             case 1: if(positionFaithPath>4){
                 papalPawn1=true;
-                papalPoints=papalPoints+1;
+                papalPoints=papalPoints+2;
                 return true;
             }
             case 2: if(positionFaithPath>11){
                 papalPawn2=true;
-                papalPoints=papalPoints+2;
+                papalPoints=papalPoints+3;
                 return true;
             }
             case 3: if(positionFaithPath>18){
                 papalPawn3=true;
-                papalPoints=papalPoints+3;
+                papalPoints=papalPoints+4;
                 return true;
             }
         }

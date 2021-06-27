@@ -713,7 +713,7 @@ public class LocalSPController {
      */
     public void localLose(){
         int victoryPoints = endgame.totalVictoryPoints(gameModel.getPlayers().get(0));
-        handler.handleClient(new Lose("You had accumulated "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points"));
+        handler.handleClient(new Lose("Sorry, you lose. You have "+ Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET +" victory points"));
     }
 
     /**
@@ -721,7 +721,7 @@ public class LocalSPController {
      */
     public void localWin(){
         int victoryPoints = endgame.totalVictoryPoints(gameModel.getPlayers().get(0));
-        handler.handleClient(new Win("You had accumulated " + Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET + " victory points"));
+        handler.handleClient(new Win("You won! You have " + Constants.ANSI_BLUE + victoryPoints + Constants.ANSI_RESET + " victory points"));
     }
 
 
