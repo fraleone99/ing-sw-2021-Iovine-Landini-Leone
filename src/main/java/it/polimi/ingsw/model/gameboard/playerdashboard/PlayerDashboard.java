@@ -66,23 +66,49 @@ public class PlayerDashboard {
      * @return a boolean that represents if requirements are satisfied
      */
     public boolean CheckResource(ArrayList<Goods> needed){
-        ArrayList<Goods> neededClone = new ArrayList<>();
         boolean RequirementsSatisfied = true;
 
-        for(Goods g: needed){
-            neededClone.add(new Goods(g));
+        int neededShield = 0;
+        int neededServant = 0;
+        int neededCoin = 0;
+        int neededStone = 0;
+
+        for(Goods g : needed){
+            if(g.getType().equals(Resource.SHIELD)){
+                neededShield += g.getAmount();
+            }
+            else if(g.getType().equals(Resource.COIN)){
+                neededCoin += g.getAmount();
+            }
+            else if(g.getType().equals(Resource.SERVANT)){
+                neededServant += g.getAmount();
+            }
+            else {
+                neededStone += g.getAmount();
+            }
         }
+
+        Goods shield = new Goods(Resource.SHIELD, neededShield);
+        Goods coin = new Goods(Resource.COIN, neededCoin);
+        Goods servant = new Goods(Resource.SERVANT, neededServant);
+        Goods stone = new Goods(Resource.STONE, neededStone);
+
+        ArrayList<Goods> neededGoods = new ArrayList<>();
+        neededGoods.add(shield);
+        neededGoods.add(coin);
+        neededGoods.add(servant);
+        neededGoods.add(stone);
 
 
         //Storage check
-        for(Goods g1: neededClone){
+        for(Goods g1: neededGoods){
             g1.setAmount(getStorage().checkInput(g1));
         }
 
         //StorageLeader check
         for(int i = 0; i < leaders.size(); i++) {
             if (leaders.get(i) instanceof StorageLeader && leaders.get(i).getIsActive()) {
-                for (Goods g1 : neededClone) {
+                for (Goods g1 : neededGoods) {
                     if (g1.getType().equals(((StorageLeader) leaders.get(i)).getType())) {
                         if (((StorageLeader) leaders.get(i)).getAmount() >= g1.getAmount()) g1.setAmount(0);
                         else g1.setAmount(g1.getAmount() - ((StorageLeader) leaders.get(i)).getAmount());
@@ -92,11 +118,11 @@ public class PlayerDashboard {
         }
 
         //vaultCheck
-        for(Goods g1: neededClone){
+        for(Goods g1: neededGoods){
             g1.setAmount(getVault().checkInput(g1));
         }
 
-        for(Goods g1: neededClone){
+        for(Goods g1: neededGoods){
             if (g1.getAmount() > 0) {
                 RequirementsSatisfied = false;
                 break;

@@ -58,7 +58,7 @@ public class PlayerTest {
         player.buyCard(devCard,3);
     }
 
-    //@Test(expected=NotEnoughResourceException.class)
+    @Test(expected=NotEnoughResourceException.class)
     public void ProductionLeader_NotEnoughResource() throws NotEnoughResourceException, ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, InvalidChoiceException {
         String s = "path";
         player.getPlayerDashboard().getStorage().addResources(1,Resource.SHIELD,1);
@@ -86,7 +86,7 @@ public class PlayerTest {
         player.activeProductionLeader(1, Resource.COIN);
     }
 
-
+    @Test
     public void ProductionLeader() throws ShelfHasDifferentTypeException, AnotherShelfHasTheSameTypeException, NotEnoughSpaceException, NotEnoughResourceException, InvalidChoiceException {
         String s = "path";
 
@@ -508,27 +508,33 @@ public class PlayerTest {
         Production production=new Production(input, output, 0);
         DevelopmentCard devCard=new DevelopmentCard(3, 4, s, CardColor.PURPLE, 1, cost, production);
 
+        DevelopmentCard devCard2 =new DevelopmentCard(3, 4, s, CardColor.PURPLE, 1, cost, production);
+
         player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard,1);
         player.getPlayerDashboard().getDevCardsSpace().addCard(devCard,1);
+
+        player.getPlayerDashboard().getDevCardsSpace().checkSpace(devCard2,2);
+        player.getPlayerDashboard().getDevCardsSpace().addCard(devCard2,2);
 
         player.getPlayerDashboard().getStorage().addResources(1,Resource.STONE,1);
         player.getPlayerDashboard().getStorage().addResources(2,Resource.COIN,1);
         player.getPlayerDashboard().getVault().addResource(Resource.STONE,1);
         player.getPlayerDashboard().getVault().addResource(Resource.SHIELD,1);
-        player.getPlayerDashboard().getVault().addResource(Resource.COIN,2);
+        player.getPlayerDashboard().getVault().addResource(Resource.COIN,3);
         player.getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(Resource.STONE,Resource.SHIELD);
         player.getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(Resource.COIN);
 
         player.activeProductionDevCard(1);
+        player.activeProductionDevCard(2);
         player.doProduction();
 
         assertEquals(player.getPlayerDashboard().getStorage().getAmountShelf(1),1);
         assertEquals(player.getPlayerDashboard().getStorage().getAmountShelf(2),0);
         assertEquals(player.getPlayerDashboard().getStorage().getAmountShelf(3),0);
-        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.COIN),1);
-        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.STONE),2);
-        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.SHIELD),2);
-        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.SERVANT),1);
+        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.COIN),0);
+        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.STONE),3);
+        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.SHIELD),3);
+        assertEquals(player.getPlayerDashboard().getVault().getResource(Resource.SERVANT),2);
     }
 
     @Test
