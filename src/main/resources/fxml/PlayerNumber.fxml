@@ -6,13 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.PlayerNumberController">
-   <children>
-      <ChoiceBox fx:id="numberChoice" layoutX="771.0" layoutY="415.0" prefWidth="150.0" />
-      <Button fx:id="okButton" layoutX="826.0" layoutY="506.0" mnemonicParsing="false" text="OK" />
-      <Label layoutX="578.0" layoutY="417.0" prefHeight="24.0" prefWidth="182.0" text="Choose player number">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font></Label>
-   </children>
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.PlayerNumberController">
+   <ChoiceBox fx:id="numberChoice" layoutX="771.0" layoutY="415.0" prefWidth="150.0"/>
+   <Button fx:id="okButton" layoutX="826.0" layoutY="506.0" mnemonicParsing="false" text="OK"/>
+   <Label layoutX="578.0" layoutY="417.0" prefHeight="24.0" prefWidth="182.0" text="Choose player number">
+      <font>
+         <Font name="System Bold" size="17.0"/>
+      </font>
+   </Label>
 </AnchorPane>

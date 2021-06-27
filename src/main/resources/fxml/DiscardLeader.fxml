@@ -5,16 +5,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="440.0" prefWidth="958.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DiscardLeaderController">
-   <children>
-      <ImageView fx:id="leader1" fitHeight="349.0" fitWidth="231.0" layoutX="14.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader2" fitHeight="349.0" fitWidth="231.0" layoutX="245.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader3" fitHeight="349.0" fitWidth="231.0" layoutX="476.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leader4" fitHeight="349.0" fitWidth="231.0" layoutX="707.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="282.0" layoutY="1.0" prefHeight="34.0" prefWidth="466.0" text="You have to discard two leaders! Plese click on the leader that you want to discard">
-         <font>
-            <Font name="System Italic" size="13.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane prefHeight="440.0" prefWidth="958.0" styleClass="bgimage" stylesheets="@../bootstrap3.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DiscardLeaderController">
+   <ImageView fx:id="leader1" fitHeight="349.0" fitWidth="231.0" layoutX="14.0" layoutY="36.0" pickOnBounds="true"
+              preserveRatio="true"/>
+   <ImageView fx:id="leader2" fitHeight="349.0" fitWidth="231.0" layoutX="245.0" layoutY="36.0" pickOnBounds="true"
+              preserveRatio="true"/>
+   <ImageView fx:id="leader3" fitHeight="349.0" fitWidth="231.0" layoutX="476.0" layoutY="36.0" pickOnBounds="true"
+              preserveRatio="true"/>
+   <ImageView fx:id="leader4" fitHeight="349.0" fitWidth="231.0" layoutX="707.0" layoutY="36.0" pickOnBounds="true"
+              preserveRatio="true"/>
+   <Label layoutX="282.0" layoutY="1.0" prefHeight="34.0" prefWidth="466.0"
+          text="You have to discard two leaders! Plese click on the leader that you want to discard">
+      <font>
+         <Font name="System Italic" size="13.0"/>
+      </font>
+   </Label>
 </AnchorPane>

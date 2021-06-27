@@ -7,10 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DevelopmentCardsGridController" styleClass="bgimage">
-   <ImageView fitHeight="1080.0" fitWidth="1600.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/mainScene/gray-brick-wall1.jpg" />
-   </ImageView>
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DevelopmentCardsGridController">
    <Group fx:id="card_group" layoutX="100.0" layoutY="10.0">
       <ImageView fx:id="purple3" fitHeight="240.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="yellow1" fitHeight="240.0" fitWidth="207.0" layoutX="207.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" />

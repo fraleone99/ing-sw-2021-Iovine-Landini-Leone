@@ -6,14 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController">
-   <children>
-      <TextField fx:id="nicknameBox" layoutX="787.0" layoutY="405.0" />
-      <Label layoutX="624.0" layoutY="405.0" prefHeight="30.0" prefWidth="138.0" text="Insert nickname:">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font></Label>
-      <Button fx:id="okButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="826.0" layoutY="506.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Play" />
-      <Label fx:id="invalidNick_label" layoutX="624.0" layoutY="453.0" opacity="0.0" prefHeight="39.0" prefWidth="250.0" text="The chosen nickname is already taken or invalid. Please try again!" textFill="RED" wrapText="true" />
-   </children>
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController">
+   <TextField fx:id="nicknameBox" layoutX="787.0" layoutY="405.0"/>
+   <Label layoutX="624.0" layoutY="405.0" prefHeight="30.0" prefWidth="138.0" text="Insert nickname:">
+      <font>
+         <Font name="System Bold" size="17.0"/>
+      </font>
+   </Label>
+   <Button fx:id="okButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="826.0"
+           layoutY="506.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Play"/>
+   <Label fx:id="invalidNick_label" layoutX="624.0" layoutY="453.0" opacity="0.0" prefHeight="39.0" prefWidth="250.0"
+          text="The chosen nickname is already taken or invalid. Please try again!" textFill="RED" wrapText="true"/>
 </AnchorPane>

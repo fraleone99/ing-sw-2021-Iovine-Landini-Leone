@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="setup" prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
    <TextField fx:id="ipBox" layoutX="791.0" layoutY="347.0" prefHeight="26.0" prefWidth="150.0" />
    <TextField fx:id="portBox" layoutX="791.0" layoutY="405.0" />
    <Label layoutX="696.0" layoutY="347.0" prefHeight="31.0" prefWidth="94.0" text="Server IP:">
