@@ -22,18 +22,5 @@ public enum ProductionType {
         return null;
     }
 
-    public static int toInteger(ProductionType productionType){
-        switch (productionType){
-            case BASIC:
-                return 1;
-            case DEVELOPMENT_CARD:
-                return 2;
-            case PRODUCTION_LEADER:
-                return 3;
-            case DO_PRODUCTION:
-                return 4;
-        }
-        return 0;
-    }
 }
 

@@ -25,7 +25,6 @@ public class NetworkHandler implements Runnable, Handler {
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
-    private Client owner;
     private final View view;
 
     private boolean isConnected;
@@ -33,7 +32,6 @@ public class NetworkHandler implements Runnable, Handler {
 
     public NetworkHandler(Socket server, Client owner ,View view) {
         this.server = server;
-        this.owner = owner;
         this.view = view;
         isConnected = true;
     }
@@ -72,10 +70,6 @@ public class NetworkHandler implements Runnable, Handler {
     }
 
     public void send(Object message) {
-        //System.out.println("[DEBUG] sending message to server." + message.toString());
-        //if(message instanceof SendInt){
-            //System.out.println("[DEBUG] Int: " + ((SendInt) message).getChoice());
-        //}
         try {
             output.writeObject(message);
             output.flush();
@@ -96,7 +90,6 @@ public class NetworkHandler implements Runnable, Handler {
             view.askNickname(((RequestString) inputObj).getMessage());
         }
         else if(inputObj instanceof RequestInt) {
-            //System.out.println("[DEBUG] reading from server" + ((RequestInt) inputObj).getMessage());
             switch(((RequestInt) inputObj).getType()) {
                 case "NUMBER" : view.askPlayerNumber(((RequestInt) inputObj).getMessage());
                                 break;

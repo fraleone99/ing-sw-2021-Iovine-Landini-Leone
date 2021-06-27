@@ -47,7 +47,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     }
 
     public void send(Object message) {
-        //System.out.println("[SERVER] Sending message " + message.toString() + "to" + nickname);
         synchronized (lock) {
             while (!active.get()) {
                 try {
@@ -100,8 +99,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        /*if(!(next instanceof Ping))
-            System.out.println("[SERVER] Reading from client " + nickname + " " +  next.toString());*/
         return next;
     }
 

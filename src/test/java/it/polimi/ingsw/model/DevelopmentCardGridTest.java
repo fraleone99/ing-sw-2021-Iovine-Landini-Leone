@@ -14,6 +14,7 @@ public class DevelopmentCardGridTest {
         System.out.println(devCardGrid.getCard(CardColor.GREEN,2));
     }
 
+    @Test
     public void testShufflesAllDecks() {
         devCardGrid.shufflesAllDecks();
     }

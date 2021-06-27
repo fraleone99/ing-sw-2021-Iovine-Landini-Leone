@@ -412,24 +412,7 @@ public class TurnController {
      * @throws NotExistingPlayerException if the selected player doesn't exists
      */
     public void buyCard(int player, int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException {
-        CardColor cardColor;
-
-        switch (color) {
-            case 1 :
-                cardColor=CardColor.PURPLE;
-                break;
-            case 2 :
-                cardColor=CardColor.YELLOW;
-                break;
-            case 3 :
-                cardColor=CardColor.BLUE;
-                break;
-            case 4 :
-                cardColor=CardColor.GREEN;
-                break;
-            default:
-                cardColor=null;
-        }
+        CardColor cardColor = game.getGameBoard().getDevelopmentCardGrid().parserColor(color);
 
         DevelopmentCard card=game.getGameBoard().getDevelopmentCardGrid().getCard(cardColor,level);
 

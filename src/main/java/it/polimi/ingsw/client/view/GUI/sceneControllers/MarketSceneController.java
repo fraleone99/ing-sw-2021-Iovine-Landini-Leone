@@ -89,7 +89,7 @@ public class MarketSceneController {
     /**
      * Method setGui set the GUI for this scene and initialize the map of the resources and the matrix for the market
      *
-     * @param gui is the gui to set 
+     * @param gui is the gui to set
      */
     public void setGui(GUI gui) {
         this.gui = gui;
