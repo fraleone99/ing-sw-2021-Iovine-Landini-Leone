@@ -48,7 +48,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         firstClient.send(new InitialSetup());
     }
 
-    public void add(ClientHandler clientHandler, String nickname) throws IOException{
+    public void add(ClientHandler clientHandler, String nickname) {
         clientHandler.setNickname(nickname);
 
         for(String nick: nicknames){
@@ -142,6 +142,9 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         return playersNumber;
     }
 
+    public int getLobbyID() {
+        return lobbyID;
+    }
 
     public void prepareTheGame(){
         Thread t=new Thread( () -> {

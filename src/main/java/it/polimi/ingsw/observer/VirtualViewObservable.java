@@ -16,7 +16,7 @@ public class VirtualViewObservable {
         }
     }
 
-    public void notifyPreparationOfLobby() throws IOException {
+    public void notifyPreparationOfLobby() {
         synchronized (observersList){
             for(VirtualViewObserver obs: observersList){
                 obs.updatePreparationOfLobby();

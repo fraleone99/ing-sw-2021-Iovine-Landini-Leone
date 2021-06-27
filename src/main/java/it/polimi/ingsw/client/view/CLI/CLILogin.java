@@ -60,7 +60,6 @@ public class CLILogin {
         Thread t=new Thread( () -> {
             startGame();
             System.out.println(welcome);
-            handler.send(new SendString("Client connected!"));
         }
         );
         t.start();

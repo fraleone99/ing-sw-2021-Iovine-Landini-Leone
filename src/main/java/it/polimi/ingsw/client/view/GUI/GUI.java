@@ -316,7 +316,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void handShake(String welcome) {
-        handler.send(new SendString("Client connected"));
     }
 
     @Override

@@ -122,13 +122,7 @@ public class TurnController {
                 if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case NOTHING:
-                break;
             case CRASHED:
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 break;
         }
     }
@@ -232,16 +226,19 @@ public class TurnController {
                     case MARKET:
                         int manageStorage = view.manageStorage(1, players.get(player));
                         if (manageStorage == YES) manageStorage(player);
-                        else if(manageStorage== CRASHED) break;
-                        int line = view.useMarket(players.get(player));
-                        if(line == CRASHED) break;
-                        useMarket(player, line);
+                        else if(manageStorage == CRASHED) break;
+                        if(clientConnected.get(players.get(player))) {
+                            int line = view.useMarket(players.get(player));
+                            if(line == CRASHED) break;
+                            useMarket(player, line);
+                        }
                         break;
 
                     case BUY_DEVELOPMENT:
                         ArrayList<Integer> card;
                         do {
                             card = view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI());
+                            if(card.get(0) == CRASHED) break;
                         } while (game.getGameBoard().getDevelopmentCardGrid().getCard(game.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)), card.get(1)) == null);
                         if(card.get(0) == CRASHED) break;
                         int space = view.askSpace(players.get(player));
@@ -254,7 +251,7 @@ public class TurnController {
                             type = view.askType(players.get(player));
                             if(type == CRASHED) break;
                             activeProduction(player, type);
-                        } while (type != DO_PRODUCTION);
+                        } while (type != DO_PRODUCTION && clientConnected.get(players.get(player)));
                         break;
 
                     case CRASHED:
@@ -267,7 +264,7 @@ public class TurnController {
                     }
                 }
 
-            } while (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction);
+            } while ((answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction) && clientConnected.get(players.get(player)));
         }
 
         notHasPerformedAnAction = false;
@@ -555,7 +552,7 @@ public class TurnController {
             } else {
                 action = CRASHED;
             }
-        } while(action==1);
+        } while(action==1 && clientConnected.get(players.get(player)));
     }
 
 
@@ -665,7 +662,9 @@ public class TurnController {
                                     if(!players.contains(p2.getNickname()))
                                         players.add(p2.getNickname());
                                         for(Player nick: game.getPlayers()){
-                                            view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 1);
+                                            if(clientConnected.get(nick.getNickname())) {
+                                                view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 1);
+                                            }
                                         }
                                 }
                             }
@@ -673,7 +672,9 @@ public class TurnController {
                         game.updatePapalPawn();
                         players.add(p.getNickname());
                         for(Player nick: game.getPlayers()){
-                            view.updatePapalPawn(nick.getNickname(), p.getNickname(), 1);
+                            if(clientConnected.get(nick.getNickname())) {
+                                view.updatePapalPawn(nick.getNickname(), p.getNickname(), 1);
+                            }
                         }
                         break;
                     }
@@ -688,7 +689,9 @@ public class TurnController {
                                     if(!players.contains(p2.getNickname()))
                                         players.add(p2.getNickname());
                                         for(Player nick: game.getPlayers()){
-                                            view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 2);
+                                            if(clientConnected.get(nick.getNickname())) {
+                                                view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 2);
+                                            }
                                         }
                                 }
                             }
@@ -696,7 +699,9 @@ public class TurnController {
                         game.updatePapalPawn();
                         players.add(p.getNickname());
                         for(Player nick: game.getPlayers()){
-                            view.updatePapalPawn(nick.getNickname(), p.getNickname(), 2);
+                            if(clientConnected.get(nick.getNickname())) {
+                                view.updatePapalPawn(nick.getNickname(), p.getNickname(), 2);
+                            }
                         }
                         break;
                     }
@@ -711,7 +716,9 @@ public class TurnController {
                                     if(!players.contains(p2.getNickname()))
                                         players.add(p2.getNickname());
                                         for(Player nick: game.getPlayers()){
-                                            view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 3);
+                                            if(clientConnected.get(nick.getNickname())) {
+                                                view.updatePapalPawn(nick.getNickname(), p2.getNickname(), 3);
+                                            }
                                         }
                                 }
                             }
@@ -719,7 +726,9 @@ public class TurnController {
                         game.updatePapalPawn();
                         players.add(p.getNickname());
                         for(Player nick: game.getPlayers()){
-                            view.updatePapalPawn(nick.getNickname(), p.getNickname(), 3);
+                            if(clientConnected.get(nick.getNickname())) {
+                                view.updatePapalPawn(nick.getNickname(), p.getNickname(), 3);
+                            }
                         }
                         break;
                     }

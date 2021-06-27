@@ -76,6 +76,7 @@ public class Server {
                 }
 
                 clients.add(clientHandler);
+                System.out.println("Client connected!");
 
                 playerReady=false;
 
@@ -100,7 +101,7 @@ public class Server {
         Thread t = new Thread(()-> {
             VirtualView view;
             if(clients.size() == 1 || lobbyFull) {
-                view = new VirtualView();
+                view = new VirtualView(this);
             } else {
                 view = lobbyToView.get(lobbies.get(numberOfLobbies-1));
             }
@@ -138,14 +139,10 @@ public class Server {
                 } else {
                     setNickname(nickname);
                     nicknameToLobby.put(nickname, lobbies.get(numberOfLobbies - 1));
-                    try {
-                        lobbies.get(numberOfLobbies - 1).add(clientHandler1, nickname);
-                        synchronized (lock) {
-                            playerReady = true;
-                            lock.notifyAll();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    lobbies.get(numberOfLobbies - 1).add(clientHandler1, nickname);
+                    synchronized (lock) {
+                        playerReady = true;
+                        lock.notifyAll();
                     }
                     playersInLastLobby++;
                 }
@@ -162,8 +159,8 @@ public class Server {
     }
 
     public void handShake(ClientHandler client, VirtualView view) {
-        String welcome = view.askHandShake(client);
-        System.out.println(welcome);
+        view.askHandShake(client);
+
     }
 
     public String requestNickname(ClientHandler client, VirtualView view) {
@@ -207,5 +204,9 @@ public class Server {
         nicknames.remove(nickname);
         nicknameConnected.remove(nickname);
         nicknameToLobby.remove(nickname);
+    }
+
+    public void closeGame(String nickname) {
+        System.out.println("The game of the lobby number " + nicknameToLobby.get(nickname).getLobbyID() + " is over." );
     }
 }

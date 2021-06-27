@@ -148,26 +148,27 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
             server.getLock().notifyAll();
         }
 
-        if(!isEnd) {
-            synchronized (lock) {
+        synchronized (lock) {
+            if (!isEnd) {
                 server.removeClient(this, nickname);
                 number = -1;
                 number2 = -1;
                 isReady = true;
-                lock.notifyAll();
+            } else {
+                server.clientDisconnected(nickname);
             }
-        } else {
-            server.clientDisconnected(nickname);
-        }
 
-        System.out.println(Constants.ANSI_RED + "[SERVER] client disconnected." + Constants.ANSI_RESET);
-        notifyDisconnection(this);
+            System.out.println(Constants.ANSI_RED + "[SERVER] client disconnected." + Constants.ANSI_RESET);
+            notifyDisconnection(this);
 
-        try {
-            input.close();
-            output.close();
-            socketClient.close();
-        } catch (IOException ignored) {
+            try {
+                input.close();
+                output.close();
+                socketClient.close();
+                lock.notifyAll();
+            } catch (IOException e) {
+                System.out.println("ERROR");
+            }
         }
     }
 

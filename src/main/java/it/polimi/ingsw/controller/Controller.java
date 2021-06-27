@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.gameboard.playerdashboard.PlayerDashboard;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.server.VirtualView;
@@ -94,7 +95,7 @@ public class Controller {
                     }
                 }
 
-                if(players.size()==1){
+                if(players.size()==1 && clientConnected.get(players.get(0))){
                     try{
                         actionToken = gameModel.drawActionToken();
                         ArrayList<String> nick = new ArrayList<>(turncontroller.checkPapalPawn());
@@ -112,13 +113,23 @@ public class Controller {
                     } catch (InvalidChoiceException e){
                         e.printStackTrace();
                     }
+
                     isEnd = endgame.singlePlayerIsEndGame(gameModel);
+
                 } else {
-                    isEnd = isEndGame();
+                    if(!clientConnected.containsValue(true)) {
+                        isEnd = true;
+                    }
+                    else isEnd = isEndGame();
                 }
             }
 
-            endGame();
+            if(!clientConnected.containsValue(true)) {
+                view.closeGame(players.get(0));
+                view.allClientCrashed();
+            }
+
+            if(clientConnected.containsValue(true)) endGame();
 
         } catch (NotExistingPlayerException | InvalidChoiceException e){
             e.printStackTrace();
@@ -159,9 +170,18 @@ public class Controller {
             boolean discarded2 = deck.get(1).getIsDiscarded();
             view.initializeGameBoard(true, nickname, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), gameModel.getPlayer(nickname).getLeaders().idDeck(), active1, discarded1, active2, discarded2);
             for(String player : players) {
-                view.seeStorage(nickname, gameModel.getPlayer(player).getPlayerDashboard(), player, false, true);
-                view.updateFaithPath(nickname, player, gameModel.getPlayer(player).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
-                view.setDevCardsSpaceForReconnection(nickname, gameModel.getPlayer(player).getPlayerDashboard().getDevCardsSpace().getSpace(), player);
+                PlayerDashboard dashboard = gameModel.getPlayer(player).getPlayerDashboard();
+                view.seeStorage(nickname, dashboard, player, false, true);
+                view.updateFaithPath(nickname, player, dashboard.getFaithPath().getPositionFaithPath(), false);
+                view.setDevCardsSpaceForReconnection(nickname, dashboard.getDevCardsSpace().getSpace(), player);
+
+                if(dashboard.getFaithPath().isPapalPawn1()) {
+                    view.updatePapalPawn(nickname, player, 1);
+                } else if (dashboard.getFaithPath().isPapalPawn2()) {
+                    view.updatePapalPawn(nickname, player, 2);
+                } else if (dashboard.getFaithPath().isPapalPawn3()) {
+                    view.updatePapalPawn(nickname, player, 3);
+                }
 
                 LeaderCard leader1 = gameModel.getPlayer(player).getLeaders().get(0);
                 if(leader1.getIsActive()) {
@@ -311,6 +331,7 @@ public class Controller {
                 }
             }
         }
+        view.closeGame(players.get(0));
         view.closeConnection();
     }
 

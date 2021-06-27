@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
@@ -31,6 +32,11 @@ public class VirtualView extends VirtualViewObservable {
     private final Map <String, ClientHandler> namesToClient = new HashMap<>();
     private final Map <String, Boolean> clientConnected = new HashMap<>();
     private Controller controller;
+    private final Server server;
+
+    public VirtualView(Server server) {
+        this.server = server;
+    }
 
     public void setController(Controller controller) {
         this.controller = controller;
@@ -113,10 +119,8 @@ public class VirtualView extends VirtualViewObservable {
         return answer;
     }
 
-    public String askHandShake(ClientHandler client) {
+    public void askHandShake(ClientHandler client) {
         client.send(new Connection("Welcome to this fantastic server!", true));
-
-        return waitForString(client);
     }
 
 
@@ -147,7 +151,7 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
-    public void prepareTheLobby() throws IOException {
+    public void prepareTheLobby(){
         notifyPreparationOfLobby();
     }
 
@@ -402,9 +406,11 @@ public class VirtualView extends VirtualViewObservable {
 
         moves.add(waitForInt(client));
 
-        client.send(new RequestInt("SHELF",""));
+        if(moves.get(0) != -1) {
+            client.send(new RequestInt("SHELF", ""));
 
-        moves.add(waitForInt(client));
+            moves.add(waitForInt(client));
+        }
 
         return moves;
     }
@@ -602,6 +608,16 @@ public class VirtualView extends VirtualViewObservable {
             client.isEnd(true);
             client.send(new SendMessage("END_GAME"));
         }
+    }
+
+    public void allClientCrashed() {
+        for(ClientHandler client : namesToClient.values()) {
+            server.clientDisconnected(client.getNickname());
+        }
+    }
+
+    public void closeGame(String nickname) {
+        server.closeGame(nickname);
     }
 
 
