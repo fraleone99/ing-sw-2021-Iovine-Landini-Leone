@@ -78,7 +78,7 @@ public class MarketSceneController {
 
     @FXML private Group choiceShelf_group;
 
-    ImageView[][] imageViewMatrix = new ImageView[3][4];
+    private final ImageView[][] imageViewMatrix = new ImageView[3][4];
 
 
     private GUI gui;

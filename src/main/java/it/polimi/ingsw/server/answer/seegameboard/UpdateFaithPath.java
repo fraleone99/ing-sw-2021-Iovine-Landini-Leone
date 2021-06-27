@@ -10,9 +10,9 @@ import it.polimi.ingsw.server.answer.Answer;
  */
 public class UpdateFaithPath implements Answer {
 
-    String nickname;
-    int position;
-    boolean isLorenzo;
+    private final String nickname;
+    private final int position;
+    private final boolean isLorenzo;
 
     public UpdateFaithPath(String nick, int pos, boolean isLorenzo) {
         this.nickname = nick;

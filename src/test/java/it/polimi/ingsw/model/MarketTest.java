@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
 public class MarketTest {
-    Market market = new Market();
+    private final Market market = new Market();
 
     @Test
     public void testGetChosenColor() throws InvalidChoiceException {

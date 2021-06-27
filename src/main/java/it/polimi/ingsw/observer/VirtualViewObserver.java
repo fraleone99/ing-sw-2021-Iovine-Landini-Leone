@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface VirtualViewObserver {
 
-    void updatePreparationOfLobby() throws IOException;
+    void updatePreparationOfLobby();
 
     void updatePlayingNick(String nickname);
 

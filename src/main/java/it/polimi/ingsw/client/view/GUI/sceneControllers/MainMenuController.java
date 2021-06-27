@@ -13,7 +13,7 @@ public class MainMenuController {
     @FXML private Button singlePlayerButton;
     @FXML private Button multiplayerButton;
 
-    private AtomicInteger ris = new AtomicInteger();
+    private final AtomicInteger ris = new AtomicInteger();
 
     private GUI gui;
 

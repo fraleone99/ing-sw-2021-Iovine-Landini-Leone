@@ -35,15 +35,11 @@ public class CLIInitialize {
         initializeBallToString();
         initializeTokenToString();
 
-        try {
-            initializeDevelopmentCard();
-            initializeLeaderCard();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        initializeDevelopmentCard();
+        initializeLeaderCard();
     }
 
-    private void initializeDevelopmentCard() throws FileNotFoundException {
+    private void initializeDevelopmentCard(){
         Gson gson = new Gson();
         JsonReader jsonReader= new JsonReader(new InputStreamReader(Objects.requireNonNull(DevelopmentCard.class.getResourceAsStream("/JSON/DevelopmentCards.json")), StandardCharsets.UTF_8));
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
@@ -51,7 +47,7 @@ public class CLIInitialize {
         developmentCardDeck.setDeck(data);
     }
 
-    private void initializeLeaderCard() throws FileNotFoundException {
+    private void initializeLeaderCard(){
         jsonReader(LeaderDeck);
     }
 

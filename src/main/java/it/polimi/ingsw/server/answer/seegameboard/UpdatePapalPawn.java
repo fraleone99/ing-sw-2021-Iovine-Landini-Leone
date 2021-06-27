@@ -10,8 +10,8 @@ import it.polimi.ingsw.server.answer.Answer;
  */
 public class UpdatePapalPawn implements Answer {
 
-    String nickname;
-    int pawn;
+    private final String nickname;
+    private final int pawn;
 
     public UpdatePapalPawn(String nickname, int pawn) {
         this.nickname = nickname;

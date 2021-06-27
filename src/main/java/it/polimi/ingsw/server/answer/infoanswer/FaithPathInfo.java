@@ -10,13 +10,13 @@ import it.polimi.ingsw.server.answer.Answer;
  * @author Lorenzo Iovine
  */
 public class FaithPathInfo implements Answer {
-    int position;
-    int LorenzoPos;
-    boolean Papal1;
-    boolean Papal2;
-    boolean Papal3;
-    boolean singlePlayer;
-    String message;
+    private final int position;
+    private final int LorenzoPos;
+    private final boolean Papal1;
+    private final boolean Papal2;
+    private final boolean Papal3;
+    private final boolean singlePlayer;
+    private final String message;
 
     public FaithPathInfo(String message, FaithPath path, boolean SinglePlayer) {
         this.message= message;

@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.message.Ping;
 
 public class Heartbeat implements Runnable {
 
-    NetworkHandler networkHandler;
+    private NetworkHandler networkHandler;
 
     public Heartbeat(NetworkHandler networkHandler) {
         this.networkHandler = networkHandler;

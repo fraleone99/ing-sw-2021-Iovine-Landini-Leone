@@ -14,7 +14,7 @@ import it.polimi.ingsw.server.answer.Answer;
  * @author Lorenzo Iovine
  */
 public class StorageInfo implements Answer {
-    String nickname;
+    private final String nickname;
 
     //STORAGE
     private final Resource shelf1Type;

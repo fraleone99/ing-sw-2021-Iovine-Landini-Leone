@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Lorenzo Iovine
  */
 public class SeeBall implements Answer {
-    ArrayList<Ball> balls;
+    private final ArrayList<Ball> balls;
 
     public SeeBall(ArrayList<Ball> balls) {
         this.balls = balls;
