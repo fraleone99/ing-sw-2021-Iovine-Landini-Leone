@@ -4,6 +4,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Message containing initial leader card's id.
+ *
+ * @author Lorenzo Iovine
+ */
 public class PassLeaderCard implements Answer {
     private final ArrayList<Integer> IdLeaders;
 

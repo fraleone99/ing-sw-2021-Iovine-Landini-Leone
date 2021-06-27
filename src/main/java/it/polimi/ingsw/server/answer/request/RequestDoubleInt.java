@@ -4,6 +4,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Message requesting two int to the client.
+ *
+ * @author Lorenzo Iovine
+ */
 public class RequestDoubleInt implements Answer {
     private final String type;
     private final String message;

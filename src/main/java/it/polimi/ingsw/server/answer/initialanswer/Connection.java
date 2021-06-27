@@ -2,13 +2,19 @@ package it.polimi.ingsw.server.answer.initialanswer;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message containing information about the player's connection status.
+ *
+ * @author Lorenzo Iovine
+ */
 public class Connection implements Answer {
     private final String message;
-    private final boolean connection; //true connection confirmation, false connection termination.
+    private final boolean connected; //true connection confirmation, false connection termination.
 
     public Connection(String message, boolean connection) {
         this.message = message;
-        this.connection = connection;
+        this.connected = connection;
     }
 
     @Override
@@ -16,7 +22,7 @@ public class Connection implements Answer {
         return message;
     }
 
-    public boolean isConnection() {
-        return connection;
+    public boolean isConnected() {
+        return connected;
     }
 }

@@ -2,6 +2,12 @@ package it.polimi.ingsw.server.answer.seegameboard;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message containing papal pawn's updates.
+ *
+ * @author Nicola Landini
+ */
 public class UpdatePapalPawn implements Answer {
 
     String nickname;

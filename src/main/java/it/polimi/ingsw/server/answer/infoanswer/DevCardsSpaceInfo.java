@@ -6,6 +6,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.HashMap;
 
+
+/**
+ * Message containing information about a player's development cards space.
+ *
+ * @author Lorenzo Iovine
+ */
 public class DevCardsSpaceInfo implements Answer {
     private final int victoryPoints;
 

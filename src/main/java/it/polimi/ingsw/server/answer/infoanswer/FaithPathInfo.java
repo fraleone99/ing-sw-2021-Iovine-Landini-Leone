@@ -3,6 +3,12 @@ package it.polimi.ingsw.server.answer.infoanswer;
 import it.polimi.ingsw.model.gameboard.playerdashboard.FaithPath;
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message containing information about a player's faith path.
+ *
+ * @author Lorenzo Iovine
+ */
 public class FaithPathInfo implements Answer {
     int position;
     int LorenzoPos;

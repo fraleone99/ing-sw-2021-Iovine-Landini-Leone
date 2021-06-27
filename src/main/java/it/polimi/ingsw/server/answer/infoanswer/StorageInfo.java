@@ -7,6 +7,12 @@ import it.polimi.ingsw.model.gameboard.playerdashboard.Storage;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Vault;
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message containing information about player's storage, vault and storage leaders.
+ *
+ * @author Lorenzo Iovine
+ */
 public class StorageInfo implements Answer {
     String nickname;
 

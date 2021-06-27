@@ -3,6 +3,12 @@ package it.polimi.ingsw.server.answer.infoanswer;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message containing information about basic production.
+ *
+ * @author Lorenzo Iovine
+ */
 public class BasicProductionInfo implements Answer {
     private final Resource input1;
     private final Resource input2;

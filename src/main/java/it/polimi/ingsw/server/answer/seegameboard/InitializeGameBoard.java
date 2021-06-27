@@ -5,6 +5,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * GameBoard initializing message.
+ *
+ * @author Lorenzo Iovine
+ */
 public class InitializeGameBoard implements Answer {
     private final boolean crashed;
     private final Market market;

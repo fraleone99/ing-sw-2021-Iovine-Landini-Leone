@@ -4,6 +4,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Message containing information about game's development cards grid.
+ *
+ * @author Lorenzo Iovine
+ */
 public class GridInfo implements Answer {
     private final ArrayList<Integer> IdDevCards;
 

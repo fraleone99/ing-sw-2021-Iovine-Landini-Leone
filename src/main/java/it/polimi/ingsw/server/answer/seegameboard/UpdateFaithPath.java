@@ -2,6 +2,12 @@ package it.polimi.ingsw.server.answer.seegameboard;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message containing faith path's updates.
+ *
+ * @author Nicola Landini
+ */
 public class UpdateFaithPath implements Answer {
 
     String nickname;

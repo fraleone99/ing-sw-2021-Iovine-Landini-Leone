@@ -2,6 +2,11 @@ package it.polimi.ingsw.server.answer.infoanswer;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+/**
+ * Message containing information about a card bought by a player.
+ *
+ * @author Lorenzo Iovine
+ */
 public class CardsSpaceInfo implements Answer {
     private final String nickname;
     private final int level;

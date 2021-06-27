@@ -2,6 +2,12 @@ package it.polimi.ingsw.server.answer.turnanswer;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+
+/**
+ * Message used to reset card's status.
+ *
+ * @author Lorenzo Iovine
+ */
 public class ResetCard implements Answer {
     private final int pos;
 

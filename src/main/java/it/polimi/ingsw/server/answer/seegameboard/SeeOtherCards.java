@@ -4,6 +4,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Message containing another player's leader cards' id.
+ *
+ * @author Lorenzo Iovine
+ */
 public class SeeOtherCards implements Answer {
     private final ArrayList<Integer> IdLeaders;
 

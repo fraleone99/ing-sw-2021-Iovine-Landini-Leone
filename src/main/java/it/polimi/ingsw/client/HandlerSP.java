@@ -94,7 +94,7 @@ public class HandlerSP implements Runnable, Handler {
 
     public void handleClient(Answer inputObj) {
         if(inputObj instanceof Connection){
-            if(((Connection) inputObj).isConnection()){
+            if(((Connection) inputObj).isConnected()){
                 view.handShake(((Connection) inputObj).getMessage());
             }
         }
@@ -195,10 +195,10 @@ public class HandlerSP implements Runnable, Handler {
             view.printActionToken(((ActionTokenInfo) inputObj).getMessage());
         }
         else if (inputObj instanceof TurnStatus) {
-            if (((TurnStatus) inputObj).getMessage().equals("END")) {
+            if (inputObj.getMessage().equals("END")) {
                 view.setIsMyTurn(false);
                 view.waitForYourTurn();
-            } else if (((TurnStatus) inputObj).getMessage().equals("START")) {
+            } else if (inputObj.getMessage().equals("START")) {
                 view.setIsMyTurn(true);
             }
         }
@@ -209,10 +209,10 @@ public class HandlerSP implements Runnable, Handler {
             view.playersInfo((PlayersInfo) inputObj);
         }
         else if(inputObj instanceof ErrorMessage){
-            view.errorHandling((String) ((ErrorMessage) inputObj).getMessage());
+            view.errorHandling((String) inputObj.getMessage());
         }
         else if(inputObj instanceof MarketInfo){
-            view.updateMarket((Market) ((MarketInfo) inputObj).getMessage());
+            view.updateMarket((Market) inputObj.getMessage());
         }
         else if (inputObj instanceof UpdateFaithPath){
             view.updateFaithPath((UpdateFaithPath) inputObj);

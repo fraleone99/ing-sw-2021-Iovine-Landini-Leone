@@ -2,6 +2,11 @@ package it.polimi.ingsw.server.answer.infoanswer;
 
 import it.polimi.ingsw.server.answer.Answer;
 
+/**
+ * Message containing information regarding a card bought by another player.
+ *
+ * @author Lorenzo Iovine
+ */
 public class OtherLeaderCard implements Answer {
     private final int idCard;
     private final String action;

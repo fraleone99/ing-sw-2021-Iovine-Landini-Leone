@@ -4,6 +4,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Message containing players' information
+ *
+ * @author Lorenzo Iovine
+ */
 public class PlayersInfo implements Answer {
     private final int playersNumber;
     private final ArrayList<String> nicknames = new ArrayList<>();

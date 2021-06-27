@@ -5,6 +5,12 @@ import it.polimi.ingsw.server.answer.Answer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Message containing the balls requested from market.
+ *
+ * @author Lorenzo Iovine
+ */
 public class SeeBall implements Answer {
     ArrayList<Ball> balls;
 
