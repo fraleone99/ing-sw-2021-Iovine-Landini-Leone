@@ -62,11 +62,10 @@ public class Server {
                 Thread t = new Thread(clientHandler, "Server_" + newSocket.getInetAddress());
                 t.start();
 
-                clients.add(clientHandler);
-
                 synchronized (lock) {
                     while(!playerReady) {
                         try {
+                            System.out.println("hello");
                             clientHandler.send(new SendMessage("We are creating the lobby, please wait..."));
                             clientHandler.send(new InitialSetup());
                             lock.wait();
@@ -75,6 +74,8 @@ public class Server {
                         }
                     }
                 }
+
+                clients.add(clientHandler);
 
                 playerReady=false;
 
