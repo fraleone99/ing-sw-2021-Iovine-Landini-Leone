@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;
@@ -22,6 +21,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -152,6 +152,7 @@ public class GUI extends Application implements View {
         stage.setWidth(1440);
         stage.setFullScreen(true);
         stage.setMaximized(true);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/inkwell.png")));
         stage.show();
 
         secondaryStage = new Stage();
@@ -366,12 +367,8 @@ public class GUI extends Application implements View {
             Platform.runLater(()->changeStage(LOCAL_GAME));
         }
 
-        else if(message.endsWith(" is playing")){
-            Platform.runLater(()->gameSceneController.updateMessage(message,"PLAYING_NICK"));
-        }
-
-        else if(message.startsWith("->")){
-            Platform.runLater(()->gameSceneController.updateMessage(message, "TURN_CHOICE"));
+        else if(message.endsWith(" is playing") || message.startsWith(">")){
+            Platform.runLater(()->gameSceneController.updateMessage(message));
         }
 
         else if(message.equals("INVALID") || message.equals("Invalid choice.")) {

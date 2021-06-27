@@ -17,13 +17,19 @@ import it.polimi.ingsw.server.answer.seegameboard.UpdateFaithPath;
 import it.polimi.ingsw.server.answer.seegameboard.UpdatePapalPawn;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
+import javax.management.Notification;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -197,6 +203,9 @@ public class GameSceneController {
         papalPawnToImageView.put(2, "/graphics/PAPAL_PAWN_3.png");
         papalPawnToImageView.put(3, "/graphics/PAPAL_PAWN_4.png");
 
+        message.setBackground(new Background(new BackgroundFill(Color.rgb(249, 228, 183, 0.9), new CornerRadii(5.0), new Insets(-5.0))));
+        message.setTextFill(Color.BLACK);
+
     }
 
     /**
@@ -238,7 +247,6 @@ public class GameSceneController {
      */
     public void notMyTurn() {
         message.setText("IT'S NOT YOUR TURN!");
-        message.setTextFill(Color.BLACK);
         message.setOpacity(1);
         toSee_market.setDisable(false);
         toSee_nothing.setDisable(true);
@@ -267,7 +275,6 @@ public class GameSceneController {
      */
     public void isMyTurn() {
         message.setText("IT'S YOUR TURN!");
-        message.setTextFill(Color.BLACK);
         message.setOpacity(1);
         toSee_nothing.setOpacity(1);
         ok_turnType.setDisable(true);
@@ -816,7 +823,6 @@ public class GameSceneController {
         turn_discardLeader.setOpacity(1);
         ok_turnType.setOpacity(1);
         message.setText("IT'S YOUR TURN!");
-        message.setTextFill(Color.BLACK);
         AtomicReference<EndTurnType> turnType = new AtomicReference<>();
 
         ok_turnType.setOnAction(actionEvent -> {
@@ -1023,16 +1029,16 @@ public class GameSceneController {
         int player;
 
         if(firstPlayer.equals(gui.getNickname())){
-            currentPlayer_inkwell.setImage(new Image("/graphics/calamaio.png"));
+            currentPlayer_inkwell.setImage(new Image("/graphics/inkwell.png"));
         } else {
             player = nicknameToPosition.get(firstPlayer);
 
             if(player==1){
-                player1_inkwell.setImage(new Image("/graphics/calamaio.png"));
+                player1_inkwell.setImage(new Image("/graphics/inkwell.png"));
             } else if (player==2) {
-                player2_inkwell.setImage(new Image("/graphics/calamaio.png"));
+                player2_inkwell.setImage(new Image("/graphics/inkwell.png"));
             } else if (player==3) {
-                player3_inkwell.setImage(new Image("/graphics/calamaio.png"));
+                player3_inkwell.setImage(new Image("/graphics/inkwell.png"));
             }
         }
     }
@@ -1091,16 +1097,9 @@ public class GameSceneController {
         quit_button.setOnAction(actionEvent -> Platform.exit());
     }
 
-    public void updateMessage(String notification, String command){
-
-        if(command.equals("PLAYING_NICK") || command.equals("PAPAL_PAWN")){
-            message.setText(notification);
-            message.setTextFill(Color.DARKRED);
-        } else if(command.equals("TURN_CHOICE")) {
-            if(!notification.endsWith(" is watching the game board")){
+    public void updateMessage(String notification){
+        if(!notification.endsWith(" is watching the game board")){
                 message.setText(notification);
-                message.setTextFill(Color.BEIGE);
-            }
         }
     }
 }

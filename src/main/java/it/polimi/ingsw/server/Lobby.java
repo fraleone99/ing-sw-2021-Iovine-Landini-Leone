@@ -133,7 +133,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
     public void updateTurnChoice(String nickname, String message){
         for(String nick: nicknames){
             if(!nick.equals(nickname)){
-                namesToClient.get(nick).send(new SendMessage("->"+nickname+message));
+                namesToClient.get(nick).send(new SendMessage(">"+nickname+message));
             }
         }
     }

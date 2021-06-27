@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController" styleClass="bgimage">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
    <ImageView fx:id="currentPlayerBoard" fitHeight="408.0" fitWidth="611.0" layoutX="469.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
    </ImageView>
@@ -485,7 +485,7 @@
       </children>
    </Group>
    <Button fx:id="ok_turnType" layoutX="1127.0" layoutY="575.0" mnemonicParsing="false" text="OK" />
-   <Button fx:id="toSee_nothing" layoutX="759.0" layoutY="360.0" mnemonicParsing="false" text="Play Turn" />
+   <Button fx:id="toSee_nothing" layoutX="710.0" layoutY="362.0" mnemonicParsing="false" text="Play Turn" />
    <Label fx:id="noActionSelectedLabel" layoutX="1122.0" layoutY="691.0" opacity="0.0" text="Select an action" />
    <Label fx:id="invalid" layoutX="1256.0" layoutY="460.0" prefHeight="66.0" prefWidth="124.0" text="INVALID CHOICE" textFill="#e41717" wrapText="true">
       <font>
@@ -494,11 +494,6 @@
    </Label>
    <ImageView fx:id="leader1" fitHeight="240.0" fitWidth="207.0" layoutX="41.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
    <ImageView fx:id="leader2" fitHeight="240.0" fitWidth="207.0" layoutX="240.0" layoutY="522.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" />
-   <Label fx:id="message" alignment="CENTER" layoutX="377.0" layoutY="312.0" opacity="0.0" prefHeight="47.0" prefWidth="838.0">
-      <font>
-         <Font size="26.0" />
-      </font>
-   </Label>
    <Label fx:id="active2" alignment="CENTER" layoutX="240.0" layoutY="770.0" opacity="0.0" prefHeight="26.0" prefWidth="180.0" text="ACTIVE" textFill="#096b3e" underline="true">
       <font>
          <Font name="Century" size="17.0" />
@@ -660,4 +655,9 @@
    </Group>
    <Button fx:id="quit_button" disable="true" layoutX="594.0" layoutY="347.0" mnemonicParsing="false" opacity="0.0" text="QUIT" />
    <ImageView fx:id="currentPlayer_inkwell" fitHeight="85.0" fitWidth="84.0" layoutX="452.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true" />
+   <Label fx:id="message" alignment="CENTER" layoutX="439.0" layoutY="297.0" opacity="0.0" prefHeight="47.0" prefWidth="620.0">
+      <font>
+         <Font size="26.0" />
+      </font>
+   </Label>
 </AnchorPane>
