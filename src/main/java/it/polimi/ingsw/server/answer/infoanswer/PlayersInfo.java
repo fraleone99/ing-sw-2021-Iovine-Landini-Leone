@@ -5,8 +5,8 @@ import it.polimi.ingsw.server.answer.Answer;
 import java.util.ArrayList;
 
 public class PlayersInfo implements Answer {
-    private int playersNumber;
-    private ArrayList<String> nicknames = new ArrayList<>();
+    private final int playersNumber;
+    private final ArrayList<String> nicknames = new ArrayList<>();
 
     public PlayersInfo(int playersNumber) {
         this.playersNumber = playersNumber;

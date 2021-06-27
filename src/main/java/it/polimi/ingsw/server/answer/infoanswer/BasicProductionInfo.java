@@ -4,9 +4,9 @@ import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.server.answer.Answer;
 
 public class BasicProductionInfo implements Answer {
-    private Resource input1;
-    private Resource input2;
-    private Resource output;
+    private final Resource input1;
+    private final Resource input2;
+    private final Resource output;
 
     public BasicProductionInfo(Resource input1, Resource input2, Resource output) {
         this.input1 = input1;

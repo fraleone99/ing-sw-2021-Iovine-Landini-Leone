@@ -3,10 +3,10 @@ package it.polimi.ingsw.server.answer.infoanswer;
 import it.polimi.ingsw.server.answer.Answer;
 
 public class OtherLeaderCard implements Answer {
-    private int idCard;
-    private String action;
-    private String owner;
-    int pos;
+    private final int idCard;
+    private final String action;
+    private final String owner;
+    private final int pos;
 
     public OtherLeaderCard(int idCard, String action, String owner, int pos) {
         this.idCard = idCard;

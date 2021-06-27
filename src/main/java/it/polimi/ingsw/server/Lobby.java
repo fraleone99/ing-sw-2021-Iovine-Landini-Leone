@@ -142,9 +142,6 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         return playersNumber;
     }
 
-    public Map<String, ClientHandler> getNamesToClient() {
-        return namesToClient;
-    }
 
     public void prepareTheGame(){
         Thread t=new Thread( () -> {

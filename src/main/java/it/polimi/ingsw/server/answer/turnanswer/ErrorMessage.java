@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.answer.turnanswer;
 import it.polimi.ingsw.server.answer.Answer;
 
 public class ErrorMessage implements Answer {
-    private String errorType;
+    private final String errorType;
 
     public ErrorMessage(String errorType) {
         this.errorType = errorType;

@@ -1,10 +1,8 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.message.Message;
 import it.polimi.ingsw.observer.ConnectionObservable;
 import it.polimi.ingsw.client.message.*;
-import it.polimi.ingsw.server.answer.Pong;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -25,19 +23,14 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     private int number;
     private int number2;
 
-    private boolean isConnected;
-
     private String nickname;
 
 
     private static final int CONNECTION_TIMEOUT = 10000;
 
-    private AtomicBoolean active = new AtomicBoolean(false);
-
-    ConnectionObservable connectionObservable = new ConnectionObservable();
+    private final AtomicBoolean active = new AtomicBoolean(false);
 
     private final Object lock = new Object();
-
 
     public ClientHandler(Socket socketClient,Server server) {
         this.server=server;
@@ -148,14 +141,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return number2;
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-    public boolean isActive() {
-        return active.get();
-    }
-
     public void closeConnection(){
         if (!active.get()) return;
 
@@ -180,8 +165,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
         System.out.println(Constants.ANSI_RED + "[SERVER] client disconnected." + Constants.ANSI_RESET);
         notifyDisconnection(this);
-
-        isConnected = false;
 
         try {
             input.close();

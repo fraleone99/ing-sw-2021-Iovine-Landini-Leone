@@ -31,8 +31,8 @@ public class StorageInfo implements Answer {
     private final int storageLeader2;
     private  Resource leader2Type;
 
-    private boolean vaultUpdate;
-    private boolean toPrint;
+    private final boolean vaultUpdate;
+    private final boolean toPrint;
 
 
     @Override

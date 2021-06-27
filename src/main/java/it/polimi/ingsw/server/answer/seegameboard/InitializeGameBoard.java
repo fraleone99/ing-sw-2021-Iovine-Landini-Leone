@@ -6,14 +6,14 @@ import it.polimi.ingsw.server.answer.Answer;
 import java.util.ArrayList;
 
 public class InitializeGameBoard implements Answer {
-    private boolean crashed;
+    private final boolean crashed;
     private final Market market;
     private final ArrayList<Integer> IdDevCards = new ArrayList<>();
     private final ArrayList<Integer> leaderCards = new ArrayList<>();
-    private boolean isActive1;
-    private boolean isDiscarded1;
-    private boolean isActive2;
-    private boolean isDiscarded2;
+    private final boolean isActive1;
+    private final boolean isDiscarded1;
+    private final boolean isActive2;
+    private final boolean isDiscarded2;
 
 
     public InitializeGameBoard(boolean crashed, Market market, ArrayList<Integer> idCards, ArrayList<Integer> leader, boolean isActive1, boolean isDiscarded1, boolean isActive2, boolean isDiscarded2) {

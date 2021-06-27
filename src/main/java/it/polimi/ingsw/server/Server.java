@@ -1,8 +1,5 @@
 package it.polimi.ingsw.server;
 
-//import it.polimi.ingsw.observer.LobbyObserver;
-
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.server.answer.initialanswer.InitialSetup;
 import it.polimi.ingsw.server.answer.request.SendMessage;
 import it.polimi.ingsw.server.answer.turnanswer.TurnStatus;
@@ -84,7 +81,7 @@ public class Server {
                 createLobby(clientHandler);
 
             } catch (IOException  e) {
-                System.out.println("Connection dropped1");
+                System.out.println("Connection dropped");
             }
         }
     }
@@ -95,10 +92,6 @@ public class Server {
 
     public Object getLock() {
         return lock;
-    }
-
-    public ArrayList<ClientHandler> getClients() {
-        return clients;
     }
 
     public void createLobby(ClientHandler clienthandler) {

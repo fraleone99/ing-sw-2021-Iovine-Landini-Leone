@@ -4,7 +4,6 @@ public class Constants {
 
 
     //ANSI COLOR
-    public static final String	ANSI_BLACK				= "\u001B[38;5;232m";
     public static final String	ANSI_RED				= "\u001B[38;5;124m";
     public static final String	ANSI_GREEN				= "\u001B[38;5;28m";
     public static final String	ANSI_YELLOW				= "\u001B[38;5;226m";
@@ -25,21 +24,15 @@ public class Constants {
 
     public final static String FAITH    = "\u271F";
     public final static String CIRCLE = "\uD83D\uDF89";
-    public final static String RECTANGLE = "\u25AD";
 
     public final static String AUTHORS = "Authors: " + ANSI_BLUE + "Francesco Leone " + ANSI_RED + "Nicola Landini " +
                                             ANSI_GREEN + "Lorenzo Iovine " +ANSI_RESET;
 
-    public final static String LEADER_CARD_TOP_EDGE = "++++++++++++++++\n";
     public final static String LEADER_CARD_LEFT_EDGE = "+";
     public final static String LEADER_CARD_RIGHT_EDGE = "+\n";
-    public final static String FIVE_WITHE_SPACE = "     ";
 
     public final static String DIVIDING_LINE = ANSI_WHITE+"********************************************************************************************************************************************"+ANSI_RESET;
     public final static String PLAYING_EDGE = ANSI_WHITE+"\n\n\n++++++++++++++++++++++++++++++++++++++++++++++\n"+ANSI_RESET;
-
-    //DEVELOPMENT CARD
-    public final static String DEV_CARD_TOP = "+++++++++++++";
 
     //BALL
     public final static String WhiteBALL    = ANSI_WHITE + CIRCLE + ANSI_RESET;
@@ -87,7 +80,6 @@ public class Constants {
 
     //STORAGE
     public final static String STORAGE_TOP_BOTTOM_EDGE = "++++++++++++\n";
-    public final static String TEN_EMPTY_SPACE = "          ";
     public final static String EDGE = "|";
     public final static String RIGHT_EDGE = "|\n";
     public final static String EMPTY_SPACE = "_";

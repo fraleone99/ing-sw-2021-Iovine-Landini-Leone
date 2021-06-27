@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.gameboard.Market;
 import it.polimi.ingsw.server.answer.Answer;
 
 public class MarketInfo implements Answer {
-    private Market market;
+    private final Market market;
 
     public MarketInfo(Market market) {
         this.market = market;
