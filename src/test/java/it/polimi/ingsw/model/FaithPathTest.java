@@ -23,6 +23,6 @@ public class FaithPathTest {
         faithPath=new FaithPath();
         faithPath.setPositionFaithPath(19);
         faithPath.activatePapalPawn(3);
-        assertEquals(15, faithPath.getTotalPoint());
+        assertEquals(16, faithPath.getTotalPoint());
     }
 }
