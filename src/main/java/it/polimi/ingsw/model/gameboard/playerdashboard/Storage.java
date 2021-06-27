@@ -79,7 +79,7 @@ public class Storage {
      * @param amount is the number of resources that have to be removed
      * @return how many resources still need to be removed
      */
-    public int DiscardResources(Resource type, int amount){
+    public int discardResources(Resource type, int amount){
         Shelf s = isThisTypePresent(type);
 
         if(s == null) return amount;
@@ -105,7 +105,7 @@ public class Storage {
      * @throws AnotherShelfHasTheSameTypeException when there is another shelf with the same type of Resources
      * @throws ShelfHasDifferentTypeException when the selected shelf contains already some resources of a different type
      */
-    public void AddResource(int s, Resource type, int amount) throws NotEnoughSpaceException, AnotherShelfHasTheSameTypeException,
+    public void addResources(int s, Resource type, int amount) throws NotEnoughSpaceException, AnotherShelfHasTheSameTypeException,
             ShelfHasDifferentTypeException {
 
 
@@ -116,7 +116,7 @@ public class Storage {
         if (shelves.get(s-1).getAvailableSpace() < amount) throw new NotEnoughSpaceException();
 
         shelves.get(s-1).changeType(type);
-        shelves.get(s-1).AddResource(amount);
+        shelves.get(s-1).addResource(amount);
     }
 
     /**
@@ -127,18 +127,18 @@ public class Storage {
      * @throws NotEnoughSpaceException when in one of the two shelves there isn't enough spaces for storing all the
      * resources of the other shelf
      */
-    public void InvertShelvesContent(int s1, int s2) throws NotEnoughSpaceException{
+    public void invertShelvesContent(int s1, int s2) throws NotEnoughSpaceException{
         if(shelves.get(s1-1).getShelfDimension() < shelves.get(s2-1).getAmount() || shelves.get(s2-1).getShelfDimension() < shelves.get(s1-1).getAmount())
             throw new NotEnoughSpaceException();
 
         Resource TempType = shelves.get(s1-1).getResourceType();
         int TempAmount = shelves.get(s1-1).getAmount();
 
-        shelves.get(s1-1).ChangeResourceType(shelves.get(s2-1).getResourceType());
-        shelves.get(s1-1).AddResource(shelves.get(s2-1).getAmount());
+        shelves.get(s1-1).changeResourceType(shelves.get(s2-1).getResourceType());
+        shelves.get(s1-1).addResource(shelves.get(s2-1).getAmount());
 
-        shelves.get(s2-1).ChangeResourceType(TempType);
-        shelves.get(s2-1).AddResource(TempAmount);
+        shelves.get(s2-1).changeResourceType(TempType);
+        shelves.get(s2-1).addResource(TempAmount);
 
     }
 

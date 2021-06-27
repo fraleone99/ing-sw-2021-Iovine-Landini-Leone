@@ -27,8 +27,8 @@ public class ProductionLeader extends LeaderCard {
      * @param production is the production of the card
      * @param req is the requirement of the card
      */
-    public ProductionLeader(int VictoryPoints, int CardID, String graphicPath, Production production, Requirements req) {
-        super(VictoryPoints, CardID, graphicPath);
+    public ProductionLeader(int VictoryPoints, int CardID, Production production, Requirements req) {
+        super(VictoryPoints, CardID);
         requirements.add(req);
         this.production = production;
     }

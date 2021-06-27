@@ -17,8 +17,8 @@ import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
  * @author Lorenzo Iovine.
  */
 public class StorageLeader extends LeaderCard {
-    private Shelf LeaderShelf;
-    private ArrayList<Requirements> requirements = new ArrayList<>();
+    private final Shelf LeaderShelf;
+    private final ArrayList<Requirements> requirements = new ArrayList<>();
 
 
     /**
@@ -28,9 +28,9 @@ public class StorageLeader extends LeaderCard {
      * @param req is the requirements of the card
      * @param s is the shelf of the card
      */
-    public StorageLeader(int VictoryPoints, int CardID, String graphicPath, Requirements req, Shelf s)
+    public StorageLeader(int VictoryPoints, int CardID, Requirements req, Shelf s)
     {
-        super(VictoryPoints, CardID, graphicPath);
+        super(VictoryPoints, CardID);
         requirements.add(req);
         this.LeaderShelf=s;
     }
@@ -41,7 +41,7 @@ public class StorageLeader extends LeaderCard {
      * @param amount is the number of resources to be removed
      * @return the available space of the shelf
      */
-    public int DiscardResources(int amount) {
+    public int discardResources(int amount) {
         if(LeaderShelf.getAmount() >= amount){
             LeaderShelf.discardResource(amount);
             return 0;
@@ -61,13 +61,13 @@ public class StorageLeader extends LeaderCard {
      * @throws NotEnoughSpaceException if the shelf doesn't have enough available space
      * @throws ShelfHasDifferentTypeException if the shelf cannot contain this type of resource
      */
-    public void AddResources(Resource type, int amount) throws NotEnoughSpaceException, ShelfHasDifferentTypeException {
+    public void addResources(Resource type, int amount) throws NotEnoughSpaceException, ShelfHasDifferentTypeException {
 
         if (!LeaderShelf.getResourceType().equals(type)) throw new ShelfHasDifferentTypeException();
 
         if (LeaderShelf.getAvailableSpace() < amount) throw new NotEnoughSpaceException();
 
-        LeaderShelf.AddResource(amount);
+        LeaderShelf.addResource(amount);
     }
 
 

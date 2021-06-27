@@ -2,7 +2,6 @@ package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.server.ClientHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class ConnectionObservable {
 
     /**
      * this method is used to add a new ConnectionObserver
-     * @param obs
+     * @param obs is the observer that we want to register
      */
     public void registerObserver(ConnectionObserver obs){
         synchronized (observersList){
@@ -23,20 +22,9 @@ public class ConnectionObservable {
     }
 
     /**
-     * this method is used to remove a ConnectionObserver
-     * @param obs
-     */
-    public void unregisterObserver(ConnectionObserver obs){
-        synchronized (observersList){
-            observersList.remove(obs);
-        }
-    }
-
-    /**
      * this method is used to notify every object in observersList
-     * @param clientHandler
+     * @param clientHandler is the client that we want to notify
      */
-    //Every object in observersList is an instance of a class that implements ConnectionObserver interface
     public void notifyDisconnection(ClientHandler clientHandler){
         synchronized (observersList){
             for(ConnectionObserver obs: observersList){

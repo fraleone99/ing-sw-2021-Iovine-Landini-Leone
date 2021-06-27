@@ -29,7 +29,7 @@ public class Vault {
      * @param type resource type
      * @param amount of resource to add
      */
-    public void AddResource(Resource type, int amount){
+    public void addResource(Resource type, int amount){
         if(type.equals(Resource.COIN)) coinsAmount += amount;
         else if(type.equals(Resource.SERVANT)) servantsAmount += amount;
         else if(type.equals(Resource.SHIELD)) shieldsAmount += amount;

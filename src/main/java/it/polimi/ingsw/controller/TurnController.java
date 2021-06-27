@@ -18,6 +18,7 @@ import it.polimi.ingsw.server.VirtualView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * TurnController class manages the actions of player's turn
@@ -90,9 +91,9 @@ public class TurnController {
 
         ToSeeFromGameBoard toSee = ToSeeFromGameBoard.fromInteger(answer);
 
-        switch(toSee){
+        switch(Objects.requireNonNull(toSee)){
             case LEADER_CARDS:
-                seeMore =view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                seeMore =view.seeLeaderCards(players.get(player), game.getPlayer(players.get(player)).getLeaders().idDeck());
                 if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case MARKET:
@@ -102,9 +103,9 @@ public class TurnController {
             case DEVELOPMENT_CARD_GRID:
                 int choice=view.chooseLine(players.get(player));
                 if(choice == ALL_GRID) { //in the gui we always ask for all the grid while in the cli we ask for a line at the time
-                    seeMore =view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+                    seeMore =view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck());
                 } else {
-                    seeMore = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck());
+                    seeMore = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).idDeck());
                 }
                 if(seeMore == YES) seeGameBoard(false, player);
                 break;
@@ -170,11 +171,10 @@ public class TurnController {
     /**
      * This method allows the selected player to choose what he wants to do in his turn
      * @param player is the player index in array list players
-     * @throws InterruptedException is due to multithreading message send
      * @throws NotExistingPlayerException if the selected player doesn't exists
      * @throws InvalidChoiceException if the choice is invalid
      */
-    public void chooseTurn(int player) throws InterruptedException, NotExistingPlayerException, InvalidChoiceException {
+    public void chooseTurn(int player) throws NotExistingPlayerException, InvalidChoiceException {
         int answer;
         //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
 
@@ -186,9 +186,9 @@ public class TurnController {
                 if (notHasPerformedAnAction = true) notHasPerformedAnAction = false;
                 answer = view.chooseTurn(players.get(player));
                 TurnType turnType = TurnType.fromInteger(answer);
-                switch (turnType) {
+                switch (Objects.requireNonNull(turnType)) {
                     case ACTIVE_LEADER:
-                        pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                        pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().idDeck());
                         if (pos == INVALID || pos == CRASHED) break;
                         try {
                             activeLeader(player, pos);
@@ -207,7 +207,7 @@ public class TurnController {
                         break;
 
                     case DISCARD_LEADER:
-                        pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                        pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().idDeck());
                         if (pos == INVALID || pos == CRASHED) break;
                         try {
                             discardLeader(player, pos);
@@ -241,7 +241,7 @@ public class TurnController {
                     case BUY_DEVELOPMENT:
                         ArrayList<Integer> card;
                         do {
-                            card = view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI());
+                            card = view.askCardToBuy(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), game.getPlayer(players.get(player)).getDevCardsForGUI());
                         } while (game.getGameBoard().getDevelopmentCardGrid().getCard(game.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)), card.get(1)) == null);
                         if(card.get(0) == CRASHED) break;
                         int space = view.askSpace(players.get(player));
@@ -277,7 +277,7 @@ public class TurnController {
 
             while (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER)) {
                 if (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER)) {
-                    pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    pos = view.activeLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().idDeck());
                     if (pos == INVALID || pos == CRASHED) break;
                     try {
                         activeLeader(player, pos);
@@ -294,7 +294,7 @@ public class TurnController {
                         view.resetCard(players.get(player), game.getPlayer(players.get(player)).getLeaders().get(pos - 1).getCardID());
                     }
                 } else  if (answer == TurnType.toInteger(TurnType.DISCARD_LEADER)){
-                    pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().IdDeck());
+                    pos = view.discardLeader(players.get(player), game.getPlayer(players.get(player)).getLeaders().idDeck());
                     if (pos == INVALID || pos == CRASHED) break;
                     try {
                         discardLeader(player, pos);
@@ -330,14 +330,13 @@ public class TurnController {
      * @param player is the player index in array list players
      * @param type is the number corresponding to the the type of the production that the player decided to activate
      * @throws NotExistingPlayerException if the selected player doesn't exists
-     * @throws InterruptedException is due to multithreading message send
      */
-    public void activeProduction(int player, int type) throws NotExistingPlayerException, InterruptedException {
+    public void activeProduction(int player, int type) throws NotExistingPlayerException {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
 
         ProductionType productionType = ProductionType.fromInteger(type);
-        switch(productionType) {
+        switch(Objects.requireNonNull(productionType)) {
             case BASIC:
                 Resource input1=view.askInput(players.get(player));
                 if(input1 == null) break;
@@ -348,7 +347,7 @@ public class TurnController {
                 game.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
                 game.getPlayer(players.get(player)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
                 try {
-                    game.getPlayer(players.get(player)).ActiveProductionBase();
+                    game.getPlayer(players.get(player)).activeProductionBase();
                     view.sendBasicProduction(players.get(player), input1, input2, output);
                 } catch (NotEnoughResourceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_BASE_PRODUCTION");
@@ -359,7 +358,7 @@ public class TurnController {
                 int space=view.askDevCard(players.get(player));
                 if(space == CRASHED) break;
                 try {
-                    game.getPlayer(players.get(player)).ActiveProductionDevCard(space);
+                    game.getPlayer(players.get(player)).activeProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_DEV_CARD");
                 }
@@ -371,7 +370,7 @@ public class TurnController {
                 Resource outputProduction=view.askOutput(players.get(player));
                 if(outputProduction == null) break;
                 try {
-                    game.getPlayer(players.get(player)).ActiveProductionLeader(index, outputProduction);
+                    game.getPlayer(players.get(player)).activeProductionLeader(index, outputProduction);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
                     view.sendErrorMessage(players.get(player), "ACTIVE_PROD_LEADER");
                 }
@@ -440,7 +439,7 @@ public class TurnController {
             for(String nickname : players){
                 if(clientConnected.get(nickname)) {
                     view.updateDevCardSpace(nickname, players.get(player), level, space, card.getCardID());
-                    view.updateGrid(nickname, game.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck());
+                    view.updateGrid(nickname, game.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck());
                 }
             }
         } catch(InvalidSpaceCardException e) {
@@ -470,10 +469,10 @@ public class TurnController {
         }
         ArrayList<Ball> balls = new ArrayList<>();
 
-        if (game.getPlayer(players.get(player)).WhiteBallLeader() == 2) {
+        if (game.getPlayer(players.get(player)).whiteBallLeader() == 2) {
             int ball = view.askWhiteBallLeader(players.get(player));
             resource = ((WhiteBallLeader) game.getPlayer(players.get(player)).getLeaders().get(ball - 1)).getConversionType();
-        } else if (game.getPlayer(players.get(player)).WhiteBallLeader() == 1) {
+        } else if (game.getPlayer(players.get(player)).whiteBallLeader() == 1) {
             if (game.getPlayer(players.get(player)).getLeaders().get(0) instanceof WhiteBallLeader)
                 resource = ((WhiteBallLeader) game.getPlayer(players.get(player)).getLeaders().get(0)).getConversionType();
             else
@@ -528,9 +527,9 @@ public class TurnController {
                 try {
                     if(choice.get(1)==4) {
                         int card=game.getPlayer(players.get(player)).indexOfStorageLeader(toPlace.get((choice.get(0)) - 1).getCorrespondingResource());
-                        ((StorageLeader) game.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                        ((StorageLeader) game.getPlayer(players.get(player)).getLeaders().get(card - 1)).addResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     } else {
-                        game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                        game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().addResources(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                         view.seeStorage(players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), true, false);
 
                     }
@@ -561,7 +560,7 @@ public class TurnController {
 
             if(choice.get(0) != CRASHED && choice.get(1) != CRASHED) {
                 try {
-                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0), choice.get(1));
+                    game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().invertShelvesContent(choice.get(0), choice.get(1));
                     view.seeStorage(players.get(player), game.getPlayer(players.get(player)).getPlayerDashboard(), players.get(player), true, false);
                 } catch (NotEnoughSpaceException e) {
                     view.sendErrorMessage(players.get(player), "MARKET_INVALID_SHELF");
@@ -585,7 +584,7 @@ public class TurnController {
      * @throws NotExistingPlayerException if the selected player doesn't exists
      */
     public void activeLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
-        game.getPlayer(players.get(player)).ActiveLeader(pos);
+        game.getPlayer(players.get(player)).activeLeader(pos);
     }
 
 
@@ -597,7 +596,7 @@ public class TurnController {
      * @throws NotExistingPlayerException if the selected player doesn't exists
      */
     public void discardLeader(int player, int pos) throws InvalidChoiceException, NotExistingPlayerException {
-        game.getPlayer(players.get(player)).DiscardLeader(pos);
+        game.getPlayer(players.get(player)).discardLeader(pos);
     }
 
 
@@ -615,7 +614,7 @@ public class TurnController {
         for (Ball b : balls) {
             int i = game.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
 
-            if (game.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
+            if (game.getPlayer(players.get(player)).storageLeader(b.getCorrespondingResource())) {
                 toPlace.add(new Ball(b.getType()));
             } else {
                 if (i != 0) {

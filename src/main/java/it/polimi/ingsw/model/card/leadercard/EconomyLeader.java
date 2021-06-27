@@ -26,8 +26,8 @@ public class EconomyLeader extends LeaderCard {
      * @param req1 is the first requirement of the card
      * @param req2 is the second requirement of the card
      */
-    public EconomyLeader(int VictoryPoints, int CardID, String graphicPath, Resource DiscountType, Requirements req1, Requirements req2) {
-        super(VictoryPoints, CardID, graphicPath);
+    public EconomyLeader(int VictoryPoints, int CardID, Resource DiscountType, Requirements req1, Requirements req2) {
+        super(VictoryPoints, CardID);
         this.discountType = DiscountType;
         requirements.add(req1);
         requirements.add(req2);

@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class LorenzoMagnifico{
 
-    private ArrayList<ActionToken> tokens=new ArrayList<>();
+    private final ArrayList<ActionToken> tokens=new ArrayList<>();
 
     /**
      * LorenzoMagnifico constructor: creates a new instance of LorenzoMagnifico and

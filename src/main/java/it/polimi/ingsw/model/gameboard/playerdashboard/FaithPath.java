@@ -97,9 +97,6 @@ public class FaithPath {
         this.positionFaithPath = positionFaithPath;
     }
 
-    //this method is called every times some player reaches papal favor position
-    //spaceIndicator indicates which papal space
-
     /**
      * This method is called every times some player reaches papal favor position
      * and it establishes if the player has the right to activate the corresponding papal pawn

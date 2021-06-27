@@ -31,7 +31,7 @@ public class DevelopmentCard extends Card {
      * @param production is the production of the card
      */
     public DevelopmentCard(int VictoryPoints, int CardID, String graphicPath, CardColor Color, int Level, ArrayList<Goods> Cost, Production production) {
-        super(VictoryPoints, CardID, graphicPath);
+        super(VictoryPoints, CardID);
         this.color=Color;
         this.level=Level;
         this.cost.addAll(Cost);

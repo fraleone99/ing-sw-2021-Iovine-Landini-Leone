@@ -1,8 +1,5 @@
 package it.polimi.ingsw.observer;
 
-import it.polimi.ingsw.server.ClientHandler;
-import it.polimi.ingsw.server.VirtualView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +13,6 @@ public class VirtualViewObservable {
     public void registerObserver(VirtualViewObserver observer){
         synchronized (observersList){
             observersList.add(observer);
-        }
-    }
-
-    public void unregisterObserver(VirtualViewObserver observer){
-        synchronized (observersList){
-            observersList.remove(observer);
         }
     }
 

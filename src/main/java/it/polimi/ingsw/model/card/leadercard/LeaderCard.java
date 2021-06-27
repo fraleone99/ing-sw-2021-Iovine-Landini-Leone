@@ -24,8 +24,8 @@ public abstract class LeaderCard extends Card {
      * @param VictoryPoints is the number of the victory points of the card
      * @param CardID is the ID of the card
      */
-    public LeaderCard(int VictoryPoints, int CardID, String graphicPath) {
-        super(VictoryPoints, CardID, graphicPath);
+    public LeaderCard(int VictoryPoints, int CardID) {
+        super(VictoryPoints, CardID);
     }
 
 

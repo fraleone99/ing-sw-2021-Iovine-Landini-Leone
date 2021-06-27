@@ -1002,6 +1002,11 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * This method updates the papal pawn of a player of the lobby
+     * @param updatePapalPawn is a message that contains the nickname of the player that
+     *                        activated the papal pawn and the level of the pawn
+     */
     public void updatePapalPawn(UpdatePapalPawn updatePapalPawn) {
         int player;
         ImageView image;
@@ -1097,9 +1102,14 @@ public class GameSceneController {
         quit_button.setOnAction(actionEvent -> Platform.exit());
     }
 
+    /**
+     * This method allows to update the notifications message
+     * @param notification is the message that the player have to know
+     */
     public void updateMessage(String notification){
         if(!notification.endsWith(" is watching the game board")){
-                message.setText(notification);
+            message.setText(notification);
         }
     }
+
 }

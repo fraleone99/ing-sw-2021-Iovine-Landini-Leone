@@ -36,7 +36,7 @@ public class Controller {
      */
     public Controller(ArrayList<String> players, VirtualView view) {
         this.players.addAll(players);
-        gameModel=new Game(players.size(), players);
+        gameModel=new Game();
         turncontroller=new TurnController(gameModel, players, view);
         endgame=new EndGameController();
         this.view=view;
@@ -61,7 +61,7 @@ public class Controller {
             for(int i=0; i<players.size(); i++){
                 view.initialInfo(players.get(i), players.size(), players);
                 startGame(i);
-                view.initializeGameBoard(false, players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(i)).getLeaders().IdDeck(), false, false, false, false);
+                view.initializeGameBoard(false, players.get(i), gameModel.getGameBoard().getMarket(),gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), gameModel.getPlayer(players.get(i)).getLeaders().idDeck(), false, false, false, false);
 
                 for(String player: players){
                     view.seeStorage(players.get(i), gameModel.getPlayer(player).getPlayerDashboard(), player, false, false);
@@ -112,7 +112,7 @@ public class Controller {
                     } catch (InvalidChoiceException e){
                         e.printStackTrace();
                     }
-                    isEnd = endgame.SinglePlayerIsEndGame(gameModel);
+                    isEnd = endgame.singlePlayerIsEndGame(gameModel);
                 } else {
                     isEnd = isEndGame();
                 }
@@ -120,7 +120,7 @@ public class Controller {
 
             endGame();
 
-        } catch (NotExistingPlayerException | InterruptedException | InvalidChoiceException e){
+        } catch (NotExistingPlayerException | InvalidChoiceException e){
             e.printStackTrace();
         }
     }
@@ -157,7 +157,7 @@ public class Controller {
             boolean discarded1 = deck.get(0).getIsDiscarded();
             boolean active2 = deck.get(1).getIsActive();
             boolean discarded2 = deck.get(1).getIsDiscarded();
-            view.initializeGameBoard(true, nickname, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(nickname).getLeaders().IdDeck(), active1, discarded1, active2, discarded2);
+            view.initializeGameBoard(true, nickname, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), gameModel.getPlayer(nickname).getLeaders().idDeck(), active1, discarded1, active2, discarded2);
             for(String player : players) {
                 view.seeStorage(nickname, gameModel.getPlayer(player).getPlayerDashboard(), player, false, true);
                 view.updateFaithPath(nickname, player, gameModel.getPlayer(player).getPlayerDashboard().getFaithPath().getPositionFaithPath(), false);
@@ -227,16 +227,16 @@ public class Controller {
         try {
             switch (resource) {
                 case 1:
-                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.COIN, 1);
+                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().addResources(shelf, Resource.COIN, 1);
                     break;
                 case 2:
-                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.STONE, 1);
+                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().addResources(shelf, Resource.STONE, 1);
                     break;
                 case 3:
-                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SHIELD, 1);
+                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().addResources(shelf, Resource.SHIELD, 1);
                     break;
                 case 4:
-                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(shelf, Resource.SERVANT, 1);
+                    gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().addResources(shelf, Resource.SERVANT, 1);
                     break;
             }
         } catch (NotEnoughSpaceException | AnotherShelfHasTheSameTypeException | ShelfHasDifferentTypeException e) {
@@ -266,9 +266,9 @@ public class Controller {
      */
     public void discardFirstLeaders(int player) throws NotExistingPlayerException {
         int card;
-        card=view.discardFirstLeaders(players.get(player), 1, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+        card=view.discardFirstLeaders(players.get(player), 1, gameModel.getPlayer(players.get(player)).getLeaders().idDeck());
         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
-        card=view.discardFirstLeaders(players.get(player), 2, gameModel.getPlayer(players.get(player)).getLeaders().IdDeck());
+        card=view.discardFirstLeaders(players.get(player), 2, gameModel.getPlayer(players.get(player)).getLeaders().idDeck());
         gameModel.getPlayer(players.get(player)).getPlayerDashboard().getLeaders().remove(card-1);
     }
 
@@ -289,7 +289,7 @@ public class Controller {
     public void endGame() throws NotExistingPlayerException {
         if(players.size()==1){
             try {
-                if(endgame.SinglePlayerLose(gameModel)){
+                if(endgame.singlePlayerLose(gameModel)){
                     view.lose(players.get(0),endgame.totalVictoryPoints(gameModel.getPlayer(players.get(0))));
                 } else {
                     view.win(players.get(0),endgame.totalVictoryPoints(gameModel.getPlayer(players.get(0))));

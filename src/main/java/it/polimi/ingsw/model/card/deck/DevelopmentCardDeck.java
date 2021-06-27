@@ -13,7 +13,7 @@ import java.util.List;
  * @author Francesco Leone, Lorenzo Iovine
  */
 public class DevelopmentCardDeck implements Deck {
-    private ArrayList<DevelopmentCard> deck = new ArrayList<>();
+    private final ArrayList<DevelopmentCard> deck = new ArrayList<>();
 
 
     /**
@@ -26,13 +26,12 @@ public class DevelopmentCardDeck implements Deck {
 
     /**
      * Draws a card from the deck. The Card is removed from the deck
-     * @return the last card of the deck.
      */
-    public DevelopmentCard draw() throws InvalidChoiceException {
+    public void draw() throws InvalidChoiceException {
         if(deck.isEmpty()) {
             throw new InvalidChoiceException();
         }
-        return deck.remove(deck.size()-1);
+        deck.remove(deck.size() - 1);
     }
 
 
@@ -102,21 +101,6 @@ public class DevelopmentCardDeck implements Deck {
         this.deck.addAll(deck);
     }
 
-
-    /**
-     * Calculates the total victory points of the cards in the deck
-     * @return the victory points
-     */
-    public int victoryPointsAmount(){
-        int amount=0;
-        for(DevelopmentCard d: deck){
-            amount=amount+d.getVictoryPoints();
-        }
-
-        return amount;
-    }
-
-
     /**
      * Gets the deck
      * @return the deck
@@ -145,7 +129,7 @@ public class DevelopmentCardDeck implements Deck {
      * Gets all the cards of the deck with their IDs
      * @return an ArrayList of the IDs of the cards
      */
-    public ArrayList<Integer> IdDeck(){
+    public ArrayList<Integer> idDeck(){
         ArrayList<Integer> IdDeck=new ArrayList<>();
         for (DevelopmentCard dev : deck) {
             if(dev==null) IdDeck.add(65);

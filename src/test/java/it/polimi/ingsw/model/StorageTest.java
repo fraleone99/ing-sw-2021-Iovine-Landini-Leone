@@ -56,9 +56,9 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 2, Resource.SHIELD);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        assertEquals(1, storage.DiscardResources(Resource.SHIELD, 3));
-        assertEquals(0, storage.DiscardResources(Resource.COIN, 1));
-        assertEquals(3, storage.DiscardResources(Resource.SERVANT, 3));
+        assertEquals(1, storage.discardResources(Resource.SHIELD, 3));
+        assertEquals(0, storage.discardResources(Resource.COIN, 1));
+        assertEquals(3, storage.discardResources(Resource.SERVANT, 3));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 0, Resource.STONE);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.AddResource(1,Resource.COIN, 1);
+        storage.addResources(1,Resource.COIN, 1);
 
 
         assertEquals(shelf1.getAmount(),1);
@@ -85,7 +85,7 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 0, Resource.STONE);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.AddResource(3, Resource.COIN, 2);
+        storage.addResources(3, Resource.COIN, 2);
     }
 
     @Test(expected = ShelfHasDifferentTypeException.class)
@@ -97,7 +97,7 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 0, Resource.STONE);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.AddResource(1, Resource.COIN, 1);
+        storage.addResources(1, Resource.COIN, 1);
     }
 
     @Test(expected = NotEnoughSpaceException.class)
@@ -109,7 +109,7 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 0, Resource.STONE);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.AddResource(2, Resource.SERVANT, 2);
+        storage.addResources(2, Resource.SERVANT, 2);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 0, Resource.STONE);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.InvertShelvesContent(1,2);
+        storage.invertShelvesContent(1,2);
 
         assertEquals(shelf1.getResourceType(), Resource.SERVANT);
         assertEquals(shelf2.getResourceType(), Resource.STONE);
@@ -133,7 +133,7 @@ public class StorageTest {
         Shelf shelf3 = new Shelf(3, 3, Resource.SHIELD);
         Storage storage = new Storage(shelf1,shelf2,shelf3);
 
-        storage.InvertShelvesContent(3, 1);
+        storage.invertShelvesContent(3, 1);
     }
 
     @Test

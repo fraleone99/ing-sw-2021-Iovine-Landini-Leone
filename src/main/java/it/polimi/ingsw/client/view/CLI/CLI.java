@@ -171,8 +171,11 @@ public class CLI implements View {
 
     @Override
     public void readMessage(String message) {
-        if(message.endsWith(" is playing")){
+        if(message.endsWith(" is playing") || message.endsWith("is back.")){
             System.out.println(Constants.PLAYING_EDGE+Constants.ANSI_GREEN+message+Constants.ANSI_RESET);
+        }
+        else if(message.endsWith("players in this Lobby.")){
+            System.out.println(Constants.ANSI_RED+message+Constants.ANSI_RESET);
         }
         else {
             System.out.println(message);

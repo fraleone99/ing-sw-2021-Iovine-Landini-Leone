@@ -38,7 +38,7 @@ public class EndGameController {
      * @return player's total victory points
      */
     public int totalVictoryPoints(Player player) {
-        int totalPoints=0;
+        int totalPoints;
 
         //points in Player+total points from the faith path
         totalPoints = player.calculateVictoryPoints() + player.getPlayerDashboard().getFaithPath().getTotalPoint();
@@ -65,7 +65,7 @@ public class EndGameController {
      * @return true if player lost, false otherwise
      * @throws InvalidChoiceException if the choice is invalid
      */
-    public boolean SinglePlayerLose(Game game) throws InvalidChoiceException {
+    public boolean singlePlayerLose(Game game) throws InvalidChoiceException {
         boolean green   = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.GREEN);
         boolean purple  = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.PURPLE);
         boolean blue    = game.getGameBoard().getDevelopmentCardGrid().sameColorDeckAreEmpty(CardColor.BLUE);
@@ -79,7 +79,7 @@ public class EndGameController {
      * @param game is the instance of game
      * @return true if player won, false otherwise
      */
-    public boolean SinglePlayerWins(Game game) {
+    public boolean singlePlayerWins(Game game) {
 
         return game.getPlayers().get(0).getPlayerDashboard().getDevCardsSpace().getAmountCards() == 7 || game.getPlayers().get(0).getPlayerDashboard().getFaithPath().getPositionFaithPath() == 24;
     }
@@ -89,10 +89,10 @@ public class EndGameController {
      * @param game is the instance of game
      * @return true if the match is over, false otherwise
      */
-    public boolean SinglePlayerIsEndGame(Game game){
+    public boolean singlePlayerIsEndGame(Game game){
 
         try {
-            if(SinglePlayerLose(game) || SinglePlayerWins(game)){
+            if(singlePlayerLose(game) || singlePlayerWins(game)){
                 return true;
             }
         } catch (InvalidChoiceException e) {

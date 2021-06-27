@@ -11,8 +11,8 @@ import java.io.Serializable;
 
 public class BlackCrossMover extends ActionToken implements Serializable {
 
-    int steps;
-    boolean shuffle;
+    private final int steps;
+    private final boolean shuffle;
 
     /**
      * BlackCrossMover constructor: creates a new instance of BlackCrossMover

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.gameboard.playerdashboard;
 
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
-import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.Goods;
 import it.polimi.ingsw.model.Production;

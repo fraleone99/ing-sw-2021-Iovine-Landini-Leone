@@ -1,15 +1,11 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
-import it.polimi.ingsw.model.card.leadercard.EconomyLeader;
-import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.gameboard.GameBoard;
-import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.model.singleplayer.BlackCrossMover;
 import it.polimi.ingsw.model.singleplayer.DeleteCard;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -20,20 +16,16 @@ import java.util.ArrayList;
 
 public class Game {
     private final ArrayList<Player> players;
-    private ArrayList<String> nicknames=new ArrayList<>();
-    private GameBoard gameBoard;
+    private final GameBoard gameBoard;
     private int papalPawn=0;
 
 
     /**
      * Constructor Game creates a new Game instance
-     * @param playersNumber is the players number of the game
-     * @param nickname is an Arraylist that contains all nicknames
      */
-    public Game(int playersNumber, ArrayList<String> nickname) {
-        players = new ArrayList<> ();
-        nicknames.addAll(nickname);
-        gameBoard=new GameBoard(playersNumber);
+    public Game() {
+        players = new ArrayList<>();
+        gameBoard = new GameBoard();
     }
 
 
@@ -70,10 +62,6 @@ public class Game {
     public void createPlayer(String nickname){
         Player p = new Player(nickname);
         players.add(p);
-
-        if(players.size()==1){
-            players.get(0).setFirst(true);
-        }
     }
 
 
@@ -93,7 +81,7 @@ public class Game {
 
 
     /**
-     * Draws an action Token from the arrayList of LorenzoMagnifico
+     * Draws an action Token from the arrayList of LorenzoIlMagnifico
      * @return the action token drawn
      * @throws InvalidChoiceException if the choice is invalid
      * @throws EmptyDecksException if the deck is empty

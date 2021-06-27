@@ -14,9 +14,9 @@ import java.util.Arrays;
  */
 
 public class Market implements Serializable {
-    private Ball[][] matrix = new Ball[3][4];
+    private final Ball[][] matrix = new Ball[3][4];
     private Ball ramp;
-    private ArrayList<Ball>randomBall=new ArrayList<>();
+    private final ArrayList<Ball>randomBall=new ArrayList<>();
 
     /**
      * Market constructor: creates a new instance of market

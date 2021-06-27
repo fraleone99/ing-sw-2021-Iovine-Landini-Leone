@@ -3,13 +3,10 @@ package it.polimi.ingsw.model.gameboard;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.model.Production;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.leadercard.*;
 import it.polimi.ingsw.model.singleplayer.LorenzoMagnifico;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -24,7 +21,6 @@ import java.util.ArrayList;
  * @author Lorenzo Iovine, Francesco Leone, Nicola Landini
  */
 public class GameBoard {
-    private int playersNumber;
     private final Market market;
     private final DevelopmentCardGrid developmentCardGrid;
     private final LeaderCardDeck LeaderDeck;
@@ -33,20 +29,14 @@ public class GameBoard {
 
     /**
      * Constructor GameBoard create a new GameBoard instance
-     * @param playersNumber is the number of players in the game
      */
-    public GameBoard(int playersNumber) {
-        this.playersNumber = playersNumber;
+    public GameBoard() {
         market = new Market();
         developmentCardGrid = new DevelopmentCardGrid();
         lorenzoMagnifico=new LorenzoMagnifico();
         LeaderDeck = new LeaderCardDeck();
 
-        try {
-            initializeLeaderCards();
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        initializeLeaderCards();
     }
 
 
@@ -77,9 +67,8 @@ public class GameBoard {
 
     /**
      * Initialize the leader cards
-     * @throws FileNotFoundException if the file wasn't found
      */
-    public void initializeLeaderCards() throws FileNotFoundException {
+    public void initializeLeaderCards() {
         Gson gson = new Gson();
         JsonReader jsonReaderEcon = new JsonReader(new InputStreamReader(EconomyLeader.class.getResourceAsStream("/JSON/EconomyLeaders.json"), StandardCharsets.UTF_8));
         JsonReader jsonReaderProd = new JsonReader(new InputStreamReader(ProductionLeader.class.getResourceAsStream("/JSON/ProductionLeaders.json"), StandardCharsets.UTF_8));

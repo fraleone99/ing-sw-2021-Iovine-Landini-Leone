@@ -146,7 +146,7 @@ public class GUI extends Application implements View {
 
 
         stage = primaryStage;
-        stage.setTitle("I Maestri del Rinascimento");
+        stage.setTitle("Master of Renaissance");
         stage.centerOnScreen();
         stage.setHeight(810);
         stage.setWidth(1440);
@@ -271,6 +271,14 @@ public class GUI extends Application implements View {
         errorDialog.showAndWait();
     }
 
+    private void disconnectionAlert(String warning) {
+        Alert errorDialog = new Alert(Alert.AlertType.WARNING);
+        errorDialog.setTitle("Disconnection alert");
+        errorDialog.setHeaderText("Warning!");
+        errorDialog.setContentText(warning);
+        errorDialog.showAndWait();
+    }
+
     @Override
     public void updateDevCardsSpace(CardsSpaceInfo info) {
         Platform.runLater( () -> gameSceneController.updateCardsSpace(info));
@@ -367,8 +375,12 @@ public class GUI extends Application implements View {
             Platform.runLater(()->changeStage(LOCAL_GAME));
         }
 
-        else if(message.endsWith(" is playing") || message.startsWith(">")){
+        else if(message.endsWith(" is playing") || message.startsWith(">") || message.endsWith("is back.")){
             Platform.runLater(()->gameSceneController.updateMessage(message));
+        }
+
+        else if(message.endsWith("players in this Lobby.") || message.startsWith("You crashed")){
+            Platform.runLater(()->disconnectionAlert(message));
         }
 
         else if(message.equals("INVALID") || message.equals("Invalid choice.")) {

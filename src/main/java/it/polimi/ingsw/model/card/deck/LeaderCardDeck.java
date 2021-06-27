@@ -90,7 +90,7 @@ public class LeaderCardDeck {
      * Gets all the cards of the deck with their IDs
      * @return an ArrayList of the IDs of the cards
      */
-    public ArrayList<Integer> IdDeck(){
+    public ArrayList<Integer> idDeck(){
         ArrayList<Integer> IdDeck=new ArrayList<>();
         for (LeaderCard leaderCard : deck) {
             IdDeck.add(leaderCard.getCardID());

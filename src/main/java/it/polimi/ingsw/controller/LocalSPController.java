@@ -27,6 +27,7 @@ import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * LocalSPController class handles local single player match
@@ -54,7 +55,7 @@ public class LocalSPController {
     public LocalSPController(String nickname, HandlerSP handler) {
         this.players.add(nickname);
         this.handler=handler;
-        gameModel=new Game(players.size(), players);
+        gameModel=new Game();
         turncontroller=new TurnController(gameModel, players, null);
         endgame=new EndGameController();
     }
@@ -80,7 +81,7 @@ public class LocalSPController {
             playersInfo.addNick(players.get(0));
             handler.handleClient(playersInfo);
             handler.handleClient(new SendMessage("The game starts!\n"));
-            handler.handleClient(new InitializeGameBoard(false, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getLeaders().IdDeck(), false, false, false, false));
+            handler.handleClient(new InitializeGameBoard(false, gameModel.getGameBoard().getMarket(), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), gameModel.getPlayer(players.get(0)).getLeaders().idDeck(), false, false, false, false));
 
             handler.handleClient(new UpdateFaithPath(null, 0, true));
             handler.handleClient(new UpdateFaithPath(players.get(0), 0, false));
@@ -98,7 +99,7 @@ public class LocalSPController {
                     if(!nick.isEmpty()) {
                         handler.handleClient(new SendMessage("A Vatican report was activated. You will get the points of the Pope's Favor tile"));
                     }
-                    handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
+                    handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck()));
                     handler.handleClient(new SendMessage("Drawn action token: "));
                     handler.handleClient(new ActionTokenInfo(currentActionToken));
                     handler.handleClient(new UpdateFaithPath(null, gameModel.getPlayer(players.get(0)).getPlayerDashboard().getFaithPath().getPositionLorenzo(), true));
@@ -107,14 +108,14 @@ public class LocalSPController {
                 } catch (InvalidChoiceException e) {
                     e.printStackTrace();
                 }
-                isEnd = endgame.SinglePlayerIsEndGame(gameModel);
+                isEnd = endgame.singlePlayerIsEndGame(gameModel);
             }
         } catch(NotExistingPlayerException | InvalidChoiceException e){
             e.printStackTrace();
         }
 
         try {
-            if(endgame.SinglePlayerLose(gameModel)){
+            if(endgame.singlePlayerLose(gameModel)){
                 localLose();
             } else {
                 localWin();
@@ -151,12 +152,12 @@ public class LocalSPController {
         int card;
 
         handler.handleClient(new SendMessage("Please choose the first leader card to discard."));
-        handler.handleClient(new PassLeaderCard(gameModel.getPlayers().get(0).getLeaders().IdDeck()));
+        handler.handleClient(new PassLeaderCard(gameModel.getPlayers().get(0).getLeaders().idDeck()));
         card=getAnswer();
         gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().remove(card-1);
 
         handler.handleClient(new SendMessage("Please choose the second leader card to discard."));
-        handler.handleClient(new PassLeaderCard(gameModel.getPlayers().get(0).getLeaders().IdDeck()));
+        handler.handleClient(new PassLeaderCard(gameModel.getPlayers().get(0).getLeaders().idDeck()));
         card=getAnswer();
         gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().remove(card-1);
     }
@@ -242,8 +243,8 @@ public class LocalSPController {
 
         ToSeeFromGameBoard toSee = ToSeeFromGameBoard.fromInteger(answer);
 
-        switch (toSee){
-            case LEADER_CARDS: handler.handleClient(new SeeLeaderCards(gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+        switch (Objects.requireNonNull(toSee)){
+            case LEADER_CARDS: handler.handleClient(new SeeLeaderCards(gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                 finish=getAnswer();
                 if(finish==YES) localSeeGameBoard();
                 break;
@@ -254,9 +255,9 @@ public class LocalSPController {
             case DEVELOPMENT_CARD_GRID: handler.handleClient(new RequestInt("LINE","Please choose what you want to see from the Development Cards Grid"));
                 int choice=getAnswer();
                 if(choice==ALL_GRID) {
-                    handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
+                    handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck()));
                 } else {
-                    handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).IdDeck()));
+                    handler.handleClient(new SeeGrid(gameModel.getGameBoard().getDevelopmentCardGrid().getLine(choice).idDeck()));
                 }
                 finish=getAnswer();
                 if(finish==YES) localSeeGameBoard();
@@ -289,9 +290,9 @@ public class LocalSPController {
             handler.handleClient(new RequestInt("TURN","Choose what you want to do in this turn:"));
             answer=getAnswer();
             TurnType turnType = TurnType.fromInteger(answer);
-            switch (turnType) {
+            switch (Objects.requireNonNull(turnType)) {
                 case ACTIVE_LEADER:
-                    handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+                    handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                     pos=getAnswer();
                     if(pos==INVALID) break;
                     try{
@@ -303,7 +304,7 @@ public class LocalSPController {
                     break;
 
                 case DISCARD_LEADER:
-                    handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+                    handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                     pos=getAnswer();
                     if(pos==INVALID) break;
                     try{
@@ -331,7 +332,7 @@ public class LocalSPController {
                 case BUY_DEVELOPMENT:
                     ArrayList<Integer> card;
                     do {
-                        handler.handleClient(new RequestDoubleInt("DEVCARD", null, gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck(), gameModel.getPlayer(players.get(0)).getDevCardsForGUI()));
+                        handler.handleClient(new RequestDoubleInt("DEVCARD", null, gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck(), gameModel.getPlayer(players.get(0)).getDevCardsForGUI()));
                         card = getDoubleInt();
                     } while(gameModel.getGameBoard().getDevelopmentCardGrid().getCard(gameModel.getGameBoard().getDevelopmentCardGrid().parserColor(card.get(0)),card.get(1))==null);
                     handler.handleClient(new RequestInt("SPACE", "Choose the space where to insert the card"));
@@ -357,7 +358,7 @@ public class LocalSPController {
 
         while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) ) {
             if (answer == 1) {
-                handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+                handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                 pos=getAnswer();
                 if(pos==INVALID) break;
                 try{
@@ -366,7 +367,7 @@ public class LocalSPController {
                     handler.handleClient(new ErrorMessage("ACTIVE_LEADER"));
                     handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));                }
             } else {
-                handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().IdDeck()));
+                handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                 pos=getAnswer();
                 if(pos==INVALID) break;
                 try{
@@ -399,7 +400,7 @@ public class LocalSPController {
             ArrayList<Integer> choice=getDoubleInt();
 
             try {
-                gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage().InvertShelvesContent(choice.get(0),choice.get(1));
+                gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage().invertShelvesContent(choice.get(0),choice.get(1));
                 handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null,
                         gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().get(0),gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().get(1),gameModel.getPlayers().get(0).getNickname(), true));
             } catch (NotEnoughSpaceException e) {
@@ -426,11 +427,11 @@ public class LocalSPController {
         ArrayList<Ball> market = new ArrayList<>(gameModel.getGameBoard().getMarket().getChosenColor(line));
         ArrayList<Ball> balls = new ArrayList<>();
 
-        if (gameModel.getPlayer(players.get(player)).WhiteBallLeader() == 2) {
+        if (gameModel.getPlayer(players.get(player)).whiteBallLeader() == 2) {
             handler.handleClient(new RequestInt("WHITE","You have 2 active WhiteBall leaders, which one do you want to use in this turn? (1 or 2)"));
             int ball=getAnswer();
             resource = ((WhiteBallLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(ball - 1)).getConversionType();
-        } else if (gameModel.getPlayer(players.get(player)).WhiteBallLeader() == 1) {
+        } else if (gameModel.getPlayer(players.get(player)).whiteBallLeader() == 1) {
             if (gameModel.getPlayer(players.get(player)).getLeaders().get(0) instanceof WhiteBallLeader)
                 resource = ((WhiteBallLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(0)).getConversionType();
             else
@@ -479,9 +480,9 @@ public class LocalSPController {
                 try {
                     if(choice.get(1)==4) {
                         int card=gameModel.getPlayer(players.get(player)).indexOfStorageLeader(toPlace.get((choice.get(0)) - 1).getCorrespondingResource());
-                        ((StorageLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(card - 1)).AddResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                        ((StorageLeader) gameModel.getPlayer(players.get(player)).getLeaders().get(card - 1)).addResources(toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                     } else {
-                        gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().AddResource(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
+                        gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().addResources(choice.get(1), toPlace.get((choice.get(0)) - 1).getCorrespondingResource(), 1);
                         handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),null,
                                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().get(0), gameModel.getPlayer(players.get(0)).getPlayerDashboard().getLeaders().get(1)
                                 ,gameModel.getPlayers().get(0).getNickname(), true));
@@ -515,7 +516,7 @@ public class LocalSPController {
         for (Ball b : balls) {
             int i = gameModel.getPlayer(players.get(player)).getPlayerDashboard().getStorage().typePresent(b.getCorrespondingResource());
 
-            if (gameModel.getPlayer(players.get(player)).StorageLeader(b.getCorrespondingResource())) {
+            if (gameModel.getPlayer(players.get(player)).storageLeader(b.getCorrespondingResource())) {
                 toPlace.add(new Ball(b.getType()));
             } else {
                 if (i != 0) {
@@ -587,7 +588,7 @@ public class LocalSPController {
             gameModel.getGameBoard().getDevelopmentCardGrid().removeCard(cardColor,level);
 
             handler.handleClient(new CardsSpaceInfo(players.get(0), level, space, card.getCardID()));
-            handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().IdDeck()));
+            handler.handleClient(new GridInfo(gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck()));
         } catch(InvalidSpaceCardException e) {
             handler.handleClient(new SendMessage("INVALID"));
             notHasPerformedAnAction =true;
@@ -603,7 +604,7 @@ public class LocalSPController {
         //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
 
         ProductionType productionType = ProductionType.fromInteger(type);
-        switch (productionType) {
+        switch (Objects.requireNonNull(productionType)) {
             case BASIC:
                 handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
                 Resource input1 = parser(getAnswer());
@@ -614,7 +615,7 @@ public class LocalSPController {
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
                 try {
-                    gameModel.getPlayer(players.get(0)).ActiveProductionBase();
+                    gameModel.getPlayer(players.get(0)).activeProductionBase();
                     handler.handleClient(new BasicProductionInfo(input1, input2, output));
                 } catch (NotEnoughResourceException e) {
                     handler.handleClient(new ErrorMessage("ACTIVE_BASE_PRODUCTION"));
@@ -625,7 +626,7 @@ public class LocalSPController {
                 handler.handleClient(new RequestInt("DEVCARD","Insert the number of the space containing the development card"));
                 int space = getAnswer();
                 try {
-                    gameModel.getPlayer(players.get(0)).ActiveProductionDevCard(space);
+                    gameModel.getPlayer(players.get(0)).activeProductionDevCard(space);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
                     handler.handleClient(new ErrorMessage("ACTIVE_DEV_CARD"));
                 }
@@ -637,7 +638,7 @@ public class LocalSPController {
                 handler.handleClient(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
                 Resource outputProduction = parser(getAnswer());
                 try {
-                    gameModel.getPlayer(players.get(0)).ActiveProductionLeader(index, outputProduction);
+                    gameModel.getPlayer(players.get(0)).activeProductionLeader(index, outputProduction);
                 } catch (InvalidChoiceException | NotEnoughResourceException e) {
                     handler.handleClient(new ErrorMessage("ACTIVE_PROD_LEADER"));
                 }

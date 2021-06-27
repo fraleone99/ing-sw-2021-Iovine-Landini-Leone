@@ -58,7 +58,7 @@ public class Shelf {
      * to zero
      * @param newType new resource type of the shelf
      */
-    public void ChangeResourceType(Resource newType){
+    public void changeResourceType(Resource newType){
         resourceType = newType;
         resourceAmount = 0;
     }
@@ -75,7 +75,7 @@ public class Shelf {
      * This method add resources from the shelf for an amount equal to the parameter
      * @param amount amount of resources to add
      */
-    public void AddResource(int amount){
+    public void addResource(int amount){
         resourceAmount += amount;
     }
 

@@ -78,7 +78,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         client.setNickname(nickname);
 
         for(String nick : nicknames) {
-            namesToClient.get(nick).send(new SendMessage(Constants.ANSI_BLUE + nickname + " is back."+Constants.ANSI_RESET));
+            namesToClient.get(nick).send(new SendMessage(nickname + " is back."));
         }
 
         clientToNames.put(client, nickname);
@@ -108,7 +108,7 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         String nickname = clientToNames.get(clientHandler);
         removeConnection(clientHandler);
         for(String nick: nicknames){
-            namesToClient.get(nick).send(new SendMessage(Constants.ANSI_RED+"Player "+/*clientToNames.get(clientHandler)*/nickname+" left the game. Now there are "+playersNumber+" players in this Lobby."+Constants.ANSI_RESET));
+            namesToClient.get(nick).send(new SendMessage("Player "+nickname+" left the game. Now there are "+playersNumber+" players in this Lobby."));
         }
         //removeConnection(clientHandler);
     }

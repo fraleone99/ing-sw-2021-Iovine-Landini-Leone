@@ -16,7 +16,7 @@ public class GameTest {
     @Test
     public void getPlayer() throws NotExistingPlayerException {
         ArrayList<String> nickname=new ArrayList<>();
-        game=new Game(1, nickname);
+        game=new Game();
         Player player=new Player("TestPlayer");
         game.getPlayers().add(player);
         assertEquals(game.getPlayer("TestPlayer").getNickname(),"TestPlayer");
@@ -25,7 +25,7 @@ public class GameTest {
     @Test(expected = NotExistingPlayerException.class)
     public void getPlayer_NotExistingPlayer() throws NotExistingPlayerException {
         ArrayList<String> nickname=new ArrayList<>();
-        game=new Game(1, nickname);
+        game=new Game();
         Player player=new Player("TestPlayer");
         game.getPlayers().add(player);
         assertEquals(game.getPlayer("Nicola").getNickname(),"TestPlayer");
@@ -37,7 +37,7 @@ public class GameTest {
         String player1="player1";
         nickname.add(player1);
 
-        Game game = new Game(1,nickname);
+        Game game = new Game();
         game.createPlayer(player1);
 
         game.drawActionToken();
@@ -56,7 +56,7 @@ public class GameTest {
     @Test
     public void testCreatePlayer(){
         ArrayList<String> nickname=new ArrayList<>();
-        game=new Game(1, nickname);
+        game=new Game();
         String nick="nick";
 
         game.createPlayer(nick);

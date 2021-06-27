@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.InvalidChoiceException;
 import it.polimi.ingsw.exceptions.InvalidSpaceCardException;
 import it.polimi.ingsw.exceptions.NotEnoughResourceException;
-import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
@@ -25,7 +24,6 @@ public class Player {
     private final String nickname;
     private final PlayerDashboard playerDashboard;
     private int victoryPoints;
-    private boolean first=false;
     private final ArrayList <Production> activatedProduction = new ArrayList<>();
 
 
@@ -44,15 +42,6 @@ public class Player {
      */
     public LeaderCardDeck getLeaders(){
         return playerDashboard.getLeaders();
-    }
-
-
-    /**
-     * Sets the variable first to parameter first
-     * @param first is the value to be assigned to the variable first
-     */
-    public void setFirst(boolean first) {
-        this.first = first;
     }
 
 
@@ -105,7 +94,7 @@ public class Player {
      * @param pos is the position of the leader card that we want to activate
      * @throws InvalidChoiceException if the card cannot be activated
      */
-    public void ActiveLeader(int pos) throws InvalidChoiceException{
+    public void activeLeader(int pos) throws InvalidChoiceException{
         if(playerDashboard.getLeaders().size()>=pos && pos>=0 && !playerDashboard.getLeaders().get(pos-1).getIsDiscarded()) {
             if (playerDashboard.getLeaders().get(pos-1) instanceof StorageLeader) {
                 if (playerDashboard.getLeaders().get(pos-1).checkRequirements(playerDashboard)) {
@@ -128,7 +117,7 @@ public class Player {
      * @param pos is the position of the leader card that we want to discard
      * @throws InvalidChoiceException if the card cannot be discarded
      */
-    public void DiscardLeader(int pos) throws InvalidChoiceException {
+    public void discardLeader(int pos) throws InvalidChoiceException {
         //playerDashboard.getLeaders().DrawFromPosition(pos);
         if(playerDashboard.getLeaders().size()>=pos-1 && pos-1>=0 && !playerDashboard.getLeaders().get(pos-1).getIsActive() && !playerDashboard.getLeaders().get(pos-1).getIsDiscarded()) {
             playerDashboard.getLeaders().get(pos-1).setIsDiscarded();
@@ -218,7 +207,7 @@ public class Player {
      * @throws InvalidChoiceException if the choice is not valid
      * @throws NotEnoughResourceException if we can't do the production
      */
-    public void ActiveProductionLeader(int pos, Resource output) throws InvalidChoiceException, NotEnoughResourceException {
+    public void activeProductionLeader(int pos, Resource output) throws InvalidChoiceException, NotEnoughResourceException {
         if(playerDashboard.getLeaders().get(pos- 1) instanceof ProductionLeader && playerDashboard.getLeaders().get(pos-1).getIsActive()){
             if(playerDashboard.CheckResource(((ProductionLeader) playerDashboard.getLeaders().get(pos- 1)).getInputProduction())) {
                 ((ProductionLeader) playerDashboard.getLeaders().get(pos-1)).setOutputProduction(output);
@@ -235,7 +224,7 @@ public class Player {
      * Manages the activation of a base production
      * @throws NotEnoughResourceException if we can't do the production
      */
-    public void ActiveProductionBase() throws NotEnoughResourceException {
+    public void activeProductionBase() throws NotEnoughResourceException {
         if(playerDashboard.CheckResource(playerDashboard.getDevCardsSpace().getBasicProduction().getInputProduction()))
             activatedProduction.add(playerDashboard.getDevCardsSpace().getBasicProduction());
         else throw new NotEnoughResourceException();
@@ -248,7 +237,7 @@ public class Player {
      * @throws InvalidChoiceException if the choice is not valid
      * @throws NotEnoughResourceException if we can't do the production
      */
-    public void ActiveProductionDevCard(int space) throws InvalidChoiceException, NotEnoughResourceException {
+    public void activeProductionDevCard(int space) throws InvalidChoiceException, NotEnoughResourceException {
         if(playerDashboard.CheckResource(playerDashboard.getDevCardsSpace().getCard(space).getInputProduction()))
             activatedProduction.add(playerDashboard.getDevCardsSpace().getCard(space).getProduction());
         else throw new NotEnoughResourceException();
@@ -286,7 +275,7 @@ public class Player {
      * Counts how many active White Ball Leader Cards the player has
      * @return the number of active White Ball Leader cards
      */
-    public int WhiteBallLeader () {
+    public int whiteBallLeader() {
         int cards=0;
 
         for(LeaderCard card:getLeaders().getDeck()){
@@ -326,7 +315,7 @@ public class Player {
      * @param resource is the resource we want to place
      * @return true if there is a leader card who can hold this resource, false otherwise
      */
-    public boolean StorageLeader(Resource resource) {
+    public boolean storageLeader(Resource resource) {
         for(LeaderCard card:getLeaders().getDeck()) {
             if((card instanceof StorageLeader) && card.getIsActive() &&  ((StorageLeader) card).getType()==resource && ((StorageLeader) card).getAmount()<2) {
                 return true;
