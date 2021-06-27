@@ -16,7 +16,7 @@ public class InitialResourcesController {
     @FXML private ImageView servant;
     @FXML private ImageView shield;
     @FXML private Label message;
-    GUI gui;
+    private GUI gui;
 
     public void setGui(GUI gui) {
         this.gui = gui;

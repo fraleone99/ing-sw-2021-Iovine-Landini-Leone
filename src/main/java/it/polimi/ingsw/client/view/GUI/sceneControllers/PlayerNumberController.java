@@ -16,8 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 public class PlayerNumberController {
-    @FXML public ChoiceBox numberChoice;
-    @FXML public Button okButton;
+    @FXML private ChoiceBox numberChoice;
+    @FXML private Button okButton;
     private GUI gui;
 
     public void setGui(GUI gui) {

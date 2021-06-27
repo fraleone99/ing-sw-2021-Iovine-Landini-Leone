@@ -33,68 +33,63 @@ import java.util.Map;
  * @author Francesco Leone
  */
 public class MarketSceneController {
-    @FXML public GridPane marketGrid;
-    @FXML public ImageView ramp;
-    @FXML public Button back_button;
-    public ImageView resource_firstShelf;
-    public ImageView first_resource_secondShelf;
-    public ImageView second_resource_secondShelf;
-    public ImageView first_resource_thirdShelf;
-    public ImageView second_resource_thirdShelf;
-    public ImageView third_resource_thirdShelf;
-    public Button yes_reorganizeStorage;
-    public Button no_reorganizeStorage;
-    public CheckBox manage_firstShelf;
-    public CheckBox manage_secondShelf;
-    public CheckBox manage_thirdShelf;
-    public Label error_label;
-    public Button ok_manageStorage;
-    public Label invertShelf_label;
-    public Group manageStorage_group;
-    public Group reorganizeQuestion_group;
-    @FXML public Group chosenBall_group;
-    public Pane firstShelf_pane;
-    public Pane secondShelf_pane;
-    public Pane thirdShelf_pane;
-    public Group shelves_group;
-    public Label selectShelf_label;
-    public Group buttonMarket_group;
-    public ImageView chosenBall_1;
-    public ImageView chosenBall_2;
-    public ImageView chosenBall_3;
-    public ImageView chosenBall_4;
-    public Button storageLeader_button;
-    public ImageView storageLeader_1;
-    public ImageView storageLeader_2;
-    public Group leader_group;
-    public Label white_label;
-    @FXML ImageView im00;
-    @FXML ImageView im01;
-    @FXML ImageView im02;
-    @FXML ImageView im10;
-    @FXML ImageView im11;
-    @FXML ImageView im12;
-    @FXML ImageView im20;
-    @FXML ImageView im21;
-    @FXML ImageView im22;
-    @FXML ImageView im30;
-    @FXML ImageView im31;
-    @FXML ImageView im32;
+    @FXML private ImageView ramp;
+    @FXML private  Button back_button;
+    @FXML private  ImageView resource_firstShelf;
+    @FXML private  ImageView first_resource_secondShelf;
+    @FXML private  ImageView second_resource_secondShelf;
+    @FXML private  ImageView first_resource_thirdShelf;
+    @FXML private  ImageView second_resource_thirdShelf;
+    @FXML private  ImageView third_resource_thirdShelf;
+    @FXML private  Button yes_reorganizeStorage;
+    @FXML private  Button no_reorganizeStorage;
+    @FXML private  CheckBox manage_firstShelf;
+    @FXML private  CheckBox manage_secondShelf;
+    @FXML private  CheckBox manage_thirdShelf;
+    @FXML private  Label error_label;
+    @FXML private  Button ok_manageStorage;
+    @FXML private  Group manageStorage_group;
+    @FXML private  Group reorganizeQuestion_group;
+    @FXML private  Group chosenBall_group;
+    @FXML private  Group shelves_group;
+    @FXML private  Label selectShelf_label;
+    @FXML private  Group buttonMarket_group;
+    @FXML private  ImageView chosenBall_1;
+    @FXML private  ImageView chosenBall_2;
+    @FXML private  ImageView chosenBall_3;
+    @FXML private  ImageView chosenBall_4;
+    @FXML private  Button storageLeader_button;
+    @FXML private  ImageView storageLeader_1;
+    @FXML private  ImageView storageLeader_2;
+    @FXML private  Group leader_group;
+    @FXML private  Label white_label;
+    @FXML private ImageView im00;
+    @FXML private ImageView im01;
+    @FXML private ImageView im02;
+    @FXML private ImageView im10;
+    @FXML private ImageView im11;
+    @FXML private ImageView im12;
+    @FXML private ImageView im20;
+    @FXML private ImageView im21;
+    @FXML private ImageView im22;
+    @FXML private ImageView im30;
+    @FXML private ImageView im31;
+    @FXML private ImageView im32;
 
-    @FXML Group choiceShelf_group;
+    @FXML private Group choiceShelf_group;
 
     ImageView[][] imageViewMatrix = new ImageView[3][4];
 
 
     private GUI gui;
-    private Map<BallColor, String> ballColorPathMap = new HashMap<>();
-    private Map<Resource, String> resourceToPathMap = new HashMap<>();
+    private final Map<BallColor, String> ballColorPathMap = new HashMap<>();
+    private final Map<Resource, String> resourceToPathMap = new HashMap<>();
 
 
     /**
      * Method setGui set the GUI for this scene and initialize the map of the resources and the matrix for the market
      *
-     * @param gui
+     * @param gui is the gui to set 
      */
     public void setGui(GUI gui) {
         this.gui = gui;

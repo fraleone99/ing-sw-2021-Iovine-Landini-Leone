@@ -20,18 +20,17 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CLI implements View {
-    private final CLIInitialize initialize;
     private final CLILogin login;
     private final CLIGameBoard gameBoard;
     private final CLITurn turn;
     private final CLIPrint print;
 
 
-    private AtomicBoolean isMyTurn = new AtomicBoolean(false);
+    private final AtomicBoolean isMyTurn = new AtomicBoolean(false);
 
 
     public CLI() {
-        initialize = new CLIInitialize();
+        CLIInitialize initialize = new CLIInitialize();
         print = new CLIPrint(initialize);
         login = new CLILogin(initialize);
         gameBoard = new CLIGameBoard(initialize, print);
@@ -357,11 +356,4 @@ public class CLI implements View {
         System.out.println(Constants.LOSE + "\n" + Constants.ANSI_WHITE + message + Constants.ANSI_RESET + "\n" + Constants.THANKS_FOR_PLAYING);
     }
 
-    public CLIInitialize getInitialize() {
-        return initialize;
-    }
-
-    public CLIPrint getPrint() {
-        return print;
-    }
 }

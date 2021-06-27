@@ -5,18 +5,6 @@ public enum EndTurnType {
     DISCARD_LEADER,
     END_TURN;
 
-    public static EndTurnType fromInteger(int x) {
-        switch(x) {
-            case 1:
-                return ACTIVE_LEADER;
-            case 2:
-                return DISCARD_LEADER;
-            case 3:
-                return END_TURN;
-        }
-        return null;
-    }
-
     public static int toInteger(EndTurnType endTurnType){
         switch (endTurnType){
             case ACTIVE_LEADER:

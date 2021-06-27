@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
+import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.finalanswer.Lose;
 import it.polimi.ingsw.server.answer.finalanswer.Win;
@@ -567,19 +568,8 @@ public class LocalSPController {
      * @throws NotExistingPlayerException if the player doesn't exist
      */
     public void localBuyCard(int color, int level, int space) throws InvalidChoiceException, NotExistingPlayerException {
-        CardColor cardColor;
 
-        switch (color) {
-            case 1 : cardColor=CardColor.PURPLE;
-                break;
-            case 2 : cardColor=CardColor.YELLOW;
-                break;
-            case 3 : cardColor=CardColor.BLUE;
-                break;
-            case 4 : cardColor=CardColor.GREEN;
-                break;
-            default: cardColor=null;
-        }
+        CardColor cardColor = gameModel.getGameBoard().getDevelopmentCardGrid().parserColor(color);
 
         DevelopmentCard card=gameModel.getGameBoard().getDevelopmentCardGrid().getCard(cardColor,level);
 

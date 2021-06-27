@@ -33,16 +33,8 @@ public class GUI extends Application implements View {
     private Stage stage;
     private Stage secondaryStage;
 
-    private Scene currentScene;
-    private Scene MenuScene;
-    private Scene SetupScene;
-    private Scene NicknameScene;
-    private Scene ChooseNumberScene;
     private Scene LoadingScene;
-    private Scene GameScene;
-    private Scene MarketScene;
     private Scene LocalGameScene;
-    private Scene GridScene;
 
     private MainMenuController mainMenuController;
     private SetupController setupController;
@@ -62,14 +54,11 @@ public class GUI extends Application implements View {
     public static final String LOADING = "Loading";
     public static final String GAME = "Game";
     public static final String MARKET = "Market";
-    public static final String SINGLE_PLAYER = "SinglePlayer";
-    public static final String LOCAL_SP = "setupLocalSP";
-    public static final String WELCOME = "Welcome";
     public static final String GRID = "Grid";
     public final static String LOCAL_GAME = "LocalGame";
 
 
-    Handler handler;
+    private Handler handler;
 
     private final Object lock = new Object();
     private boolean notReady = true;
@@ -78,10 +67,9 @@ public class GUI extends Application implements View {
     private int portNumber;
     private String nickname;
 
-    private boolean isMyTurn = false;
-    StorageInfo lastStorage;
+    private StorageInfo lastStorage;
     private boolean isSinglePlayer=false;
-    ArrayList<Integer> leaderCards = new ArrayList<>();
+    private final ArrayList<Integer> leaderCards = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -91,23 +79,23 @@ public class GUI extends Application implements View {
     @Override
     public void init() throws Exception {
         FXMLLoader menu = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-        MenuScene = new Scene(menu.load());
+        Scene menuScene = new Scene(menu.load());
         mainMenuController = menu.getController();
         mainMenuController.setGui(this);
 
         FXMLLoader setup = new FXMLLoader(getClass().getResource("/fxml/setup.fxml"));
-        SetupScene = new Scene(setup.load());
+        Scene setupScene = new Scene(setup.load());
         setupController = setup.getController();
         setupController.setGui(this);
 
         FXMLLoader nickname = new FXMLLoader(getClass().getResource(("/fxml/Nickname.fxml")));
-        NicknameScene = new Scene(nickname.load());
+        Scene nicknameScene = new Scene(nickname.load());
         nicknameController = nickname.getController();
         nicknameController.setGui(this);
 
 
         FXMLLoader number = new FXMLLoader(getClass().getResource("/fxml/PlayerNumber.fxml"));
-        ChooseNumberScene = new Scene(number.load());
+        Scene chooseNumberScene = new Scene(number.load());
         playerNumberController = number.getController();
         playerNumberController.setGui(this);
 
@@ -115,30 +103,30 @@ public class GUI extends Application implements View {
         LoadingScene = new Scene(loading.load());
 
         FXMLLoader game = new FXMLLoader(getClass().getResource("/fxml/GameScene.fxml"));
-        GameScene = new Scene(game.load());
+        Scene gameScene = new Scene(game.load());
         gameSceneController = game.getController();
         gameSceneController.setGui(this);
-        GameScene.getStylesheets().add(GUI.class.getResource("/bootstrap3.css").toExternalForm());
+        gameScene.getStylesheets().add(Objects.requireNonNull(GUI.class.getResource("/bootstrap3.css")).toExternalForm());
 
 
         FXMLLoader market = new FXMLLoader(getClass().getResource("/fxml/Market.fxml"));
-        MarketScene = new Scene(market.load());
+        Scene marketScene = new Scene(market.load());
         marketSceneController = market.getController();
         marketSceneController.setGui(this);
 
         FXMLLoader grid = new FXMLLoader(getClass().getResource("/fxml/DevelopmentCardsGrid.fxml"));
-        GridScene = new Scene(grid.load());
+        Scene gridScene = new Scene(grid.load());
         developmentCardsGridController = grid.getController();
         developmentCardsGridController.setGui(this);
 
-        sceneMap.put(MENU, MenuScene);
-        sceneMap.put(SETUP, SetupScene);
-        sceneMap.put(NICKNAME, NicknameScene);
-        sceneMap.put(NUMBER, ChooseNumberScene);
+        sceneMap.put(MENU, menuScene);
+        sceneMap.put(SETUP, setupScene);
+        sceneMap.put(NICKNAME, nicknameScene);
+        sceneMap.put(NUMBER, chooseNumberScene);
         sceneMap.put(LOADING, LoadingScene);
-        sceneMap.put(GAME, GameScene);
-        sceneMap.put(MARKET, MarketScene);
-        sceneMap.put(GRID, GridScene);
+        sceneMap.put(GAME, gameScene);
+        sceneMap.put(MARKET, marketScene);
+        sceneMap.put(GRID, gridScene);
     }
 
     @Override
@@ -152,7 +140,7 @@ public class GUI extends Application implements View {
         stage.setWidth(1440);
         stage.setFullScreen(true);
         stage.setMaximized(true);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/inkwell.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/graphics/inkwell.png"))));
         stage.show();
 
         secondaryStage = new Stage();
@@ -170,7 +158,7 @@ public class GUI extends Application implements View {
     }
 
     public void changeStage(String scene){
-        currentScene = sceneMap.get(scene);
+        Scene currentScene = sceneMap.get(scene);
         stage.setScene(currentScene);
         stage.show();
     }
@@ -520,7 +508,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void printStorage(StorageInfo storageInfo) {
-        //System.out.println("storage  of" + storageInfo.getNickname() + " I am" + nickname);
         Platform.runLater(()-> {
             gameSceneController.updateStorage(storageInfo);
         if(storageInfo.getNickname().equals(nickname)) {
@@ -532,8 +519,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
-        //System.out.println("storage  of" + storageInfo.getNickname() + " I am" + nickname);
-
         Platform.runLater(()-> {
             gameSceneController.updateStorage(storageInfo);
             if(storageInfo.getNickname().equals(nickname)) {
@@ -720,7 +705,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void waitForYourTurn() {
-        //gameSceneController.notMyTurn();
     }
 
     public void initializeGameBoard(InitializeGameBoard message) {

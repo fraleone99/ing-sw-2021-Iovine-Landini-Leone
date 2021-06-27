@@ -15,9 +15,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Francesco Leone
  */
 public class NicknameController {
-    @FXML public TextField nicknameBox;
-    @ FXML public Button okButton;
-    public Label invalidNick_label;
+    @FXML private TextField nicknameBox;
+    @FXML private Button okButton;
+    @FXML private Label invalidNick_label;
 
     private GUI gui;
 

@@ -14,11 +14,11 @@ import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CLIInitialize {
@@ -45,18 +45,22 @@ public class CLIInitialize {
 
     private void initializeDevelopmentCard() throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader jsonReader= new JsonReader(new InputStreamReader(DevelopmentCard.class.getResourceAsStream("/JSON/DevelopmentCards.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReader= new JsonReader(new InputStreamReader(Objects.requireNonNull(DevelopmentCard.class.getResourceAsStream("/JSON/DevelopmentCards.json")), StandardCharsets.UTF_8));
         ArrayList<DevelopmentCard> data = gson.fromJson(jsonReader, new TypeToken<ArrayList<DevelopmentCard>>(){}.getType());
 
         developmentCardDeck.setDeck(data);
     }
 
     private void initializeLeaderCard() throws FileNotFoundException {
+        jsonReader(LeaderDeck);
+    }
+
+    public static void jsonReader(LeaderCardDeck leaderDeck) {
         Gson gson = new Gson();
-        JsonReader jsonReaderEcon = new JsonReader(new InputStreamReader(EconomyLeader.class.getResourceAsStream("/JSON/EconomyLeaders.json"), StandardCharsets.UTF_8));
-        JsonReader jsonReaderProd = new JsonReader(new InputStreamReader(ProductionLeader.class.getResourceAsStream("/JSON/ProductionLeaders.json"), StandardCharsets.UTF_8));
-        JsonReader jsonReaderStorage = new JsonReader(new InputStreamReader(StorageLeader.class.getResourceAsStream("/JSON/StorageLeaders.json"), StandardCharsets.UTF_8));
-        JsonReader jsonReaderWhite = new JsonReader(new InputStreamReader(WhiteBallLeader.class.getResourceAsStream("/JSON/WhiteBallLeaders.json"), StandardCharsets.UTF_8));
+        JsonReader jsonReaderEcon = new JsonReader(new InputStreamReader(Objects.requireNonNull(EconomyLeader.class.getResourceAsStream("/JSON/EconomyLeaders.json")), StandardCharsets.UTF_8));
+        JsonReader jsonReaderProd = new JsonReader(new InputStreamReader(Objects.requireNonNull(ProductionLeader.class.getResourceAsStream("/JSON/ProductionLeaders.json")), StandardCharsets.UTF_8));
+        JsonReader jsonReaderStorage = new JsonReader(new InputStreamReader(Objects.requireNonNull(StorageLeader.class.getResourceAsStream("/JSON/StorageLeaders.json")), StandardCharsets.UTF_8));
+        JsonReader jsonReaderWhite = new JsonReader(new InputStreamReader(Objects.requireNonNull(WhiteBallLeader.class.getResourceAsStream("/JSON/WhiteBallLeaders.json")), StandardCharsets.UTF_8));
 
         ArrayList<EconomyLeader> leadersEcon ;
         ArrayList<ProductionLeader> leadersProd;
@@ -70,13 +74,13 @@ public class CLIInitialize {
         leadersWhite = gson.fromJson(jsonReaderWhite, new TypeToken<ArrayList<WhiteBallLeader>>(){}.getType());
 
         for(EconomyLeader e: leadersEcon)
-            LeaderDeck.add(e);
+            leaderDeck.add(e);
         for(ProductionLeader p: leadersProd)
-            LeaderDeck.add(p);
+            leaderDeck.add(p);
         for(StorageLeader s: leadersStorage)
-            LeaderDeck.add(s);
+            leaderDeck.add(s);
         for(WhiteBallLeader w: leadersWhite)
-            LeaderDeck.add(w);
+            leaderDeck.add(w);
     }
 
     private void initializeResourceToString() {
