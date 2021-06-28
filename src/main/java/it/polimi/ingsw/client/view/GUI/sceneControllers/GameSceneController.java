@@ -236,6 +236,7 @@ public class GameSceneController {
 
     public void setNicknameLabel(String nickname){
         usernameLabel.setText(nickname);
+        usernameLabel.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     /**
@@ -882,6 +883,8 @@ public class GameSceneController {
             for(int i=0; i<25; i++) {
                 currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
             }
+            usernameLabel.setText(playersInfo.getNicknames().get(0));
+            usernameLabel.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
         }
         else if(playersNumber == 2){
             player2Board.setOpacity(0.4);
@@ -889,6 +892,8 @@ public class GameSceneController {
             player3Board.setOpacity(0.4);
             player3_vault.setOpacity(0.4);
             username_1.setText(othersPlayersNick.get(0));
+            username_1.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
+
             username_2.setText("");
             username_3.setText("");
             player1_leader1.setImage(new Image("/graphics/65.png"));
@@ -907,6 +912,9 @@ public class GameSceneController {
             player3_vault.setOpacity(0.4);
             username_1.setText(othersPlayersNick.get(0));
             username_2.setText(othersPlayersNick.get(1));
+            username_1.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
+            username_2.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
+
             username_3.setText("");
             player1_leader1.setImage(new Image("/graphics/65.png"));
             player1_leader2.setImage(new Image("/graphics/65.png"));
@@ -929,6 +937,10 @@ public class GameSceneController {
             username_1.setText(othersPlayersNick.get(0));
             username_2.setText(othersPlayersNick.get(1));
             username_3.setText(othersPlayersNick.get(2));
+            username_1.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
+            username_2.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
+            username_3.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
+
             player1_leader1.setImage(new Image("/graphics/65.png"));
             player1_leader2.setImage(new Image("/graphics/65.png"));
             player2_leader1.setImage(new Image("/graphics/65.png"));

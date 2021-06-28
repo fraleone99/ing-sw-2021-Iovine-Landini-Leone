@@ -3,20 +3,27 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.SetupController">
-   <TextField fx:id="ipBox" layoutX="791.0" layoutY="347.0" prefHeight="26.0" prefWidth="150.0" />
-   <TextField fx:id="portBox" layoutX="791.0" layoutY="405.0" />
-   <Label layoutX="696.0" layoutY="347.0" prefHeight="31.0" prefWidth="94.0" text="Server IP:">
+   <ImageView fitHeight="505.0" fitWidth="509.0" layoutX="492.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../graphics/background.png" />
+      </image>
+   </ImageView>
+   <TextField fx:id="ipBox" layoutX="720.0" layoutY="372.0" prefHeight="26.0" prefWidth="150.0" />
+   <TextField fx:id="portBox" layoutX="720.0" layoutY="425.0" />
+   <Label layoutX="593.0" layoutY="372.0" prefHeight="31.0" prefWidth="94.0" text="Server IP:">
       <font>
          <Font name="System Bold" size="17.0" />
       </font></Label>
-   <Label layoutX="697.0" layoutY="404.0" prefHeight="31.0" prefWidth="45.0" text="Port:">
+   <Label layoutX="611.0" layoutY="424.0" prefHeight="31.0" prefWidth="45.0" text="Port:">
       <font>
          <Font name="System Bold" size="17.0" />
       </font></Label>
-   <Button fx:id="playButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="826.0" layoutY="506.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="81.0" text="Play" />
+   <Button fx:id="playButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="704.0" layoutY="508.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="81.0" text="Play" />
    <Label fx:id="invalidLabel" layoutX="699.0" layoutY="441.0" opacity="0.0" text="Please enter valid ip and port!" />
 </AnchorPane>
