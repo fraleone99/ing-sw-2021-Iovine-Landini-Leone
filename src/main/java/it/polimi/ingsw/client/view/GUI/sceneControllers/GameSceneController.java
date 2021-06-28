@@ -27,9 +27,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
-import javax.management.Notification;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +52,6 @@ public class GameSceneController {
     @FXML private ToggleGroup TurnType_group;
     @FXML private RadioButton turn_discardLeader;
     @FXML private ImageView player2Board;
-    @FXML private ImageView player1Board;
     @FXML private ImageView player3Board;
     @FXML private Label username_1;
     @FXML private Label username_2;
@@ -169,7 +166,6 @@ public class GameSceneController {
 
     private final ArrayList<String> othersPlayersNick = new ArrayList<>();
     private final HashMap<String, Integer> nicknameToPosition = new HashMap<>();
-    private final HashMap<Integer, String> positionToNickname = new HashMap<>();
 
     private final HashMap<Integer, ImageView> currentFaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
@@ -895,13 +891,14 @@ public class GameSceneController {
             username_1.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
 
             username_2.setText("");
+            username_2.setOpacity(0);
+
             username_3.setText("");
+            username_3.setOpacity(0);
             player1_leader1.setImage(new Image("/graphics/65.png"));
             player1_leader2.setImage(new Image("/graphics/65.png"));
 
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
-            positionToNickname.put(1, othersPlayersNick.get(0));
-
             for(int i=0; i<25; i++) {
                 currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
                 player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
@@ -916,6 +913,7 @@ public class GameSceneController {
             username_2.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
 
             username_3.setText("");
+            username_3.setOpacity(0);
             player1_leader1.setImage(new Image("/graphics/65.png"));
             player1_leader2.setImage(new Image("/graphics/65.png"));
             player2_leader1.setImage(new Image("/graphics/65.png"));
@@ -923,8 +921,6 @@ public class GameSceneController {
 
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
             nicknameToPosition.put(othersPlayersNick.get(1) , 2);
-            positionToNickname.put(1, othersPlayersNick.get(0));
-            positionToNickname.put(2, othersPlayersNick.get(1));
 
             for(int i=0; i<25; i++) {
                 currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
@@ -952,9 +948,6 @@ public class GameSceneController {
             nicknameToPosition.put(othersPlayersNick.get(1) , 2);
             nicknameToPosition.put(othersPlayersNick.get(2) , 3);
 
-            positionToNickname.put(1, othersPlayersNick.get(0));
-            positionToNickname.put(2, othersPlayersNick.get(1));
-            positionToNickname.put(3, othersPlayersNick.get(2));
 
             for(int i=0; i<25; i++) {
                 currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));

@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Handler;
 import it.polimi.ingsw.client.message.SendInt;
-import it.polimi.ingsw.client.message.SendString;
 import it.polimi.ingsw.client.view.GUI.sceneControllers.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;

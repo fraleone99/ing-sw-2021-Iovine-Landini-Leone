@@ -27,7 +27,7 @@
          <ImageView fx:id="player2_3_2" fitHeight="18.0" fitWidth="14.0" layoutX="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
          <ImageView fx:id="player2_3_3" fitHeight="18.0" fitWidth="14.0" layoutX="28.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
       </Group>
-      <Label fx:id="username_2" layoutY="264.0" prefHeight="27.0" prefWidth="150.0" text="Label">
+      <Label fx:id="username_2" layoutY="264.0" prefHeight="27.0" prefWidth="150.0" text="Label" styleClass="tooltip, info">
          <font>
             <Font size="18.0" />
          </font>
@@ -125,7 +125,7 @@
          <ImageView fx:id="player1_3_2" fitHeight="18.0" fitWidth="14.0" layoutX="15.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
          <ImageView fx:id="player1_3_3" fitHeight="18.0" fitWidth="14.0" layoutX="29.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
       </Group>
-      <Label fx:id="username_1" layoutX="4.0" layoutY="265.0" prefHeight="27.0" prefWidth="150.0" text="Label">
+      <Label fx:id="username_1" layoutX="4.0" layoutY="265.0" prefHeight="27.0" prefWidth="150.0" text="Label" styleClass="tooltip, info">
          <font>
             <Font size="18.0" />
          </font>
@@ -223,7 +223,7 @@
          <ImageView fx:id="player3_3_2" fitHeight="18.0" fitWidth="14.0" layoutX="14.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
          <ImageView fx:id="player3_3_3" fitHeight="18.0" fitWidth="14.0" layoutX="28.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
       </Group>
-      <Label fx:id="username_3" layoutX="4.0" layoutY="264.0" prefHeight="27.0" prefWidth="150.0" text="Label">
+      <Label fx:id="username_3" layoutX="4.0" layoutY="264.0" prefHeight="27.0" prefWidth="150.0" text="Label" styleClass="tooltip, info">
          <font>
             <Font size="18.0" />
          </font>
@@ -356,7 +356,7 @@
          <ImageView fitHeight="36.0" fitWidth="38.0" layoutX="309.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
       </Group>
    </Group>
-   <Label fx:id="usernameLabel" layoutX="875.0" layoutY="376.0" prefHeight="34.0" prefWidth="152.0" text="USERNAME">
+   <Label fx:id="usernameLabel" layoutX="875.0" layoutY="376.0" prefHeight="34.0" prefWidth="152.0" text="USERNAME" styleClass="tooltip, info">
       <font>
          <Font size="22.0" />
       </font></Label>
