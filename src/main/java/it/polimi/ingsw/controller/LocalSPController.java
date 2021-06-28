@@ -15,7 +15,6 @@ import it.polimi.ingsw.model.enumeration.BallColor;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.Ball;
-import it.polimi.ingsw.model.gameboard.DevelopmentCardGrid;
 import it.polimi.ingsw.model.singleplayer.ActionToken;
 import it.polimi.ingsw.server.answer.finalanswer.Lose;
 import it.polimi.ingsw.server.answer.finalanswer.Win;
@@ -287,7 +286,7 @@ public class LocalSPController {
         int type;
 
         do{
-            if(notHasPerformedAnAction =true) notHasPerformedAnAction =false;
+            notHasPerformedAnAction =false;
             handler.handleClient(new RequestInt("TURN","Choose what you want to do in this turn:"));
             answer=getAnswer();
             TurnType turnType = TurnType.fromInteger(answer);
@@ -350,6 +349,12 @@ public class LocalSPController {
                     break;
 
             }
+
+            handler.handleClient(new StorageInfo(gameModel.getPlayer(players.get(0)).getPlayerDashboard().getStorage(),
+                    gameModel.getPlayer(players.get(0)).getPlayerDashboard().getVault(),
+                    gameModel.getPlayer(players.get(0)).getLeaders().get(0), gameModel.getPlayer(players.get(0)).getLeaders().get(1),
+                    players.get(0), false));
+
         } while (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) || notHasPerformedAnAction);
 
         notHasPerformedAnAction =false;
@@ -358,7 +363,7 @@ public class LocalSPController {
         answer=getAnswer();
 
         while(answer == TurnType.toInteger(TurnType.ACTIVE_LEADER) || answer == TurnType.toInteger(TurnType.DISCARD_LEADER) ) {
-            if (answer == 1) {
+            if (answer == TurnType.toInteger(TurnType.ACTIVE_LEADER)) {
                 handler.handleClient(new ActiveLeader("Which leader do you want to activate?", gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                 pos=getAnswer();
                 if(pos==INVALID) break;
@@ -367,7 +372,7 @@ public class LocalSPController {
                 } catch (InvalidChoiceException e) {
                     handler.handleClient(new ErrorMessage("ACTIVE_LEADER"));
                     handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));                }
-            } else {
+            } else if (answer == TurnType.toInteger(TurnType.DISCARD_LEADER)){
                 handler.handleClient(new DiscardLeader("Which leader do you want to discard?", gameModel.getPlayer(players.get(0)).getLeaders().idDeck()));
                 pos=getAnswer();
                 if(pos==INVALID) break;
@@ -381,7 +386,6 @@ public class LocalSPController {
                 } catch (InvalidChoiceException e) {
                     handler.handleClient(new ErrorMessage("DISCARD_LEADER"));
                     handler.handleClient(new ResetCard(gameModel.getPlayer(players.get(0)).getLeaders().get(pos - 1).getCardID()));
-                    localChooseTurn();
                 }
             }
             handler.handleClient(new RequestInt("END","What do you want to do?\n1) Active Leader\n2) Discard Leader\n3) End turn"));
@@ -596,11 +600,11 @@ public class LocalSPController {
         ProductionType productionType = ProductionType.fromInteger(type);
         switch (Objects.requireNonNull(productionType)) {
             case BASIC:
-                handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+                handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT"));
                 Resource input1 = parser(getAnswer());
-                handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+                handler.handleClient(new RequestInt("INPUT","Choose the input:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT"));
                 Resource input2 = parser(getAnswer());
-                handler.handleClient(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) SERVANT\n3) SHIELD\n4) STONE"));
+                handler.handleClient(new RequestInt("OUTPUT","Choose the output:\n1) COIN\n2) STONE\n3) SHIELD\n4) SERVANT"));
                 Resource output = parser(getAnswer());
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setInputBasicProduction(input1, input2);
                 gameModel.getPlayer(players.get(0)).getPlayerDashboard().getDevCardsSpace().setOutputBasicProduction(output);
@@ -663,9 +667,9 @@ public class LocalSPController {
     public Resource parser(int answer){
         switch(answer) {
             case 1 : return Resource.COIN;
-            case 2 : return Resource.SERVANT;
+            case 2 : return Resource.STONE;
             case 3 : return Resource.SHIELD;
-            case 4 : return Resource.STONE;
+            case 4 : return Resource.SERVANT;
             default : return null;
         }
     }

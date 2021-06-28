@@ -442,6 +442,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a RequestInt message asking to select the desired production type
+     * @param nickname recipient of the message
+     * @return player's choice
+     */
     public int askType(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
         notifyTurnChoice(nickname, " is activating a production");
@@ -452,6 +457,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a RequestInt message asking to select the input resource for production
+     * @param nickname recipient of the message
+     * @return player's choice
+     */
     public Resource askInput(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
@@ -469,6 +479,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a RequestInt message asking to select the output resource for production
+     * @param nickname recipient of the message
+     * @return player's choice
+     */
     public Resource askOutput(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -486,6 +501,13 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a BasicProductionInfo message
+     * @param nickname recipient of the message
+     * @param input1 basic production first input
+     * @param input2 basic production second input
+     * @param output basic production output
+     */
     public void sendBasicProduction(String nickname, Resource input1, Resource input2, Resource output) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -493,6 +515,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a RequestInt message asking to select the space of the development card that the player wants to use for productions
+     * @param nickname recipient of the message
+     * @return player's choice
+     */
     public int askDevCard(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -502,22 +529,53 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends an InitializeGameBoard message
+     * @param crashed indicates if the message is used to restore the game board of a crashed player
+     * @param nickname recipient of the message
+     * @param market is the player's market
+     * @param idCards are the cards IDs of the grid
+     * @param leader leaders belonging to the player
+     * @param active1 indicates if the first leader of the player is active
+     * @param discarded1 indicates if the first leader of the player is discarded
+     * @param active2 indicates if the second leader of the player is active
+     * @param discarded2 indicates if the first leader of the player is discarded
+     */
     public void initializeGameBoard(boolean crashed, String nickname, Market market, ArrayList<Integer> idCards, ArrayList<Integer> leader, boolean active1, boolean discarded1, boolean active2, boolean discarded2) {
         ClientHandler client=namesToClient.get(nickname);
         client.send(new InitializeGameBoard(crashed, market, idCards, leader, active1, discarded1, active2, discarded2));
 
     }
 
+    /**
+     * Sends an UpdateFaithPath message
+     * @param nickname recipient of the message
+     * @param nickToUpdate is the owner of the updated faith path
+     * @param nickPos is the new position in the path
+     * @param isLorenzo indicates if the faith path modification concerns Lorenzo il Magnifico's path
+     */
     public void updateFaithPath(String nickname, String nickToUpdate, int nickPos, boolean isLorenzo){
         ClientHandler client=namesToClient.get(nickname);
         client.send(new UpdateFaithPath(nickToUpdate, nickPos, isLorenzo));
     }
 
+    /**
+     * Sends an UpdatePapalPawn message
+     * @param nickname recipient of the message
+     * @param nickToUpdate is the player who activated a papal pawn
+     * @param pawn is the level of the activated papal pawn
+     */
     public void updatePapalPawn(String nickname, String nickToUpdate, int pawn){
         ClientHandler client=namesToClient.get(nickname);
         client.send(new UpdatePapalPawn(nickToUpdate, pawn));
     }
 
+    /**
+     * Sends a PlayersInfo message with all the nicknames of the lobby
+     * @param nickname recipient of the message
+     * @param playerNumber is the number of player of the lobby
+     * @param nicknames are all the player's nickname of the lobby
+     */
     public void initialInfo(String nickname, int playerNumber, ArrayList<String> nicknames){
         PlayersInfo playersInfo = new PlayersInfo(playerNumber);
         for(String nick: nicknames){
@@ -528,6 +586,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a RequestInt message asking the player which production leader wants to use
+     * @param nickname recipient of the message
+     * @return player's choice
+     */
     public int askLeaderCard(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -537,6 +600,10 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a SendMessage notifying that a vatican report has been activated, and the players that received points
+     * @param nicknames recipient of the message
+     */
     public void papalPawn(ArrayList<String> nicknames) {
         for(ClientHandler client : namesToClient.values()) {
             if(clientConnected.get(client.getNickname())) {
@@ -549,6 +616,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a RequestInt for the end turn, asking if the player wants to active a leader, to discard a leader or to finish his turn
+     * @param nickname recipient of the message
+     * @return player's choice
+     */
     public int endTurn(String nickname){
         ClientHandler client=namesToClient.get(nickname);
 
@@ -558,6 +630,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a Win message
+     * @param nickname recipient of the message
+     * @param victoryPoints points accumulated by the player
+     */
     public void win(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -565,6 +642,11 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends a Lose message
+     * @param nickname recipient of the message
+     * @param victoryPoints points accumulated by the player
+     */
     public void lose(String nickname, int victoryPoints) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -572,21 +654,43 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends CardsSpaceInfo message used to
+     * @param player recipient of the message
+     * @param nickname is the player who modified his cards spaces
+     * @param level is the level of the card
+     * @param space is the card space
+     * @param idCard is the ID of the new card
+     */
     public void updateDevCardSpace(String player, String nickname, int level, int space, int idCard) {
         ClientHandler client=namesToClient.get(player);
         client.send(new CardsSpaceInfo(nickname, level, space, idCard));
     }
 
+    /**
+     * Sends a GridInfo message
+     * @param player recipient of the message
+     * @param idCards are the IDs of the card in the grid
+     */
     public void updateGrid(String player, ArrayList<Integer> idCards) {
         ClientHandler client=namesToClient.get(player);
         client.send(new GridInfo(idCards));
     }
 
+    /**
+     * Sends ErrorMessage
+     * @param nickname recipient of the message
+     * @param errorType indicates the error type
+     */
     public void sendErrorMessage(String nickname, String errorType){
         ClientHandler client=namesToClient.get(nickname);
         client.send(new ErrorMessage(errorType));
     }
 
+    /**
+     * Sends an error message for invalid input
+     * @param nickname recipient of the message
+     */
     public void sendInvalidInput(String nickname) {
         ClientHandler client=namesToClient.get(nickname);
 
@@ -594,13 +698,20 @@ public class VirtualView extends VirtualViewObservable {
     }
 
 
+    /**
+     * Sends ResetCard message to the selected client
+     * @param nickname recipient of the message
+     * @param pos position of the card that needs to be reset
+     */
     public void resetCard(String nickname, int pos) {
         ClientHandler client=namesToClient.get(nickname);
 
         client.send(new ResetCard(pos));
     }
 
-
+    /**
+     * Sends the end game message
+     */
     public void closeConnection() {
         for(ClientHandler client : namesToClient.values()) {
             client.isEnd(true);
@@ -608,17 +719,29 @@ public class VirtualView extends VirtualViewObservable {
         }
     }
 
+    /**
+     * Calls the server removal of all players
+     */
     public void allClientCrashed() {
         for(ClientHandler client : namesToClient.values()) {
             server.clientDisconnected(client.getNickname());
         }
     }
 
+    /**
+     * This method closes the game of the selected player
+     * @param nickname is the player whose game will be closed
+     */
     public void closeGame(String nickname) {
         server.closeGame(nickname);
     }
 
 
+    /**
+     * Sends the turn status to the player
+     * @param message indicates the turn status
+     * @param nickname recipient of the message
+     */
     public void sendTurnStatus(String message, String nickname){
         if(message.equals("START")){
             notifyPlayingNick(nickname);
@@ -629,11 +752,22 @@ public class VirtualView extends VirtualViewObservable {
         client.send(new TurnStatus(message));
     }
 
+    /**
+     * Sends MarketInfo message with the updated market
+     * @param nickname recipient of the message
+     * @param market is the updated market
+     */
     public void sendUpdateMarket(String nickname, Market market){
         ClientHandler client = namesToClient.get(nickname);
         client.send(new MarketInfo(market));
     }
 
+    /**
+     * Sends a CardsSpaceInfo message to the crashed player, after reconnection
+     * @param nickname recipient of the message
+     * @param space all the development cards spaces that need to be restored after reconnection
+     * @param owner reconnected client
+     */
     public void setDevCardsSpaceForReconnection(String nickname, ArrayList<DevelopmentCardDeck> space, String owner) {
         ClientHandler client = namesToClient.get(nickname);
         for(int i = 0; i < 3; i++){

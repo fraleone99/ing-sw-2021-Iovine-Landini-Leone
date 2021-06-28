@@ -177,7 +177,7 @@ public class TurnController {
 
         if(clientConnected.get(players.get(player))) {
             do {
-                if (notHasPerformedAnAction = true) notHasPerformedAnAction = false;
+                notHasPerformedAnAction = false;
                 answer = view.chooseTurn(players.get(player));
                 TurnType turnType = TurnType.fromInteger(answer);
                 switch (Objects.requireNonNull(turnType)) {
