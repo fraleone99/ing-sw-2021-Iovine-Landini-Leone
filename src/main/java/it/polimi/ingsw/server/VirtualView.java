@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.Constants;
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
 import it.polimi.ingsw.model.card.leadercard.LeaderCard;
@@ -22,7 +21,6 @@ import it.polimi.ingsw.server.answer.request.SendMessage;
 import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+
+/**
+ * Server class is the main one of the server side, it allows clients to connect
+ *
+ * @author Lorenzo Iovine
+ */
 public class Server {
     private ServerSocket Socket;
     private int numberOfLobbies;
@@ -27,11 +33,19 @@ public class Server {
     private final Map <String, Lobby> nicknameToLobby = new HashMap<>();
 
 
+    /**
+     * The main class of the server. It create a new instance of Server and runs it.
+     * @param args of type String[] - the main args, like any Java application.
+     */
     public static void main(String[] args) {
         Server server = new Server();
         server.run();
     }
 
+
+    /**
+     * Manages the connection with the client and creates the corresponding ClientHandler
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
@@ -80,7 +94,7 @@ public class Server {
 
                 playerReady=false;
 
-                createLobby(clientHandler);
+                manageLobby(clientHandler);
 
             } catch (IOException  e) {
                 System.out.println("Connection dropped");
@@ -96,8 +110,14 @@ public class Server {
         return lock;
     }
 
-    public void createLobby(ClientHandler clienthandler) {
-        final ClientHandler clientHandler1=clienthandler;
+
+    /**
+     * Manages the creation of a lobby (with the corresponding virtual view)
+     * or the entry of a client into an existing one
+     * @param clientHandler is the ClientHandler of the client who wants to join a lobby
+     */
+    public void manageLobby(ClientHandler clientHandler) {
+        final ClientHandler clientHandler1=clientHandler;
         Thread t = new Thread(()-> {
             VirtualView view;
             if(clients.size() == 1 || lobbyFull) {
@@ -158,11 +178,24 @@ public class Server {
         t.start();
     }
 
+
+    /**
+     * Handshake with the client
+     * @param client is the ClientHandler of the client who joined the game
+     * @param view is the virtual view of the lobby of the ClientHandler
+     */
     public void handShake(ClientHandler client, VirtualView view) {
         view.askHandShake(client);
 
     }
 
+
+    /**
+     * Requests the nickname to client who joined the game
+     * @param client is the ClientHandler of the client who joined the game
+     * @param view is the virtual view of the lobby of the ClientHandler
+     * @return the chosen nickname
+     */
     public String requestNickname(ClientHandler client, VirtualView view) {
         String nickname = view.requestNickname(client);
 
@@ -178,10 +211,23 @@ public class Server {
         nicknameConnected.put(nickname, true);
     }
 
+
+    /**
+     * Requests the number of players to first client of a lobby
+     * @param client is the ClientHandler of the client who joined the game
+     * @param view is the virtual view of the lobby of the ClientHandler
+     * @return the chosen players number
+     */
     public int requestPlayersNumber(ClientHandler client, VirtualView view) {
         return view.requestPlayersNumber(client);
     }
 
+
+    /**
+     * Checks if the client is crashed
+     * @param nickname is the check parameter
+     * @return true if the client is crashed
+     */
     public boolean clientCrashed(String nickname) {
         return nicknames.contains(nickname) && !nicknameConnected.get(nickname);
     }
@@ -190,6 +236,12 @@ public class Server {
         nicknameConnected.replace(nickname, true);
     }
 
+
+    /**
+     * Removes client who crashed from the game
+     * @param client is the ClientHandler of the client who crashed
+     * @param nickname is the nickname of the client who crashed
+     */
     public void removeClient(ClientHandler client, String nickname) {
         clients.remove(client);
         nicknameConnected.put(nickname, false);
@@ -200,12 +252,21 @@ public class Server {
         view.clientCrashed(nickname);
     }
 
+
+    /**
+     * Removes client when the game is over
+     * @param nickname is the nickname of the client
+     */
     public void clientDisconnected(String nickname) {
         nicknames.remove(nickname);
         nicknameConnected.remove(nickname);
         nicknameToLobby.remove(nickname);
     }
 
+    /**
+     * Prints when the game of a lobby is over
+     * @param nickname is the nickname of a client
+     */
     public void closeGame(String nickname) {
         System.out.println("The game of the lobby number " + nicknameToLobby.get(nickname).getLobbyID() + " is over." );
     }

@@ -10,6 +10,12 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
+/**
+ * This class handles network connection on the Server side
+ *
+ * @author Lorenzo Iovine
+ */
 public class ClientHandler extends ConnectionObservable implements Runnable {
     private final Socket socketClient;
     private boolean isEnd = false;
@@ -46,6 +52,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return nickname;
     }
 
+    /**
+     * Messages sender from server to client
+     * @param message object sent to client
+     */
     public void send(Object message) {
         synchronized (lock) {
             while (!active.get()) {
@@ -66,6 +76,9 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         }
     }
 
+    /**
+     * This method handles the connection with the client
+     */
     public void handleClientConnection(){
         try {
             this.socketClient.setSoTimeout(CONNECTION_TIMEOUT);
@@ -91,6 +104,12 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
 
     }
 
+
+    /**
+     * Reads the client's answer
+     * @return message received by client
+     * @throws IOException if the reading goes wrong
+     */
     public Message readFromClient() throws IOException {
         Message next = null;
         try {
@@ -103,6 +122,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     }
 
 
+    /**
+     * Manages client's answer
+     * @param message object received by client
+     */
     public void processClientMessage(Message message){
         synchronized (lock) {
             if(message instanceof SendString) {
@@ -138,6 +161,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         return number2;
     }
 
+
+    /**
+     * Closes the connection with the client when the game is over or the client crashed
+     */
     public void closeConnection(){
         if (!active.get()) return;
 
@@ -180,6 +207,10 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         this.nickname = nickname;
     }
 
+
+    /**
+     * Initializes the connection with the client
+     */
     @Override
     public void run() {
         handleClientConnection();

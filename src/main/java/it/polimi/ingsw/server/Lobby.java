@@ -13,7 +13,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * This class manages the match creation.
+ *
+ * @author Lorenzo Iovine
+ */
 public class Lobby implements ConnectionObserver, VirtualViewObserver {
     private int playersNumber;
     private final int lobbyID;
@@ -27,6 +31,13 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         this.view = view;
     }
 
+
+    /**
+     * Creates a new lobby and registers the client
+     * @param firstClient is the ClientHandler of the first client of the lobby
+     * @param nickname is the nickname of the first client of the lobby
+     * @param number is the player numbers of the lobby
+     */
     public void newLobby(ClientHandler firstClient, String nickname, int number) {
         clientToNames.put(firstClient, nickname);
         namesToClient.put(nickname, firstClient);
@@ -48,6 +59,12 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         firstClient.send(new InitialSetup());
     }
 
+
+    /**
+     * Adds a player to this lobby
+     * @param clientHandler is the ClientHandler of the client who joined
+     * @param nickname is the nickname of the client who joined
+     */
     public void add(ClientHandler clientHandler, String nickname) {
         clientHandler.setNickname(nickname);
 
@@ -74,6 +91,12 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         clientHandler.send(new InitialSetup());
     }
 
+
+    /**
+     * Re-adds a player in the lobby after the crash
+     * @param client is the ClientHandler of the client who re-joined the lobby
+     * @param nickname is the nickname of the client who re-joined the lobby
+     */
     public void reAdd(ClientHandler client, String nickname) {
         client.setNickname(nickname);
 
@@ -93,6 +116,11 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         System.out.println(nickname + " is back in the lobby number " + lobbyID);
     }
 
+
+    /**
+     * Removes client from the lobby when he crashed or the game is over
+     * @param clientHandler is the ClientHandler of the client
+     */
     public void removeConnection(ClientHandler clientHandler){
         String nick=clientToNames.get(clientHandler);
         System.out.println("Removing player "+nick+" from the lobby number " + lobbyID);
@@ -102,6 +130,9 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         playersNumber--;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateDisconnection(ClientHandler clientHandler) {
         //clientHandler.unregisterObserver(this);
@@ -113,6 +144,9 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         //removeConnection(clientHandler);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatePreparationOfLobby(){
         for(String nick: nicknames){
@@ -120,6 +154,9 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatePlayingNick(String nickname){
         for(String nick: nicknames){
@@ -129,6 +166,10 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         }
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateTurnChoice(String nickname, String message){
         for(String nick: nicknames){
@@ -146,6 +187,10 @@ public class Lobby implements ConnectionObserver, VirtualViewObserver {
         return lobbyID;
     }
 
+
+    /**
+     * Prepares the game of this lobby and starts it
+     */
     public void prepareTheGame(){
         Thread t=new Thread( () -> {
             System.out.println("Preparing the game of lobby number " + lobbyID);
