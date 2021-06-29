@@ -342,7 +342,7 @@ public class LocalSPController {
 
                 case ACTIVE_PRODUCTION:
                     do{
-                        handler.handleClient(new RequestInt("TYPE", "What kind of production do you want to activate?\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
+                        handler.handleClient(new RequestInt("TYPE", "Choose productions\n1) Basic Production\n2) Development Card\n3) Leader Card\n4) It's okay, do productions"));
                         type = getAnswer();
                         localActiveProduction(type);
                     } while (type != DO_PRODUCTION);
