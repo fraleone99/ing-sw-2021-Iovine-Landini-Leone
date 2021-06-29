@@ -68,7 +68,6 @@ public class LocalSPController {
 
         gameModel.createPlayer(players.get(0));
         handler.handleClient(new Connection("",true));
-        getString();
 
         setPlayers();
 
