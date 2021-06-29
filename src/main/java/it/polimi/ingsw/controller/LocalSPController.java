@@ -674,6 +674,12 @@ public class LocalSPController {
         }
     }
 
+    /**
+     * This method is called every time the faith path indicator (red or black cross) moves forward
+     * and it checks firstly if a papal favor has been triggered, if so it returns the nicknames of the
+     * players that have the rights of activating the corresponding papal pawn
+     * @return the array list of nicknames of the players that have the rights of activating the papal pawn
+     */
     public ArrayList<String> localCheckPapalPawn() {
         ArrayList<String> players=new ArrayList<>();
         switch (gameModel.getPapalPawn()) {

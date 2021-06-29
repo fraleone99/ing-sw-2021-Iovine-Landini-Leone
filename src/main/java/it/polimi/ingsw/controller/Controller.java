@@ -145,6 +145,12 @@ public class Controller {
         gameModel.createPlayer(players.get(player));
     }
 
+    /**
+     * Sets the connection status of the player
+     * @param nickname player
+     * @param connection indicates if the player is connected
+     * @param crashed indicates if the player is crashed
+     */
     public void setClientConnection(String nickname, boolean connection, boolean crashed) {
         if(crashed) {
             if(connection) {
@@ -160,6 +166,10 @@ public class Controller {
         turncontroller.setClientConnection(nickname, connection, crashed);
     }
 
+    /**
+     * Sets the game board in case of reconnection
+     * @param nickname player
+     */
     public void setGameBoardForReconnection(String nickname) {
         try {
             view.initialInfo(nickname, players.size(), players);

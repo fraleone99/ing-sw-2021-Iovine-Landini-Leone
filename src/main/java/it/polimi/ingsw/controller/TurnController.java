@@ -50,13 +50,18 @@ public class TurnController {
         this.view=view;
     }
 
+    /**
+     * Sets the connection status of the player
+     * @param nickname player
+     * @param connection indicates if the player is connected
+     * @param crashed indicates if the player is crashed
+     */
     public void setClientConnection(String nickname, boolean connection, boolean crashed) {
         if(crashed) {
             if(connection) {
                 clientConnected.replace(nickname, true);
             } else {
                 clientConnected.replace(nickname, false);
-                //System.out.println(clientConnected.get(nickname));
             }
         } else {
             clientConnected.put(nickname, true);
@@ -85,8 +90,6 @@ public class TurnController {
      */
     public void seeGameBoard(boolean first, int player) throws  NotExistingPlayerException {
         int answer=view.seeGameBoard(first, players.get(player));
-        //1) Leader Cards, 2) Market, 3) Grid, 4) Possible Production, 5) Active Leader Cards of the other players
-        //6) Development Cards of the other players, 7) Nothing
         int seeMore;
 
         ToSeeFromGameBoard toSee = ToSeeFromGameBoard.fromInteger(answer);
@@ -102,7 +105,7 @@ public class TurnController {
                 break;
             case DEVELOPMENT_CARD_GRID:
                 int choice=view.chooseLine(players.get(player));
-                if(choice == ALL_GRID) { //in the gui we always ask for all the grid while in the cli we ask for a line at the time
+                if(choice == ALL_GRID) {
                     seeMore =view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck());
                 } else {
                     seeMore = view.seeGrid(players.get(player), game.getGameBoard().getDevelopmentCardGrid().getLine(choice).idDeck());
@@ -170,8 +173,6 @@ public class TurnController {
      */
     public void chooseTurn(int player) throws NotExistingPlayerException, InvalidChoiceException {
         int answer;
-        //1) Active Leader, 2) Discard Leader, 3) Use Market, 4) Buy development card, 5) Do production
-
         int pos;
         int type;
 
@@ -329,9 +330,6 @@ public class TurnController {
      * @throws NotExistingPlayerException if the selected player doesn't exists
      */
     public void activeProduction(int player, int type) throws NotExistingPlayerException {
-        //1) Basic Production, 2) Development Card, 3) Production Leader, 4) Do production
-
-
         ProductionType productionType = ProductionType.fromInteger(type);
         switch(Objects.requireNonNull(productionType)) {
             case BASIC:
@@ -493,9 +491,7 @@ public class TurnController {
             }
         }
 
-
         ArrayList<Ball> toPlace = new ArrayList<>(checkEmptyShelves(player, balls));
-
 
         if(!toPlace.isEmpty()) {
             do {
@@ -579,7 +575,6 @@ public class TurnController {
         game.getPlayer(players.get(player)).discardLeader(pos);
     }
 
-
     /**
      * This method checks the spaces for balls that need to be placed and returns and returns the
      * only ones that can be add (to the storage or to the storage leader if present)
@@ -641,7 +636,6 @@ public class TurnController {
 
         return toPlace;
     }
-
 
     /**
      * This method is called every time the faith path indicator (red or black cross) moves forward
