@@ -7,6 +7,10 @@ import java.util.List;
 
 //this class is used by ClientHandler
 
+/**
+ * ConnectionObservable is used to notify player in case of disconnection
+ * @author Nicola Landini
+ */
 public class ConnectionObservable {
 
     private final List<ConnectionObserver> observersList=new ArrayList<>();

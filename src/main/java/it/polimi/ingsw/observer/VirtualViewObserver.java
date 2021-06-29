@@ -1,9 +1,11 @@
 package it.polimi.ingsw.observer;
 
-import java.io.IOException;
-
 //this interface is implemented by Lobby
 
+/**
+ * VirtualViewObserver is an interface used by Lobby class, to receive VirtualViewObservable notifications
+ * @author Nicola Landini
+ */
 public interface VirtualViewObserver {
 
     void updatePreparationOfLobby();
