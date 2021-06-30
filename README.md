@@ -38,6 +38,8 @@ If you want to do a local game, you won't need to start a server.
 
 If you want to do a multiplayer game, you'll need to start a server and at least two client.
 
+You can also do a single player game connected to the server.
+
 If you use the default configuration on the server the port is 3456.
 
 ## Authors
