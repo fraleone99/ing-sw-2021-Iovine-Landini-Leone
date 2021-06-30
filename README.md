@@ -26,7 +26,7 @@ at Politecnico di Milano. (2020/2021)
 #### Legend
 [![RED](http://placehold.it/15/f03c15/f03c15)]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;[![YELLOW](http://placehold.it/15/ffdd00/ffdd00)]() Implementing&nbsp;&nbsp;&nbsp;&nbsp;[![GREEN](http://placehold.it/15/44bb44/44bb44)]() Implemented
 
-##Running
+## Running
 To launch the game use the following command in the directory of the jar.
 
 ```
