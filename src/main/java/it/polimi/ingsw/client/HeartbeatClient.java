@@ -2,11 +2,11 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.message.Ping;
 
-public class Heartbeat implements Runnable {
+public class HeartbeatClient implements Runnable {
 
-    private NetworkHandler networkHandler;
+    private final NetworkHandler networkHandler;
 
-    public Heartbeat(NetworkHandler networkHandler) {
+    public HeartbeatClient(NetworkHandler networkHandler) {
         this.networkHandler = networkHandler;
     }
 

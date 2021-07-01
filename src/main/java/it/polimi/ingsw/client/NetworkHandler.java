@@ -34,6 +34,8 @@ public class NetworkHandler implements Runnable, Handler {
 
     private boolean isConnected;
 
+    private static final int CONNECTION_TIMEOUT = 10000;
+
 
     public NetworkHandler(Socket server, Client owner ,View view) {
         this.server = server;
@@ -44,6 +46,8 @@ public class NetworkHandler implements Runnable, Handler {
     @Override
     public void run() {
         try {
+            server.setSoTimeout(CONNECTION_TIMEOUT);
+
             input = new ObjectInputStream(server.getInputStream());
             output = new ObjectOutputStream(server.getOutputStream());
 
@@ -59,12 +63,13 @@ public class NetworkHandler implements Runnable, Handler {
     }
 
     public void handleClientConnection() throws IOException{
-        Heartbeat heartbeat = new Heartbeat(this);
-        Thread heartbeatThread = new Thread(heartbeat);
+        HeartbeatClient heartbeatClient = new HeartbeatClient(this);
+        Thread heartbeatThread = new Thread(heartbeatClient);
         heartbeatThread.start();
 
         while (isConnected) {
             try {
+
                 Answer next = (Answer) input.readObject();
                 if(!(next instanceof Pong))
                     processServerAnswer(next);
@@ -180,7 +185,6 @@ public class NetworkHandler implements Runnable, Handler {
             if(((RequestDoubleInt) inputObj).getType().equals("DEVCARD")) {
                 view.askCardToBuy(((RequestDoubleInt) inputObj).getCards(), ((RequestDoubleInt) inputObj).getSpaces());
             } else {
-                //System.out.println("[DEBUG] Reading from server: Move shelves double int request");
                 view.MoveShelves(((RequestDoubleInt) inputObj).getMessage());
             }
         }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.Constants;
 import it.polimi.ingsw.observer.ConnectionObservable;
 import it.polimi.ingsw.client.message.*;
+import it.polimi.ingsw.server.answer.Pong;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,6 +31,8 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
     private int number2;
 
     private String nickname;
+
+    private boolean isConnected = true;
 
 
     private static final int CONNECTION_TIMEOUT = 10000;
@@ -76,10 +79,23 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         }
     }
 
+    public void pong() {
+        try {
+            output.writeObject(new Pong());
+            output.flush();
+        } catch (IOException e) {
+            closeConnection();
+        }
+    }
+
     /**
      * This method handles the connection with the client
      */
     public void handleClientConnection(){
+        HeartbeatServer heartbeatServer = new HeartbeatServer(this);
+        Thread heartbeatThread = new Thread(heartbeatServer);
+        heartbeatThread.start();
+
         try {
             this.socketClient.setSoTimeout(CONNECTION_TIMEOUT);
 
@@ -197,6 +213,7 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
                 System.out.println("ERROR");
             }
         }
+        isConnected = false;
     }
 
     public Object getLock() {
@@ -207,6 +224,9 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         this.nickname = nickname;
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
 
     /**
      * Initializes the connection with the client

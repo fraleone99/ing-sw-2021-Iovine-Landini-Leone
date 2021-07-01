@@ -710,6 +710,9 @@ public class GameSceneController {
         leader1.setImage(new Image("/graphics/" + message.getLeaderCards().get(0) + ".png"));
         leader2.setImage(new Image("/graphics/" + message.getLeaderCards().get(1) + ".png"));
 
+        leader1.setOpacity(0.5);
+        leader2.setOpacity(0.5);
+
         if(message.isCrashed()){
             if(message.isActive1()) {
                 active1.setOpacity(1);
