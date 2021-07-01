@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 /**
  * GameSceneController class controls the main scene of the game form which the player see the dashboards and chooses what
  * to do in his turn.
@@ -41,7 +40,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Francesco Leone, Lorenzo Iovine, Nicola Landini
  */
 public class GameSceneController {
-
     @FXML private Button toSee_nothing;
     @FXML private Button toSee_developmentGrid;
     @FXML private Button toSee_market;
@@ -150,29 +148,22 @@ public class GameSceneController {
     @FXML private ImageView player2_inkwell;
     @FXML private ImageView player3_inkwell;
 
-
     private int oldCurrFPPos=0;
     private int oldPlayer1FPPos=0;
     private int oldPlayer2FPPos=0;
     private int oldPlayer3FPPos=0;
     private int oldLorenzoFPPos=0;
-
     private String firstPlayer;
-
     private GUI gui;
-
     private final Map<Resource, String> resourceToPathMap = new HashMap<>();
     private final Map<CardColor, String> actionTokenDeleteCardToPathMap = new HashMap<>();
-
     private final ArrayList<String> othersPlayersNick = new ArrayList<>();
     private final HashMap<String, Integer> nicknameToPosition = new HashMap<>();
-
     private final HashMap<Integer, ImageView> currentFaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player1FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player2FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> player3FaithPathPosToImageView = new HashMap<>();
     private final HashMap<Integer, ImageView> lorenzoFaithPathPosToImageView = new HashMap<>();
-
     private final HashMap<Integer, String> papalPawnToImageView = new HashMap<>();
 
     /**
@@ -198,7 +189,6 @@ public class GameSceneController {
 
         message.setBackground(new Background(new BackgroundFill(Color.rgb(249, 228, 183, 0.9), new CornerRadii(5.0), new Insets(-5.0))));
         message.setTextFill(Color.BLACK);
-
     }
 
     /**
@@ -354,48 +344,39 @@ public class GameSceneController {
     public void storage(ImageView firstResourcesFirstShelf, ImageView firstResourcesSecondShelf, ImageView secondResourcesSecondShelf,
     ImageView firstResourcesThirdShelf, ImageView secondResourcesThirdShelf, ImageView thirdResourcesThirdShelf, Label vault_coin,
                         Label vault_stone, Label vault_servant, Label vault_shield, Group leader1, Group leader2, StorageInfo storageInfo){
-        //first shelf
+
         if(storageInfo.getShelf1Amount() == 0){
             firstResourcesFirstShelf.setImage(null);
-        }
-        else{
+        } else{
             firstResourcesFirstShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf1Type())));
         }
 
-
-        //second shelf
         if(storageInfo.getShelf2Amount() == 0){
             firstResourcesSecondShelf.setImage(null);
             secondResourcesSecondShelf.setImage(null);
-        }
-        else{
+        } else{
             if(storageInfo.getShelf2Amount() > 1){
                 firstResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
                 secondResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
-            }
-            else{
+            } else{
                 firstResourcesSecondShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf2Type())));
                 secondResourcesSecondShelf.setImage(null);
             }
         }
 
-        //third shelf
         if(storageInfo.getShelf3Amount() == 0){
             firstResourcesThirdShelf.setImage(null);
             secondResourcesThirdShelf.setImage(null);
             thirdResourcesThirdShelf.setImage(null);
-        }
-        else if(storageInfo.getShelf3Amount() == 1){
+        } else if(storageInfo.getShelf3Amount() == 1){
             firstResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             secondResourcesThirdShelf.setImage(null);
             thirdResourcesThirdShelf.setImage(null);
-        }
-        else if(storageInfo.getShelf3Amount() == 2){
+        } else if(storageInfo.getShelf3Amount() == 2){
             firstResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             thirdResourcesThirdShelf.setImage(null);
-        }
-        else if(storageInfo.getShelf3Amount() == 3){
+        } else if(storageInfo.getShelf3Amount() == 3){
             firstResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             secondResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
             thirdResourcesThirdShelf.setImage(new Image(resourceToPathMap.get(storageInfo.getShelf3Type())));
@@ -416,15 +397,12 @@ public class GameSceneController {
                 imageView.setImage(null);
                 imageView = (ImageView) leader1.getChildren().get(1);
                 imageView.setImage(null);
-            }
-
-            else if(amount == 1){
+            } else if(amount == 1){
                 imageView = (ImageView) leader1.getChildren().get(0);
                 imageView.setImage(new Image(resourceToPathMap.get(storageInfo.getLeader1Type())));
                 imageView = (ImageView) leader1.getChildren().get(1);
                 imageView.setImage(null);
-            }
-            else {
+            } else {
                 imageView = (ImageView) leader1.getChildren().get(0);
                 imageView.setImage(new Image(resourceToPathMap.get(storageInfo.getLeader1Type())));
                 imageView = (ImageView) leader1.getChildren().get(1);
@@ -440,93 +418,98 @@ public class GameSceneController {
                 imageView.setImage(null);
                 imageView = (ImageView) leader2.getChildren().get(1);
                 imageView.setImage(null);
-            }
-
-            else if(amount == 1){
+            } else if(amount == 1){
                 imageView = (ImageView) leader2.getChildren().get(0);
                 imageView.setImage(new Image(resourceToPathMap.get(storageInfo.getLeader2Type())));
                 imageView = (ImageView) leader2.getChildren().get(1);
                 imageView.setImage(null);
-            }
-            else {
+            } else {
                 imageView = (ImageView) leader2.getChildren().get(0);
                 imageView.setImage(new Image(resourceToPathMap.get(storageInfo.getLeader2Type())));
                 imageView = (ImageView) leader2.getChildren().get(1);
                 imageView.setImage(new Image(resourceToPathMap.get(storageInfo.getLeader2Type())));
             }
         }
-
-
     }
 
     /**
      * discardLeader method let the player discard a leader at the beginning or at the end of the turn
      */
     public void discardLeader() {
-        message.setText("Press on the leader card that you want to discard.");
-        message.setOpacity(1);
-        leader1.setDisable(false);
-        leader2.setDisable(false);
-        leader1.setOnMouseClicked(event -> {
-            if(leader1.getOpacity()==1) {
-                gui.readMessage("INVALID");
-                gui.getHandler().send(new SendInt(3));
-            } else {
-                gui.getHandler().send(new SendInt(1));
-                leader1.setOpacity(0);
-            }
-            message.setOpacity(0);
-            leader1.setDisable(true);
-            leader2.setDisable(true);
-        });
-        leader2.setOnMouseClicked(event -> {
-            if(leader2.getOpacity()==1) {
-                gui.readMessage("INVALID");
-                gui.getHandler().send(new SendInt(3));
-            } else {
-                gui.getHandler().send(new SendInt(2));
-                leader2.setOpacity(0);
-            }
-            message.setOpacity(0);
-            leader1.setDisable(true);
-            leader2.setDisable(true);
-        });
+        if(leader1.getOpacity()!=0.5 && leader2.getOpacity()!=0.5) {
+            gui.getHandler().send(new SendInt(3));
+            gui.readMessage("INVALID");
+        } else {
+            message.setText("Press on the leader card that you want to discard.");
+            message.setOpacity(1);
+            leader1.setDisable(false);
+            leader2.setDisable(false);
+            leader1.setOnMouseClicked(event -> {
+                if (leader1.getOpacity() == 1) {
+                    gui.readMessage("INVALID");
+                    gui.getHandler().send(new SendInt(3));
+                } else {
+                    gui.getHandler().send(new SendInt(1));
+                    leader1.setOpacity(0);
+                }
+                message.setOpacity(0);
+                leader1.setDisable(true);
+                leader2.setDisable(true);
+            });
+            leader2.setOnMouseClicked(event -> {
+                if (leader2.getOpacity() == 1) {
+                    gui.readMessage("INVALID");
+                    gui.getHandler().send(new SendInt(3));
+                } else {
+                    gui.getHandler().send(new SendInt(2));
+                    leader2.setOpacity(0);
+                }
+                message.setOpacity(0);
+                leader1.setDisable(true);
+                leader2.setDisable(true);
+            });
+        }
     }
 
     /**
      * activeLeader method let the player active a leader at the beginning or at the end of the turn
      */
     public void activeLeader() {
-        message.setText("Press on the leader card that you want to activate.");
-        message.setOpacity(1);
-        leader1.setDisable(false);
-        leader2.setDisable(false);
-        leader1.setOnMouseClicked(event -> {
-            if(leader1.getOpacity()==0) {
-                gui.readMessage("INVALID");
-                gui.getHandler().send(new SendInt(3));
-            } else {
-                gui.getHandler().send(new SendInt(1));
-                active1.setOpacity(1);
-                leader1.setOpacity(1);
-            }
-            message.setOpacity(0);
-            leader1.setDisable(true);
-            leader2.setDisable(true);
-        });
-        leader2.setOnMouseClicked(event -> {
-            if(leader2.getOpacity()==0) {
-                gui.readMessage("INVALID");
-                gui.getHandler().send(new SendInt(3));
-            } else {
-                gui.getHandler().send(new SendInt(2));
-                active2.setOpacity(1);
-                leader2.setOpacity(1);
-            }
-            message.setOpacity(0);
-            leader1.setDisable(true);
-            leader2.setDisable(true);
-        });
+        if(leader1.getOpacity()!=0.5 && leader2.getOpacity()!=0.5) {
+            gui.getHandler().send(new SendInt(3));
+            gui.readMessage("INVALID");
+        } else {
+            message.setText("Press on the leader card that you want to activate.");
+            message.setOpacity(1);
+            leader1.setDisable(false);
+            leader2.setDisable(false);
+            leader1.setOnMouseClicked(event -> {
+                if (leader1.getOpacity() == 0) {
+                    gui.readMessage("INVALID");
+                    gui.getHandler().send(new SendInt(3));
+                } else {
+                    gui.getHandler().send(new SendInt(1));
+                    active1.setOpacity(1);
+                    leader1.setOpacity(1);
+                }
+                message.setOpacity(0);
+                leader1.setDisable(true);
+                leader2.setDisable(true);
+            });
+            leader2.setOnMouseClicked(event -> {
+                if (leader2.getOpacity() == 0) {
+                    gui.readMessage("INVALID");
+                    gui.getHandler().send(new SendInt(3));
+                } else {
+                    gui.getHandler().send(new SendInt(2));
+                    active2.setOpacity(1);
+                    leader2.setOpacity(1);
+                }
+                message.setOpacity(0);
+                leader1.setDisable(true);
+                leader2.setDisable(true);
+            });
+        }
     }
 
     /**
@@ -604,7 +587,6 @@ public class GameSceneController {
         leader2.setDisable(false);
 
         leader1.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(1)));
-
         leader2.setOnMouseClicked(event -> gui.getHandler().send(new SendInt(2)));
     }
 
@@ -632,34 +614,23 @@ public class GameSceneController {
      * @param storageInfo is the message received from the server that contains the info of the storage to update
      */
     public void updateStorage(StorageInfo storageInfo){
-
         if(storageInfo.getNickname().equals(gui.getNickname())){
             storage(firstResourcesFirstShelf, firstResourcesSecondShelf, secondResourcesSecondShelf,firstResourcesThirdShelf,
                     secondResourcesThirdShelf,thirdResourcesThirdShelf,vault_coinAmount,vault_stoneAmount, vault_servantAmount,
                     vault_shieldAmount,player_leader1Storage_group, player_leader2Storage_group,  storageInfo);
-        }
-
-        else{
+        } else{
             int player = nicknameToPosition.get(storageInfo.getNickname());
-            //System.out.println("I have received storage of player " + player);
             if(player == 1){
-                //System.out.println("Updating player Dashboard 1..." + positionToNickname.get(1));
                 storage(player1_1_1, player1_2_1,player1_2_2, player1_3_1, player1_3_2, player1_3_3, player1_coinAmount, player1_stoneAmount,
                         player1_servantAmount, player1_shieldAmount, player1_leader1storage_group, player1_leader2Storage_group, storageInfo);
-            }
-            else if(player == 2){
-                //System.out.println("Updating player Dashboard 2..." + positionToNickname.get(2));
+            } else if(player == 2){
                 storage(player2_1_1, player2_2_1,player2_2_2, player2_3_1, player2_3_2, player2_3_3, player2_coinAmount, player2_stoneAmount,
                         player2_servantAmount, player2_shieldAmount, player2_leader1storage_group ,player2_leader2storage_group, storageInfo);
-            }
-            else if(player == 3){
-                //System.out.println("Updating player Dashboard 3..." + positionToNickname.get(3));
+            } else if(player == 3){
                 storage(player3_1_1, player3_2_1,player3_2_2, player3_3_1, player3_3_2, player3_3_3, player3_coinAmount, player3_stoneAmount,
                         player3_servantAmount, player3_shieldAmount, player3_leader1storage_group, player3_leader2storage_group, storageInfo);
             }
         }
-
-
     }
 
     /**
@@ -802,7 +773,6 @@ public class GameSceneController {
         }
     }
 
-
     /**
      * endTurn method handles the end of the turn of the player. After the end of the turn until it is his turn again the
      * player can only view the market and the grid
@@ -847,6 +817,10 @@ public class GameSceneController {
         invalid.setOpacity(1);
     }
 
+    /**
+     * Updates the action token
+     * @param actionToken is the drawn action token
+     */
     public void updateActionToken(ActionToken actionToken){
         if(actionToken instanceof BlackCrossMover) {
             if(((BlackCrossMover) actionToken).haveToBeShuffled()){
@@ -858,7 +832,6 @@ public class GameSceneController {
             actionTokenPrint.setImage(new Image(actionTokenDeleteCardToPathMap.get(((DeleteCard) actionToken).getColorType())));
         }
     }
-
 
     /**
      * setupGameBoard method sets the Game scene at the beginning of the game. The player dashboards are set based
@@ -881,8 +854,7 @@ public class GameSceneController {
             }
             usernameLabel.setText(playersInfo.getNicknames().get(0));
             usernameLabel.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.9), CornerRadii.EMPTY, Insets.EMPTY)));
-        }
-        else if(playersNumber == 2){
+        } else if(playersNumber == 2){
             player2Board.setOpacity(0.4);
             player2_vault.setOpacity(0.4);
             player3Board.setOpacity(0.4);
@@ -903,8 +875,7 @@ public class GameSceneController {
                 currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
                 player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
             }
-        }
-        else if(playersNumber == 3){
+        } else if(playersNumber == 3){
             player3Board.setOpacity(0.4);
             player3_vault.setOpacity(0.4);
             username_1.setText(othersPlayersNick.get(0));
@@ -927,9 +898,7 @@ public class GameSceneController {
                 player1FaithPathPosToImageView.put(i, (ImageView) player1_faithPathGroup.getChildren().get(i));
                 player2FaithPathPosToImageView.put(i, (ImageView) player2_faithPathGroup.getChildren().get(i));
             }
-
-        }
-        else{
+        } else{
             username_1.setText(othersPlayersNick.get(0));
             username_2.setText(othersPlayersNick.get(1));
             username_3.setText(othersPlayersNick.get(2));
@@ -947,7 +916,6 @@ public class GameSceneController {
             nicknameToPosition.put(othersPlayersNick.get(0) , 1);
             nicknameToPosition.put(othersPlayersNick.get(1) , 2);
             nicknameToPosition.put(othersPlayersNick.get(2) , 3);
-
 
             for(int i=0; i<25; i++) {
                 currentFaithPathPosToImageView.put(i, (ImageView) current_faithPathGroup.getChildren().get(i));
@@ -1032,6 +1000,9 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Sets the first player
+     */
     public void setInkwell() {
         int player;
 
@@ -1059,8 +1030,7 @@ public class GameSceneController {
 
         if(info.getNickname().equals(gui.getNickname())) {
             getSpaceGroup(info, level, currentGroup);
-        }
-        else {
+        } else {
             int player=nicknameToPosition.get(info.getNickname());
 
             if(player==1) {
@@ -1100,7 +1070,6 @@ public class GameSceneController {
     public void endGame() {
         quit_button.setOpacity(1);
         quit_button.setDisable(false);
-
         quit_button.setOnAction(actionEvent -> Platform.exit());
     }
 
@@ -1113,5 +1082,4 @@ public class GameSceneController {
             message.setText(notification);
         }
     }
-
 }

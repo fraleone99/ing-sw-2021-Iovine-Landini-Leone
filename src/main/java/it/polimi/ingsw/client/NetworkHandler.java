@@ -19,6 +19,11 @@ import it.polimi.ingsw.server.answer.turnanswer.*;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Handles network connection on the Client side
+ *
+ * @author Francesco Leone
+ */
 public class NetworkHandler implements Runnable, Handler {
     private final Socket server;
 

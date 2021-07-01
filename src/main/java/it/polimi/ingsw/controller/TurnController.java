@@ -117,7 +117,7 @@ public class TurnController {
                 if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case LEADER_CARDS_OTHER_PLAYER:
-                seeMore =leaderCard(player);
+                seeMore = leaderCard(player);
                 if(seeMore == YES) seeGameBoard(false, player);
                 break;
             case DEVELOPMENT_CARDS_OTHER_PLAYER:

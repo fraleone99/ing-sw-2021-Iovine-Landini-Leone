@@ -20,6 +20,12 @@ import it.polimi.ingsw.server.answer.request.SendMessage;
 import it.polimi.ingsw.server.answer.seegameboard.*;
 import it.polimi.ingsw.server.answer.turnanswer.*;
 
+
+/**
+ * This is the handler that manages the communication between the controller and the client, without using a server
+ *
+ * @author Nicola Landini
+ */
 public class HandlerSP implements Runnable, Handler {
     private final View view;
     final Object lock = new Object();

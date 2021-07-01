@@ -1,11 +1,14 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.model.card.deck.DevelopmentCardDeck;
+import it.polimi.ingsw.model.card.deck.LeaderCardDeck;
 import it.polimi.ingsw.model.card.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.card.leadercard.*;
 import it.polimi.ingsw.model.enumeration.CardColor;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.gameboard.playerdashboard.Shelf;
+import it.polimi.ingsw.model.gameboard.playerdashboard.Storage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,9 +37,20 @@ public class PlayerTest {
         Production production=new Production(input, output, 3);
         DevelopmentCard devCard=new DevelopmentCard(3, 0, s, CardColor.PURPLE, 1, cost, production);
         player.getPlayerDashboard().getStorage().addResources(3, Resource.SERVANT, 3);
+        DevelopmentCardDeck deck = new DevelopmentCardDeck();
+        deck.add(devCard);
+
+        DevelopmentCardDeck deck2 = new DevelopmentCardDeck();
+        deck2.addAll(deck);
 
         player.buyCard(devCard,2);
 
+        Integer zero = 0;
+
+        assertEquals(devCard.getOutputProduction(),output);
+        assertEquals(deck.getCardByID(0),devCard);
+        assertEquals(deck2.idDeck().get(0),zero);
+        assertEquals(deck.get(),devCard);
         assertEquals(player.getPlayerDashboard().getDevCardsSpace().getCard(2).getLevel(),1);
         assertEquals(player.getPlayerDashboard().getDevCardsSpace().getCard(2).getFaithSteps(),3);
     }
@@ -107,6 +121,21 @@ public class PlayerTest {
         Requirements req1=new Requirements(CardColor.PURPLE, 2, 1, cost);
         LeaderCard leader=new ProductionLeader(4, 8, production, req1);
 
+        LeaderCardDeck deck = new LeaderCardDeck();
+        deck.add(leader);
+        Integer otto = 8;
+
+        if(!deck.isEmpty()) {
+            deck.shuffle();
+            deck.remove(0);
+            deck.add(leader);
+            assertEquals(deck.getFromID(8),leader);
+            assertEquals(deck.get(),leader);
+            assertEquals(deck.get(0),leader);
+            assertEquals(deck.size(),1);
+            assertEquals(deck.idDeck().get(0),otto);
+        }
+
         player.getPlayerDashboard().getLeaders().add(leader);
 
         if(player.getPlayerDashboard().getLeaders().get(0) instanceof ProductionLeader)
@@ -115,6 +144,9 @@ public class PlayerTest {
             fail();
 
         player.getPlayerDashboard().getLeaders().get(0).setIsActive();
+
+        assertEquals(deck.idDeckActive().get(0),otto);
+        assertEquals(deck.drawFromTail(),leader);
 
         player.activeProductionLeader(1, Resource.COIN);
         player.doProduction();
@@ -237,6 +269,10 @@ public class PlayerTest {
         req2=new Requirements(CardColor.BLUE,0,1, cost);
         leader=new EconomyLeader(2,2, Resource.STONE,req1,req2);
         player.getPlayerDashboard().getLeaders().add(leader);
+
+        EconomyLeader economyLeader = new EconomyLeader(2,2,Resource.STONE,req1,req2);
+        assertEquals(economyLeader.getDiscountType(),Resource.STONE);
+        assertEquals(economyLeader.getRequirements().get(0), req1);
 
         input = new ArrayList<>();
         Goods g1 = new Goods(Resource.SERVANT,1);
@@ -641,6 +677,10 @@ public class PlayerTest {
         leader.setIsActive();
         player.getPlayerDashboard().getLeaders().add(leader);
 
+        WhiteBallLeader whiteBallLeader = new WhiteBallLeader(5,12,Resource.COIN,req1,req2);
+        assertEquals(whiteBallLeader.getConversionType(),Resource.COIN);
+        assertEquals(whiteBallLeader.getRequirements().get(0),req1);
+
         cost=new Goods(Resource.SHIELD,5);
         req1=new Requirements(CardColor.PURPLE,0,0, cost);
         req2=new Requirements(CardColor.BLUE,0,0, cost);
@@ -668,6 +708,11 @@ public class PlayerTest {
         LeaderCard leader=new StorageLeader(3,12, req1,shelf);
         player.getPlayerDashboard().getLeaders().add(leader);
         leader.setIsActive();
+
+        StorageLeader storageLeader = new StorageLeader(3,12,req1,shelf);
+        assertEquals(storageLeader.getAmount(),0);
+        assertEquals(storageLeader.getRequirements().get(0),req1);
+        assertEquals(storageLeader.getType(),Resource.COIN);
 
         shelf=new Shelf(2,2,Resource.SERVANT);
         cost=new Goods(Resource.SHIELD,5);
