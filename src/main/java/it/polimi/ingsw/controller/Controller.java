@@ -102,6 +102,7 @@ public class Controller {
                         if (!nick.isEmpty()) {
                             view.papalPawn(nick);
                         }
+                        view.updateGrid(players.get(0), gameModel.getGameBoard().getDevelopmentCardGrid().getGrid().idDeck());
                         view.seeActionToken(players.get(0), actionToken);
                         if(actionToken instanceof BlackCrossMover) {
                             for(String n: players){
@@ -225,7 +226,11 @@ public class Controller {
     public void setInitialBenefits(int i) throws NotExistingPlayerException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
-                    break;
+                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.COIN,20);
+                gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.SERVANT,20);
+                gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.STONE,20);
+                gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.SHIELD,20);
+                break;
             case 1:
                 int resource1 = view.chooseResource(players.get(i), "second", 1);
                     addInitialResource(i, resource1,1);
