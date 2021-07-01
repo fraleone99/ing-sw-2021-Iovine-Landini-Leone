@@ -69,6 +69,7 @@ public class GUI extends Application implements View {
     private StorageInfo lastStorage;
     private boolean isSinglePlayer=false;
     private final ArrayList<Integer> leaderCards = new ArrayList<>();
+    private String singlePlayerNick = new String();
 
 
     public static void main(String[] args) {
@@ -406,6 +407,8 @@ public class GUI extends Application implements View {
                 gameSceneController.setLorenzoFaithPathMap();
 
                 Platform.runLater(()->changeStage(LOCAL_GAME));
+
+                gameSceneController.setNicknameLabel(singlePlayerNick);
             } else {
                 Platform.runLater(()-> changeStage(GAME));
             }
@@ -890,6 +893,7 @@ public class GUI extends Application implements View {
     public void playersInfo(PlayersInfo playersInfo) {
         if(playersInfo.getPlayersNumber()==1){
             isSinglePlayer=true;
+            singlePlayerNick=playersInfo.getNicknames().get(0);
         }
         Platform.runLater(()-> {
             changeStage(GAME);

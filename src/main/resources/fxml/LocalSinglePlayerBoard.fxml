@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -215,4 +216,17 @@
         <ImageView fitHeight="27.0" fitWidth="29.0" layoutX="523.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
     </Group>
     <Button fx:id="quit_button" disable="true" layoutX="594.0" layoutY="347.0" mnemonicParsing="false" opacity="0.0" text="QUIT" />
+   <ImageView fitHeight="225.0" fitWidth="159.0" layoutX="1083.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../graphics/giglio.png" />
+      </image>
+      <effect>
+         <DropShadow />
+      </effect>
+   </ImageView>
+   <Label fx:id="usernameLabel1" alignment="CENTER" layoutX="875.0" layoutY="70.0" prefHeight="26.0" prefWidth="152.0" styleClass="tooltip, info" text="Lorenzo il Magnifico">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
 </AnchorPane>
