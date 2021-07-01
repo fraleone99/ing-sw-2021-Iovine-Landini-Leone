@@ -69,7 +69,7 @@ public class GUI extends Application implements View {
     private StorageInfo lastStorage;
     private boolean isSinglePlayer=false;
     private final ArrayList<Integer> leaderCards = new ArrayList<>();
-    private String singlePlayerNick = new String();
+    private String singlePlayerNick;
 
 
     public static void main(String[] args) {
