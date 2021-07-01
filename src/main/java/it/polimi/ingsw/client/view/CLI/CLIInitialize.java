@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * This class initializes all maps and decks in CLI.
+ * See CLI.
+ */
 public class CLIInitialize {
     private final LeaderCardDeck LeaderDeck = new LeaderCardDeck();
     private final DevelopmentCardDeck developmentCardDeck = new DevelopmentCardDeck();

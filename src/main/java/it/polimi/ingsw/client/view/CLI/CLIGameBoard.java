@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.gameboard.Market;
 
 import java.util.ArrayList;
 
+/**
+ * This class allows the player to see the game board.
+ * See CLI.
+ */
 public class CLIGameBoard {
     private Handler handler = null;
     private final CLIInitialize initialize;

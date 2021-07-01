@@ -9,6 +9,10 @@ import it.polimi.ingsw.client.message.SendString;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class manages the login of the player in CLI.
+ * See CLI.
+ */
 public class CLILogin {
     private final Scanner in;
     private Handler handler = null;

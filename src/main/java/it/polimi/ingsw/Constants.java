@@ -1,5 +1,9 @@
 package it.polimi.ingsw;
 
+
+/**
+ * This class contains the constants used in the game.
+ */
 public class Constants {
 
 

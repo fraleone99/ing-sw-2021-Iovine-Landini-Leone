@@ -5,7 +5,15 @@ import it.polimi.ingsw.server.Server;
 
 import java.util.Scanner;
 
+/**
+ * This is the main class of whole project.
+ */
 public class Maestri {
+
+    /**
+     * Method main selects CLI, GUI or Server based on the arguments provided.
+     * @param args of type String[]
+     */
     public static void main(String[] args) {
         System.out.println("WELCOME! What do you want to launch?");
         System.out.println("0. SERVER\n1. CLIENT (CLI INTERFACE)\n2. CLIENT (GUI INTERFACE)");

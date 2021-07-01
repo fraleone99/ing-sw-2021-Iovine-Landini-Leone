@@ -13,6 +13,11 @@ import it.polimi.ingsw.server.answer.infoanswer.StorageInfo;
 
 import java.util.HashMap;
 
+
+/**
+ * This class manages prints in CLI.
+ * See CLI.
+ */
 public class CLIPrint {
     private final CLIInitialize initialize;
 

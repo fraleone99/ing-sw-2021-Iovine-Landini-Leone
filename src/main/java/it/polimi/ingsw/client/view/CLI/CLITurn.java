@@ -9,6 +9,11 @@ import it.polimi.ingsw.server.answer.turnanswer.DiscardLeader;
 
 import java.util.ArrayList;
 
+
+/**
+ * This class manages turns of the match in CLI.
+ * See CLI.
+ */
 public class CLITurn {
     private final CLIInitialize initialize;
     private Handler handler = null;

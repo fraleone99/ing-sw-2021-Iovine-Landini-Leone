@@ -8,6 +8,9 @@ import javafx.application.Application;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * This is the main class of the client that manages the connection.
+ */
 public class Client implements Runnable {
     NetworkHandler networkHandler;
     private static View view;
@@ -30,7 +33,9 @@ public class Client implements Runnable {
         }
     }
 
-
+    /**
+     * This method manages the connection of the player
+     */
     @Override
     public void run() {
         int PORT_NUMBER;

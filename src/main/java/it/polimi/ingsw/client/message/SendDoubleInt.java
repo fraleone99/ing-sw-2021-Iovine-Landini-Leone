@@ -1,5 +1,9 @@
 package it.polimi.ingsw.client.message;
 
+
+/**
+ * This message sends two int to the server.
+ */
 public class SendDoubleInt implements Message {
     private final int choice1;
     private final int choice2;

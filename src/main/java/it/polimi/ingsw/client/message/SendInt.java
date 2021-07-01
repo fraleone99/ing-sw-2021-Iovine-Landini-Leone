@@ -1,7 +1,8 @@
 package it.polimi.ingsw.client.message;
 
-import it.polimi.ingsw.client.message.Message;
-
+/**
+ * This message sends one int to the server.
+ */
 public class SendInt implements Message {
     private final int choice;
 

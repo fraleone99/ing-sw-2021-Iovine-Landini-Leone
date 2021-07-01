@@ -43,6 +43,10 @@ public class NetworkHandler implements Runnable, Handler {
         isConnected = true;
     }
 
+    /**
+     * This method initializes the timeout, the input stream and the output stream.
+     * It also calls the handle client connection method.
+     */
     @Override
     public void run() {
         try {
@@ -62,6 +66,10 @@ public class NetworkHandler implements Runnable, Handler {
         }
     }
 
+    /**
+     * This method runs the heartbeat thread and reads the server requests.
+     * @throws IOException called by readObject a network error happens.
+     */
     public void handleClientConnection() throws IOException{
         HeartbeatClient heartbeatClient = new HeartbeatClient(this);
         Thread heartbeatThread = new Thread(heartbeatClient);
@@ -79,6 +87,9 @@ public class NetworkHandler implements Runnable, Handler {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void send(Object message) {
         try {
             output.writeObject(message);
@@ -90,6 +101,11 @@ public class NetworkHandler implements Runnable, Handler {
         }
     }
 
+
+    /**
+     * This method manages the server requests.
+     * @param inputObj is the message sent by the server
+     */
     public void processServerAnswer(Object inputObj){
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnected()){
@@ -244,6 +260,9 @@ public class NetworkHandler implements Runnable, Handler {
     }
 
 
+    /**
+     * This method closes client connection with the server
+     */
     public synchronized void closeConnection(){
         System.out.println("Closing connection!");
         isConnected = false;
