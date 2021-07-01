@@ -226,13 +226,8 @@ public class Controller {
     public void setInitialBenefits(int i) throws NotExistingPlayerException {
         switch(i){
             case 0: view.firstPlayer(players.get(i));
-                    gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.COIN,20);
-                gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.SERVANT,20);
-                gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.STONE,20);
-                gameModel.getPlayer(players.get(i)).getPlayerDashboard().getVault().addResource(Resource.SHIELD,20);
-                break;
-            case 1:
-                int resource1 = view.chooseResource(players.get(i), "second", 1);
+                    break;
+            case 1: int resource1 = view.chooseResource(players.get(i), "second", 1);
                     addInitialResource(i, resource1,1);
                     break;
             case 2: resource1 =view.chooseResource(players.get(i), "third",1);
@@ -240,7 +235,7 @@ public class Controller {
                     break;
             case 3: resource1 =view.chooseResource(players.get(i), "fourth",1);
                     addInitialResource(i, resource1,2);
-                int resource2 = view.chooseResource(players.get(i), "fourth", 2);
+                    int resource2 = view.chooseResource(players.get(i), "fourth", 2);
                     if(resource1 == resource2) {
                         addInitialResource(i, resource2, 2);
                     } else {

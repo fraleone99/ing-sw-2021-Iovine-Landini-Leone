@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.GameSceneController">
    <ImageView fitHeight="408.0" fitWidth="611.0" layoutX="469.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/mainScene/BOARDFINALTOP.png" />
    </ImageView>

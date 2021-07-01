@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="440.0" prefWidth="958.0" styleClass="bgimage" stylesheets="@../bootstrap3.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.DiscardLeaderController">
    <ImageView fx:id="leader1" fitHeight="349.0" fitWidth="231.0" layoutX="14.0" layoutY="36.0" pickOnBounds="true"
               preserveRatio="true"/>

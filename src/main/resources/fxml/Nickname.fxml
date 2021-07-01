@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bgimage" stylesheets="@../bootstrap3.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.GUI.sceneControllers.NicknameController">
    <ImageView fitHeight="505.0" fitWidth="509.0" layoutX="492.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../graphics/background.png" />

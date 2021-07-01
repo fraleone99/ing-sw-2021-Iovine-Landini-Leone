@@ -146,8 +146,6 @@ public class DevelopmentCardsGridController {
         selectedGlow.setWidth(depth);
         selectedGlow.setHeight(depth);
 
-        ImageView card;
-
         for(int i = 0; i < card_group.getChildren().size(); i++) {
             card_group.getChildren().forEach(x -> x.setEffect(null));
         }
