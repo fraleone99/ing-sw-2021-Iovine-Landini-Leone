@@ -38,6 +38,11 @@ public class HandlerSP implements Runnable, Handler {
         this.view = view;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void send(Object message) {
         synchronized (lock) {
             if(message instanceof SendString) {
@@ -54,6 +59,9 @@ public class HandlerSP implements Runnable, Handler {
     }
 
 
+    /**
+     * Starts the local game
+     */
     @Override
     public void run() {
         view.askNickname("Insert nickname: ");
@@ -98,6 +106,11 @@ public class HandlerSP implements Runnable, Handler {
         return answer;
     }
 
+
+    /**
+     * Manages the message received by the controller
+     * @param inputObj is the message received by the controller
+     */
     public void handleClient(Answer inputObj) {
         if(inputObj instanceof Connection){
             if(((Connection) inputObj).isConnected()){

@@ -195,16 +195,16 @@ public class Controller {
 
                 LeaderCard leader1 = gameModel.getPlayer(player).getLeaders().get(0);
                 if(leader1.getIsActive()) {
-                    view.activeOtherLeaderCard(nickname, leader1.getCardID(), player, 1);
+                    view.activeOtherLeaderCard(player, leader1.getCardID(), nickname, 1);
                 } else if(leader1.getIsDiscarded()) {
-                    view.discardOtherLeaderCard(nickname, leader1.getCardID(), player,1);
+                    view.discardOtherLeaderCard(player, leader1.getCardID(), nickname,1);
                 }
 
                 LeaderCard leader2 = gameModel.getPlayer(player).getLeaders().get(1);
                 if(leader2.getIsActive()) {
-                    view.activeOtherLeaderCard(nickname, leader2.getCardID(), player,2);
+                    view.activeOtherLeaderCard(player, leader2.getCardID(), nickname,2);
                 } else if(leader2.getIsDiscarded()) {
-                    view.discardOtherLeaderCard(nickname, leader2.getCardID(), player,2);
+                    view.discardOtherLeaderCard(player, leader2.getCardID(), nickname,2);
                 }
             }
         } catch (NotExistingPlayerException e) {
