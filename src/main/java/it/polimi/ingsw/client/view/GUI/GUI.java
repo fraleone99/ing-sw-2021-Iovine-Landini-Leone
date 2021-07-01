@@ -156,6 +156,10 @@ public class GUI extends Application implements View {
         System.exit(0);
     }
 
+    /**
+     * manages the change of stage
+     * @param scene is the new scene
+     */
     public void changeStage(String scene){
         Scene currentScene = sceneMap.get(scene);
         stage.setScene(currentScene);
@@ -174,6 +178,10 @@ public class GUI extends Application implements View {
         this.notReady = notReady;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int gameType() {
         Platform.runLater(()-> mainMenuController.start());
@@ -203,17 +211,30 @@ public class GUI extends Application implements View {
         }
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setHandler(Handler handler) {
         this.handler = handler;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setupConnection() {
         notReady = true;
         Platform.runLater(()-> setupController.setupConnection());
     }
 
+
+    /**
+     * manages the error received
+     * @param error the error received
+     */
     public void errorHandling(String error) {
         switch (error) {
             case "setup" : Platform.runLater(() -> {
@@ -229,21 +250,33 @@ public class GUI extends Application implements View {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateGrid(ArrayList<Integer> idCards) {
         Platform.runLater(() -> developmentCardsGridController.updateGrid(idCards));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateBasicProduction(BasicProductionInfo info) {
         Platform.runLater(() -> gameSceneController.updateBasicProduction(info));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateMarket(Market market) {
         Platform.runLater(()->  marketSceneController.updateMarket(market));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDevCardsSpace(ArrayList<DevelopmentCardDeck> spaces, String owner) {
         Platform.runLater( () -> gameSceneController.setDevCardsSpaceForReconnection(spaces, owner));
@@ -266,6 +299,9 @@ public class GUI extends Application implements View {
         errorDialog.showAndWait();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateDevCardsSpace(CardsSpaceInfo info) {
         Platform.runLater( () -> gameSceneController.updateCardsSpace(info));
@@ -277,6 +313,9 @@ public class GUI extends Application implements View {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getIp() {
         synchronized (lock) {
@@ -295,6 +334,9 @@ public class GUI extends Application implements View {
         this.IP = IP;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getPortNumber() {
         synchronized (lock) {
@@ -313,21 +355,33 @@ public class GUI extends Application implements View {
         this.portNumber = portNumber;
     }
 
+    /**
+     * unused in GUI
+     */
     @Override
     public void handShake(String welcome) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askPlayerNumber(String message) {
         Platform.runLater(()-> playerNumberController.setupPlayersNumber());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askNickname(String message) {
        Platform.runLater(() -> nicknameController.setupNickname(message));
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void readMessage(String message) {
         if(message.equals("You are now in the waiting room. The game will start soon!")){
@@ -391,6 +445,9 @@ public class GUI extends Application implements View {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askResource(String message) {
         //1) COIN 2) STONE 3) SHIELD 4) SERVANT
@@ -418,6 +475,9 @@ public class GUI extends Application implements View {
         return secondaryStage;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askLeaderToDiscard(ArrayList<Integer> IdLeaders) {
         Platform.runLater(()->{
@@ -439,16 +499,25 @@ public class GUI extends Application implements View {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askTurnType(String message) {
         Platform.runLater(()->gameSceneController.askTurn());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void activeLeader(ActiveLeader message) {
         Platform.runLater(() -> gameSceneController.activeLeader());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void discardLeader(DiscardLeader message) {
         Platform.runLater( () -> gameSceneController.discardLeader());
@@ -458,6 +527,9 @@ public class GUI extends Application implements View {
         Platform.runLater(()-> changeStage(GAME));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void seeGameBoard(String message) {
         Platform.runLater(()-> {
@@ -467,11 +539,17 @@ public class GUI extends Application implements View {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void seeLeaderCards(ArrayList<Integer> leaderCards) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void seeMarket(Market market) {
         Platform.runLater(()->{
@@ -481,11 +559,17 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void chooseLine(String message) {
         handler.send(new SendInt(8));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void seeGrid(ArrayList<Integer> devCards) {
         Platform.runLater( () -> {
@@ -494,16 +578,21 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * unused in GUI
+     */
     @Override
-    public void seeProductions(ArrayList<Integer> productions) {
+    public void seeProductions(ArrayList<Integer> productions) {}
 
-    }
-
+    /**
+     * unused in GUI
+     */
     @Override
-    public void printFaithPath(FaithPathInfo path) {
+    public void printFaithPath(FaithPathInfo path) {}
 
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void printStorage(StorageInfo storageInfo) {
         Platform.runLater(()-> {
@@ -515,6 +604,9 @@ public class GUI extends Application implements View {
     });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void printStorageAndVault(StorageInfo storageInfo) {
         Platform.runLater(()-> {
@@ -526,24 +618,34 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * unused in GUI
+     */
     @Override
-    public void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo) {
+    public void printDevelopmentCardsSpace(DevCardsSpaceInfo devCardsSpaceInfo) {}
 
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void printActionToken(ActionToken actionToken) {
         Platform.runLater(()-> gameSceneController.updateActionToken(actionToken));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ManageStorage(String message) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             marketSceneController.storage(lastStorage);
             marketSceneController.manageStorage();
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void MoveShelves(String message) {
         Platform.runLater(()->{
@@ -552,11 +654,17 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resetCard(int pos) {
         gameSceneController.resetCard(pos);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void useMarket(String message) {
         Platform.runLater(()-> {
@@ -565,29 +673,49 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void chooseWhiteBallLeader(String message) {
         Platform.runLater(()-> marketSceneController.whiteBallLeader());
     }
 
+    /**
+     * Shows the leader cards of the other player when active
+     * @param info contains the IDs of the activated leader card and the owner
+     */
     public void activeOtherLeaderCard(OtherLeaderCard info) {
         Platform.runLater( () -> gameSceneController.activeOtherLeaderCard(info));
     }
 
+    /**
+     * Deletes the leader cards of other player when deactivated
+     * @param info contains the IDs of the deactivated leader card and the owner
+     */
     public void discardOtherLeaderCard(OtherLeaderCard info) {
         Platform.runLater( () -> gameSceneController.discardOtherLeaderCard(info));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void seeBall(SeeBall ball) {
         Platform.runLater(()-> marketSceneController.seeBall(ball));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void chooseShelf() {
         Platform.runLater(()-> marketSceneController.chooseShelf());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askCardToBuy(ArrayList<Integer> cards, ArrayList<Integer> spaces) {
         Platform.runLater( () -> {
@@ -596,16 +724,25 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askSpace(String message) {
         developmentCardsGridController.chooseSpace();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askType(String message) {
         Platform.runLater(() -> gameSceneController.chooseProduction());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askInput(String message) {
         Platform.runLater(() -> {
@@ -627,6 +764,9 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askOutput(String message) {
         Platform.runLater(() -> {
@@ -649,16 +789,25 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askDevelopmentCard(String message) {
         Platform.runLater(() -> gameSceneController.developmentCardProduction());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void askLeaderCard(String message) {
         Platform.runLater(() -> gameSceneController.leaderCardProduction());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endTurn(String message) {
         Platform.runLater( () -> {
@@ -667,26 +816,39 @@ public class GUI extends Application implements View {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void win(String message) {
         Platform.runLater(() -> gameSceneController.winLabel(message));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void lose(String message) {
         Platform.runLater(() -> gameSceneController.loseLabel(message));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void seeOtherCards(ArrayList<Integer> leaderCards) {
 
     }
 
+    /**
+     * unused in GUI
+     */
     @Override
-    public void seeMoreFromTheGameBoard() {
+    public void seeMoreFromTheGameBoard() {}
 
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIsMyTurn(boolean isMyTurn) {
         if(isMyTurn) {
@@ -701,10 +863,17 @@ public class GUI extends Application implements View {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void waitForYourTurn() {
     }
 
+    /**
+     * Initializes the game board at the beginning of the match
+     * @param message the message containing the initial information
+     */
     public void initializeGameBoard(InitializeGameBoard message) {
         marketSceneController.updateMarket(message.getMarket());
         developmentCardsGridController.updateGrid(message.getIdDevCards());
@@ -714,6 +883,9 @@ public class GUI extends Application implements View {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void playersInfo(PlayersInfo playersInfo) {
         if(playersInfo.getPlayersNumber()==1){
@@ -726,15 +898,22 @@ public class GUI extends Application implements View {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateFaithPath(UpdateFaithPath updateFaithPath){
         Platform.runLater(() -> gameSceneController.updateFaithPath(updateFaithPath));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatePapalPawn(UpdatePapalPawn updatePapalPawn){
         Platform.runLater(() -> gameSceneController.updatePapalPawn(updatePapalPawn));
     }
+
 
     public void setNickname(String s) {
         this.nickname = s;
