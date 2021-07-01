@@ -44,7 +44,7 @@ If you use the default configuration on the server the port is 3456.
 
 The recommended setting for the GUI on Windows are : 
 * Resolution 1920x1080 
-* scale and layout: 125%
+* Scale and layout: 125%
 
 ## Authors
 * [Lorenzo Iovine](https://github.com/lorenzoiovine99)
