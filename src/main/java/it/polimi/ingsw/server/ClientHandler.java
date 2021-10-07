@@ -79,15 +79,6 @@ public class ClientHandler extends ConnectionObservable implements Runnable {
         }
     }
 
-    public void pong() {
-        try {
-            output.writeObject(new Pong());
-            output.flush();
-        } catch (IOException e) {
-            closeConnection();
-        }
-    }
-
     /**
      * This method handles the connection with the client
      */

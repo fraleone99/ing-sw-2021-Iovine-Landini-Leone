@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.server.answer.Pong;
+
 /**
  * This is the heartbeat of the server.
  */
@@ -19,7 +21,7 @@ public class HeartbeatServer  implements Runnable{
                 e.printStackTrace();
             }
 
-            clientHandler.pong();
+            clientHandler.send(new Pong());
         }
     }
 }
