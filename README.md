@@ -51,6 +51,13 @@ The recommended setting for the GUI on Windows are :
 * [Nicola Landini](https://github.com/neekoo0)
 * [Francesco Leone](https://github.com/fraleone99)
 
+# Tools
+* Astah UML - UML Diagrams
+* Maven - Dependency Management
+* Intellij - IDE
+* JavaFX - GUI
 
+## License
+This project is developed in collaboration with [Politecnico di Milano](https://www.polimi.it/) and [Cranio Creations](https://www.craniocreations.it/)
 
 
