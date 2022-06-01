@@ -8,23 +8,22 @@ at Politecnico di Milano. (2020/2021)
 
 ![Image of the game](src/main/resources/graphics/box_image.png)
 
-## Functionalities
-
+## Implemented Functionalities
 | Functionality | Status |
 |:-----------------------|:------------------------------------:|
-| Basic rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/model) |
-| Complete rules | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/model) |
-| Socket |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server) |
-| GUI | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/client/view/GUI) |
-| CLI |[![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/client/view/CLI) |
-| Multiple games | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server)|
-| Local single player | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/blob/main/src/main/java/it/polimi/ingsw/controller/LocalSPController.java) |
-| Resilience | [![GREEN](http://placehold.it/15/44bb44/44bb44)](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server)
-| Persistence | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
-| Editor | [![RED](http://placehold.it/15/f03c15/f03c15)]() |
+| Basic rules | [✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/model) |
+| Complete rules | [✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/model) |
+| Socket |[✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server) |
+| GUI | [✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/client/view/GUI) |
+| CLI |[✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/client/view/CLI) |
+| Multiple games | [✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server)|
+| Local single player | [✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/blob/main/src/main/java/it/polimi/ingsw/controller/LocalSPController.java) |
+| Resilience | [✅](https://github.com/fraleone99/ing-sw-2021-Iovine-Landini-Leone/tree/main/src/main/java/it/polimi/ingsw/server) |
+| Persistence | [⛔]() |
+| Editor | [⛔]() |
 
 #### Legend
-[![RED](http://placehold.it/15/f03c15/f03c15)]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;[![YELLOW](http://placehold.it/15/ffdd00/ffdd00)]() Implementing&nbsp;&nbsp;&nbsp;&nbsp;[![GREEN](http://placehold.it/15/44bb44/44bb44)]() Implemented
+[⛔]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp; [⚠️]() Implementing&nbsp;&nbsp;&nbsp;&nbsp; [✅]() Implemented
 
 ## Running
 To launch the game use the following command in the directory of the jar.
